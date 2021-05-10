@@ -1,0 +1,124 @@
+{
+  "categories": [
+    {
+      "noCategorie": "Hébergement",
+      "soCategorie": null,
+      "idCategorie": "1"
+    },
+    {
+      "noCategorie": "Transport",
+      "soCategorie": null,
+      "idCategorie": "2"
+    },
+    {
+      "noCategorie": "Juridique",
+      "soCategorie": null,
+      "idCategorie": "3"
+    },
+    {
+      "noCategorie": "Repas",
+      "soCategorie": "Alcool",
+      "idCategorie": "4"
+    },
+    {
+      "noCategorie": "Repas",
+      "soCategorie": "Nourriture",
+      "idCategorie": "5"
+    },
+    {
+      "noCategorie": "Repas",
+      "soCategorie": "Nourriture à emporter",
+      "idCategorie": "6"
+    },
+    {
+      "noCategorie": "Voiture",
+      "soCategorie": "Péage",
+      "idCategorie": "7"
+    },
+    {
+      "noCategorie": "Voiture",
+      "soCategorie": "Location",
+      "idCategorie": "8"
+    },
+    {
+      "noCategorie": "Voiture",
+      "soCategorie": "Carburant",
+      "idCategorie": "9"
+    },
+    {
+      "noCategorie": "Communication",
+      "soCategorie": "Internet",
+      "idCategorie": "10"
+    },
+    {
+      "noCategorie": "Communication",
+      "soCategorie": "Téléphone",
+      "idCategorie": "11"
+    },
+    {
+      "noCategorie": "Communication",
+      "soCategorie": "Mail",
+      "idCategorie": "12"
+    },
+    {
+      "noCategorie": "Externe",
+      "soCategorie": "Vision",
+      "idCategorie": "13"
+    },
+    {
+      "noCategorie": "Externe",
+      "soCategorie": "Autres",
+      "idCategorie": "14"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Abonnement Alarme",
+      "idCategorie": "15"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Maintenance Alarme",
+      "idCategorie": "16"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Matériel Informatique",
+      "idCategorie": "17"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Matériel Bureautique",
+      "idCategorie": "18"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Matériel Entretien",
+      "idCategorie": "19"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Café",
+      "idCategorie": "20"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Cadeaux Clients",
+      "idCategorie": "21"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Loyer",
+      "idCategorie": "22"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Pharmacie",
+      "idCategorie": "23"
+    },
+    {
+      "noCategorie": "Locaux",
+      "soCategorie": "Autre",
+      "idCategorie": "24"
+    }
+  ]
+}
