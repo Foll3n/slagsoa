@@ -1,0 +1,91 @@
+<section class="container bg-white p-5 mb-3">
+  <h1 class="row justify-content-center text-info small mb-1">{{dateD}} au {{dateF}}</h1>
+  <h2 class="row justify-content-center text-warning p-2"><small>{{message}}</small></h2>
+  <div>
+    <div class="form-group">
+      <input type="text" class="form-control mb-2" placeholder="recherche par id" [(ngModel)]="searchTerm">
+      <input type="text" class="form-control mb-2" placeholder="recherche par commentaire" [(ngModel)]="searchTerm1">
+      <input type="text" class="form-control mb-2" placeholder="recherche par Sous catégorie" [(ngModel)]="searchTerm2">
+    </div>
+    <table class="table table-striped table-responsive">
+      <thead>
+      <tr>
+        <th scope="col">Id.</th>
+        <th scope="col">Date</th>
+        <th scope="col">Categorie</th>
+        <th scope="col">Sous Categorie</th>
+        <th scope="col">TTC</th>
+        <th scope="col">HT</th>
+        <th scope="col">TVA</th>
+        <th scope="col">TVA %</th>
+        <th scope="col">Commentaire</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <tr *ngFor="let f of factures | recherche: searchTerm | recherchec: searchTerm1 | recherchesc:searchTerm2">
+        <td>{{f.idFacture}}</td>
+        <td><small>{{f.dateFacture}}</small></td>
+        <td><small>{{f.categorie}}</small></td>
+        <td><small>{{f.sousCategorie}}</small></td>
+        <td><small>{{f.montantTTC}}€</small></td>
+        <td><small>{{f.montantHT}}€</small></td>
+        <td><small>{{f.tva}}€</small></td>
+        <td><small>{{f.pourcentageTVA}}%</small></td>
+        <td><small>{{f.commentaire}}</small></td>
+        <td class="overflow-hidden">
+          <div ngbDropdown container="body">
+            <button class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem (click)="open(content , f)">Voir plus</button>
+              <div class="dropdown-divider"></div>
+              <button (click)="supprimerFacture(f.idFacture)" ngbDropdownItem>Supprimer</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</section>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Facture numéro: {{facture.idFacture}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="modification" (submit)="modifierFacture()" class="form-group">
+      <small class="text-danger">*</small><small>Montant TTC</small>
+      <input formControlName="montantTTC" class="form-control text-info is-valid" placeholder="{{facture.montantTTC}}" [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
+      <small class="text-danger">*</small><small>Date</small>
+      <input formControlName="dateFacture" class="form-control text-info is-valid" placeholder="{{facture.dateFacture}}" [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
+      <small>commentaire</small>
+      <input formControlName="commentaire" class="form-control text-info" placeholder="{{facture.commentaire}}">
+      <small class="text-danger">*</small><select formControlName="categorie" class='select-option mt-2 mr-2 text-info border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}"  #mySelect
+              (change)='onOptionsSelected(mySelect.value)'>
+        <option class='option'
+                *ngFor='let option of this.tableauCat'
+                [value]="option.nom">{{option.nom}}</option>
+      </select>
+      <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"  class='select-option mt-2 text-info' #mySelect1
+              (change)='onOptionsSelected1(mySelect1.value)'>
+        <option class='option'
+                *ngFor='let s of sousCat'
+                [value]="s">{{s}}</option>
+      </select>
+      <!-- ---------------------------------------------------------------------------------------------- -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark">Upload</button>
+        <input  *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" value="sauvegarder" class="btn btn-outline-dark" (click)="c('Save click') ">
+      </div>
+
+    </form>
+  </div>
+
+</ng-template>

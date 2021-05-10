@@ -1,0 +1,18 @@
+<section class="container p-5">
+  <h1 class="row justify-content-center text-info p-2">{{dateD}} à {{dateF}}</h1>
+  <h2 class="row justify-content-center text-warning p-2"><small>{{message}}</small></h2>
+  <div class="mb-5">
+    <button class="btn btn-outline-danger" (click)="changerMode()">{{modestring}}</button>
+    <button class="btn btn-outline-warning  ml-3 " (click)="changerModeCat()">{{modeCatString}}</button>
+  </div>
+
+  <div style="display: block">
+    <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="'pie'"
+    [colors]="pieChartColors" ></canvas>
+
+  </div>
+</section>
+

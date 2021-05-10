@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info text-white">
+  <a *ngIf="this.c.isLogged()" class="navbar-brand" href="visualisation">
+    <img class="logo" src="../../assets/images/logoSlag.png">
+  </a>
+  <a *ngIf="!this.c.isLogged()" class="navbar-brand" href="connexion">
+    <img class="logo" src="../../assets/images/logoSlag.png">
+  </a>
+
+
+
+  <div *ngIf="this.c.isLogged()" class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link text-white" href="visualisation">Visualisation</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="ajouter">Ajout</a>
+      </li>
+    </ul>
+  </div>
+
+  <button *ngIf="this.c.isLogged()" (click)="this.c.Logout()" class="btn btn-warning text-white">deconnexion</button>
+
+
+</nav>

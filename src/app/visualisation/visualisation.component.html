@@ -1,0 +1,77 @@
+<section *ngIf="this.c.isLogged()">
+  <div class="opacity ">
+
+
+    <div class="list-group-item">
+      <h1 class="text-info text-center m-3"> Visualisation </h1>
+
+      <app-date-picker (dateD)="fixerdateD($event)" (dateF)="fixerdateF($event)"></app-date-picker>
+      <div class="m-auto form-group col-md-4">
+        <label>Filtre</label>
+        <div>
+          <div *ngFor="let m of map; let i = index" class="list-group list-group-horizontal">
+            <select class='select-option mt-2' #mySelect
+                    (change)='onOptionsSelected(mySelect.value , i)'>
+              <option *ngIf="i==map.length-1 && i!=0" class="option"></option>
+              <option *ngIf="i==0" class="option" selected>tout</option>
+              <option class='option'
+                      *ngFor='let option of this.catPrincipal'
+                      [value]="option.nom_Categorie + '  ' + option.nom_sous_Categorie + '  ' + option.id_Categorie">{{option.nom_Categorie}}  {{option.nom_sous_Categorie}}</option>
+            </select>
+            <button *ngIf="i+1 == map.length && i!=0" (click)="remove(i)" type="button"
+                    class="btn btn-danger btn-sm pull-right ml-2 mt-2" title="effacer">
+              <span class="glyphicon glyphicon-remove font-weight-bold p-1">X</span>
+            </button>
+
+          </div>
+        </div>
+        <h2 class="text-danger">{{erreurMessage}}</h2>
+      </div>
+
+      <div class="row justify-content-center m-3">
+        <button class=" btn btn-primary" *ngIf="selectedCategories[map.length-1].id_Categorie != ''"
+                (click)="ajouterCat()">Ajouter
+        </button>
+      </div>
+      <!-----------------------------------------------DEBUT MEN--------------------------------------------------------->
+
+      <div class="container bg-white">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
+
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Liste</a>
+            <ng-template ngbNavContent>
+              <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD" [dateFin]="dateF" [factures]="facturesFiltre"
+                                  [categories]="selectedCategories" #childfactures></app-liste-factures>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2" [destroyOnHide]="true">
+            <a ngbNavLink>Diagrammes</a>
+            <ng-template ngbNavContent>
+              <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre" [categories]="categories"
+                               [catPrincipal]="catPrincipal"></app-graph-ligne>
+            </ng-template>
+          </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        <pre>Active: {{ active }}</pre>
+      </div>
+
+    </div>
+  </div>
+
+
+</section>
+
+<section *ngIf="!this.c.isLogged()">
+  <h1 class="row text-danger justify-content-center pt-5 text-warning">PAS DE PERMISSIONS</h1>
+</section>
+
+
+
+
+
+
+

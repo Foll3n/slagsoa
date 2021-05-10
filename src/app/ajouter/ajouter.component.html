@@ -1,0 +1,102 @@
+<section *ngIf="this.c.isLogged()" class="padding-perso container bg-white">
+  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+
+    <!-------------------------------------------------------------------------------------------------------------------------------->
+    <li ngbNavItem>
+      <a ngbNavLink>CSV</a>
+      <ng-template ngbNavContent>
+
+        <section class="container bg-white p-5">
+          <div class="pt-5 text-info text-center">
+            <h1>Upload un fichier csv</h1>
+          </div>
+          <input type="file" class="file-input" accept=".csv"
+                 (change)="onFileSelected($event)" #fileUpload>
+
+          <div class="file-upload">
+            {{fileName}}
+
+            <button mat-mini-fab color="primary" class="btn btn-outline-info upload-btn"
+                    (click)="debutChargement()"
+                    (click)="fileUpload.click()">
+              <div>Choisir un fichier</div>
+            </button>
+          </div>
+          <button *ngIf="upload" type="button" (click)="stockerDonnees(this.jsondata)" class="btn btn-primary mt-5 ">Upload</button>
+
+          <br>
+          <br>
+          <br>
+          <h1>{{message}}</h1>
+        </section>
+        <section class="container bg-white">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Montant ttc</th>
+                <th scope="col">categorie</th>
+                <th scope="col">sous Categorie</th>
+                <th scope="col">date</th>
+                <th scope="col">commentaire</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let f of facture">
+                <th scope="row">{{f.montantTTC}}</th>
+                <td>{{f.categorie}}</td>
+                <td>{{f.sousCategorie}}</td>
+                <td>{{f.dateFacture}}</td>
+                <td>{{f.commentaire}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </ng-template>
+    </li>
+    <!-------------------------------------------------------------------------------------------------------------------------------->
+    <li ngbNavItem>
+      <a ngbNavLink>MANUEL</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="insertion" class="form-group" (submit)="addFacture()">
+          <small class="text-danger">*</small><small>Montant TTC</small>
+          <input type="text" class="form-control text-info is-valid" placeholder="ex: 153.52" formControlName="montantttc" [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
+          <small class="text-danger">*</small><small>Date</small>
+          <input formControlName="dateFacture" class="form-control text-info is-valid" placeholder="JJ/MM/AAAA" [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
+          <small>commentaire</small>
+          <input formControlName="commentaire" class="form-control text-info" placeholder="">
+          <small class="text-danger">*</small><select formControlName="categorie" class='select-option mt-2 mr-2 text-info border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}" #mySelect
+                                                      (change)='onOptionsSelected(mySelect.value)'>
+          <option class='option'
+                  *ngFor='let option of this.tableauCategories'
+                  [value]="option.nom">{{option.nom}}</option>
+        </select>
+          <span class="text-danger mb-3" *ngIf="categorie!= null && categorie.errors">
+              Catégorie vide.
+          </span>
+          <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"  class='select-option mt-2 text-info' #mySelect1
+                  (change)='onOptionsSelected1(mySelect1.value)'>
+            <option class='option'
+                    *ngFor='let s of sousCat'
+                    [value]="s">{{s}}</option>
+          </select>
+          <br>
+          <input *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" name="" value="Ajouter" href="#" class="btn btn-outline-info mt-3">
+        </form>
+          <h2><small>{{messageerreur}}</small></h2>
+
+        {{message}}
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</section>
+
+
+
+<section *ngIf="!this.c.isLogged()">
+  <h1 class="row text-danger justify-content-center pt-5 text-warning">PAS DE PERMISSIONS</h1>
+</section>
+

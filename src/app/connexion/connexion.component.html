@@ -1,0 +1,18 @@
+<div class="row justify-content-center">
+  <div class="">
+    <div class="">
+      <div class="">
+        <form [formGroup]="logForm" (submit)="onSubmit()" class="box">
+          <img class="logo" src="assets/images/logoSlag.png">
+            <h3 class="text-white">Connexion</h3>
+            <p class="text-muted"> Veuillez entrer votre nom de compte et votre mot de passe!</p>
+            <input formControlName="ndc" type="text" name=" " placeholder="Id compte">
+            <input formControlName="mdp" type="password" name="" placeholder="Mot de passe">
+            <!-- <a class="forgot text-muted" href="#">Forgot password?</a> -->
+            <input type="submit" name="" value="Connexion" href="#">
+          <h1 class="row justify-content-center text-danger">{{message}}</h1>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
