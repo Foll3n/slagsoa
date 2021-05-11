@@ -2,11 +2,14 @@
   <h1 class="row justify-content-center text-info small mb-1">{{dateD}} au {{dateF}}</h1>
   <h2 class="row justify-content-center text-warning p-2"><small>{{message}}</small></h2>
   <div>
+    <!------------------------------------- DEBUT FILTRE BARRE DE RECHERCHE -------------------------------------------------------------->
     <div class="form-group">
       <input type="text" class="form-control mb-2" placeholder="recherche par id" [(ngModel)]="searchTerm">
       <input type="text" class="form-control mb-2" placeholder="recherche par commentaire" [(ngModel)]="searchTerm1">
       <input type="text" class="form-control mb-2" placeholder="recherche par Sous catégorie" [(ngModel)]="searchTerm2">
     </div>
+
+    <!------------------------------------- DEBUT TABLEAU -------------------------------------------------------------->
     <table class="table table-striped table-responsive">
       <thead>
       <tr>
@@ -52,6 +55,7 @@
 
   </div>
 </section>
+<!------------------------------------- DEBUT FENETRE VOIR PLUS -------------------------------------------------------------->
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Facture numéro: {{facture.idFacture}}</h4>
@@ -60,6 +64,7 @@
     </button>
   </div>
   <div class="modal-body">
+    <!------------------------------------- DEBUT FORMULAIRE MODIFICATION -------------------------------------------------------------->
     <form [formGroup]="modification" (submit)="modifierFacture()" class="form-group">
       <small class="text-danger">*</small><small>Montant TTC</small>
       <input formControlName="montantTTC" class="form-control text-info is-valid" placeholder="{{facture.montantTTC}}" [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
@@ -78,7 +83,7 @@
                 *ngFor='let s of sousCat'
                 [value]="s">{{s}}</option>
       </select>
-      <!-- ---------------------------------------------------------------------------------------------- -->
+      <!------------------------------------- FOOTER EN BAS DE LA FENETRE VOIR PLUS -------------------------------------------------------------->
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark">Upload</button>
         <input  *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" value="sauvegarder" class="btn btn-outline-dark" (click)="c('Save click') ">
@@ -86,5 +91,4 @@
 
     </form>
   </div>
-
 </ng-template>

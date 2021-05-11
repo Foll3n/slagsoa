@@ -1,9 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClientModule, HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {any} from "codelyzer/util/function";
-import {FormBuilder, Validators, FormGroup, FormArray} from "@angular/forms";
 import {Facture} from '../Modeles/facture';
 import { ConnexionComponent } from "../connexion/connexion.component";
 import { Categories1 } from "../Modeles/categorie";

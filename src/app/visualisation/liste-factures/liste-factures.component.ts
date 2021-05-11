@@ -7,6 +7,7 @@ import { Categories1 } from "../../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ResultatUpload } from "../../ajouter/ajouter.component";
 
+//---------------------------------------------- Class temporaire qui stock la reponse de la requete delete -----------------
 export class reponseDelete{
   reponse!: string;
   message!: string;
@@ -20,6 +21,12 @@ export class reponseDelete{
 
 export class ListeFacturesComponent implements OnChanges {
 
+  //Attributs qui récupèrent les données du composant père, on y retrouve ainsi:
+  // - la date de debut
+  // - la date de fin
+  // - une liste de facture déjà trié
+  // - Une liste des categories
+  // - Une liste des categories avec leurs sous categories
   @Input() dateDebut!: string;
   @Input() dateFin!: string;
   @Input() factures!: Facture[];
@@ -28,16 +35,24 @@ export class ListeFacturesComponent implements OnChanges {
 
 
 
-
   sousCat !: string[];
+
   dateD!:string;
   dateF!:string;
+
+  //Les attributs searchTerm permettent de stocker en temps réel les mots recherchés dans le filtre
   searchTerm!: string;
   searchTerm1!: string;
   searchTerm2!: string;
+
+  //rpd servira de stockage pour la reponse delete
   rpd = new reponseDelete();
+
+
   message = '';
   message1 = '';
+
+
   rp!: ResultatUpload;
 
   erreur!: string;
@@ -45,10 +60,9 @@ export class ListeFacturesComponent implements OnChanges {
     headers: new HttpHeaders()
   };
 
-  //rf = new ReponseGetFacture();
 
   facture!: Facture;
-  modification: FormGroup;
+  modification!: FormGroup;
 
   constructor(private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
     this.modification = new FormGroup({

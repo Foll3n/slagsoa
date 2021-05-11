@@ -1,7 +1,7 @@
 <section *ngIf="this.c.isLogged()" class="padding-perso container bg-white">
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
 
-    <!-------------------------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------- AJOUT PAR CSV ---------------------------------------------------------------->
     <li ngbNavItem>
       <a ngbNavLink>CSV</a>
       <ng-template ngbNavContent>
@@ -12,7 +12,6 @@
           </div>
           <input type="file" class="file-input" accept=".csv"
                  (change)="onFileSelected($event)" #fileUpload>
-
           <div class="file-upload">
             {{fileName}}
 
@@ -55,7 +54,7 @@
         </section>
       </ng-template>
     </li>
-    <!-------------------------------------------------------------------------------------------------------------------------------->
+    <!------------------------------------------------------ AJOUT MANUEL -------------------------------------------------------->
     <li ngbNavItem>
       <a ngbNavLink>MANUEL</a>
       <ng-template ngbNavContent>

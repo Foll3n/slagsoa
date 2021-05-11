@@ -1,11 +1,11 @@
 <section *ngIf="this.c.isLogged()">
   <div class="opacity ">
-
-
     <div class="list-group-item">
       <h1 class="text-info text-center m-3"> Visualisation </h1>
-
+      <!------------------------------------- DatePicker -------------------------------------------------------------->
       <app-date-picker (dateD)="fixerdateD($event)" (dateF)="fixerdateF($event)"></app-date-picker>
+
+      <!------------------------------------- Filtre Categories -------------------------------------------------------------->
       <div class="m-auto form-group col-md-4">
         <label>Filtre</label>
         <div>
@@ -33,22 +33,27 @@
                 (click)="ajouterCat()">Ajouter
         </button>
       </div>
-      <!-----------------------------------------------DEBUT MEN--------------------------------------------------------->
+      <!-----------------------------------------------DEBUT MENU--------------------------------------------------------->
 
       <div class="container bg-white">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
-
+          <!------------------------------------- DEBUT PAGE LISTE FACTURE -------------------------------------------------------------->
           <li [ngbNavItem]="1">
             <a ngbNavLink>Liste</a>
             <ng-template ngbNavContent>
-              <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD" [dateFin]="dateF" [factures]="facturesFiltre"
+              <!------------------------------------- LISTE FACTURES -------------------------------------------------------------->
+              <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD" [dateFin]="dateF"
+                                  [factures]="facturesFiltre"
                                   [categories]="selectedCategories" #childfactures></app-liste-factures>
             </ng-template>
           </li>
+          <!------------------------------------- DEBUT PAGE DIAGRAMME -------------------------------------------------------------->
           <li [ngbNavItem]="2" [destroyOnHide]="true">
             <a ngbNavLink>Diagrammes</a>
+            <!------------------------------------- DIAGRAMME -------------------------------------------------------------->
             <ng-template ngbNavContent>
-              <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre" [categories]="categories"
+              <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre"
+                               [categories]="categories"
                                [catPrincipal]="catPrincipal"></app-graph-ligne>
             </ng-template>
           </li>
@@ -58,15 +63,8 @@
 
         <pre>Active: {{ active }}</pre>
       </div>
-
     </div>
   </div>
-
-
-</section>
-
-<section *ngIf="!this.c.isLogged()">
-  <h1 class="row text-danger justify-content-center pt-5 text-warning">PAS DE PERMISSIONS</h1>
 </section>
 
 
