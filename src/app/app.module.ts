@@ -8,13 +8,11 @@ import { BaspageComponent } from '../entete/baspage/baspage.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 import { AjouterComponent } from './ajouter/ajouter.component';
-import { FactureComponent } from './facture/facture.component';
 import { ListeFacturesComponent } from './visualisation/liste-factures/liste-factures.component';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePickerComponent } from './visualisation/date-picker/date-picker.component';
 import { GraphLigneComponent } from './visualisation/graph-ligne/graph-ligne.component';
-import { CategorieComponent } from './categorie/categorie.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { RecherchePipe } from './recherche.pipe';
@@ -29,12 +27,11 @@ import { RecherchescPipe } from './recherchesc.pipe';
     NavbarComponent,
     BaspageComponent,
     routingComponents,
-    FactureComponent,
     ListeFacturesComponent,
     DatePickerComponent,
     GraphLigneComponent,
-    CategorieComponent,
     VisualisationComponent,
+    ConnexionComponent,
     RecherchePipe,
     RecherchecPipe,
     RecherchescPipe,

@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClientModule, HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CategorieComponent} from "../categorie/categorie.component";
 import {catchError, tap} from "rxjs/operators";
 import {any} from "codelyzer/util/function";
 import {FormBuilder, Validators, FormGroup, FormArray} from "@angular/forms";
-import {Facture} from '../facture/facture';
+import {Facture} from '../Modeles/facture';
 import { ConnexionComponent } from "../connexion/connexion.component";
 import { Categories1 } from "../Modeles/categorie";
 
@@ -61,6 +60,7 @@ export class VisualisationComponent implements OnInit {
   selectedCategories!: Categorie[];
   //Cat principal permet de stocker les cat qui n'ont pas de sous cat
   catPrincipal!: Categorie[];
+  //sousCat c'est la liste des sous cat qui s'adapte aux cat Principal sous forme de dropdown
   sousCat!: Categorie[];
 
   tableauCategories!: Categories1[];
@@ -87,7 +87,7 @@ export class VisualisationComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders()
   };
-  urlCategories = "http://localhost:5555/rest/ws.get_categorie_rs";
+  urlCategories = "http://localhost:5555/rest/ws.categorie";
   //urlCategories= "http://localhost:3000/categories";
 
   erreurMessage = '';

@@ -19,25 +19,41 @@ export class ReponseConnexion{
 )
 export class ConnexionComponent implements OnInit {
 
+  logForm!: FormGroup;
+
+  message!: string;
+
+  url = 'http://localhost:5555/rest/ws/connexion/';
+
   rpc = new ReponseConnexion();
-  loginUserData = {};
   httpOptions = {
     headers: new HttpHeaders()
   };
+
+//-------------------------------------------------- DEBUT CONSTRUCTOR + NGONINIT ----------------------------------------------------
 
 
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
-    console.log(sessionStorage);
     this.logForm = new FormGroup({
       ndc: new FormControl(),
       mdp: new FormControl()
     });
-    //sessionStorage.setItem('ndc', 'l');
-    //sessionStorage.setItem('mdp', 'ok');
   }
+
+
+//-------------------------------------------------- FIN CONSTRUCTOR + NGONINIT ----------------------------------------------------
+  /*
+  -
+  -
+  -
+  -
+   */
+//-------------------------------------------------- DEBUT METHODES CONNEXION ACCESSIBLE DE TOUTES LES PAGES ----------------------------------------------------
+
+
 
   public isLogged(){
     return(sessionStorage.getItem('ndc') != null);
@@ -54,18 +70,21 @@ export class ConnexionComponent implements OnInit {
     }
   }
 
-  connexion: string = '';
-  ndc!: FormControl;
-  mdp!: FormControl;
-  logForm!: FormGroup;
-  message!: string;
-  url = 'http://localhost:5555/rest/ws/connexion/';
+
+  //-------------------------------------------------- FIN METHODES CONNEXION ----------------------------------------------------
+  /*
+  -
+  -
+  -
+  -
+   */
+//-------------------------------------------------- DEBUT METHODE CONNEXION POUR LA PAGE CONNEXION----------------------------------------------------
+
 
   onSubmit() {
     if(this.logForm.get('ndc')?.value && this.logForm.get('mdp')?.value){
       this.message = '';
       let body = '[' + JSON.stringify(this.logForm.value) + ']';
-      console.log("'" +this.logForm.get('ndc')?.value + ':'+this.logForm.get('mdp')?.value+ "'");
       this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(this.logForm.get('ndc')?.value + ':'+this.logForm.get('mdp')?.value)})
       this.http.post(this.url, JSON.parse(body) , this.httpOptions).subscribe(
         reponse => {

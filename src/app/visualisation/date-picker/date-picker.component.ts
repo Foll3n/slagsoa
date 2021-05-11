@@ -8,15 +8,35 @@ import { EventEmitter } from '@angular/core';
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss']
 })
+
 export class DatePickerComponent implements OnInit{
+
+  //Attributs en lien avec le datePicker
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
+
+  //Attributs utilisé pour stocker la date de debut et la date de fin dans le composant
   dateDebut!: string;
   dateFin!: string;
+
+  //Emetteurs utilisé pour emettre la date de debut et la date de fin au composant père qui est visualisation
   @Output() dateD: EventEmitter<string> = new EventEmitter();
   @Output() dateF: EventEmitter<string> = new EventEmitter();
 
+
+
+
+  //-------------------------------------------FIN ATTRIBUTS -------------------------------------------------------------------------------------
+  /*
+  -
+  -
+  -
+   */
+  //--------------------------------------------DEBUT CONSTRUCTOR ET INIT ------------------------------------------------------------------------
+
+
+  //Le constructeur permet d'initialiser à l'ouverture au 29/04/l'année actuel au 29/04/2022
   constructor(private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
     this.fromDate.day = 29;
@@ -28,6 +48,9 @@ export class DatePickerComponent implements OnInit{
     this.toDate.month = 4;
     this.toDate.year = 2022;
   }
+
+  //A l'initialisation, on verifie si dans le storage il n'y a pas de date de debut et de fin stocké. Si oui alors le datePicker prend les valeurs stockés.
+  //Cela permet ainsi lors d'une actualisation de page de garder la date qui avait été choisie.
 
   ngOnInit(){
     if(sessionStorage.getItem('dateD') != null && sessionStorage.getItem('dateF')!=null){
@@ -50,7 +73,13 @@ export class DatePickerComponent implements OnInit{
         this.toDate.year = s12[0];
     }
   }}
-
+  //--------------------------------------------FIN CONSTRUCTOR ET INIT ------------------------------------------------------------------------
+  /*
+  -
+  -
+  -
+   */
+  //--------------------------------------------Debut Méthodes propre au DatePicker ------------------------------------------------------------
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -78,7 +107,16 @@ export class DatePickerComponent implements OnInit{
     const parsed = this.formatter.parse(input);
     return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
+  //--------------------------------------------FIN Méthodes propre au DatePicker ------------------------------------------------------------------------
+  /*
 
+    Méthode de chargement permettant:
+
+    1- Stocker dans dateDebut et dans dateFin les date sous for YYYY-MM-JJ
+    2- Le stocker sous ce même format dans le sessionStorage
+    3- On emet les dates au composant père
+
+   */
   changement(fromDate: NgbDate, toDate: NgbDate) {
     this.dateDebut = this.formatter.format(this.fromDate);
     this.dateFin = this.formatter.format(this.toDate);

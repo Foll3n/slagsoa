@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Facture} from "../../facture/facture";
+import {Facture} from "../../Modeles/facture";
 import {Categorie, ReponseGetFacture} from "../visualisation.component";
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Categories1 } from "../../Modeles/categorie";
@@ -110,7 +110,6 @@ export class ListeFacturesComponent implements OnChanges {
 
   // @ts-ignore
   open(content , fact: Facture) {
-
     this.facture = fact;
     this.modification.reset();
     this.modification.patchValue({
@@ -132,18 +131,9 @@ export class ListeFacturesComponent implements OnChanges {
         this.modification.get('sousCategorie')?.setValue(this.sousCat[0]);
       }
     }
-    //this.catPrincipalSelected = value;
-    console.log(this.modification.value);
-
-  }
-
-  onOptionsSelected1(value: string) {
-    console.log(this.modification.value);
   }
 
   modifierFacture() {
-    //console.log(this.modification.value);
-
     let s = '[' + JSON.stringify(this.modification.value) + ']';
     this.http.put("http://localhost:5555/rest/ws.facture/" , s , this.httpOptions).subscribe(
       reponse => {

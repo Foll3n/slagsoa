@@ -1,4 +1,5 @@
 <form class="form-inline row justify-content-center">
+  <!--------------------------------------- Fonctionnalitées du datepicker ----------------------------------------------------->
   <div class="form-group hidden">
     <div class="input-group">
       <input name="datepicker"
@@ -24,6 +25,7 @@
       </ng-template>
     </div>
   </div>
+  <!------------------------------------------ Input date Debut -------------------------------------------------------->
   <div class="form-group">
     <div class="input-group">
       <input #dpFromDate
@@ -36,6 +38,7 @@
       </div>
     </div>
   </div>
+  <!------------------------------------------ Input Date Fin  -------------------------------------------------------->
   <div class="form-group ml-2">
     <div class="input-group">
       <input #dpToDate
@@ -48,9 +51,12 @@
       </div>
     </div>
   </div>
+  <!---------------------------------------- Bouton actualiser-------------------------------------------------------->
+
   <div class="ml-3" *ngIf="fromDate!=null && toDate!=null">
     <button (click)="changement(fromDate, toDate)" class="btn btn-info">Actualiser</button>
   </div>
+
 </form>
 
 <hr/>

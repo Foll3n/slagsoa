@@ -66,7 +66,7 @@
           <input formControlName="dateFacture" class="form-control text-info is-valid" placeholder="JJ/MM/AAAA" [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
           <small>commentaire</small>
           <input formControlName="commentaire" class="form-control text-info" placeholder="">
-          <small class="text-danger">*</small><select formControlName="categorie" class='select-option mt-2 mr-2 text-info border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}" #mySelect
+          <small class="text-danger">*</small><select formControlName="categorie" class='select-option mt-2 mr-2 btn text-info border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}" #mySelect
                                                       (change)='onOptionsSelected(mySelect.value)'>
           <option class='option'
                   *ngFor='let option of this.tableauCategories'
@@ -75,8 +75,7 @@
           <span class="text-danger mb-3" *ngIf="categorie!= null && categorie.errors">
               Catégorie vide.
           </span>
-          <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"  class='select-option mt-2 text-info' #mySelect1
-                  (change)='onOptionsSelected1(mySelect1.value)'>
+          <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"  class='select-option mt-2 btn border-dark text-info' #mySelect1>
             <option class='option'
                     *ngFor='let s of sousCat'
                     [value]="s">{{s}}</option>
