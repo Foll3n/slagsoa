@@ -122,10 +122,19 @@ export class ListeFacturesComponent implements OnChanges {
     )
   }
 
+  //Ouverture de la fenetre modifier facture
   // @ts-ignore
   open(content , fact: Facture) {
     this.facture = fact;
     this.modification.reset();
+    //boucle permettant d'initialiser la liste des sous categories selon la categorie
+    for(let i=0; i<this.tableauCat.length;i++){
+      if(this.tableauCat[i].nom == fact.categorie){
+        this.sousCat = this.tableauCat[i].nomSousCategorie;
+        this.modification.get('sousCategorie')?.setValue(this.sousCat[0]);
+      }
+    }
+    //permet d'attribuer des valeurs à chaque champs
     this.modification.patchValue({
       idFacture: fact.idFacture,
       montantTTC: fact.montantTTC,

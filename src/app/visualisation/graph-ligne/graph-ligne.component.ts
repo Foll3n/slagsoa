@@ -110,7 +110,7 @@ export class GraphLigneComponent implements OnChanges{
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
-  //On insère une liste de catégories, une liste de stockage (catégorie, total), un mode(true:TTC ou false:HT) et la liste des factures)
+  //On insère une liste de catégories, une liste de stockage (catégorie, total), un mode(true:TTC ou false:HT) et la liste des factures), calcul pour vision précis.
   calculerTotalCategories(listeCat: Categorie[], listeStockage: TotalCategorie[], mode: boolean, factures: Facture[]){
 
     if(listeCat != null){
@@ -123,13 +123,19 @@ export class GraphLigneComponent implements OnChanges{
 
   }
 
+
+  //CalculerTotal parcourt selon une categorie et sous categorie donnée, la liste des factures pour faire la somme à chaque fois du montant ttc ou ht
   //CalculerTotal permet ainsi de parcourir les factures et de retourner le total d'une *SOUS CATEGORIE* passé en paramètre
   calculerTotal(nom: string, sousnom: string , mode: boolean, factures: Facture[]){
     var s=0
 
+    //On parcourt la liste des factures
     for(var i=0; i<factures.length; i++){
-      if(sousnom == ''){
-        if(factures[i].categorie == nom && factures[i].sousCategorie == null){
+      //si la sous categorie est vide mais qu'on est quand même en mode précis.
+      if(sousnom == '' || sousnom == null){
+        //Si nom categorie et sous categorie existe dans la liste de factures
+        if(factures[i].categorie == nom && (factures[i].sousCategorie == null || factures[i].sousCategorie == '')){
+          //Alors on l'ajoute à la somme s selon le mode actuel ttc ou ht.
           if(mode){
             this.modestring = "Mode: TTC";
             this.etatT = "Mode: TTC";

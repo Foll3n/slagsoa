@@ -188,7 +188,6 @@ export class VisualisationComponent implements OnInit {
 
       this.tableauCategories.push(c);
     }
-
   }
 
 // La méthode refactoriser permet de réecrire les données dans la liste de facture, permettant ainsi d'ajouter ou modifier les formats.
