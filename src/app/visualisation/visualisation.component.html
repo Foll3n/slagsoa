@@ -5,37 +5,32 @@
       <!------------------------------------- DatePicker -------------------------------------------------------------->
       <app-date-picker (dateD)="fixerdateD($event)" (dateF)="fixerdateF($event)"></app-date-picker>
 
-      <!------------------------------------- Filtre Categories -------------------------------------------------------------->
-      <div class="m-auto form-group col-md-4">
-        <label>Filtre</label>
-        <div>
-          <div *ngFor="let m of map; let i = index" class="list-group list-group-horizontal">
-            <select class='select-option mt-2 btn btn-outline-info bg-white text-info' #mySelect
-                    (change)='onOptionsSelected(mySelect.value , i)'>
-              <option *ngIf="i==map.length-1 && i!=0" class="option"></option>
-              <option *ngIf="i==0" class="option" selected>tout</option>
-              <option class='option'
-                      *ngFor='let option of this.catPrincipal'
-                      [value]="option.nom_Categorie + '  ' + option.nom_sous_Categorie + '  ' + option.id_Categorie">{{option.nom_Categorie}}  {{option.nom_sous_Categorie}}</option>
-            </select>
-            <button *ngIf="i+1 == map.length && i!=0" (click)="remove(i)" type="button"
-                    class="btn btn-danger btn-sm pull-right ml-2 mt-2" title="effacer">
-              <span class="glyphicon glyphicon-remove font-weight-bold p-1">X</span>
-            </button>
 
+
+      <!------------------------------------- Filtre Categories -------------------------------------------------------------->
+      <div class="row justify-content-center row-cols-sm-2 mb-3 pb-5 perso" *ngIf="this.factures != null ">
+        <div class="list-group-horizontal ">
+          <div class="btn">
+            <button class="btn btn-outline-success mr-3" (click)="check1.click()" [ngClass]="{'btn-success text-white' : tout}">Tout</button>
+            <input #check1 type="checkbox" name="checkbox1" [(ngModel)]="this.tout" (change)="etat()" >
+          </div>
+
+          <div  *ngFor="let c of cf" class="btn m-1 ">
+            <button class="btn text-dark border-dark mr-3"  (click)="check.click()" [ngClass]="{'btn-light text-dark' : c.checked}">{{c.cat.nom_Categorie}} </button>
+            <input #check type="checkbox" name="checkbox" [(ngModel)]="c.checked" (change)="aff()" >
           </div>
         </div>
-        <h2 class="text-danger">{{erreurMessage}}</h2>
       </div>
+      <!------------------------------------- Filtre Categories -------------------------------------------------------------->
 
-      <div class="row justify-content-center m-3">
-        <button class=" btn btn-primary" *ngIf="selectedCategories[map.length-1].id_Categorie != ''"
-                (click)="ajouterCat()">Ajouter
-        </button>
-      </div>
+
+
+
+
       <!-----------------------------------------------DEBUT MENU--------------------------------------------------------->
 
       <div class="container bg-white">
+        <small>Total de la TVA {{this.dateDebut}} à {{this.dateFin}}: </small><h3 class="text-success">{{this.montantTotalTva}}€</h3>
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
           <!------------------------------------- DEBUT PAGE LISTE FACTURE -------------------------------------------------------------->
           <li [ngbNavItem]="1">

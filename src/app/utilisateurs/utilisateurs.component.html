@@ -1,0 +1,48 @@
+<section class="container bg-white p-5" *ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
+  <h1 class="text-center p-5 text-info">Gestion utilisateurs</h1>
+  <!-------------------------------------------------------------------------------------------------------------------------------------------------->
+  <div class="container bg-white">
+    <div class="d-flex">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+
+        <!-------------------------------------------------------------------------------------------------------------------------------------------------->
+        <li ngbNavItem="top">
+          <a ngbNavLink class="btn-outline-info text-white" [ngClass]="{'text-info': active != 'top'}">Gestion des
+            utilisateurs</a>
+          <ng-template ngbNavContent>
+
+          </ng-template>
+        </li>
+
+
+
+        <!-------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+        <li ngbNavItem="bottom">
+          <a ngbNavLink class="btn-outline-info text-white mt-3" [ngClass]="{'text-info': active != 'bottom'}">Inscription</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="inscriptionForm" class="form-group center_div" (submit)="inscrireUtilisateur()">
+              <small>Nom de compte</small>
+              <input  formControlName="ndc" class="form-control border-success" [ngClass]="{'border-danger' : (this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null) }">
+              <small>Mot de passe</small>
+              <input formControlName="mdp" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
+              <small>Confirmer mot de passe</small>
+              <input formControlName="mdp1" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
+              <small class="mr-1">role</small>
+              <select formControlName="role" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (this.inscriptionForm.get('role')!.value == '' || this.inscriptionForm.get('role')!.value == null) }">
+                <option class='option' *ngFor='let option of this.roles' [value]="option">{{option}}</option>
+              </select>
+              <br>
+              <input type="submit" class="btn btn-outline-info mt-3" *ngIf="( (!(this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null))     &&    (this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))  &&  ((!(this.inscriptionForm.get('role')!.value == '' )|| !(this.inscriptionForm.get('role')!.value == null)))  )">
+            </form>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="ml-4"></div>
+    </div>
+  </div>
+
+
+</section>

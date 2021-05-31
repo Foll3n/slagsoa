@@ -62,6 +62,20 @@ export class GraphLigneComponent implements OnChanges{
       backgroundColor: ['rgba(123,206,80,0.8)', 'rgba(255,206,80,0.8)', 'rgba(255,25,80,0.8)', 'rgba(255,250,80,0.8)', 'rgba(255,101,152,0.8)', 'rgba(0,0,50,0.8)','rgba(160,40,100,0.8)', 'rgba(0,255,0,0.8)', 'rgba(0,40,255,0.8)', 'rgba(123,206,80,0.8)', 'rgba(255,206,80,0.8)', 'rgba(255,25,80,0.8)', 'rgba(255,250,80,1)', 'rgba(255,101,152,1)', 'rgba(0,0,50,1)','rgba(160,40,100,1)', 'rgba(0,255,0,1)', 'rgba(0,40,255,1)']
     },
   ];
+
+
+  public chartOptions = {
+    tooltips: {
+      callbacks: {
+        // @ts-ignore
+        label: (tooltipItems, data) => {
+
+          return  data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] + ' € ' ;
+        }
+      },
+    },
+  };
+
   //----------------------------------------------------
 
   //TTC si true - HT si false
@@ -105,6 +119,7 @@ export class GraphLigneComponent implements OnChanges{
       this.message = "Aucune donnnées aux date séléctionné";
     }
   }
+
 
 
 

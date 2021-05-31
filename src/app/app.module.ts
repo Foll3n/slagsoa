@@ -19,6 +19,7 @@ import { RecherchePipe } from './recherche.pipe';
 import { ChartsModule } from 'ng2-charts';
 import { RecherchecPipe } from './recherchec.pipe';
 import { RecherchescPipe } from './recherchesc.pipe';
+import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { RecherchescPipe } from './recherchesc.pipe';
     RecherchePipe,
     RecherchecPipe,
     RecherchescPipe,
+    UtilisateursComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,7 @@ import { RecherchescPipe } from './recherchesc.pipe';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import {HttpClientModule, HttpClient, HttpHeaders, HttpParams} from "@angular/co
 import {Facture} from '../Modeles/facture';
 import { ConnexionComponent } from "../connexion/connexion.component";
 import { Categories1 } from "../Modeles/categorie";
+import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 
 
 export class ReponseGetFacture {
@@ -27,7 +28,10 @@ export class Categorie {
   }
 }
 
-
+export class CatFiltrer {
+  cat!: Categorie;
+  checked!: boolean;
+}
 
 
 @Component({
@@ -63,22 +67,17 @@ export class VisualisationComponent implements OnInit {
   //objet Resultat permettant de stocker la réponse
   resultat!: Resultat;
 
+  cf!: CatFiltrer[];
   //map permet de stocker (Index de l'objet ihm, l'id de la catégorie)
-  //map = new Map();
-  //map: Array<string> =  [];
-  map: Array<Categorie> = [];
 
-  /*
-  dateD = '2021-04-29';
-  dateF = '2022-03-29';
-  dateDebut = "29/04/2021";
-  dateFin = "29/03/2022";
-   */
 
-  dateD = '2021-04-29';
-  dateF = '2022-03-29';
-  dateDebut = "29/04/2021";
-  dateFin = "29/03/2022";
+
+  dateD = '';
+  dateF = '';
+  dateDebut = '';
+  dateFin ='';
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
 
   httpOptions = {
     headers: new HttpHeaders()
@@ -88,15 +87,26 @@ export class VisualisationComponent implements OnInit {
 
   erreurMessage = '';
 
+  tout!: boolean;
+  montantTotalTva = 0;
 
   //---------------------------------------------------------------------------------------------
 
   //--------------------------------Construcor---------------------------------------
   //On déclare httpClient pour les requetes api et c pour recuperer les methodes concernant l'authentification
 
+
   constructor(
+    private calendar: NgbCalendar ,
     private httpClient: HttpClient,
     public c: ConnexionComponent) {
+    this.toDate = calendar.getToday();
+    this.fromDate = calendar.getNext(this.toDate,'m',-4);
+
+    this.dateD = this.fromDate.year + '-' + this.fromDate.month + '-' + this.fromDate.day;
+    this.dateF =  this.toDate.year + '-' + this.toDate.month + '-' + this.toDate.day;
+    this.dateDebut = this.fromDate.day+ '/' +  this.fromDate.month+ '/'+ this.fromDate.year;
+    this.dateFin =  this.toDate.day+ '/' +  this.toDate.month+ '/'+ this.toDate.year;
   }
 
   //----------------------------------OnInit()------------------------------------------
@@ -120,12 +130,10 @@ export class VisualisationComponent implements OnInit {
     this.catPrincipal = [];
     this.sousCat = [];
     this.facturesFiltre = [];
-    this.map.push(new Categorie('', '', ''));
     this.chargerFacture(this.dateD, this.dateF);
     this.selectedCategories = [];
     this.getCategories();
-    this.selectedCategories.push(new Categorie('','',''));
-
+    this.tout = true;
   }
 
   //----------------------------------------Méthodes chargement----------------------------------------------------
@@ -133,7 +141,7 @@ export class VisualisationComponent implements OnInit {
 
   getCategories() {
 
-    this.httpClient.get<any>(this.urlCategories).subscribe(
+    this.httpClient.get<any>(this.urlCategories , this.httpOptions).subscribe(
       reponse => {
         this.resultat = reponse;
         this.categories = this.resultat.cat;
@@ -147,12 +155,28 @@ export class VisualisationComponent implements OnInit {
           }
           this.tableauCategories= [];
           this.chargerTableauCategories();
+          if(this.catPrincipal != null){
+            this.initTableauCatFiltrer();
+          }
         }
       },
       error => {
         this.erreurMessage = "Le serveur ne répond pas";
       }
     );
+  }
+
+  initTableauCatFiltrer(){
+    this.cf = [];
+    if(this.catPrincipal != null){
+      for(var i =0; i<this.catPrincipal.length; i++){
+        let a = new CatFiltrer();
+        a.cat = this.catPrincipal[i];
+        a.checked = true;
+        this.cf.push(a);
+      }
+    }
+
   }
 
   private chargerFacture(dateDebut: string, dateFin: string) {
@@ -166,13 +190,16 @@ export class VisualisationComponent implements OnInit {
         this.rf = reponse;
         this.factures = this.rf.liste;
         this.facturesFiltre = this.factures;
-        this.refactoriser();
+        if(this.factures != null){
+          this.refactoriser();
+        }
       },
       error => {
         this.erreurMessage = "le serveur ne répond pas !";
       }
 
     )
+
   }
 
   private chargerTableauCategories() {
@@ -193,111 +220,44 @@ export class VisualisationComponent implements OnInit {
 // La méthode refactoriser permet de réecrire les données dans la liste de facture, permettant ainsi d'ajouter ou modifier les formats.
 
   refactoriser() {
+    this.montantTotalTva = 0;
     for (var i = 0; i < this.factures.length; i++) {
       let s = this.factures[i].dateFacture.split('-');
       this.factures[i].dateFacture = s[2] + '/' + s[1] + '/' + s[0];
+      this.montantTotalTva = this.montantTotalTva+ Number(this.factures[i].tva);
     }
-
-  }
-//-----------------------------------------------FIN Méthodes chargement------------------------------------------------------------------------
-
-
-
-
-//-----------------------------------------------Debut des méthodes de filtrage-----------------------------------------------------------------
-
-
-  //La methode exists permet de recuperer une valeur et vérifier si elle n'existe pas déjà
-  // dans les catégories séléctionné. Cela evite les erreurs de doublons.
-
-  exists(value:string): boolean{
-    for(var i=0; i<this.selectedCategories.length; i++){
-      let s = value.split('  ');
-      if(this.selectedCategories[i].id_Categorie == s[2]){
-        return true;
-      }
-    }
-    return false;
   }
 
-  //La methode onOptionsSelected permet de vider les différentes liste, et tout relancer à nouveau
-  onOptionsSelected(value: string, i: number) {
-    this.facturesFiltre = [];
-    this.erreurMessage = '';
-    if(this.exists(value)){
-      let s = value.split('  ');
-      if(s[1] == 'null'){
-        s[1] = '';
-      }
-      this.erreurMessage = s[0] + ' ' + s[1]  + " Existe déjà";
-    }
-    this.facturesFiltre = [];
-
-    if(value == 'tout'){
-      this.facturesFiltre = [];
-
-      this.facturesFiltre = this.factures;
-      this.map = [];
-      this.selectedCategories = [];
-      this.map.push(new Categorie('','',''))
-      this.selectedCategories.push(new Categorie('','',''))
-
-    }
-    else{
-      let s = value.split('  ');
-
-      if(s[1] == 'null'){
-        s[1] = '';
-      }
-      this.selectedCategories[i] = new Categorie(s[0], s[1], s[2]);
-
-      this.filtrerFactures();
-    }
-
-  }
-
-  //la methode remove permet de supprimer un element de la liste des categories selectionné ainsi elle supprime de la map un element, de selected categories aussi.
-  remove(i: number) {
-    this.map.splice(i, 1);
-    this.selectedCategories.splice(i,1);
-    this.facturesFiltre = [];
-    this.filtrerFactures();
-    this.erreurMessage = '';
-
-
-  }
 
   //filtrer Factures permet de parcourir les factures et de les filtrer selon les catégories séléctionné pour ensuite les stocker
   // dans facturesFiltre qui sera passé en paramètre dans les coposants enfants
 
   filtrerFactures(){
-
-    //console.log(this.selectedCategories);
+    this.montantTotalTva = 0;
     for(var i=0; i<this.factures.length;i++){
       for(var j=0; j<this.selectedCategories.length; j++){
-          if(this.selectedCategories[j].nom_sous_Categorie == ''){
+          if(this.selectedCategories[j].nom_sous_Categorie == '' || this.selectedCategories[j].nom_sous_Categorie == null){
             if(this.factures[i].categorie == this.selectedCategories[j].nom_Categorie){
               this.facturesFiltre.push(this.factures[i]);
+              this.montantTotalTva = this.montantTotalTva+ Number(this.factures[i].tva);
             }
           }
           else{
             if(this.factures[i].categorie == this.selectedCategories[j].nom_Categorie && this.factures[i].sousCategorie == this.selectedCategories[j].nom_sous_Categorie){
               this.facturesFiltre.push(this.factures[i]);
+              this.montantTotalTva = this.montantTotalTva+ Number(this.factures[i].tva);
             }
           }
-
-
-
       }
+
+
+
+
+
+
     }
   }
 
-  //Methode ajouterCat permet d'ajouter une categorie
-  ajouterCat() {
-    this.map.push(new Categorie('','',''));
-    this.selectedCategories.push(new Categorie('', '', ''));
-
-  }
   //-----------------------------------------------FIN des méthodes de filtrage-----------------------------------------------------------------
 
 
@@ -311,7 +271,6 @@ export class VisualisationComponent implements OnInit {
   //FixerdateF est une méthode qui est appelé par le composant enfant datePicker, il permet de fixer la date de Fin, cependant il déclenche
   //le rechargement de toute la page, il stock ainsi à nouveau les factures...
 
-
   fixerdateF($event: string) {
     this.dateF = $event;
     this.chargerFacture(this.dateD, this.dateF);
@@ -322,10 +281,52 @@ export class VisualisationComponent implements OnInit {
 
     this.facturesFiltre = [];
     this.facturesFiltre = this.factures;
-    this.map = [];
+    //this.map = [];
     this.selectedCategories = [];
-    this.map.push(new Categorie('','',''))
-    this.selectedCategories.push(new Categorie('','',''))
+    //this.map.push(new Categorie('','',''))
+    //this.selectedCategories.push(new Categorie('','',''))
   }
 
+
+
+  etat() {
+    this.selectedCategories = [];
+    this.facturesFiltre = [];
+    //this.facturesFiltre = this.factures;
+    if(!this.tout){
+      for(let i=0; i<this.cf.length;i++){
+        this.cf[i].checked = false;
+        this.selectedCategories = [];
+        this.facturesFiltre = [];
+      }
+    }
+    else{
+      for(var i=0; i<this.cf.length;i++){
+        this.cf[i].checked = true;
+        this.selectedCategories.push(this.cf[i].cat);
+      }
+    }
+    this.filtrerFactures();
+  }
+
+  aff() {
+    this.selectedCategories = [];
+    this.facturesFiltre = [];
+    //this.facturesFiltre = this.factures;
+    let s=0;
+    for(var i=0 ; i<this.cf.length; i++){
+
+      if(!this.cf[i].checked){
+        s++;
+        this.tout = false;
+      }
+      if(this.cf[i].checked){
+        this.selectedCategories.push(this.cf[i].cat);
+      }
+    }
+    if(s==0){
+      this.tout=true;
+    }
+    this.filtrerFactures();
+  }
 }

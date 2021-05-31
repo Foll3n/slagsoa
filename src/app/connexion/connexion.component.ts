@@ -59,9 +59,22 @@ export class ConnexionComponent implements OnInit {
     return(sessionStorage.getItem('ndc') != null);
   }
 
+  public read(){
+    return(sessionStorage.getItem('role') == 'utilisateur');
+  }
+
+  public write(){
+    return(sessionStorage.getItem('role') == 'admin' || sessionStorage.getItem('role') == 'superAdmin');
+  }
+
   public Logout(){
     sessionStorage.clear();
     this.router.navigate(['/connexion']);
+  }
+
+  public isSuperAdmin(){
+    //return true;
+    return(sessionStorage.getItem('role') == 'superAdmin');
   }
 
   public testLogin(){
@@ -92,8 +105,10 @@ export class ConnexionComponent implements OnInit {
           this.rpc = reponse;
           if(this.rpc.reponse == 'OK'){
             //this.message = "Connexion réussie !";
-            this.message = this.rpc.message;
-            sessionStorage.setItem('ndc', this.rpc.message);
+            //this.message = this.rpc.message;
+            let m = this.rpc.message.split(';');
+            sessionStorage.setItem('ndc', m[0]);
+            sessionStorage.setItem('role', m[1]);
             sessionStorage.setItem('mdp', this.logForm.get('mdp')?.value);
             this.router.navigate(['/visualisation']);
           }

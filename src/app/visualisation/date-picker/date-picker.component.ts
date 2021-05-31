@@ -38,15 +38,12 @@ export class DatePickerComponent implements OnInit{
 
   //Le constructeur permet d'initialiser à l'ouverture au 29/04/l'année actuel au 29/04/2022
   constructor(private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
-    this.fromDate = calendar.getToday();
-    this.fromDate.day = 29;
-    this.fromDate.month = 4;
-    this.fromDate.year = calendar.getToday().year;
 
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
-    this.toDate.day = 29;
-    this.toDate.month = 4;
-    this.toDate.year = 2022;
+
+    //this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    this.toDate = calendar.getToday();
+    this.fromDate = calendar.getNext(this.toDate,'m',-4);
+
   }
 
   //A l'initialisation, on verifie si dans le storage il n'y a pas de date de debut et de fin stocké. Si oui alors le datePicker prend les valeurs stockés.

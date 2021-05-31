@@ -6,6 +6,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Categories1 } from "../../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ResultatUpload } from "../../ajouter/ajouter.component";
+import { ConnexionComponent } from "../../connexion/connexion.component";
 
 //---------------------------------------------- Class temporaire qui stock la reponse de la requete delete -----------------
 export class reponseDelete{
@@ -60,11 +61,11 @@ export class ListeFacturesComponent implements OnChanges {
     headers: new HttpHeaders()
   };
 
-
+  type!: string;
   facture!: Facture;
   modification!: FormGroup;
 
-  constructor(private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(public con: ConnexionComponent, private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
     this.modification = new FormGroup({
       idFacture: new FormControl(),
       montantTTC: new FormControl('',[Validators.required, Validators.pattern('^(([0-9]([0-9]*))([.,](([0-9]?)[0-9]))?)$')]),
@@ -72,6 +73,7 @@ export class ListeFacturesComponent implements OnChanges {
       commentaire: new FormControl(),
       categorie: new FormControl('', [Validators.pattern('^[a-zA-Z]*$') ,Validators.required]),
       sousCategorie: new FormControl(),
+      image: new FormControl(),
     });
   }
   get dateFacture() {
@@ -141,8 +143,15 @@ export class ListeFacturesComponent implements OnChanges {
       dateFacture: fact.dateFacture,
       commentaire: fact.commentaire,
       categorie: fact.categorie,
-      sousCategorie: fact.sousCategorie
+      sousCategorie: fact.sousCategorie,
+      image: fact.image
     })
+    if(this.modification.get('image')?.value != null && this.modification.get('image')?.value != ''){
+      let a = this.modification.get('image')?.value;
+      let s = a.split('/');
+      s = s[1].split(';');
+      this.type = s[0];
+    }
     this.modalService.open(content);
   }
 
@@ -158,6 +167,7 @@ export class ListeFacturesComponent implements OnChanges {
 
   modifierFacture() {
     let s = '[' + JSON.stringify(this.modification.value) + ']';
+    //console.log(s);
     this.http.put("http://localhost:5555/rest/ws.facture/" , s , this.httpOptions).subscribe(
       reponse => {
         // @ts-ignore
@@ -167,7 +177,52 @@ export class ListeFacturesComponent implements OnChanges {
       },
       error => {
         this.message1 = error;
+        location.reload();
       }
     )
   }
+
+
+  chargerImage($event: Event) {
+    let me = this;
+    // @ts-ignore
+    let file = $event.target.files[0];
+    let s = file.name.split('.');
+    this.type  = s[1];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      //me.facture.image = reader.result;
+      me.modification.get('image')?.setValue(reader.result);
+    };
+    reader.onerror = function (error) {
+      //console.log('Error: ', error);
+    };
+  }
+
+  nettoyer(f: Facture) {
+    //console.log(f.image);
+    this.modification.get('image')?.setValue('');
+    //f.image = '';
+    //f.image = null;
+    this.type = '';
+
+  }
+
+  showPdf(linkSource: string) {
+    const downloadLink = document.createElement("a");
+    let fileName = '';
+    if(this.type == 'pdf'){
+      fileName = "facture" + this.facture.idFacture + ".pdf";
+    }
+    else{
+      fileName = "facture" + this.facture.idFacture + ".png";
+    }
+
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
 }
+

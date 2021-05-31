@@ -1,4 +1,4 @@
-<section *ngIf="this.c.isLogged()" class="padding-perso container bg-white">
+<section *ngIf="this.c.isLogged() && this.c.write()" class="padding-perso container bg-white">
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
 
     <!---------------------------------------------------- AJOUT PAR CSV ---------------------------------------------------------------->
@@ -8,7 +8,7 @@
 
         <section class="container bg-white p-5">
           <div class="pt-5 text-info text-center">
-            <h1>Upload un fichier csv</h1>
+            <h1>Charger un fichier csv</h1>
           </div>
           <input type="file" class="file-input" accept=".csv"
                  (change)="onFileSelected($event)" #fileUpload>
@@ -21,10 +21,8 @@
               <div>Choisir un fichier</div>
             </button>
           </div>
-          <button *ngIf="upload" type="button" (click)="stockerDonnees(this.jsondata)" class="btn btn-primary mt-5 ">Upload</button>
-
-          <br>
-          <br>
+          <button *ngIf="upload && !erreur" type="button" (click)="stockerDonnees(this.jsondata , 0)" class="btn btn-primary mt-5 ">Charger</button>
+          <h2 class="text-danger mt-5" *ngIf="erreur">{{this.msgErreurTab}}</h2>
           <br>
           <h1>{{message}}</h1>
         </section>
@@ -33,6 +31,7 @@
             <table class="table">
               <thead>
               <tr>
+                <th scope="col">ligne</th>
                 <th scope="col">Montant ttc</th>
                 <th scope="col">categorie</th>
                 <th scope="col">sous Categorie</th>
@@ -41,7 +40,8 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let f of facture">
+              <tr *ngFor="let f of facture ; let i = index">
+                <th>{{i+1}}</th>
                 <th scope="row">{{f.montantTTC}}</th>
                 <td>{{f.categorie}}</td>
                 <td>{{f.sousCategorie}}</td>
@@ -80,11 +80,33 @@
                     [value]="s">{{s}}</option>
           </select>
           <br>
+          <!-- ----------------------------------------- TEST -------------------------------------------------------------->
+          <div class="modal-footer">
+            <input  type="file" accept=".jpg, .png" class="btn btn-outline-dark" (change)="chargerImage($event)" *ngIf="(this.insertion.get('image')!.value == '' || this.insertion.get('image')!.value == null)" >
+          </div>
+          <!-- ----------------------------------------- TEST -------------------------------------------------------------->
           <input *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" name="" value="Ajouter" href="#" class="btn btn-outline-info mt-3">
         </form>
           <h2><small>{{messageerreur}}</small></h2>
 
-        {{message}}
+        {{message1}}
+
+
+
+
+        <div>
+          <button *ngIf="!(this.insertion.get('image')!.value == '' || this.insertion.get('image')!.value == null)" type="file" class="btn btn-danger text-bold text-white" (click)="nettoyer(facture)">Supprimer le document</button>
+          <button *ngIf=" type!= '' && type!=null"  href="#" class="btn btn-success perso text-white " (click)="showPdf(this.insertion.get('image')!.value)" >Télécharger le document</button>
+          <h2 class="row justify-content-center text-success text-center" *ngIf="type == 'pdf'">La facture est au format {{this.type}}, il faut télécharger le document pour visualiser</h2>
+          <div *ngIf="type != 'pdf' && type!= '' && type!=null" class="row justify-content-center">
+            <h2 class="row justify-content-center text-success text-center">La facture est au format {{this.type}}</h2>
+            <br>
+            <img  class="perso" src="{{this.insertion.get('image')?.value}}"/>
+          </div>
+        </div>
+
+
+
       </ng-template>
     </li>
   </ul>

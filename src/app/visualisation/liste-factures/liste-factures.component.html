@@ -22,7 +22,7 @@
         <th scope="col">TVA</th>
         <th scope="col">TVA %</th>
         <th scope="col">Commentaire</th>
-        <th scope="col">Action</th>
+        <th scope="col" *ngIf="this.con.isLogged()">Action</th>
       </tr>
       </thead>
 
@@ -40,55 +40,85 @@
         <td><small>{{f.commentaire}}</small></td>
         <td class="overflow-hidden">
           <div ngbDropdown container="body">
-            <button class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
+            <p class="text-success  mb" *ngIf="f.image != null && f.image!= ''">Image jointe</p>
+            <button class="btn btn-outline-info btn-sm mt-3" ngbDropdownToggle *ngIf="this.con.isLogged()">Actions
+            </button>
             <div ngbDropdownMenu>
               <button ngbDropdownItem (click)="open(content , f)">Voir plus</button>
-              <div class="dropdown-divider"></div>
-              <button (click)="supprimerFacture(f.idFacture)" ngbDropdownItem>Supprimer</button>
+              <div *ngIf="this.con.isLogged() && this.con.write()" class="dropdown-divider"></div>
+              <button *ngIf="this.con.isLogged() && this.con.write()" (click)="supprimerFacture(f.idFacture)"
+                      ngbDropdownItem>Supprimer
+              </button>
             </div>
           </div>
         </td>
       </tr>
       </tbody>
     </table>
-
-
   </div>
 </section>
 <!------------------------------------- DEBUT FENETRE VOIR PLUS -------------------------------------------------------------->
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Facture numéro: {{facture.idFacture}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" (change)="nettoyer(facture)">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <!------------------------------------- DEBUT FORMULAIRE MODIFICATION -------------------------------------------------------------->
-    <form [formGroup]="modification" (submit)="modifierFacture()" class="form-group">
-      <small class="text-danger">*</small><small>Montant TTC</small>
-      <input formControlName="montantTTC" class="form-control text-info is-valid" placeholder="{{facture.montantTTC}}" [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
-      <small class="text-danger">*</small><small>Date</small>
-      <input formControlName="dateFacture" class="form-control text-info is-valid" placeholder="{{facture.dateFacture}}" [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
-      <small>commentaire</small>
-      <input formControlName="commentaire" class="form-control text-info" placeholder="{{facture.commentaire}}">
-      <small class="text-danger">*</small><select formControlName="categorie" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}"  #mySelect
-              (change)='onOptionsSelected(mySelect.value)'>
-        <option class='option'
-                *ngFor='let option of this.tableauCat'
-                [value]="option.nom">{{option.nom}}</option>
-      </select>
-      <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"  class='select-option mt-2 btn border-success text-info' #mySelect1>
-        <option class='option'
-                *ngFor='let s of sousCat'
-                [value]="s">{{s}}</option>
-      </select>
-      <!------------------------------------- FOOTER EN BAS DE LA FENETRE VOIR PLUS -------------------------------------------------------------->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark">Upload</button>
-        <input  *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" value="sauvegarder" class="btn btn-outline-dark" (click)="c('Save click') ">
+    <form [formGroup]="modification" (submit)="modifierFacture()" class="form-group"
+          *ngIf="this.con.isLogged() && this.con.write()">
+      <div>
+        <small class="text-danger">*</small><small>Montant TTC</small>
+        <input formControlName="montantTTC" class="form-control text-info is-valid" placeholder="{{facture.montantTTC}}"
+               [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
+        <small class="text-danger">*</small><small>Date</small>
+        <input formControlName="dateFacture" class="form-control text-info is-valid"
+               placeholder="{{facture.dateFacture}}"
+               [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
+        <small>Commentaire</small>
+        <input formControlName="commentaire" class="form-control text-info" placeholder="{{facture.commentaire}}">
+        <small class="text-danger">*</small>
+
+        <select formControlName="categorie" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}" #mySelect (change)='onOptionsSelected(mySelect.value)'>
+          <option class='option' *ngFor='let option of this.tableauCat' [value]="option.nom">{{option.nom}}</option>
+        </select>
+
+        <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie" class='select-option mt-2 btn border-success text-info' #mySelect1>
+          <option class='option' *ngFor='let s of sousCat' [value]="s">{{s}}</option>
+        </select>
       </div>
 
+      <!------------------------------------- FOOTER EN BAS DE LA FENETRE VOIR PLUS -------------------------------------------------------------->
+      <div class="modal-footer" *ngIf="this.con.isLogged() && this.con.write()">
+        <input *ngIf="this.modification.get('image')!.value == null || this.modification.get('image')!.value == ''"
+               type="file" accept="*" class="btn btn-outline-dark" (change)="chargerImage($event)">
+        <input
+          *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern"
+          type="submit" value="Sauvegarder" class="btn btn-outline-dark" (click)="c('Save click') ">
+      </div>
     </form>
+
+    <div class="row justify-content-center"
+         *ngIf="this.modification.get('image')!.value != null && this.modification.get('image')!.value != ''">
+      <button
+        *ngIf="!(this.modification.get('image')!.value == '' || this.modification.get('image')!.value == null) && (this.con.isLogged() && this.con.write())"
+        type="file" class="btn btn-danger text-bold text-white mr-3 persoPetit" (click)="nettoyer(facture)">Supprimer
+      </button>
+      <button *ngIf=" type!= '' && type!=null" href="#" class="btn btn-success text-white persoPetit"
+              (click)="showPdf(this.modification.get('image')!.value)">Télécharger
+      </button>
+      <small class="row justify-content-center text-success text-center" *ngIf="type == 'pdf'">La facture est au
+        format {{this.type}}, il faut télécharger le document pour visualiser</small>
+      <div *ngIf="type != 'pdf' && type!= '' && type!=null" class="row justify-content-center">
+        <small class="row justify-content-center text-success text-center">La facture est au
+          format {{this.type}}</small>
+        <br>
+        <img class="perso" src="{{this.modification.get('image')?.value}}"/>
+      </div>
+    </div>
   </div>
+
+
 </ng-template>

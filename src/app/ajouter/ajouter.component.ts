@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpHeaders, HttpClient, HttpClientModule} from "@angular/common/http";
 import {stringify} from "@angular/compiler/src/util";
 import {NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -11,11 +11,13 @@ import {ConnexionComponent} from "../connexion/connexion.component";
 import {Categories1} from "../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DATEPICKER_VALIDATORS} from "@angular/material/datepicker";
+import WebViewer from "@pdftron/webviewer";
 
 export class ResultatUpload {
   message!: string;
   reponse!: string;
 }
+
 
 @Component({
   selector: 'app-ajouter',
@@ -25,18 +27,25 @@ export class ResultatUpload {
 
 
 export class AjouterComponent implements OnInit {
+
+
   message: string = "Aucune donnée détéctée";
   fileName = '';
   text: any;
+  text1: any;
   upload!: boolean;
   jsondata = '  ';
   facture!: Facture[];
   rp!: ResultatUpload;
   resultat!: Resultat;
   categories!: Categorie[];
-
+  erreur!: boolean;
+  msgErreurTab = "";
+  tableauErreur = [];
   messageerreur = "";
   urlCategories = "http://localhost:5555/rest/ws.categorie";
+  message1: any;
+  type!: string;
 
   httpOptions = {
     headers: new HttpHeaders()
@@ -48,6 +57,7 @@ export class AjouterComponent implements OnInit {
 
 
   //-------------------------------------------------- DEBUT CONSCTRUCTOR ET NGONINIT ----------------------------------------------------
+  chargement: any;
 
 
   constructor(private http: HttpClient, config: NgbNavConfig, public c: ConnexionComponent) {
@@ -86,6 +96,7 @@ export class AjouterComponent implements OnInit {
     commentaire: new FormControl(),
     categorie: new FormControl('', [Validators.pattern('^[a-zA-Z]*$'), Validators.required]),
     sousCategorie: new FormControl(),
+    image: new FormControl(),
   });
 
   get dateFacture() {
@@ -125,8 +136,14 @@ export class AjouterComponent implements OnInit {
         this.text = text;
         this.traiterDonnees(this.text);
         this.upload = true;
+        if(!this.erreur){
+          this.message = file.name + " a bien été séléctionné, appuyez sur le boutton charger pour valider";
+        }
+        else{
+          this.message = '';
+        }
       }
-      this.message = file.name + " a bien été séléctionné, appuyez sur le boutton upload pour valider";
+
 
     } else {
       this.message = "Ce n'est pas un fichier csv";
@@ -134,6 +151,7 @@ export class AjouterComponent implements OnInit {
   }
 
   debutChargement() {
+    this.msgErreurTab = "";
     this.upload = false;
     this.jsondata = '';
     this.message = "chargement";
@@ -141,6 +159,9 @@ export class AjouterComponent implements OnInit {
 
 
   traiterDonnees(donnees: string) {
+    this.msgErreurTab = "";
+    let s = "";
+    this.erreur = false;
     //console.log("debut");
     try {
       var tligne = donnees.split('\n');
@@ -150,6 +171,35 @@ export class AjouterComponent implements OnInit {
         let commentaire = ligne[4].split('\r');
         if (ligne[0] != '') {
           let fact = new Facture(ligne[0], ligne[1], ligne[2], ligne[3], commentaire[0]);
+
+          //On inseres la facture dans le formulaire pour utiliser les validators pour vérifier les lignes
+          this.insertion.patchValue({
+            idFacture: fact.idFacture,
+            montantttc: fact.montantTTC,
+            dateFacture: fact.dateFacture,
+            commentaire: fact.commentaire,
+            categorie: fact.categorie,
+            sousCategorie: fact.sousCategorie
+          })
+
+
+          //Ainsi on renvoies un message d'erreur si les champs sont null ou vides, ou bien si ils ne correspondent pas au validators.
+          if(this.montantttcF?.value == null || this.montantttcF.value == '' || this.categorie?.value == null || this.categorie.value == '' || this.dateFacture?.value == null || this.dateFacture.value == '' || this.montantttcF.errors?.pattern || (this.categorie.errors?.pattern || !this.valideCategorie(fact.categorie, fact.sousCategorie)) || ((this.dateFacture!= null && this.dateFacture.errors?.pattern))) {
+            this.erreur = true;
+            s = s+' Il y a des erreurs à la ligne ' + i + ": ";
+            if((this.montantttcF!= null && this.montantttcF.errors?.pattern)){
+              s = s+ " - Le montant ttc est incorrecte";
+            }
+            if((this.categorie!= null && this.categorie.errors?.pattern) || !this.valideCategorie(fact.categorie , fact.sousCategorie)) {
+              s = s+ " - La categorie ou la sous categorie est incorrecte";
+            }
+            if((this.dateFacture!= null && this.dateFacture.errors?.pattern)){
+              s = s+ " - La date facture est incorrecte";
+            }
+            s =   s + ' -- |||' ;
+          }
+          this.msgErreurTab = s;
+
           this.facture.push(fact);
           // @ts-ignore
           this.jsondata = this.jsondata + JSON.stringify(fact);
@@ -164,9 +214,28 @@ export class AjouterComponent implements OnInit {
       this.message = "Le fichier ne respecte pas les normes : " + error;
       this.upload = false;
     }
-
+    this.insertion.reset();
+    this.insertion.get('montantttc')?.setValue('');
+    this.insertion.get('dateFacture')?.setValue('');
   }
 
+  valideCategorie(nom: string, sousn: string): boolean{
+    for(let i=0; i<this.tableauCategories.length ; i++){
+      if(nom == this.tableauCategories[i].nom){
+        if(this.tableauCategories[i].nomSousCategorie.length == 0 && ((sousn ==null) || (sousn == ''))){
+          return true;
+        }
+        if((this.tableauCategories[i].nomSousCategorie.length > 0 && sousn !=null)){
+          for(let j=0; j< this.tableauCategories[i].nomSousCategorie.length ; j++){
+            if(sousn == this.tableauCategories[i].nomSousCategorie[j]){
+              return true
+            }
+          }
+        }
+      }
+    }
+      return false;
+  }
 
   //------------------------------------------------ FIN METHODES UPLOAD CSV------------------------------------------------------------------------
   /*
@@ -196,15 +265,16 @@ export class AjouterComponent implements OnInit {
       if (sousCategorieF == "null") {
         sousCategorieF = "";
       }
-      let facture = new Facture(this.insertion.get('montantttc')?.value, this.insertion.get('categorie')?.value, sousCategorieF, this.insertion.get('dateFacture')?.value, this.insertion.get('commentaire')?.value);
+      let facture = new Facture(this.insertion.get('montantttc')?.value, this.insertion.get('categorie')?.value, sousCategorieF, this.insertion.get('dateFacture')?.value, this.insertion.get('commentaire')?.value );
+      facture.image = this.insertion.get('image')?.value;
       this.upload = true;
-      this.stockerDonnees('[' + JSON.stringify(facture) + ']');
+      this.stockerDonnees('[' + JSON.stringify(facture) + ']' , 1);
     }
   }
 
 
   getCategories() {
-    this.http.get<any>(this.urlCategories).subscribe(
+    this.http.get<any>(this.urlCategories, this.httpOptions).subscribe(
       reponse => {
         this.resultat = reponse;
         this.categories = this.resultat.cat;
@@ -248,14 +318,20 @@ export class AjouterComponent implements OnInit {
 
   //-------------------------------------------------- DEBUT METHODES STOCKAGE ------------------------------------------------------------------------
 
-  stockerDonnees(jsondata: string) {
+  stockerDonnees(jsondata: string , nb: number) {
     if (this.upload) {
       //"http://localhost:5555/rest/ws/stocker_csv_ws/"
       this.http.post("http://localhost:5555/rest/ws.facture/", JSON.parse(jsondata), this.httpOptions).subscribe(
         reponse => {
           // @ts-ignore
           this.rp = reponse;
-          this.message = this.rp.message;
+          if(nb == 0){
+            this.message = this.rp.message;
+          }
+          if(nb == 1){
+            this.message1 = this.rp.message;
+          }
+
           if (this.rp.reponse == 'OK') {
             this.upload = false;
           }
@@ -263,6 +339,8 @@ export class AjouterComponent implements OnInit {
           this.sousCat = [];
           this.insertion.get('montantttc')?.setValue('');
           this.insertion.get('dateFacture')?.setValue('');
+          this.insertion.get('image')?.setValue('');
+          this.type = '';
         },
         error => {
           this.message = error;
@@ -274,6 +352,46 @@ export class AjouterComponent implements OnInit {
       this.upload = false;
     }
   }
+
+  nettoyer(facture: Facture[]) {
+    this.insertion.get('image')?.setValue('');
+    this.type = '';
+  }
+
+  chargerImage($event: Event) {
+    let me = this;
+    // @ts-ignore
+    let file = $event.target.files[0];
+    let s = file.name.split('.');
+    this.type  = s[1];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      me.insertion.get('image')?.setValue(reader.result);
+
+    };
+    reader.onerror = function (error) {
+      //console.log('Error: ', error);
+    };
+  }
+
+  showPdf(linkSource: string) {
+    const downloadLink = document.createElement("a");
+    let fileName = '';
+    if(this.type == 'pdf'){
+      fileName = "facture.pdf";
+    }
+    else{
+      fileName = "facture.png";
+    }
+
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
+
 }
 
 //-------------------------------------------------- FIN METHODES STOCKAGE ------------------------------------------------------------------------
+
