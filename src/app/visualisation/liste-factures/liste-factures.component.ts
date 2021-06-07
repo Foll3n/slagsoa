@@ -65,6 +65,8 @@ export class ListeFacturesComponent implements OnChanges {
   facture!: Facture;
   modification!: FormGroup;
 
+  urlFacture = "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture"
+
   constructor(public con: ConnexionComponent, private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
     this.modification = new FormGroup({
       idFacture: new FormControl(),
@@ -106,7 +108,7 @@ export class ListeFacturesComponent implements OnChanges {
   }
 
   supprimerFacture(id: string){
-    this.http.delete('http://localhost:5555/rest/ws.facture/?id='+ id , this.httpOptions).subscribe(
+    this.http.delete(this.urlFacture + '?id='+ id , this.httpOptions).subscribe(
       reponse => {
         // @ts-ignore
         this.rpd = reponse;
@@ -167,8 +169,7 @@ export class ListeFacturesComponent implements OnChanges {
 
   modifierFacture() {
     let s = '[' + JSON.stringify(this.modification.value) + ']';
-    //console.log(s);
-    this.http.put("http://localhost:5555/rest/ws.facture/" , s , this.httpOptions).subscribe(
+    this.http.put(this.urlFacture, s , this.httpOptions).subscribe(
       reponse => {
         // @ts-ignore
         this.rp = reponse;

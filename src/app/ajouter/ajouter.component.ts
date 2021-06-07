@@ -43,9 +43,11 @@ export class AjouterComponent implements OnInit {
   msgErreurTab = "";
   tableauErreur = [];
   messageerreur = "";
-  urlCategories = "http://localhost:5555/rest/ws.categorie";
+  urlCategories = "http://192.168.1.12:4555/gateway/APICategorie/1.0/categorie";
   message1: any;
   type!: string;
+  urlFacture = "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture";
+
 
   httpOptions = {
     headers: new HttpHeaders()
@@ -319,9 +321,10 @@ export class AjouterComponent implements OnInit {
   //-------------------------------------------------- DEBUT METHODES STOCKAGE ------------------------------------------------------------------------
 
   stockerDonnees(jsondata: string , nb: number) {
+    console.log(jsondata);
     if (this.upload) {
       //"http://localhost:5555/rest/ws/stocker_csv_ws/"
-      this.http.post("http://localhost:5555/rest/ws.facture/", JSON.parse(jsondata), this.httpOptions).subscribe(
+      this.http.post(this.urlFacture, JSON.parse(jsondata), this.httpOptions).subscribe(
         reponse => {
           // @ts-ignore
           this.rp = reponse;

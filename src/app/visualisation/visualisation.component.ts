@@ -82,8 +82,11 @@ export class VisualisationComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders()
   };
-  urlCategories = "http://localhost:5555/rest/ws.categorie";
+  //urlCategories = "http://localhost:5555/rest/ws.categorie";
+  urlCategories = "http://192.168.1.12:4555/gateway/APICategorie/1.0/categorie";
   //urlCategories= "http://localhost:3000/categories";
+
+  urlFacture = "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture"
 
   erreurMessage = '';
 
@@ -184,7 +187,8 @@ export class VisualisationComponent implements OnInit {
 
     //'http://localhost:5555/rest/ws.getFacture?dateMin='
     // @ts-ignore
-    this.httpClient.get('http://localhost:5555/rest/ws.facture?dateMin=' + dateDebut + '&dateMax=' + dateFin, this.httpOptions).subscribe(
+    //this.httpClient.get('http://localhost:5555/rest/ws.facture?dateMin=' + dateDebut + '&dateMax=' + dateFin, this.httpOptions).subscribe(
+    this.httpClient.get(this.urlFacture + '?dateMin=' + dateDebut + '&dateMax=' + dateFin, this.httpOptions).subscribe(
       reponse => {
         // @ts-ignore
         this.rf = reponse;

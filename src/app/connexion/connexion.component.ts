@@ -23,7 +23,8 @@ export class ConnexionComponent implements OnInit {
 
   message!: string;
 
-  url = 'http://localhost:5555/rest/ws/connexion/';
+  //url = 'http://192.168.1.12:5555/rest/ws.connexion';
+  url = 'http://192.168.1.12:4555/gateway/APIConnexion/1.0/connexion';
 
   rpc = new ReponseConnexion();
   httpOptions = {
@@ -97,7 +98,7 @@ export class ConnexionComponent implements OnInit {
   onSubmit() {
     if(this.logForm.get('ndc')?.value && this.logForm.get('mdp')?.value){
       this.message = '';
-      let body = '[' + JSON.stringify(this.logForm.value) + ']';
+      let body =  JSON.stringify(this.logForm.value) ;
       this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(this.logForm.get('ndc')?.value + ':'+this.logForm.get('mdp')?.value)})
       this.http.post(this.url, JSON.parse(body) , this.httpOptions).subscribe(
         reponse => {

@@ -13,15 +13,11 @@
       <li class="nav-item mr-4">
         <a class="nav-link text-white" href="visualisation">Visualisation</a>
       </li>
-      <li class="nav-item mr-4">
-        <a class="nav-link text-white">|</a>
-      </li>
+
       <li class="nav-item mr-4" *ngIf="this.c.isLogged() && this.c.write()">
         <a class="nav-link text-white" href="ajouter">Ajout</a>
       </li>
-      <li class="nav-item mr-4">
-        <a class="nav-link text-white">|</a>
-      </li>
+
       <li class="nav-item mr-4" *ngIf="this.c.isLogged() && this.c.isSuperAdmin()">
         <a class="nav-link text-white" href="utilisateurs">Utilisateurs</a>
       </li>
