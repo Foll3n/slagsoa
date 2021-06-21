@@ -132,7 +132,7 @@ export class AjouterComponent implements OnInit {
 
     if (s[1] == "csv") {
       const reader = new FileReader();
-      reader.readAsText(file);
+      reader.readAsText(file, 'UTF-8');
       reader.onload = () => {
         let text = reader.result;
         this.text = text;
