@@ -7,6 +7,7 @@ import { Categories1 } from "../../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ResultatUpload } from "../../ajouter/ajouter.component";
 import { ConnexionComponent } from "../../connexion/connexion.component";
+import {environment} from "../../../environments/environment";
 
 //---------------------------------------------- Class temporaire qui stock la reponse de la requete delete -----------------
 export class reponseDelete{
@@ -65,9 +66,10 @@ export class ListeFacturesComponent implements OnChanges {
   facture!: Facture;
   modification!: FormGroup;
 
-  urlFacture = "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture"
+  urlFacture = ""
 
   constructor(public con: ConnexionComponent, private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
+    this.urlFacture = environment.urlFacture;
     this.modification = new FormGroup({
       idFacture: new FormControl(),
       montantTTC: new FormControl('',[Validators.required, Validators.pattern('^(([0-9]([0-9]*))([.,](([0-9]?)[0-9]))?)$')]),

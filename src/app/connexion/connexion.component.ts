@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
+import {environment} from "../../environments/environment";
 
 export class ReponseConnexion{
   message!: string;
@@ -23,8 +24,7 @@ export class ConnexionComponent implements OnInit {
 
   message!: string;
 
-  //url = 'http://192.168.1.12:5555/rest/ws.connexion';
-  url = 'http://192.168.1.12:4555/gateway/APIConnexion/1.0/connexion';
+  urlConnexion = '';
 
   rpc = new ReponseConnexion();
   httpOptions = {
@@ -35,7 +35,9 @@ export class ConnexionComponent implements OnInit {
 
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    this.urlConnexion = environment.urlConnexion;
+  }
 
   ngOnInit(): void {
     this.logForm = new FormGroup({
@@ -100,7 +102,7 @@ export class ConnexionComponent implements OnInit {
       this.message = '';
       let body =  JSON.stringify(this.logForm.value) ;
       this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(this.logForm.get('ndc')?.value + ':'+this.logForm.get('mdp')?.value)})
-      this.http.post(this.url, JSON.parse(body) , this.httpOptions).subscribe(
+      this.http.post(this.urlConnexion, JSON.parse(body) , this.httpOptions).subscribe(
         reponse => {
           // @ts-ignore
           this.rpc = reponse;

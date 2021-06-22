@@ -3,6 +3,7 @@ import { ConnexionComponent } from "../connexion/connexion.component";
 import { HttpClient , HttpHeaders } from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Utilisateur } from "../Modeles/utilisateur";
+import {environment} from "../../environments/environment";
 
 export class Role{
   role!: string;
@@ -30,8 +31,8 @@ export class UtilisateursComponent implements OnInit {
 
   roles!: string[];
   utilisateurs!: Utilisateur[];
-  urlRole = 'http://192.168.1.12:4555/gateway/APIRole/1.0/role';
-  urlUtilisateurs = 'http://192.168.1.12:4555/gateway/APIUtilisateurs/1.0/utilisateurs';
+  urlRole = '';
+  urlUtilisateurs = '';
 
   ru = new ReponseUtilisateur();
   message = "";
@@ -43,7 +44,10 @@ export class UtilisateursComponent implements OnInit {
 
   inscriptionForm!: FormGroup;
   modificationUtilisateur!: FormGroup;
-  constructor(public http: HttpClient, public con: ConnexionComponent) { }
+  constructor(public http: HttpClient, public con: ConnexionComponent) {
+    this.urlRole= environment.urlRole;
+    this.urlUtilisateurs= environment.urlUtilisateurs;
+  }
 
   ngOnInit(): void {
     this.inscriptionForm = new FormGroup({

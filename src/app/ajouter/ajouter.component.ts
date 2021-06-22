@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpHeaders, HttpClient, HttpClientModule} from "@angular/common/http";
 import {stringify} from "@angular/compiler/src/util";
 import {NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
+import { environment} from "../../environments/environment";
 import {Categorie, Resultat} from "../visualisation/visualisation.component";
 // @ts-ignore
 import * as url from "url";
@@ -43,10 +44,10 @@ export class AjouterComponent implements OnInit {
   msgErreurTab = "";
   tableauErreur = [];
   messageerreur = "";
-  urlCategories = "http://192.168.1.12:4555/gateway/APICategorie/1.0/categorie";
+  urlCategories = "";
   message1: any;
   type!: string;
-  urlFacture = "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture";
+  urlFacture = "";
 
 
   httpOptions = {
@@ -63,6 +64,8 @@ export class AjouterComponent implements OnInit {
 
 
   constructor(private http: HttpClient, config: NgbNavConfig, public c: ConnexionComponent) {
+    this.urlFacture = environment.urlFacture;
+    this.urlCategories = environment.urlCategories;
     config.destroyOnHide = false;
     config.roles = false;
   }

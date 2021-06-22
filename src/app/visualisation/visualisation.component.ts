@@ -4,6 +4,7 @@ import {Facture} from '../Modeles/facture';
 import { ConnexionComponent } from "../connexion/connexion.component";
 import { Categories1 } from "../Modeles/categorie";
 import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {environment} from "../../environments/environment";
 
 
 export class ReponseGetFacture {
@@ -82,11 +83,8 @@ export class VisualisationComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders()
   };
-  //urlCategories = "http://localhost:5555/rest/ws.categorie";
-  urlCategories = "http://192.168.1.12:4555/gateway/APICategorie/1.0/categorie";
-  //urlCategories= "http://localhost:3000/categories";
-
-  urlFacture = "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture"
+  urlCategories = "";
+  urlFacture = ""
 
   erreurMessage = '';
 
@@ -103,6 +101,8 @@ export class VisualisationComponent implements OnInit {
     private calendar: NgbCalendar ,
     private httpClient: HttpClient,
     public c: ConnexionComponent) {
+    this.urlFacture = environment.urlFacture;
+    this.urlCategories= environment.urlCategories;
     this.toDate = calendar.getToday();
     this.fromDate = calendar.getNext(this.toDate,'m',-4);
 
@@ -230,6 +230,7 @@ export class VisualisationComponent implements OnInit {
       this.factures[i].dateFacture = s[2] + '/' + s[1] + '/' + s[0];
       this.montantTotalTva = this.montantTotalTva+ Number(this.factures[i].tva);
     }
+    this.montantTotalTva = Number(this.montantTotalTva.toFixed(2));
   }
 
 
@@ -260,6 +261,7 @@ export class VisualisationComponent implements OnInit {
 
 
     }
+    this.montantTotalTva = Number(this.montantTotalTva.toFixed(2));
   }
 
   //-----------------------------------------------FIN des méthodes de filtrage-----------------------------------------------------------------

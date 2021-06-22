@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: true,
+  urlFacture: "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture",
+  urlCategories: "http://192.168.1.12:4555/gateway/APICategorie/1.0/categorie",
+  urlRole:'http://192.168.1.12:4555/gateway/APIRole/1.0/role',
+  urlUtilisateurs:'http://192.168.1.12:4555/gateway/APIUtilisateurs/1.0/utilisateurs',
+  urlConnexion: 'http://192.168.1.12:4555/gateway/APIConnexion/1.0/connexion'
 };
 
 /*
