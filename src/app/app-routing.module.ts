@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'utilisateurs', component: UtilisateursComponent },
   { path: '',   redirectTo: '/connexion', pathMatch: 'full' },
   { path: '**', redirectTo: '/connexion' },
+
 ];
 
 @NgModule({
