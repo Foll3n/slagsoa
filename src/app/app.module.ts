@@ -20,6 +20,7 @@ import { ChartsModule } from 'ng2-charts';
 import { RecherchecPipe } from './recherchec.pipe';
 import { RecherchescPipe } from './recherchesc.pipe';
 import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
+import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
     FormsModule,
     ChartsModule,
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 
