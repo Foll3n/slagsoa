@@ -4,11 +4,11 @@
 
 export const environment = {
   production: true,
-  urlFacture: "http://192.168.1.12:4555/gateway/APIFacture/1.0/facture",
-  urlCategories: "http://192.168.1.12:4555/gateway/APICategorie/1.0/categorie",
-  urlRole:'http://192.168.1.12:4555/gateway/APIRole/1.0/role',
-  urlUtilisateurs:'http://192.168.1.12:4555/gateway/APIUtilisateurs/1.0/utilisateurs',
-  urlConnexion: 'http://192.168.1.12:4555/gateway/APIConnexion/1.0/connexion'
+  urlFacture: "http://5.196.8.160:4000/gateway/APIFacture/1.0/facture",
+  urlCategories: "http://5.196.8.160:4000/gateway/APICategorie/1.0/categorie",
+  urlRole:'http://5.196.8.160:4000/gateway/APIRole/1.0/role',
+  urlUtilisateurs:'http://5.196.8.160:4000/gateway/APIUtilisateurs/1.0/utilisateurs',
+  urlConnexion: 'http://5.196.8.160:4000/gateway/APIConnexion/1.0/connexion'
 };
 
 /*
