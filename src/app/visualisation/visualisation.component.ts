@@ -200,6 +200,7 @@ export class VisualisationComponent implements OnInit {
       },
       error => {
         this.erreurMessage = "le serveur ne répond pas !";
+
       }
 
     )

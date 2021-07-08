@@ -1,0 +1,66 @@
+<section class="padding-fenetre">
+  <div class="opacity ">
+    <div class="list-group-item">
+      <h1 class="text-info text-center m-3"> Visualisation Conges</h1>
+      <!------------------------------------- STATISTIQUES -------------------------------------------------------------->
+      <div class="row justify-content-center list-group-horizontal mt-5">
+        <ul class="list-group-item  border-success">Jours de congés cumulés: {{congesCumules}}</ul>
+        <ul class="list-group-item border-danger">Jours de congés posés: {{congesPoses}}</ul>
+        <ul class="list-group-item border-left border-warning">Jours de congés restant: {{congesRestant}}</ul>
+      </div>
+
+      <!------------------------------------- FIN STATISTIQUES -------------------------------------------------------------->
+      <!--
+      -->
+      <!------------------------------------- MENU -------------------------------------------------------------->
+
+      <mat-tab-group>
+
+        <!------------------------------------- VISUALISATION -------------------------------------------------------------->
+
+
+        <mat-tab label="Visualisation">
+          <div class="mt-5">
+            <app-table-conges></app-table-conges>
+          </div>
+        </mat-tab>
+
+
+        <!------------------------------------- FIN VISUALISATION -------------------------------------------------------------->
+        <!--
+        -->
+        <!------------------------------------- NOUVEAU CONGE -------------------------------------------------------------->
+
+        <mat-tab label="Nouveau congé">
+          <div class="mt-5 host">
+            <!----------------------------------DATE PICKER ------------------------------------------------------------------>
+            <mat-form-field appearance="fill" class="mb-2">
+              <mat-label>Période du congé</mat-label>
+              <mat-date-range-input [rangePicker]="picker" [min]="minDate"
+                                    [max]="maxDate">
+                <input matStartDate placeholder="Début">
+                <input matEndDate placeholder="Fin">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            <!---------------------------------- FIN DATE PICKER ------------------------------------------------------------------>
+
+            <mat-checkbox class="example-margin" (click)="changementEtatCongeExceptionnel()">Congé exceptionnel</mat-checkbox>
+            <mat-form-field class="example-full-width" appearance="fill" *ngIf="etatCongeExceptionnel">
+              <mat-label>Raison du congé exceptionnel</mat-label>
+              <textarea matInput placeholder="Ex. Décès, Maladies..."></textarea>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+
+
+        <!------------------------------------- FIN NOUVEAU CONGE -------------------------------------------------------------->
+        <!--
+        -->
+      </mat-tab-group>
+      <!------------------------------------- FIN MENU-------------------------------------------------------------->
+
+    </div>
+  </div>
+</section>

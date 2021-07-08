@@ -20,6 +20,37 @@ import { ChartsModule } from 'ng2-charts';
 import { RecherchecPipe } from './recherchec.pipe';
 import { RecherchescPipe } from './recherchesc.pipe';
 import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
+import { VisualisationCongesComponent } from './visualisation-conges/visualisation-conges.component';
+import { NavComponent } from './nav/nav.component';
+
+//-------------------------------------------------------
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { TabComponent } from './visualisation/tab/tab.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatBadgeModule} from "@angular/material/badge";
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import {MatCalendar, MatDatepickerInput} from "@angular/material/datepicker";
+import {MatTabGroup, MatTabsModule} from "@angular/material/tabs";
+import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDatepicker, MatDatepickerModule} from "@angular/material/datepicker";
+//--------------------------------------------------------------------------------------------------
+import { CongesEnAttenteComponent } from './conges-en-attente/conges-en-attente.component';
+import { TableCongesComponent } from './visualisation-conges/table-conges/table-conges.component';
+import {MatSliderModule} from "@angular/material/slider";
+import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
+
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 
@@ -38,6 +69,12 @@ import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
     RecherchecPipe,
     RecherchescPipe,
     UtilisateursComponent,
+    VisualisationCongesComponent,
+    NavComponent,
+    TabComponent,
+    CongesEnAttenteComponent,
+    TableCongesComponent,
+    TableCongesEnAttenteComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +85,25 @@ import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
     ReactiveFormsModule,
     FormsModule,
     ChartsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatBadgeModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatTabsModule,
+    MatCheckboxModule,
   ],
   //providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   providers: [],

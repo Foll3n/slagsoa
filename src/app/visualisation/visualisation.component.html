@@ -6,64 +6,73 @@
       <app-date-picker (dateD)="fixerdateD($event)" (dateF)="fixerdateF($event)"></app-date-picker>
 
 
-
       <!------------------------------------- Filtre Categories -------------------------------------------------------------->
-      <div class="row justify-content-center row-cols-sm-2 mb-3 pb-5 perso" *ngIf="this.factures != null ">
-        <div class="list-group-horizontal ">
-          <div class="btn">
-            <button class="btn btn-outline-success mr-3" (click)="check1.click()" [ngClass]="{'btn-success text-white' : tout}">Tout</button>
-            <input #check1 type="checkbox" name="checkbox1" [(ngModel)]="this.tout" (change)="etat()" >
-          </div>
 
-          <div  *ngFor="let c of cf" class="btn m-1 ">
-            <button class="btn text-dark border-dark mr-3"  (click)="check.click()" [ngClass]="{'btn-light text-dark' : c.checked}">{{c.cat.nom_Categorie}} </button>
-            <input #check type="checkbox" name="checkbox" [(ngModel)]="c.checked" (change)="aff()" >
+
+      <div class="row justify-content-center">
+        <div class="container">
+        <div *ngIf="this.factures != null " class="row-cols-sm-2">
+          <div>
+            <div class="btn">
+              <button class="btn btn-outline-success mr-2 mb-2 petiteListe" (click)="check1.click()"
+                      [ngClass]="{'btn-success text-white' : tout}">Tout
+              </button>
+              <input #check1 type="checkbox" name="checkbox1" [(ngModel)]="this.tout" (change)="etat()">
+            </div>
           </div>
+          <mat-divider></mat-divider>
+            <div *ngFor="let c of cf" class="btn mr-2 mt-2 mb-2">
+                <button class="btn text-dark border-dark small mr-2 petiteListe" (click)="check.click()"
+                        [ngClass]="{'btn-light text-dark' : c.checked}">{{c.cat.nom_Categorie}} </button>
+                <input #check type="checkbox" name="checkbox" class="" [(ngModel)]="c.checked" (change)="aff()">
+
+            </div>
+        </div>
         </div>
       </div>
+
+
+
       <!------------------------------------- Filtre Categories -------------------------------------------------------------->
 
 
+        <!-----------------------------------------------DEBUT MENU--------------------------------------------------------->
+        <div class="mt-5">
+          <div class="container bg-white">
+            <small>Total de la TVA {{this.dateDebut}} à {{this.dateFin}}: </small>
+            <h3 class="text-success">{{this.montantTotalTva}}€</h3>
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
+              <!------------------------------------- DEBUT PAGE LISTE FACTURE -------------------------------------------------------------->
+              <li [ngbNavItem]="1">
+                <a ngbNavLink>Liste</a>
+                <ng-template ngbNavContent>
+                  <!------------------------------------- LISTE FACTURES -------------------------------------------------------------->
+                  <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD"
+                                      [dateFin]="dateF"
+                                      [factures]="facturesFiltre"
+                                      [categories]="selectedCategories" #childfactures></app-liste-factures>
+                </ng-template>
+              </li>
+              <!------------------------------------- DEBUT PAGE DIAGRAMME -------------------------------------------------------------->
+              <li [ngbNavItem]="2" [destroyOnHide]="true">
+                <a ngbNavLink>Diagrammes</a>
+                <!------------------------------------- DIAGRAMME -------------------------------------------------------------->
+                <ng-template ngbNavContent>
+                  <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre"
+                                   [categories]="categories"
+                                   [catPrincipal]="catPrincipal"></app-graph-ligne>
+                </ng-template>
+              </li>
+            </ul>
 
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
-
-      <!-----------------------------------------------DEBUT MENU--------------------------------------------------------->
-
-      <div class="container bg-white">
-        <small>Total de la TVA {{this.dateDebut}} à {{this.dateFin}}: </small><h3 class="text-success">{{this.montantTotalTva}}€</h3>
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
-          <!------------------------------------- DEBUT PAGE LISTE FACTURE -------------------------------------------------------------->
-          <li [ngbNavItem]="1">
-            <a ngbNavLink>Liste</a>
-            <ng-template ngbNavContent>
-              <!------------------------------------- LISTE FACTURES -------------------------------------------------------------->
-              <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD" [dateFin]="dateF"
-                                  [factures]="facturesFiltre"
-                                  [categories]="selectedCategories" #childfactures></app-liste-factures>
-            </ng-template>
-          </li>
-          <!------------------------------------- DEBUT PAGE DIAGRAMME -------------------------------------------------------------->
-          <li [ngbNavItem]="2" [destroyOnHide]="true">
-            <a ngbNavLink>Diagrammes</a>
-            <!------------------------------------- DIAGRAMME -------------------------------------------------------------->
-            <ng-template ngbNavContent>
-              <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre"
-                               [categories]="categories"
-                               [catPrincipal]="catPrincipal"></app-graph-ligne>
-            </ng-template>
-          </li>
-        </ul>
-
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
-        <pre>Active: {{ active }}</pre>
-      </div>
+            <pre>Active: {{ active }}</pre>
+          </div>
+        </div>
     </div>
   </div>
 </section>
-
-
-
 
 
 

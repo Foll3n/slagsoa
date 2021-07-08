@@ -1,4 +1,4 @@
-<section class="container bg-white p-5" *ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
+<section class="bg-white padding-fenetre" *ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
   <h1 class="text-center p-5 text-info">Gestion utilisateurs</h1>
   <!-------------------------------------------------------------------------------------------------------------------------------------------------->
   <div class="container bg-white">
@@ -115,7 +115,7 @@
         </select>
       </div>
 
-  
+
       <div class="modal-footer" *ngIf="this.con.isLogged() && this.con.write()">
         <input *ngIf="this.modification.get('image')!.value == null || this.modification.get('image')!.value == ''"
                type="file" accept="*" class="btn btn-outline-dark" (change)="chargerImage($event)">

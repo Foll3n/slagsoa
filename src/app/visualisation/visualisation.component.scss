@@ -9,3 +9,13 @@
 .sizemini {
   size: 70px;
 }
+.petiteListe {
+  width: auto;
+  font-size: small;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+}

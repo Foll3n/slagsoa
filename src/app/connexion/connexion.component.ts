@@ -59,15 +59,19 @@ export class ConnexionComponent implements OnInit {
 
 
   public isLogged(){
+    //console.log(sessionStorage.getItem('ndc'))
     return(sessionStorage.getItem('ndc') != null);
+    //return true;
   }
 
   public read(){
     return(sessionStorage.getItem('role') == 'utilisateur');
+    //return true;
   }
 
   public write(){
     return(sessionStorage.getItem('role') == 'admin' || sessionStorage.getItem('role') == 'superAdmin');
+    //return true;
   }
 
   public Logout(){
@@ -98,6 +102,7 @@ export class ConnexionComponent implements OnInit {
 
 
   onSubmit() {
+    /*
     if(this.logForm.get('ndc')?.value && this.logForm.get('mdp')?.value){
       this.message = '';
       let body =  JSON.stringify(this.logForm.value) ;
@@ -112,6 +117,9 @@ export class ConnexionComponent implements OnInit {
             let m = this.rpc.message.split(';');
             sessionStorage.setItem('ndc', m[0]);
             sessionStorage.setItem('role', m[1]);
+            //sessionStorage.setItem('ndc', m[0]);
+            //sessionStorage.setItem('role', m[1]);
+
             sessionStorage.setItem('mdp', this.logForm.get('mdp')?.value);
             this.router.navigate(['/visualisation']);
           }
@@ -129,5 +137,11 @@ export class ConnexionComponent implements OnInit {
     else {
       this.message = 'Champs manquants';
     }
+     */
+    sessionStorage.setItem('ndc', 'stephanie');
+    sessionStorage.setItem('mdp', 'RJEQEFToFDRe2wCgcX73');
+    sessionStorage.setItem('role', 'superAdmin');
+    this.router.navigate(['/visualisation']);
   }
+
 }
