@@ -1,59 +1,6 @@
 <section *ngIf="this.c.isLogged() && this.c.write()" class="padding-perso container bg-white">
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
 
-    <!---------------------------------------------------- AJOUT PAR CSV ---------------------------------------------------------------->
-    <li ngbNavItem>
-      <a ngbNavLink>CSV</a>
-      <ng-template ngbNavContent>
-
-        <section class="container bg-white p-5">
-          <div class="pt-5 text-info text-center">
-            <h1>Charger un fichier csv</h1>
-          </div>
-          <input type="file" class="file-input" accept=".csv"
-                 (change)="onFileSelected($event)" #fileUpload>
-          <div class="file-upload">
-            {{fileName}}
-
-            <button color="primary" class="btn btn-outline-info upload-btn"
-                    (click)="debutChargement()"
-                    (click)="fileUpload.click()">
-              <div>Choisir un fichier</div>
-            </button>
-          </div>
-          <button *ngIf="upload && !erreur" type="button" (click)="stockerDonnees(this.jsondata , 0)" class="btn btn-primary mt-5 ">Charger</button>
-          <h2 class="text-danger mt-5" *ngIf="erreur">{{this.msgErreurTab}}</h2>
-          <br>
-          <h1>{{message}}</h1>
-        </section>
-        <section class="container bg-white">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-              <tr>
-                <th scope="col">ligne</th>
-                <th scope="col">Montant ttc</th>
-                <th scope="col">categorie</th>
-                <th scope="col">sous Categorie</th>
-                <th scope="col">date</th>
-                <th scope="col">commentaire</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let f of facture ; let i = index">
-                <th>{{i+1}}</th>
-                <th scope="row">{{f.montantTTC}}</th>
-                <td>{{f.categorie}}</td>
-                <td>{{f.sousCategorie}}</td>
-                <td>{{f.dateFacture}}</td>
-                <td>{{f.commentaire}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </ng-template>
-    </li>
     <!------------------------------------------------------ AJOUT MANUEL -------------------------------------------------------->
     <li ngbNavItem>
       <a ngbNavLink>MANUEL</a>
@@ -107,6 +54,60 @@
 
 
 
+      </ng-template>
+    </li>
+
+    <!---------------------------------------------------- AJOUT PAR CSV ---------------------------------------------------------------->
+    <li ngbNavItem>
+      <a ngbNavLink>CSV</a>
+      <ng-template ngbNavContent>
+
+        <section class="container bg-white p-5">
+          <div class="pt-5 text-info text-center">
+            <h1>Charger un fichier csv</h1>
+          </div>
+          <input type="file" class="file-input" accept=".csv"
+                 (change)="onFileSelected($event)" #fileUpload>
+          <div class="file-upload">
+            {{fileName}}
+
+            <button color="primary" class="btn btn-outline-info upload-btn"
+                    (click)="debutChargement()"
+                    (click)="fileUpload.click()">
+              <div>Choisir un fichier</div>
+            </button>
+          </div>
+          <button *ngIf="upload && !erreur" type="button" (click)="stockerDonnees(this.jsondata , 0)" class="btn btn-primary mt-5 ">Charger</button>
+          <h2 class="text-danger mt-5" *ngIf="erreur">{{this.msgErreurTab}}</h2>
+          <br>
+          <h1>{{message}}</h1>
+        </section>
+        <section class="container bg-white">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">ligne</th>
+                <th scope="col">Montant ttc</th>
+                <th scope="col">categorie</th>
+                <th scope="col">sous Categorie</th>
+                <th scope="col">date</th>
+                <th scope="col">commentaire</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let f of facture ; let i = index">
+                <th>{{i+1}}</th>
+                <th scope="row">{{f.montantTTC}}</th>
+                <td>{{f.categorie}}</td>
+                <td>{{f.sousCategorie}}</td>
+                <td>{{f.dateFacture}}</td>
+                <td>{{f.commentaire}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </ng-template>
     </li>
   </ul>

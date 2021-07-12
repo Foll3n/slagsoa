@@ -69,8 +69,14 @@ export class GraphLigneComponent implements OnChanges{
       callbacks: {
         // @ts-ignore
         label: (tooltipItems, data) => {
+          let s=0;
+          for(var i=0; i<data.datasets[tooltipItems.datasetIndex].data.length ; i++){
+            s= s+ data.datasets[tooltipItems.datasetIndex].data[i];
+          }
+          let pourcentage = data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]/s;
+          pourcentage = Math.round((pourcentage) * 10000) / 100;
 
-          return  data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] + ' € ' ;
+          return   data.labels[tooltipItems.index] + ': ' +data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] + ' € -- ' + pourcentage + ' %';
         }
       },
     },

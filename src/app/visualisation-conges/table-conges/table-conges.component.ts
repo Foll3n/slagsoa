@@ -18,7 +18,7 @@ export class TableCongesComponent implements AfterViewInit {
   dataSource: TableCongesDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['dateDebut' , 'dateFin' , 'quantite' , 'type' , 'etat' ,'actions'];
+  displayedColumns = ['dateDebut' , 'dateFin' , 'type' , 'etat' , 'commentaire','actions'];
   closeResult = '';
   constructor(private modalService: NgbModal) {
     this.dataSource = new TableCongesDataSource();

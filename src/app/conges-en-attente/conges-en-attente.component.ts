@@ -10,6 +10,7 @@ export class CongesEnAttenteComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

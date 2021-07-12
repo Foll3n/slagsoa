@@ -8,24 +8,19 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 export interface TableCongesItem {
   dateDebut: string;
   dateFin: string;
-  quantite: number;
+  commentaire: string;
   type: string;
   etat: string;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: TableCongesItem[] = [
-  { dateDebut: 'Hydrogen', dateFin: 'test' , quantite: 10, type:'ARM', etat:'en cours'},
-  { dateDebut: 'fezqf', dateFin: 'zaqfrz' , quantite: 9, type:'ARM', etat:'en cours'},
-  { dateDebut: 'ktuk', dateFin: 'qzdd' , quantite: 6, type:'ARM', etat:'en cours'},
-  { dateDebut: 'ktr', dateFin: 'ydqzdgrgo' , quantite: 5, type:'ARM', etat:'en cours'},
-  { dateDebut: 'zqfqsf', dateFin: 'yyfjqazao' , quantite: 2, type:'ARM', etat:'en cours'},
-  { dateDebut: 'ze', dateFin: 'ayao' , quantite: 10, type:'ARM', etat:'en cours'},
-  { dateDebut: 'afsger', dateFin: 'byo' , quantite: 9, type:'ARM', etat:'en cours'},
-  { dateDebut: 'bjedgr', dateFin: 'tyo' , quantite: 6, type:'ARM', etat:'en cours'},
-  { dateDebut: 'jegzsergfz', dateFin: 'hyo' , quantite: 5, type:'ARM', etat:'en cours'},
-  { dateDebut: 'hzefzz', dateFin: 'yo' , quantite: 2, type:'ARM', etat:'en cours'},
-
+  { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+  { dateDebut: 'fezqf', dateFin: 'zaqfrz' , commentaire: '10dqfvqfzqdzqd10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+  { dateDebut: 'ktuk', dateFin: 'qzdd' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+  { dateDebut: 'ktr', dateFin: 'ydqzdgrgo' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+  { dateDebut: 'zqfqsf', dateFin: 'yyfjqazao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+  { dateDebut: 'ze', dateFin: 'ayao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
 ];
 
 /**
@@ -93,7 +88,7 @@ export class TableCongesDataSource extends DataSource<TableCongesItem> {
       switch (this.sort?.active) {
         case 'dateDebut': return compare((a.dateDebut).toUpperCase(), (b.dateDebut).toUpperCase(), isAsc);
         case 'dateFin': return compare((a.dateFin).toUpperCase(), (b.dateFin).toUpperCase(), isAsc);
-        case 'quantite': return compare(+a.quantite, +b.quantite, isAsc);
+        case 'commentaire': return compare(a.commentaire, b.commentaire, isAsc);
         case 'type': return compare((a.type).toUpperCase(), (b.type).toUpperCase(), isAsc);
         case 'etat': return compare((a.etat).toUpperCase(), (b.etat).toUpperCase(), isAsc);
         default: return 0;
