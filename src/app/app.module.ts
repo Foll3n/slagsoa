@@ -50,6 +50,7 @@ import { CongesEnAttenteComponent } from './conges-en-attente/conges-en-attente.
 import { TableCongesComponent } from './visualisation-conges/table-conges/table-conges.component';
 import {MatSliderModule} from "@angular/material/slider";
 import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
+import { MonCompteComponent } from './mon-compte/mon-compte.component';
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -75,6 +76,7 @@ import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-
     CongesEnAttenteComponent,
     TableCongesComponent,
     TableCongesEnAttenteComponent,
+    MonCompteComponent,
   ],
   imports: [
     BrowserModule,

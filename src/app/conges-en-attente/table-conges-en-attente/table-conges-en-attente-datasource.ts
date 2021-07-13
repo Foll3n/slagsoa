@@ -6,32 +6,21 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
 export interface TableCongesEnAttenteItem {
-  name: string;
-  id: number;
+  dateDebut: string;
+  dateFin: string;
+  commentaire: string;
+  type: string;
+  etat: string;
+  nom: string;
+  prenom: string;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: TableCongesEnAttenteItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
+  { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'A' , prenom: 'str'},
+  { dateDebut: 'Oxygene', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'H' , prenom: 'str'},
+  { dateDebut: 'Azote', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'B' , prenom: 'str'},
+  { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'D' , prenom: 'str'}
 ];
 
 /**
@@ -97,8 +86,13 @@ export class TableCongesEnAttenteDataSource extends DataSource<TableCongesEnAtte
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'dateDebut': return compare((a.dateDebut).toUpperCase(), (b.dateDebut).toUpperCase(), isAsc);
+        case 'dateFin': return compare((a.dateFin).toUpperCase(), (b.dateFin).toUpperCase(), isAsc);
+        case 'commentaire': return compare(a.commentaire, b.commentaire, isAsc);
+        case 'type': return compare((a.type).toUpperCase(), (b.type).toUpperCase(), isAsc);
+        case 'etat': return compare((a.etat).toUpperCase(), (b.etat).toUpperCase(), isAsc);
+        case 'nom': return compare((a.nom).toUpperCase(), (b.nom).toUpperCase(), isAsc);
+        case 'prenom': return compare((a.prenom).toUpperCase(), (b.prenom).toUpperCase(), isAsc);
         default: return 0;
       }
     });

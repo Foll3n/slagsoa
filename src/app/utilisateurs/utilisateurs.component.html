@@ -1,17 +1,12 @@
-<section class="bg-white padding-fenetre" *ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
-  <h1 class="text-center p-5 text-info">Gestion utilisateurs</h1>
-  <!-------------------------------------------------------------------------------------------------------------------------------------------------->
-  <div class="container bg-white">
-    <div class="d-flex">
-      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+<section class="padding-fenetre bg-white"*ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
+      <h1 class="text-info text-center m-3"> Conges en attente</h1>
 
-        <!-------------------------------------------------------------------------------------------------------------------------------------------------->
-        <li ngbNavItem="top">
-          <a ngbNavLink class="btn-outline-info text-white" [ngClass]="{'text-info': active != 'top'}">Gestion des
-            utilisateurs</a>
-          <ng-template ngbNavContent>
-
-
+      <!------------------------------------- MENU -------------------------------------------------------------->
+      <mat-tab-group>
+        <!------------------------------------- ONGLET VISUALISATION DES CONGES EN ATTENTE-------------------------------------------------------------->
+        <mat-tab label="Gestion utilisateurs">
+          <!---------------------------------------------- DEBUT TAB GESTION DES UTILISATEURS ----------------------------------------->
+          <div class="mt-5">
             <table class="table table-striped table-responsive ml-4 pl-4 thead-dark">
               <thead>
               <tr>
@@ -42,109 +37,33 @@
               </tr>
               </tbody>
             </table>
+          </div>
+          <!---------------------------------------------- FIN TAB GESTION DES UTILISATEURS ----------------------------------------->
+        </mat-tab>
+        <!------------------------------------- ONGLET INSCRIPTION UTILISATEUR -------------------------------------------------------------->
+        <mat-tab label="Inscription">
+          <!------------------------------------- DEBUT FORMULAIRE INSCRIPTION UTILISATEUR -------------------------------------------------------------->
+          <form [formGroup]="inscriptionForm" class="container form-group mt-4" (submit)="inscrireUtilisateur()">
+            <small>Nom de compte</small>
+            <input  formControlName="ndc" class="form-control border-success" [ngClass]="{'border-danger' : (this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null) }">
+            <small>Mot de passe</small>
+            <input formControlName="mdp" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
+            <small>Confirmer mot de passe</small>
+            <input formControlName="mdp1" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
+            <small class="mr-1">role</small>
+            <select formControlName="role" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (this.inscriptionForm.get('role')!.value == '' || this.inscriptionForm.get('role')!.value == null) }">
+              <option class='option' *ngFor='let option of this.roles' [value]="option">{{option}}</option>
+            </select>
+            <small class="mr-1">grade</small>
+            <select formControlName="grade" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (this.inscriptionForm.get('role')!.value == '' || this.inscriptionForm.get('role')!.value == null) }">
+              <option class='option' *ngFor='let option of this.roles' [value]="option">{{option}}</option>
+            </select>
+            <br>
+            <p class="alert-danger">{{message}}</p>
+            <input type="submit" class="btn btn-outline-info mt-3" *ngIf="( (!(this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null))     &&    (this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value)) && ((this.inscriptionForm.get('role')!.value != null) && (this.inscriptionForm.get('role')!.value != ''))  )">
 
-
-          </ng-template>
-        </li>
-
-
-
-        <!-------------------------------------------------------------------------------------------------------------------------------------------------->
-
-
-
-        <li ngbNavItem="bottom">
-          <a ngbNavLink class="btn-outline-info text-white mt-3" [ngClass]="{'text-info': active != 'bottom'}">Inscription</a>
-          <ng-template ngbNavContent>
-            <form [formGroup]="inscriptionForm" class="form-group center_div" (submit)="inscrireUtilisateur()">
-              <small>Nom de compte</small>
-              <input  formControlName="ndc" class="form-control border-success" [ngClass]="{'border-danger' : (this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null) }">
-              <small>Mot de passe</small>
-              <input formControlName="mdp" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
-              <small>Confirmer mot de passe</small>
-              <input formControlName="mdp1" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
-              <small class="mr-1">role</small>
-              <select formControlName="role" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (this.inscriptionForm.get('role')!.value == '' || this.inscriptionForm.get('role')!.value == null) }">
-                <option class='option' *ngFor='let option of this.roles' [value]="option">{{option}}</option>
-              </select>
-              <br>
-              <p class="alert-danger">{{message}}</p>
-              <input type="submit" class="btn btn-outline-info mt-3" *ngIf="( (!(this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null))     &&    (this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value)) && ((this.inscriptionForm.get('role')!.value != null) && (this.inscriptionForm.get('role')!.value != ''))  )">
-
-            </form>
-
-          </ng-template>
-        </li>
-      </ul>
-      <div [ngbNavOutlet]="nav" class="ml-4"></div>
-    </div>
-  </div>
-
-
+          </form>
+          <!------------------------------------- DEBUT FORMULAIRE INSCRIPTION UTILISATEUR -------------------------------------------------------------->
+        </mat-tab>
+      </mat-tab-group>
 </section>
-<!--
-<ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Facture numéro: {{facture.idFacture}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" (change)="nettoyer(facture)">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    ----------------------------------- DEBUT FORMULAIRE MODIFICATION --------------------------------------------------------------
-    <form [formGroup]="inscriptionForm" (submit)="modifierUtilisateur()" class="form-group"
-          *ngIf="this.con.isLogged() && this.con.write()">
-      <div>
-        <small class="text-danger">*</small><small>Montant TTC</small>
-        <input formControlName="montantTTC" class="form-control text-info is-valid" placeholder="{{facture.montantTTC}}"
-               [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
-        <small class="text-danger">*</small><small>Date</small>
-        <input formControlName="dateFacture" class="form-control text-info is-valid"
-               placeholder="{{facture.dateFacture}}"
-               [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
-        <small>Commentaire</small>
-        <input formControlName="commentaire" class="form-control text-info" placeholder="{{facture.commentaire}}">
-        <small class="text-danger">*</small>
-
-        <select formControlName="categorie" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}" #mySelect (change)='onOptionsSelected(mySelect.value)'>
-          <option class='option' *ngFor='let option of this.tableauCat' [value]="option.nom">{{option.nom}}</option>
-        </select>
-
-        <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie" class='select-option mt-2 btn border-success text-info' #mySelect1>
-          <option class='option' *ngFor='let s of sousCat' [value]="s">{{s}}</option>
-        </select>
-      </div>
-
-
-      <div class="modal-footer" *ngIf="this.con.isLogged() && this.con.write()">
-        <input *ngIf="this.modification.get('image')!.value == null || this.modification.get('image')!.value == ''"
-               type="file" accept="*" class="btn btn-outline-dark" (change)="chargerImage($event)">
-        <input
-          *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern"
-          type="submit" value="Sauvegarder" class="btn btn-outline-dark" (click)="c('Save click') ">
-      </div>
-    </form>
-
-    <div class="row justify-content-center"
-         *ngIf="this.modification.get('image')!.value != null && this.modification.get('image')!.value != ''">
-      <button
-        *ngIf="!(this.modification.get('image')!.value == '' || this.modification.get('image')!.value == null) && (this.con.isLogged() && this.con.write())"
-        type="file" class="btn btn-danger text-bold text-white mr-3 persoPetit" (click)="nettoyer(facture)">Supprimer
-      </button>
-      <button *ngIf=" type!= '' && type!=null" href="#" class="btn btn-success text-white persoPetit"
-              (click)="showPdf(this.modification.get('image')!.value)">Télécharger
-      </button>
-      <small class="row justify-content-center text-success text-center" *ngIf="type == 'pdf'">La facture est au
-        format {{this.type}}, il faut télécharger le document pour visualiser</small>
-      <div *ngIf="type != 'pdf' && type!= '' && type!=null" class="row justify-content-center">
-        <small class="row justify-content-center text-success text-center">La facture est au
-          format {{this.type}}</small>
-        <br>
-        <img class="perso" src="{{this.modification.get('image')?.value}}"/>
-      </div>
-    </div>
-  </div>
-
-
-</ng-template>
--->
