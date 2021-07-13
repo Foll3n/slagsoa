@@ -138,9 +138,10 @@ export class ConnexionComponent implements OnInit {
       this.message = 'Champs manquants';
     }
      */
-    sessionStorage.setItem('ndc', 'stephanie');
-    sessionStorage.setItem('mdp', 'RJEQEFToFDRe2wCgcX73');
+    sessionStorage.setItem('ndc', 'Administrator');
+    sessionStorage.setItem('mdp', 'manage');
     sessionStorage.setItem('role', 'superAdmin');
+    sessionStorage.setItem('id' , '13');
     this.router.navigate(['/visualisation']);
   }
 

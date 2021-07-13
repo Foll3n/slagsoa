@@ -8,7 +8,8 @@ export const environment = {
   urlCategories: "http://5.196.8.160:4000/gateway/APICategorie/1.0/categorie",
   urlRole:'http://5.196.8.160:4000/gateway/APIRole/1.0/role',
   urlUtilisateurs:'http://5.196.8.160:4000/gateway/APIUtilisateurs/1.0/utilisateurs',
-  urlConnexion: 'http://5.196.8.160:4000/gateway/APIConnexion/1.0/connexion'
+  urlConnexion: 'http://5.196.8.160:4000/gateway/APIConnexion/1.0/connexion',
+  urlConges: 'http://5.196.8.160:4000/gateway/APIConges/1.0/conges2',
 };
 
 /*

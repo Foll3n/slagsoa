@@ -5,6 +5,7 @@ import { MatTable } from '@angular/material/table';
 import { TableCongesDataSource, TableCongesItem } from './table-conges-datasource';
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-table-conges',
@@ -20,8 +21,8 @@ export class TableCongesComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['dateDebut' , 'dateFin' , 'type' , 'etat' , 'commentaire','actions'];
   closeResult = '';
-  constructor(private modalService: NgbModal) {
-    this.dataSource = new TableCongesDataSource();
+  constructor(private modalService: NgbModal, private httpClient: HttpClient,) {
+    this.dataSource = new TableCongesDataSource(httpClient);
   }
 
   ngAfterViewInit(): void {

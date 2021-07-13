@@ -3,6 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
+import {HttpClient, HttpClientModule, HttpHeaders} from "@angular/common/http";
+import { Conge } from "../../Modeles/conge";
+import { environment } from "../../../environments/environment";
 
 // TODO: Replace this with your own data model type
 export interface TableCongesItem {
@@ -11,17 +14,10 @@ export interface TableCongesItem {
   commentaire: string;
   type: string;
   etat: string;
+  id: string;
 }
 
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: TableCongesItem[] = [
-  { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-  { dateDebut: 'fezqf', dateFin: 'zaqfrz' , commentaire: '10dqfvqfzqdzqd10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-  { dateDebut: 'ktuk', dateFin: 'qzdd' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-  { dateDebut: 'ktr', dateFin: 'ydqzdgrgo' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-  { dateDebut: 'zqfqsf', dateFin: 'yyfjqazao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-  { dateDebut: 'ze', dateFin: 'ayao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-];
+
 
 /**
  * Data source for the TableConges view. This class should
@@ -29,14 +25,43 @@ const EXAMPLE_DATA: TableCongesItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class TableCongesDataSource extends DataSource<TableCongesItem> {
-  data: TableCongesItem[] = EXAMPLE_DATA;
+  data: TableCongesItem[] =[
+    //{ dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , id:''},
+    //{ dateDebut: 'fezqf', dateFin: 'zaqfrz' , commentaire: '10dqfvqfzqdzqd10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+    //{ dateDebut: 'ktuk', dateFin: 'qzdd' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+    //{ dateDebut: 'ktr', dateFin: 'ydqzdgrgo' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+    //{ dateDebut: 'zqfqsf', dateFin: 'yyfjqazao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+    //{ dateDebut: 'ze', dateFin: 'ayao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
+  ];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor() {
-    super();
-  }
+  urlConges = environment.urlConges;
+  httpOptions = {
+      headers: new HttpHeaders()
+  };
 
+  listeConges!: TableCongesItem[];
+
+  constructor(private httpClient: HttpClient) {
+    super();
+    this.remplirTableau();
+  }
+  remplirTableau(){
+    this.httpOptions.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+    this.httpClient.get<any>(this.urlConges + '/' + sessionStorage.getItem('id'), this.httpOptions).subscribe(
+      resultat => {
+        this.listeConges = resultat.listConges;
+        for(let i of this.listeConges){
+          this.data.push(i);
+        }
+        console.log(this.data);
+      },
+      error => {
+        console.log("C'est une erreur mec -- " + error );
+      }
+    )
+  }
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
