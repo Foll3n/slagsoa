@@ -1,11 +1,14 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { TableCongesDataSource, TableCongesItem } from './table-conges-datasource';
+import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort, MatSortable} from '@angular/material/sort';
+import {MatTable} from '@angular/material/table';
+import {TableCongesDataSource, TableCongesItem} from './table-conges-datasource';
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Conge} from "../../Modeles/conge";
+import {environment} from "../../../environments/environment";
+
 
 @Component({
   selector: 'app-table-conges',
@@ -19,16 +22,37 @@ export class TableCongesComponent implements AfterViewInit {
   dataSource: TableCongesDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['dateDebut' , 'dateFin' , 'type' , 'etat' , 'commentaire','actions'];
+  displayedColumns = ['dateDebut', 'dateFin', 'type', 'etat', 'commentaire', 'actions'];
   closeResult = '';
-  constructor(private modalService: NgbModal, private httpClient: HttpClient,) {
+  httpOptions = {
+    headers: new HttpHeaders()
+  };
+
+  constructor(private changeDetectorRefs: ChangeDetectorRef, private modalService: NgbModal, private httpClient: HttpClient,) {
     this.dataSource = new TableCongesDataSource(httpClient);
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+    setTimeout(() => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
+      // @ts-ignore
+      console.log(this.table.dataSource);
+      // @ts-ignore
+      this.table.dataSource.data.splice(0, 1);
+      this.dataSource.connect();
+    },200);
+
+
+
+
+
+
+
+
+
   }
 
   //---------------------------------------------MODAL---------------------------------------
@@ -49,5 +73,25 @@ export class TableCongesComponent implements AfterViewInit {
       return `with: ${reason}`;
     }
   }
+
 //---------------------------------------------MODAL---------------------------------------
+  envoi() {
+    let a = new Conge();
+    a.dateDebut = '2040-04-10';
+    a.dateFin = '2050-04-10';
+    a.commentaire= 'RTT';
+    a.etat= 'CONFIRME';
+    a.type= 'RTT';
+    a.idUtilisateur = '12';
+    this.httpClient.post(environment.urlConges, a, this.httpOptions).subscribe(
+      reponse => {
+        console.log(reponse);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+    this.dataSource.remplirTableau();
+    this.ngAfterViewInit();
+  }
 }

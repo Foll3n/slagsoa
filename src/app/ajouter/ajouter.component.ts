@@ -326,7 +326,6 @@ export class AjouterComponent implements OnInit {
   stockerDonnees(jsondata: string , nb: number) {
     console.log(jsondata);
     if (this.upload) {
-      //"http://localhost:5555/rest/ws/stocker_csv_ws/"
       this.http.post(this.urlFacture, JSON.parse(jsondata), this.httpOptions).subscribe(
         reponse => {
           // @ts-ignore

@@ -141,7 +141,7 @@ export class ConnexionComponent implements OnInit {
     sessionStorage.setItem('ndc', 'Administrator');
     sessionStorage.setItem('mdp', 'manage');
     sessionStorage.setItem('role', 'superAdmin');
-    sessionStorage.setItem('id' , '13');
+    sessionStorage.setItem('id' , '12');
     this.router.navigate(['/visualisation']);
   }
 

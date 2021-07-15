@@ -5,4 +5,5 @@ export class Conge {
   etat!: string;
   type!: string;
   commentaire!: string;
+  idUtilisateur!: string;
 }

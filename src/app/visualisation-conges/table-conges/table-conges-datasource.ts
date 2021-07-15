@@ -25,14 +25,7 @@ export interface TableCongesItem {
  * (including sorting, pagination, and filtering).
  */
 export class TableCongesDataSource extends DataSource<TableCongesItem> {
-  data: TableCongesItem[] =[
-    //{ dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , id:''},
-    //{ dateDebut: 'fezqf', dateFin: 'zaqfrz' , commentaire: '10dqfvqfzqdzqd10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-    //{ dateDebut: 'ktuk', dateFin: 'qzdd' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-    //{ dateDebut: 'ktr', dateFin: 'ydqzdgrgo' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-    //{ dateDebut: 'zqfqsf', dateFin: 'yyfjqazao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-    //{ dateDebut: 'ze', dateFin: 'ayao' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours'},
-  ];
+  data: TableCongesItem[] =[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
@@ -49,13 +42,15 @@ export class TableCongesDataSource extends DataSource<TableCongesItem> {
   }
   remplirTableau(){
     this.httpOptions.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
-    this.httpClient.get<any>(this.urlConges + '/' + sessionStorage.getItem('id'), this.httpOptions).subscribe(
+    this.httpClient.get<any>('http://5.196.8.160:4000/gateway/APIConges/1.0/conges2/11', this.httpOptions).subscribe(
       resultat => {
+        console.log(resultat);
         this.listeConges = resultat.listConges;
+        if(this.listeConges)
         for(let i of this.listeConges){
           this.data.push(i);
         }
-        console.log(this.data);
+
       },
       error => {
         console.log("C'est une erreur mec -- " + error );

@@ -35,7 +35,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { TabComponent } from './visualisation/tab/tab.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatBadgeModule} from "@angular/material/badge";
 import { MatInputModule } from '@angular/material/input';
@@ -51,6 +51,7 @@ import { TableCongesComponent } from './visualisation-conges/table-conges/table-
 import {MatSliderModule} from "@angular/material/slider";
 import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
+import {CustomPaginator} from "./ConfigurationTs/CustomPaginatorConfiguration";
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -108,7 +109,7 @@ import { MonCompteComponent } from './mon-compte/mon-compte.component';
     MatCheckboxModule,
   ],
   //providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  providers: [],
+  providers: [ {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 
