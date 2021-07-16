@@ -24,6 +24,7 @@ export class TableCongesComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['dateDebut', 'dateFin', 'type', 'etat', 'commentaire', 'actions'];
   closeResult = '';
+  data!: Conge[];
   httpOptions = {
     headers: new HttpHeaders()
   };
@@ -34,14 +35,17 @@ export class TableCongesComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+    this.recuperationConge();
     setTimeout(() => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
       // @ts-ignore
-      console.log(this.table.dataSource);
-      // @ts-ignore
-      this.table.dataSource.data.splice(0, 1);
+      //this.table.dataSource.data.splice(0, 1);
+      if(this.data){
+        // @ts-ignore
+        this.table.dataSource.data = this.data;
+      }
       this.dataSource.connect();
     },200);
 
@@ -83,15 +87,34 @@ export class TableCongesComponent implements AfterViewInit {
     a.etat= 'CONFIRME';
     a.type= 'RTT';
     a.idUtilisateur = '12';
+
     this.httpClient.post(environment.urlConges, a, this.httpOptions).subscribe(
       reponse => {
         console.log(reponse);
+        this.recuperationConge();
+        // @ts-ignore
+        this.data.push(a);
+        this.ngAfterViewInit();
       },
       error => {
         console.log(error);
       }
     )
-    this.dataSource.remplirTableau();
-    this.ngAfterViewInit();
+    //location.reload();
   }
+
+  recuperationConge(){
+    let res = this.dataSource.getConges();
+    res.subscribe(
+      resultat => {
+        let a!: Conge[];
+        // @ts-ignore
+        this.data = resultat.listConges;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
 }

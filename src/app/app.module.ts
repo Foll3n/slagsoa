@@ -52,6 +52,8 @@ import {MatSliderModule} from "@angular/material/slider";
 import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
 import {CustomPaginator} from "./ConfigurationTs/CustomPaginatorConfiguration";
+import {MatProgressSpinnerModule, MatSpinner} from "@angular/material/progress-spinner";
+import { MesCongesComponent } from './mes-conges/mes-conges.component';
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -78,6 +80,8 @@ import {CustomPaginator} from "./ConfigurationTs/CustomPaginatorConfiguration";
     TableCongesComponent,
     TableCongesEnAttenteComponent,
     MonCompteComponent,
+    MesCongesComponent,
+
   ],
   imports: [
     BrowserModule,

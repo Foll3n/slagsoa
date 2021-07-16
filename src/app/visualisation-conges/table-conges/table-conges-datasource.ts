@@ -28,7 +28,6 @@ export class TableCongesDataSource extends DataSource<TableCongesItem> {
   data: TableCongesItem[] =[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-
   urlConges = environment.urlConges;
   httpOptions = {
       headers: new HttpHeaders()
@@ -38,24 +37,10 @@ export class TableCongesDataSource extends DataSource<TableCongesItem> {
 
   constructor(private httpClient: HttpClient) {
     super();
-    this.remplirTableau();
   }
-  remplirTableau(){
+    getConges(){
     this.httpOptions.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
-    this.httpClient.get<any>('http://5.196.8.160:4000/gateway/APIConges/1.0/conges2/11', this.httpOptions).subscribe(
-      resultat => {
-        console.log(resultat);
-        this.listeConges = resultat.listConges;
-        if(this.listeConges)
-        for(let i of this.listeConges){
-          this.data.push(i);
-        }
-
-      },
-      error => {
-        console.log("C'est une erreur mec -- " + error );
-      }
-    )
+    return this.httpClient.get<any>('http://5.196.8.160:4000/gateway/APIConges/1.0/conges2/11', this.httpOptions);
   }
   /**
    * Connect this data source to the table. The table will only update when
