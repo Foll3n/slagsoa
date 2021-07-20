@@ -1,11 +1,8 @@
-<section *ngIf="this.c.isLogged() && this.c.write()" class="padding-perso container bg-white">
-  <ul ngbNav #nav="ngbNav" class="nav-tabs">
-
-    <!------------------------------------------------------ AJOUT MANUEL -------------------------------------------------------->
-    <li ngbNavItem>
-      <a ngbNavLink>MANUEL</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="insertion" class="form-group" (submit)="addFacture()">
+<section class="padding-perso container-fluid bg-white">
+    <mat-tab-group>
+      <!------------------------------------------------------ AJOUT MANUEL -------------------------------------------------------->
+      <mat-tab label="MANUEL">
+        <form [formGroup]="insertion" class="form-group container mt-5" (submit)="addFacture()">
           <small class="text-danger">*</small><small>Montant TTC</small>
           <input type="text" class="form-control text-info is-valid" placeholder="ex: 153.52" formControlName="montantttc" [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
           <small class="text-danger">*</small><small>Date</small>
@@ -34,7 +31,7 @@
           <!-- ----------------------------------------- TEST -------------------------------------------------------------->
           <input *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" name="" value="Ajouter" href="#" class="btn btn-outline-info mt-3">
         </form>
-          <h2><small>{{messageerreur}}</small></h2>
+        <h2><small>{{messageerreur}}</small></h2>
 
         {{message1}}
 
@@ -51,17 +48,9 @@
             <img  class="perso" src="{{this.insertion.get('image')?.value}}"/>
           </div>
         </div>
-
-
-
-      </ng-template>
-    </li>
-
-    <!---------------------------------------------------- AJOUT PAR CSV ---------------------------------------------------------------->
-    <li ngbNavItem>
-      <a ngbNavLink>CSV</a>
-      <ng-template ngbNavContent>
-
+      </mat-tab>
+      <!---------------------------------------------------- AJOUT PAR CSV ---------------------------------------------------------------->
+      <mat-tab label="CSV">
         <section class="container bg-white p-5">
           <div class="pt-5 text-info text-center">
             <h1>Charger un fichier csv</h1>
@@ -108,12 +97,8 @@
             </table>
           </div>
         </section>
-      </ng-template>
-    </li>
-  </ul>
-
-  <div [ngbNavOutlet]="nav" class="mt-2"></div>
-</section>
+      </mat-tab>
+    </mat-tab-group>
 
 
 

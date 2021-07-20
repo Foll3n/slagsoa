@@ -139,51 +139,56 @@ export class ConnexionComponent implements OnInit {
       this.message = 'Champs manquants';
     }
      */
+    // sessionStorage.setItem('role', 'superAdmin');
+    // sessionStorage.setItem('idUtilisateur' , '12');
+
+    //on envoie le ndc  et mdp pour récupérer le token
+    //sessionStorage.setItem('token', '');
     sessionStorage.setItem('ndc', 'Administrator');
     sessionStorage.setItem('mdp', 'manage');
-    sessionStorage.setItem('role', 'superAdmin');
-    sessionStorage.setItem('idUtilisateur' , '12');
 
     //------------------------
 
-    //sessionStorage.setItem('token', '');
-    //sessionStorage.setItem('idUtilisateur', '');
+    //Si token != null alors on récupère l'id utilisateur
+
+    sessionStorage.setItem('idUtilisateur', '13');
+
+    //------------------------
 
 
-    this.router.navigate(['/visualisation']);
+    //On récupère ensuite le reste des données
+    this.chargerUtilisateur();
 
+  }
+
+  chargerUtilisateur(){
     this.userHttp.getUtilisateurs().subscribe(
       resultat => {
         console.log(resultat);
-        let a = resultat;
-        if(a.length > 1){
+        let a = resultat.getAllutilisateurOutput;
           for(let i of a){
             if(i.id == sessionStorage.getItem(`idUtilisateur`)){
+              console.log(i.id);
               sessionStorage.setItem('role', i.role);
               sessionStorage.setItem('grade', i.grade );
               sessionStorage.setItem('nom', i.nom);
               sessionStorage.setItem('prenom', i.prenom);
-              sessionStorage.setItem('ncc', i.ncc);
-              sessionStorage.setItem('ncp', i.ncp);
-              sessionStorage.setItem('ncr', i.ncr);
+              sessionStorage.setItem('mail', i.mail);
+              sessionStorage.setItem('ncc', i.nbCongesCumules);
+              sessionStorage.setItem('ncp', i.nbCongesPoses);
+              sessionStorage.setItem('nbCongesRestant', i.ncr);
             }
           }
-        }
-        else {
-          sessionStorage.setItem('role', '');
-          sessionStorage.setItem('grade', '');
-          sessionStorage.setItem('nom', '');
-          sessionStorage.setItem('prenom', '');
-          sessionStorage.setItem('ncc', '');
-          sessionStorage.setItem('ncp', '');
-          sessionStorage.setItem('ncr', '');
-        }
+        console.log(sessionStorage.getItem('role'),sessionStorage.getItem('grade'),sessionStorage.getItem('nom'))
+        this.router.navigate(['/accueil']);
 
       },
       error => {
         console.log(error);
+        this.Logout();
       }
     )
+
   }
 
 }

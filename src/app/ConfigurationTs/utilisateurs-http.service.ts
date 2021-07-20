@@ -7,13 +7,13 @@ import {environment} from "../../environments/environment";
 })
 export class UtilisateursHttpService {
   constructor(private _httpClient: HttpClient) {
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
   }
   httpOptions = {
     headers: new HttpHeaders()
   };
 
   getUtilisateurs(){
+    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
     const href = environment.urlUtilisateurs;
     const requestUrl =
       `${href}/${sessionStorage.getItem('idUtilisateur')}`;
