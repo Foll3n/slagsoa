@@ -7,7 +7,7 @@ import { UtilisateursComponent } from "./utilisateurs/utilisateurs.component";
 import {VisualisationCongesComponent} from "./visualisation-conges/visualisation-conges.component";
 import {CongesEnAttenteComponent} from "./conges-en-attente/conges-en-attente.component";
 import {MonCompteComponent} from "./mon-compte/mon-compte.component";
-import {MesCongesComponent} from "./mes-conges/mes-conges.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   { path: 'connexion', component: ConnexionComponent },
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'visualisation-conges', component: VisualisationCongesComponent },
   { path: 'conges-en-attente', component: CongesEnAttenteComponent },
   { path: 'mon-compte', component: MonCompteComponent },
-  { path: 'mes-conges', component: MesCongesComponent },
+  { path: 'accueil', component: DashboardComponent },
   { path: '',   redirectTo: '/connexion', pathMatch: 'full' },
   { path: '**', redirectTo: '/connexion' },
 

@@ -1,6 +1,5 @@
 <div class="mat-elevation-z8">
-  <button (click)="envoi()">test</button>
-  <table *ngIf="dataSource.data" mat-table class="full-width-table" matSort aria-label="Elements">
+  <table *ngIf="this.data" [dataSource]="this.data" mat-table class="full-width-table" matSort aria-label="Elements">
 
 
     <!-- dateDebut Column -->
@@ -32,7 +31,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions</th>
       <td mat-cell *matCellDef="let row">
-        <button mat-button title="Annuler" (click)="open(content)"
+        <button mat-button title="Annuler" (click)="open(content , row.idConges)"
                 class="btn btn-outline-light text-warning font-weight-bold">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                class="bi bi-x-circle w-auto" viewBox="0 0 16 16">
@@ -68,7 +67,7 @@
     <label>Êtes vous sur de vouloir annuler la demande de congé ?</label>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-warning" (click)="modal.close('Save click')">Oui</button>
+    <button type="button" class="btn btn-outline-warning" (click)="modal.close('Save click'); deleteConges()">Oui</button>
     <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">Non</button>
   </div>
 </ng-template>

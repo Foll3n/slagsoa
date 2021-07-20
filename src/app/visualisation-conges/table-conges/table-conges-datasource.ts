@@ -40,7 +40,8 @@ export class TableCongesDataSource extends DataSource<TableCongesItem> {
   }
     getConges(){
     this.httpOptions.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
-    return this.httpClient.get<any>('http://5.196.8.160:4000/gateway/APIConges/1.0/conges2/11', this.httpOptions);
+    console.log(`${environment.urlConges}/${sessionStorage.getItem('idUtilisateur')}`);
+    return this.httpClient.get<any>(`${environment.urlConges}/${sessionStorage.getItem('idUtilisateur')}`, this.httpOptions);
   }
   /**
    * Connect this data source to the table. The table will only update when

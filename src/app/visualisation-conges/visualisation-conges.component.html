@@ -29,7 +29,7 @@
           <!---------------------------------- DEBUT FORMULAIRE ------------------------------------------------------------------>
           <!--
           -->
-          <div class="form-group" [formGroup]="formulaire" (change)="changement()">
+          <div class="form-group" [formGroup]="formulaire" (submit)="addConges()">
             <!---------------------------------- CONSIGNES UTILISATION ------------------------------------------------------------------>
             <div class="mt-5 host">
               <ul>
@@ -66,9 +66,7 @@
                   <mat-label>Type de congé</mat-label>
                   <select formControlName="typeConge" (change)="changementEtatCongeExceptionnel(this.formulaire.get('typeConge')!.value)" matNativeControl required>
                     <!----------------------------- A COMPLETER ------------------------------------------------>
-                    <option *ngFor="let t of typesConges">{{t}}</option>
-                    <option>URGENT</option>
-                    <option>autre</option>
+                    <option *ngFor="let t of typesConges">{{t.nom}}</option>
                   </select>
                 </mat-form-field>
                 <!---------------------------------- Choix Date Debut SELECT ------------------------------------------------------------------>
@@ -83,8 +81,8 @@
                 <mat-form-field appearance="fill">
                   <mat-label>Arrivée</mat-label>
                   <select formControlName="dateFinChoix" placeholder="Fin" matNativeControl required>
-                    <option value="12:00:00">Après-midi</option>
-                    <option value="18:00:00">Le lendemin</option>
+                    <option value="12:00:00">Matin</option>
+                    <option value="18:00:00">Après-midi</option>
                   </select>
                 </mat-form-field>
               </div>
@@ -95,7 +93,7 @@
               </mat-form-field>
             </div>
             <!---------------------------------- BOUTON VALIDATION ------------------------------------------------------------------>
-            <button class="btn btn-outline-success mt-5 ml-5" *ngIf="formulaire.valid">ENVOYER</button>
+            <input type="submit" value="Envoyer" class="btn btn-outline-success mt-5 ml-5" *ngIf="formulaire.valid">
             <!--
             -->
             <!---------------------------------- FIN FORMULAIRE ------------------------------------------------------------------>

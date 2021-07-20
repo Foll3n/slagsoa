@@ -53,7 +53,10 @@ import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
 import {CustomPaginator} from "./ConfigurationTs/CustomPaginatorConfiguration";
 import {MatProgressSpinnerModule, MatSpinner} from "@angular/material/progress-spinner";
-import { MesCongesComponent } from './mes-conges/mes-conges.component';
+import { MatCardAvatar } from '@angular/material/card';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {MatExpansionModule, MatExpansionPanel} from "@angular/material/expansion";
+import { MatMenuPanel } from "@angular/material/menu";
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -80,8 +83,7 @@ import { MesCongesComponent } from './mes-conges/mes-conges.component';
     TableCongesComponent,
     TableCongesEnAttenteComponent,
     MonCompteComponent,
-    MesCongesComponent,
-
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,9 +113,10 @@ import { MesCongesComponent } from './mes-conges/mes-conges.component';
     MatRadioModule,
     MatTabsModule,
     MatCheckboxModule,
+    MatExpansionModule,
   ],
   //providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  providers: [ {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
+  providers: [MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 

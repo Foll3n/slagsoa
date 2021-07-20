@@ -8,6 +8,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import {ConnexionComponent} from "../connexion/connexion.component";
 import { MatIcon } from "@angular/material/icon";
 
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',

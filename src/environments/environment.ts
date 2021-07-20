@@ -2,15 +2,23 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { HttpHeaders} from "@angular/common/http";
+
 export const environment = {
   production: true,
   urlFacture: "http://5.196.8.160:4000/gateway/APIFacture/1.0/facture",
   urlCategories: "http://5.196.8.160:4000/gateway/APICategorie/1.0/categorie",
   urlRole:'http://5.196.8.160:4000/gateway/APIRole/1.0/role',
-  urlUtilisateurs:'http://5.196.8.160:4000/gateway/APIUtilisateurs/1.0/utilisateurs',
+  urlUtilisateurs:'http://5.196.8.160:4000/gateway/APIUtilisateur/1.0/utilisateur',
   urlConnexion: 'http://5.196.8.160:4000/gateway/APIConnexion/1.0/connexion',
-  urlConges: 'http://5.196.8.160:4000/gateway/APIConges/1.0/conges2',
+  urlConges: 'http://5.196.8.160:4000/gateway/APIConges/1.0/conges',
+  urlTypes: 'http://5.196.8.160:4000/gateway/APIType/1.0/type',
 };
+
+export function dateFormatter(date: string){
+  let a = date.split('-');
+  return (a[2] + '/' + a[1] + '/' + a[0]);
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

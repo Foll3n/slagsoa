@@ -47,6 +47,13 @@ export class ListeFacturesComponent implements OnChanges {
   searchTerm1!: string;
   searchTerm2!: string;
 
+  page = 1;
+  pageSize = 10;
+  collectionSize!: number;
+  currentRate = 8;
+  allFactures!: Facture[];
+
+
   //rpd servira de stockage pour la reponse delete
   rpd = new reponseDelete();
 
@@ -67,7 +74,6 @@ export class ListeFacturesComponent implements OnChanges {
   modification!: FormGroup;
 
   urlFacture = ""
-
   constructor(public con: ConnexionComponent, private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
     this.urlFacture = environment.urlFacture;
     this.modification = new FormGroup({
@@ -93,6 +99,8 @@ export class ListeFacturesComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    this.allFactures = this.factures;
+    this.collectionSize = this.allFactures.length;
     if(this.sousCat != null){
       this.sousCat = this.tableauCat[0].nomSousCategorie;
     }
@@ -107,6 +115,11 @@ export class ListeFacturesComponent implements OnChanges {
     if(this.factures == null){
       this.message = "Aucune donnnées aux date séléctionné";
     }
+  }
+
+  search(value: string): void {
+    this.factures = this.allFactures.filter((val) => val.idFacture.toLowerCase().includes(value));
+    this.collectionSize = this.factures.length;
   }
 
   supprimerFacture(id: string){
@@ -127,6 +140,7 @@ export class ListeFacturesComponent implements OnChanges {
       }
     )
   }
+
 
   //Ouverture de la fenetre modifier facture
   // @ts-ignore
@@ -168,6 +182,8 @@ export class ListeFacturesComponent implements OnChanges {
       }
     }
   }
+
+
 
   modifierFacture() {
     let s = '[' + JSON.stringify(this.modification.value) + ']';
@@ -228,4 +244,3 @@ export class ListeFacturesComponent implements OnChanges {
     downloadLink.click();
   }
 }
-

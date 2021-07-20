@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
+import { UtilisateursHttpService } from "../ConfigurationTs/utilisateurs-http.service";
 
 export class ReponseConnexion{
   message!: string;
@@ -35,7 +36,7 @@ export class ConnexionComponent implements OnInit {
 
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router , private userHttp: UtilisateursHttpService) {
     this.urlConnexion = environment.urlConnexion;
   }
 
@@ -141,8 +142,48 @@ export class ConnexionComponent implements OnInit {
     sessionStorage.setItem('ndc', 'Administrator');
     sessionStorage.setItem('mdp', 'manage');
     sessionStorage.setItem('role', 'superAdmin');
-    sessionStorage.setItem('id' , '12');
+    sessionStorage.setItem('idUtilisateur' , '12');
+
+    //------------------------
+
+    //sessionStorage.setItem('token', '');
+    //sessionStorage.setItem('idUtilisateur', '');
+
+
     this.router.navigate(['/visualisation']);
+
+    this.userHttp.getUtilisateurs().subscribe(
+      resultat => {
+        console.log(resultat);
+        let a = resultat;
+        if(a.length > 1){
+          for(let i of a){
+            if(i.id == sessionStorage.getItem(`idUtilisateur`)){
+              sessionStorage.setItem('role', i.role);
+              sessionStorage.setItem('grade', i.grade );
+              sessionStorage.setItem('nom', i.nom);
+              sessionStorage.setItem('prenom', i.prenom);
+              sessionStorage.setItem('ncc', i.ncc);
+              sessionStorage.setItem('ncp', i.ncp);
+              sessionStorage.setItem('ncr', i.ncr);
+            }
+          }
+        }
+        else {
+          sessionStorage.setItem('role', '');
+          sessionStorage.setItem('grade', '');
+          sessionStorage.setItem('nom', '');
+          sessionStorage.setItem('prenom', '');
+          sessionStorage.setItem('ncc', '');
+          sessionStorage.setItem('ncp', '');
+          sessionStorage.setItem('ncr', '');
+        }
+
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 }

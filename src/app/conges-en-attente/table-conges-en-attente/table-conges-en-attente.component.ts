@@ -39,6 +39,7 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
     }
   }
   ngAfterViewInit(): void {
+    this.dataSource.data = [];
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;

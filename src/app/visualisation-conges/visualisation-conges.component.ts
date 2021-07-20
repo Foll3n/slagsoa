@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Type } from "../Modeles/type";
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -9,6 +10,11 @@ import {
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import 'moment/locale/ja';
 import 'moment/locale/fr';
+import {TypesHttpService} from "../ConfigurationTs/types-http.service";
+import {Conge} from "../Modeles/conge";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import {CongesHttpService} from "../ConfigurationTs/conges-http.service";
 /*import {MomentDateAdapter} from "@angular/material-moment-adapter";
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -69,7 +75,7 @@ export class VisualisationCongesComponent implements OnInit {
     dateFinChoix: new FormControl(),
     raisonConge: new FormControl(),
   });
-  typesConges = [];
+  typesConges!: Type[];
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -79,7 +85,7 @@ export class VisualisationCongesComponent implements OnInit {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  constructor(private _adapter: DateAdapter<any>,private modalService: NgbModal) {
+  constructor(private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService, httpClient: HttpClient) {
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
     const day = new Date().getDate() + 8;
@@ -92,6 +98,21 @@ export class VisualisationCongesComponent implements OnInit {
 
   ngOnInit(): void {
     this._adapter.setLocale('fr');
+    this.remplirTypes();
+
+  }
+
+  remplirTypes(){
+    this.typeServices.getTypes().subscribe(
+      resultat => {
+        console.log(resultat);
+        this.typesConges = resultat.outputType;
+        console.log(this.typesConges)
+      },
+      error => {
+        console.log(error.error);
+      }
+    )
   }
 
   changementEtatCongeExceptionnel(value: any) {
@@ -113,10 +134,19 @@ export class VisualisationCongesComponent implements OnInit {
       this.formulaire.get('start')?.reset();
     }
     this.typePreccedent = value;
-    console.log(JSON.stringify(this.formulaire.value));
   }
 
-  changement() {
-    console.log(JSON.stringify(this.formulaire.value  ))
+
+  addConges() {
+    // let a = new Conge();
+    // a.dateDebut = '2040-04-10 12:00:00';
+    // a.dateFin = '2050-04-10 18:00:00' ;
+    // a.commentaire= 'RTT';
+    // a.etat= 'CONFIRME';
+    // a.type= 'RTT';
+    // a.idUtilisateur = '12';
+    console.log(this.formulaire)
+    //this.congesServices.addConges(a);
+    //location.reload();
   }
 }

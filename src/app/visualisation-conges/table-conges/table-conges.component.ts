@@ -8,6 +8,8 @@ import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Conge} from "../../Modeles/conge";
 import {environment} from "../../../environments/environment";
+import { dateFormatter } from "../../../environments/environment";
+import { CongesHttpService } from "../../ConfigurationTs/conges-http.service";
 
 
 @Component({
@@ -24,12 +26,13 @@ export class TableCongesComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['dateDebut', 'dateFin', 'type', 'etat', 'commentaire', 'actions'];
   closeResult = '';
+  idConges = '';
   data!: Conge[];
   httpOptions = {
     headers: new HttpHeaders()
   };
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef, private modalService: NgbModal, private httpClient: HttpClient,) {
+  constructor(private changeDetectorRefs: ChangeDetectorRef, private modalService: NgbModal, private httpClient: HttpClient, private httpConges: CongesHttpService) {
     this.dataSource = new TableCongesDataSource(httpClient);
   }
 
@@ -44,7 +47,7 @@ export class TableCongesComponent implements AfterViewInit {
       //this.table.dataSource.data.splice(0, 1);
       if(this.data){
         // @ts-ignore
-        this.table.dataSource.data = this.data;
+        this.table.dataSource.data = [...this.data];
       }
       this.dataSource.connect();
     },200);
@@ -60,7 +63,8 @@ export class TableCongesComponent implements AfterViewInit {
   }
 
   //---------------------------------------------MODAL---------------------------------------
-  open(content: any) {
+  open(content: any , id: string) {
+    this.idConges = id;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -79,42 +83,47 @@ export class TableCongesComponent implements AfterViewInit {
   }
 
 //---------------------------------------------MODAL---------------------------------------
-  envoi() {
-    let a = new Conge();
-    a.dateDebut = '2040-04-10';
-    a.dateFin = '2050-04-10';
-    a.commentaire= 'RTT';
-    a.etat= 'CONFIRME';
-    a.type= 'RTT';
-    a.idUtilisateur = '12';
 
-    this.httpClient.post(environment.urlConges, a, this.httpOptions).subscribe(
-      reponse => {
-        console.log(reponse);
-        this.recuperationConge();
+  recuperationConge(){
+    let res = this.dataSource.getConges();
+    res.subscribe(
+      resultat => {
+        console.log(resultat)
         // @ts-ignore
-        this.data.push(a);
+        this.data = resultat.listConges;
+        for(let i of this.data){
+          let a = i.dateDebut.split(' ');
+          let b = i.dateFin.split(' ');
+          if(a[1] == '12:00:00.0'){
+            i.dateDebut = dateFormatter(a[0]) +  " - Matin";
+          }
+          if(a[1] == '18:00:00.0'){
+            i.dateDebut = dateFormatter(a[0]) +  " - Après-midi";
+          }
+          if(b[1] == '12:00:00.0'){
+            i.dateFin = dateFormatter(b[0]) +  " - Matin";
+          }
+          if(b[1] == '18:00:00.0') {
+            i.dateFin =  dateFormatter(b[0]) +  " - Après-midi";
+          }
+
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  deleteConges() {
+    let res= this.httpConges.deleteConges(this.idConges).subscribe(
+      reponse=> {
+        console.log(reponse);
         this.ngAfterViewInit();
       },
       error => {
         console.log(error);
       }
     )
-    //location.reload();
   }
-
-  recuperationConge(){
-    let res = this.dataSource.getConges();
-    res.subscribe(
-      resultat => {
-        let a!: Conge[];
-        // @ts-ignore
-        this.data = resultat.listConges;
-      },
-      error => {
-        console.log(error);
-      }
-    )
-  }
-
 }
