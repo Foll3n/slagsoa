@@ -6,7 +6,7 @@ export class Utilisateur {
   mail!: string;
   nbCongesCumules!: string;
   nbCongesPoses!: string;
-  ncr!: string;
+  nbCongesRestant!: string;
 }
 
 // import { Injectable } from '@angular/core';

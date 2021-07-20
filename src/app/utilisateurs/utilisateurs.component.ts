@@ -120,8 +120,8 @@ export class UtilisateursComponent implements OnInit {
 
   inscrireUtilisateur(){
     let u = new Utilisateur();
-    u.ndc = this.inscriptionForm.get('ndc')?.value;
-    u.mdp = this.inscriptionForm.get('mdp')?.value;
+    // u.ndc = this.inscriptionForm.get('ndc')?.value;
+    // u.mdp = this.inscriptionForm.get('mdp')?.value;
     u.role = this.inscriptionForm.get('role')?.value;
     let b =  JSON.stringify(u) ;
 
@@ -132,7 +132,7 @@ export class UtilisateursComponent implements OnInit {
           r= reponse;
           if(r.reponse == "OK"){
             this.inscriptionForm.reset();
-            this.message = "L'utilisateur " + u.ndc + " a bien été inscrit, son role est " + u.role;
+            //this.message = "L'utilisateur " + u.ndc + " a bien été inscrit, son role est " + u.role;
           }
       },
       error => {

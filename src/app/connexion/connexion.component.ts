@@ -2,9 +2,10 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {environment} from "../../environments/environment";
 import { UtilisateursHttpService } from "../ConfigurationTs/utilisateurs-http.service";
+import {Utilisateur} from "../Modeles/utilisateur";
 
 export class ReponseConnexion{
   message!: string;
@@ -24,7 +25,8 @@ export class ConnexionComponent implements OnInit {
   logForm!: FormGroup;
 
   message!: string;
-
+  userSubject = new Subject<Utilisateur>();
+  user!: Utilisateur;
   urlConnexion = '';
 
   rpc = new ReponseConnexion();
@@ -58,6 +60,13 @@ export class ConnexionComponent implements OnInit {
 //-------------------------------------------------- DEBUT METHODES CONNEXION ACCESSIBLE DE TOUTES LES PAGES ----------------------------------------------------
 
 
+  emitUser(){
+    //console.log(this.user);
+    let c = new Utilisateur();
+    c.nom = this.user.nom;
+    console.log(c);
+    this.userSubject.next(c);
+  }
 
   public isLogged(){
     //console.log(sessionStorage.getItem('ndc'))
@@ -82,7 +91,7 @@ export class ConnexionComponent implements OnInit {
 
   public isSuperAdmin(){
     //return true;
-    return(sessionStorage.getItem('role') == 'superAdmin');
+    return(sessionStorage.getItem('role') == 'MANAGER');
   }
 
   public testLogin(){
@@ -161,25 +170,31 @@ export class ConnexionComponent implements OnInit {
 
   }
 
+  getUtilisateur(){
+    console.log(this.user);
+    return this.user;
+  }
+
   chargerUtilisateur(){
     this.userHttp.getUtilisateurs().subscribe(
       resultat => {
         console.log(resultat);
         let a = resultat.getAllutilisateurOutput;
+        this.user = new Utilisateur();
           for(let i of a){
             if(i.id == sessionStorage.getItem(`idUtilisateur`)){
-              console.log(i.id);
-              sessionStorage.setItem('role', i.role);
-              sessionStorage.setItem('grade', i.grade );
-              sessionStorage.setItem('nom', i.nom);
-              sessionStorage.setItem('prenom', i.prenom);
-              sessionStorage.setItem('mail', i.mail);
-              sessionStorage.setItem('ncc', i.nbCongesCumules);
-              sessionStorage.setItem('ncp', i.nbCongesPoses);
-              sessionStorage.setItem('nbCongesRestant', i.ncr);
+              this.user.nom = i.nom;
+              this.user.prenom = i.prenom;
+              this.user.mail = i.mail;
+              this.user.grade = i.grade;
+              this.user.role = i.role;
+              this.user.nbCongesCumules = i.nbCongesCumules
+              this.user.nbCongesPoses = i.nbCongesPoses;
+              this.user.nbCongesRestant = i.nbCongesRestant;
+              this.emitUser();
             }
           }
-        console.log(sessionStorage.getItem('role'),sessionStorage.getItem('grade'),sessionStorage.getItem('nom'))
+
         this.router.navigate(['/accueil']);
 
       },
@@ -188,6 +203,7 @@ export class ConnexionComponent implements OnInit {
         this.Logout();
       }
     )
+
 
   }
 
