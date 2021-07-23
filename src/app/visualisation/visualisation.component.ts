@@ -5,6 +5,7 @@ import { ConnexionComponent } from "../connexion/connexion.component";
 import { Categories1 } from "../Modeles/categorie";
 import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {environment} from "../../environments/environment";
+import {ConnexionService} from "../connexion/connexion.service";
 
 
 export class ReponseGetFacture {
@@ -100,7 +101,8 @@ export class VisualisationComponent implements OnInit {
   constructor(
     private calendar: NgbCalendar ,
     private httpClient: HttpClient,
-    public c: ConnexionComponent) {
+    public c: ConnexionService)
+  {
     this.urlFacture = environment.urlFacture;
     this.urlCategories= environment.urlCategories;
     this.toDate = calendar.getToday();
@@ -128,7 +130,10 @@ export class VisualisationComponent implements OnInit {
         this.dateF = s2;
       }
     }
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+    this.httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    })
     this.c.testLogin();
     this.catPrincipal = [];
     this.sousCat = [];

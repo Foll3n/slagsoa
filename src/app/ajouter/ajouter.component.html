@@ -1,15 +1,23 @@
-<section class="padding-perso container-fluid bg-white">
+<app-nav>
+  <section class="padding-perso container-fluid bg-white">
     <mat-tab-group>
       <!------------------------------------------------------ AJOUT MANUEL -------------------------------------------------------->
       <mat-tab label="MANUEL">
+        <!------------------------------------------ FORMULAIRE ------------------------------------------->
         <form [formGroup]="insertion" class="form-group container mt-5" (submit)="addFacture()">
           <small class="text-danger">*</small><small>Montant TTC</small>
-          <input type="text" class="form-control text-info is-valid" placeholder="ex: 153.52" formControlName="montantttc" [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
+          <input type="text" class="form-control text-info is-valid" placeholder="ex: 153.52"
+                 formControlName="montantttc"
+                 [ngClass]="{'is-invalid' : (montantttcF!= null && montantttcF.errors?.pattern) || this.montantttcF == null || this.montantttcF.value == ''}">
           <small class="text-danger">*</small><small>Date</small>
-          <input formControlName="dateFacture" class="form-control text-info is-valid" placeholder="JJ/MM/AAAA" [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
+          <input formControlName="dateFacture" class="form-control text-info is-valid" placeholder="JJ/MM/AAAA"
+                 [ngClass]="{'is-invalid' : (dateFacture!= null && dateFacture.errors?.pattern || this.dateFacture == null || this.dateFacture.value == '')}">
           <small>commentaire</small>
           <input formControlName="commentaire" class="form-control text-info" placeholder="">
-          <small class="text-danger">*</small><select formControlName="categorie" class='select-option mt-2 mr-2 btn text-info border-success' [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}" #mySelect
+          <small class="text-danger">*</small><select formControlName="categorie"
+                                                      class='select-option mt-2 mr-2 btn text-info border-success'
+                                                      [ngClass]="{'border-danger' : (categorie!= null && categorie.errors)}"
+                                                      #mySelect
                                                       (change)='onOptionsSelected(mySelect.value)'>
           <option class='option'
                   *ngFor='let option of this.tableauCategories'
@@ -18,7 +26,8 @@
           <span class="text-danger mb-3" *ngIf="categorie!= null && categorie.errors">
               Catégorie vide.
           </span>
-          <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"  class='select-option mt-2 btn border-dark text-info' #mySelect1>
+          <select *ngIf="this.sousCat !=null && this.sousCat.length > 0" formControlName="sousCategorie"
+                  class='select-option mt-2 btn border-dark text-info' #mySelect1>
             <option class='option'
                     *ngFor='let s of sousCat'
                     [value]="s">{{s}}</option>
@@ -26,26 +35,36 @@
           <br>
           <!-- ----------------------------------------- TEST -------------------------------------------------------------->
           <div class="modal-footer">
-            <input  type="file" accept=".jpg, .png" class="btn btn-outline-dark" (change)="chargerImage($event)" *ngIf="(this.insertion.get('image')!.value == '' || this.insertion.get('image')!.value == null)" >
+            <input type="file" accept=".jpg, .png" class="btn btn-outline-dark" (change)="chargerImage($event)"
+                   *ngIf="(this.insertion.get('image')!.value == '' || this.insertion.get('image')!.value == null)">
           </div>
           <!-- ----------------------------------------- TEST -------------------------------------------------------------->
-          <input *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern" type="submit" name="" value="Ajouter" href="#" class="btn btn-outline-info mt-3">
+          <input
+            *ngIf="categorie!= null && categorie.value != '' && !categorie.errors && montantttcF!=null && montantttcF.value !='' && !montantttcF.errors?.pattern && dateFacture!=null && dateFacture.value != '' && !dateFacture.errors?.pattern"
+            type="submit" name="" value="Ajouter" href="#" class="btn btn-outline-info mt-3">
         </form>
+
+
+        <!------------------------------------------ FIN FORMULAIRE -------------------------------------------------------------->
         <h2><small>{{messageerreur}}</small></h2>
 
         {{message1}}
 
 
-
-
         <div>
-          <button *ngIf="!(this.insertion.get('image')!.value == '' || this.insertion.get('image')!.value == null)" type="file" class="btn btn-danger text-bold text-white" (click)="nettoyer(facture)">Supprimer le document</button>
-          <button *ngIf=" type!= '' && type!=null"  href="#" class="btn btn-success perso text-white " (click)="showPdf(this.insertion.get('image')!.value)" >Télécharger le document</button>
-          <h2 class="row justify-content-center text-success text-center" *ngIf="type == 'pdf'">La facture est au format {{this.type}}, il faut télécharger le document pour visualiser</h2>
+          <button *ngIf="!(this.insertion.get('image')!.value == '' || this.insertion.get('image')!.value == null)"
+                  type="file" class="btn btn-danger text-bold text-white" (click)="nettoyer(facture)">Supprimer le
+            document
+          </button>
+          <button *ngIf=" type!= '' && type!=null" href="#" class="btn btn-success perso text-white "
+                  (click)="showPdf(this.insertion.get('image')!.value)">Télécharger le document
+          </button>
+          <h2 class="row justify-content-center text-success text-center" *ngIf="type == 'pdf'">La facture est au
+            format {{this.type}}, il faut télécharger le document pour visualiser</h2>
           <div *ngIf="type != 'pdf' && type!= '' && type!=null" class="row justify-content-center">
             <h2 class="row justify-content-center text-success text-center">La facture est au format {{this.type}}</h2>
             <br>
-            <img  class="perso" src="{{this.insertion.get('image')?.value}}"/>
+            <img class="perso" src="{{this.insertion.get('image')?.value}}"/>
           </div>
         </div>
       </mat-tab>
@@ -66,7 +85,9 @@
               <div>Choisir un fichier</div>
             </button>
           </div>
-          <button *ngIf="upload && !erreur" type="button" (click)="stockerDonnees(this.jsondata , 0)" class="btn btn-primary mt-5 ">Charger</button>
+          <button *ngIf="upload && !erreur" type="button" (click)="stockerDonnees(this.jsondata , 0)"
+                  class="btn btn-primary mt-5 ">Charger
+          </button>
           <h2 class="text-danger mt-5" *ngIf="erreur">{{this.msgErreurTab}}</h2>
           <br>
           <h1>{{message}}</h1>
@@ -86,7 +107,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let f of facture ; let i = index">
-                <th>{{i+1}}</th>
+                <th>{{i + 1}}</th>
                 <th scope="row">{{f.montantTTC}}</th>
                 <td>{{f.categorie}}</td>
                 <td>{{f.sousCategorie}}</td>
@@ -101,8 +122,8 @@
     </mat-tab-group>
 
 
-
-<section *ngIf="!this.c.isLogged()">
-  <h1 class="row text-danger justify-content-center pt-5 text-warning">PAS DE PERMISSIONS</h1>
-</section>
-
+    <section *ngIf="!this.c.isLogged()">
+      <h1 class="row text-danger justify-content-center pt-5 text-warning">PAS DE PERMISSIONS</h1>
+    </section>
+  </section>
+</app-nav>

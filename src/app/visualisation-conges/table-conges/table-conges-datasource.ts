@@ -28,21 +28,13 @@ export class TableCongesDataSource extends DataSource<TableCongesItem> {
   data: TableCongesItem[] =[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-  urlConges = environment.urlConges;
-  httpOptions = {
-      headers: new HttpHeaders()
-  };
 
   listeConges!: TableCongesItem[];
 
   constructor(private httpClient: HttpClient) {
     super();
   }
-    getConges(){
-    this.httpOptions.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
-    console.log(`${environment.urlConges}/${sessionStorage.getItem('idUtilisateur')}`);
-    return this.httpClient.get<any>(`${environment.urlConges}/${sessionStorage.getItem('idUtilisateur')}`, this.httpOptions);
-  }
+
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.

@@ -10,29 +10,22 @@ import {
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import 'moment/locale/ja';
 import 'moment/locale/fr';
-import {TypesHttpService} from "../ConfigurationTs/types-http.service";
+import {TypesHttpService} from "../configuration-http/types-http.service";
 import {Conge} from "../Modeles/conge";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {CongesHttpService} from "../ConfigurationTs/conges-http.service";
-/*import {MomentDateAdapter} from "@angular/material-moment-adapter";
-
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
-// Depending on whether rollup is used, moment needs to be imported differently.
-// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
-// syntax. However, rollup creates a synthetic default module and we thus need to import it using
-// the `default as` syntax.
+import {CongesHttpService} from "../configuration-http/conges-http.service";
 import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-// @ts-ignore
-import {default as _rollupMoment} from 'moment';
+import {ConnexionService} from "../connexion/connexion.service";
+import {Utilisateur} from "../Modeles/utilisateur";
+import {Subscription} from "rxjs";
+const moment = _moment;
 
-const moment = _rollupMoment || _moment;
-
-// See the Moment.js docs for the meaning of these formats:
-// https://momentjs.com/docs/#/displaying/format/
-*/
+export class date {
+  date!: string;
+  month!: string;
+  year!: string;
+}
 
 @Component({
   selector: 'app-visualisation-conges',
@@ -55,9 +48,9 @@ const moment = _rollupMoment || _moment;
   ],
 })
 export class VisualisationCongesComponent implements OnInit {
-  congesCumules = 0;
-  congesPoses = 0;
-  congesRestant = 0;
+  congesCumules = '';
+  congesPoses = '';
+  congesRestant = '';
 
   typePreccedent: any;
 
@@ -65,17 +58,18 @@ export class VisualisationCongesComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
 
+  users!: Utilisateur[];
+  user!: Utilisateur;
+
+  userSubscription!: Subscription;
+
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  formulaire = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-    typeConge: new FormControl(),
-    dateDebutChoix: new FormControl(),
-    dateFinChoix: new FormControl(),
-    raisonConge: new FormControl(),
-  });
+  messageErreur = '';
+
   typesConges!: Type[];
+  formulaire: FormGroup;
+  messageSucces= '';
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -85,18 +79,37 @@ export class VisualisationCongesComponent implements OnInit {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  constructor(private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService, httpClient: HttpClient) {
+  constructor(private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService, httpClient: HttpClient) {
+
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
     const day = new Date().getDate() + 8;
     this.minDate = new Date(year, month, day);
     this.maxDate = new Date(year + 1, 11, 31);
-
+    this.formulaire = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl(),
+      typeConge: new FormControl(),
+      dateDebutChoix: new FormControl(),
+      dateFinChoix: new FormControl(),
+      raisonConge: new FormControl(),
+    });
   }
 
 
 
   ngOnInit(): void {
+    this.userSubscription = this.connexionService.usersSubject.subscribe(
+      (users: Utilisateur[]) => {
+        if(users){
+          this.users = users;
+          this.user = this.users[0];
+          this.congesCumules = this.user.nbCongesCumules;
+          this.congesPoses = this.user.nbCongesPoses;
+          this.congesRestant = this.user.nbCongesRestant;
+        }
+      }
+    );
     this._adapter.setLocale('fr');
     this.remplirTypes();
 
@@ -130,23 +143,47 @@ export class VisualisationCongesComponent implements OnInit {
       const day = new Date().getDate() + 8;
       this.minDate = new Date(year, month, day);
       this.maxDate = new Date(year + 1,  11, 31);
-      this.formulaire.get('end')?.reset();
-      this.formulaire.get('start')?.reset();
+      this.formulaire.reset();
+      console.log(this.formulaire.value);
     }
     this.typePreccedent = value;
   }
 
 
   addConges() {
-    // let a = new Conge();
-    // a.dateDebut = '2040-04-10 12:00:00';
-    // a.dateFin = '2050-04-10 18:00:00' ;
-    // a.commentaire= 'RTT';
-    // a.etat= 'CONFIRME';
-    // a.type= 'RTT';
-    // a.idUtilisateur = '12';
-    console.log(this.formulaire)
-    //this.congesServices.addConges(a);
-    //location.reload();
+    let congeTemp = new Conge();
+    let dateDebut = this.formulaire.get('start')?.value._i;
+    let dateFin = this.formulaire.get('end')?.value._i;
+    // congeTemp.dateDebut = '2040-04-10 12:00:00';
+    congeTemp.dateDebut = `${dateDebut.year}-${dateDebut.month}-${dateDebut.date} ${this.formulaire.get('dateDebutChoix')?.value}`;
+    congeTemp.dateFin = `${dateFin.year}-${dateFin.month}-${dateFin.date} ${this.formulaire.get('dateFinChoix')?.value}`;
+    congeTemp.type = this.formulaire.get('typeConge')?.value;
+    congeTemp.commentaire= this.formulaire.get('raisonConge')?.value;
+
+    congeTemp.etat= 'EN_COURS';
+
+    let idUtilisateur = sessionStorage.getItem('id');
+    if(idUtilisateur){
+      congeTemp.idUtilisateur = idUtilisateur;
+    }
+    else {
+      this.connexionService.testLogin();
+    }
+
+    if(this.formulaire.valid){
+      console.log(congeTemp);
+      this.congesServices.addConges(congeTemp).subscribe(
+        reponse => {
+          this.formulaire.reset();
+          this.messageSucces = "La demande de congé a bien été prise en compte";
+
+        },
+        error => {
+          this.messageErreur = 'Erreur formulaire incorrecte'
+
+        }
+      )
+    }
+
   }
 }

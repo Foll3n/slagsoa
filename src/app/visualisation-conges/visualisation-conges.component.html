@@ -1,4 +1,5 @@
-<section class="padding-fenetre">
+<app-nav>
+  <section class="padding-fenetre">
   <div class="opacity ">
     <div class="list-group-item">
       <h1 class="text-info text-center m-3"> Visualisation Conges</h1>
@@ -29,9 +30,9 @@
           <!---------------------------------- DEBUT FORMULAIRE ------------------------------------------------------------------>
           <!--
           -->
-          <div class="form-group" [formGroup]="formulaire" (submit)="addConges()">
+          <div>
             <!---------------------------------- CONSIGNES UTILISATION ------------------------------------------------------------------>
-            <div class="mt-5 host">
+            <form class="mt-5 host form-group" [formGroup]="formulaire" (submit)="addConges()">
               <ul>
                 <li>
                   Il faut choisir une période de congés,selon le nombre de jours restants.
@@ -48,6 +49,7 @@
               </ul>
               <!---------------------------------- FIN CONSIGNES UTILISATION ------------------------------------------------------------------>
               <div class="host ml-5">
+                <mat-error>{{messageErreur}}</mat-error>
                 <!----------------------------------DATE PICKER ------------------------------------------------------------------>
                 <mat-form-field appearance="fill" class="mb-2">
                   <mat-label>Période du congé</mat-label>
@@ -64,7 +66,7 @@
                 <!---------------------------------- Types Conges ------------------------------------------------------------------>
                 <mat-form-field appearance="fill">
                   <mat-label>Type de congé</mat-label>
-                  <select formControlName="typeConge" (change)="changementEtatCongeExceptionnel(this.formulaire.get('typeConge')!.value)" matNativeControl required>
+                  <select formControlName="typeConge"  matNativeControl required> <!-- (change)="changementEtatCongeExceptionnel(this.formulaire.get('typeConge')!.value)"-->
                     <!----------------------------- A COMPLETER ------------------------------------------------>
                     <option *ngFor="let t of typesConges">{{t.nom}}</option>
                   </select>
@@ -87,15 +89,17 @@
                 </mat-form-field>
               </div>
               <!---------------------------------- RAISON CONGES EXCEPTIONNEL ------------------------------------------------------------------>
-              <mat-form-field class="example-full-width ml-5" appearance="fill" *ngIf="this.formulaire.get('typeConge')!.value == 'URGENT'">
+              <mat-form-field class="example-full-width ml-5" appearance="fill"> <!--*ngIf="this.formulaire.get('typeConge')!.value == 'URGENT'"-->
                 <mat-label>Raison du congé exceptionnel</mat-label>
                 <textarea matInput formControlName="raisonConge" placeholder="Ex. Décès, Maladies..." matNativeControl required></textarea>
               </mat-form-field>
-            </div>
-            <!---------------------------------- BOUTON VALIDATION ------------------------------------------------------------------>
-            <input type="submit" value="Envoyer" class="btn btn-outline-success mt-5 ml-5" *ngIf="formulaire.valid">
-            <!--
-            -->
+
+              <!---------------------------------- BOUTON VALIDATION ------------------------------------------------------------------>
+              <input type="submit" value="Envoyer" class="btn btn-outline-success mt-5 ml-5" *ngIf="formulaire.valid">
+              <p class="text-success">{{this.messageSucces}}</p>
+              <!--
+              -->
+            </form>
             <!---------------------------------- FIN FORMULAIRE ------------------------------------------------------------------>
           </div>
         </mat-tab>
@@ -107,3 +111,4 @@
     </div>
   </div>
 </section>
+</app-nav>

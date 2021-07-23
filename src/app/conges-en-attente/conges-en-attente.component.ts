@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ConnexionService} from "../connexion/connexion.service";
 
 @Component({
   selector: 'app-conges-en-attente',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CongesEnAttenteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private c: ConnexionService) { }
 
   ngOnInit(): void {
 

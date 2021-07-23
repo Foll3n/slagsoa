@@ -8,6 +8,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import {ConnexionComponent} from "../connexion/connexion.component";
 import { MatIcon } from "@angular/material/icon";
 import {Utilisateur} from "../Modeles/utilisateur";
+import {ConnexionService} from "../connexion/connexion.service";
+import {CongesHttpService} from "../configuration-http/conges-http.service";
 
 
 @Component({
@@ -24,23 +26,23 @@ export class NavComponent implements OnInit{
     );
   hidden = false;
 
+  users!: Utilisateur[];
+  user!: Utilisateur;
+
   userSubscription!: Subscription;
-  user!: Utilisateur | null;
+
+
 
   notificationsConges = 8;
   @ViewChild('navdrop') dp: ElementRef | undefined;
 
   ngOnInit() {
-    this.userSubscription = this.c.userSubject.subscribe(
-      (users: Utilisateur) => {
-        this.user = users;
-        console.log( 'dans nav' +  this.user)
-      }
-    );
-    this.c.emitUser();
+    this.getData();
 
   }
-
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
   toggleBadgeVisibility() {
     this.hidden = !this.hidden;
   }
@@ -50,11 +52,41 @@ export class NavComponent implements OnInit{
     this.dp.nativeElement.classList.toggle("visibility");
   }
 
-  constructor(public c: ConnexionComponent, private breakpointObserver: BreakpointObserver) {
-
+  constructor(public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver) {
+    if(this.c.isLogged()){
+      console.log('ici constructor');
+      this.c.chargerUtilisateur();
+    }
     // c.chargerUtilisateur();
     // setTimeout(() => {this.user = c.getUtilisateur();}, 200);
 
   }
 
+  getData(){
+    if(this.c.isLogged()){
+      this.userSubscription = this.c.usersSubject.subscribe(
+        (users: Utilisateur[]) => {
+          if(users){
+            console.log('ici');
+            this.users = users;
+            this.user = this.users[0];
+            if(this.user.role == "MANAGER"){
+              this.getCongesEnAttente();
+            }
+          }
+        }
+      );
+    }
+  }
+
+  getCongesEnAttente() {
+    this.cgeService.getConges().subscribe(
+      reponse => {
+        console.log(reponse);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
 }

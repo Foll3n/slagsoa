@@ -16,13 +16,13 @@
       <div>
         <div class="dropdown-divider"></div>
         <mat-nav-list>
-          <mat-card class="example-card">
+          <mat-card *ngIf="this.c.isLogged() && this.user" class="example-card">
             <mat-card-header>
               <img src="/assets/images/logoSlag.png" mat-card-avatar class="example-header-image">
-              <mat-card-title>A. Armen</mat-card-title>
-              <mat-card-subtitle>Developpeur</mat-card-subtitle>
+              <mat-card-title>{{this.user.nom.toUpperCase().substr(0,1)}}. {{this.user.prenom}}</mat-card-title>
+              <mat-card-subtitle>{{this.user.grade}}</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-subtitle class="small">Depuis le 25/05/2020</mat-card-subtitle>
+            <mat-card-subtitle class="small">Depuis le {{this.user.dateEntree}}</mat-card-subtitle>
           </mat-card>
 
           <div class="dropdown-divider mt-3 mb-3"></div>
@@ -131,7 +131,7 @@
 
       </div>
       <!-- Add Content Here -->
-      <ng-content class="opct "></ng-content>
+      <ng-content></ng-content>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

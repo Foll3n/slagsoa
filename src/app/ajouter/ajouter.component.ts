@@ -13,6 +13,7 @@ import {Categories1} from "../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DATEPICKER_VALIDATORS} from "@angular/material/datepicker";
 import WebViewer from "@pdftron/webviewer";
+import {ConnexionService} from "../connexion/connexion.service";
 
 export class ResultatUpload {
   message!: string;
@@ -63,7 +64,7 @@ export class AjouterComponent implements OnInit {
   chargement: any;
 
 
-  constructor(private http: HttpClient, config: NgbNavConfig, public c: ConnexionComponent) {
+  constructor(private http: HttpClient, config: NgbNavConfig, public c: ConnexionService) {
     this.urlFacture = environment.urlFacture;
     this.urlCategories = environment.urlCategories;
     config.destroyOnHide = false;
@@ -78,8 +79,9 @@ export class AjouterComponent implements OnInit {
     this.catPrincipal = [];
     this.httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
     })
+
     this.c.testLogin();
     this.getCategories();
   }

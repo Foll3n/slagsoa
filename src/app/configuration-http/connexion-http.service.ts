@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {Conge} from "../Modeles/conge";
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class TypesHttpService {
+export class ConnexionHttpService {
+
   constructor(private _httpClient: HttpClient) {
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
   }
@@ -13,13 +16,13 @@ export class TypesHttpService {
     headers: new HttpHeaders()
   };
 
-  getTypes(){
-      const href = environment.urlTypes;
-      console.log(sessionStorage.getItem('idUtilisateur'))
-      const requestUrl =
-        `${href}/${sessionStorage.getItem('idUtilisateur')}`;
+  connexion(ndc: string, mdp: string){
+    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(`${ndc}:${mdp}`)});
+    const href = environment.urlConnexion;
+    const requestUrl =
+      `${href}/${ndc}`;
 
-      return this._httpClient.get<any>(requestUrl, this.httpOptions );
-
+    return this._httpClient.get<any>(requestUrl, this.httpOptions);
   }
+
 }

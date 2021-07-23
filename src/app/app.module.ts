@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NavbarComponent } from '../entete/navbar/navbar.component';
-import { BaspageComponent } from '../entete/baspage/baspage.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 import { AjouterComponent } from './ajouter/ajouter.component';
@@ -51,12 +49,13 @@ import { TableCongesComponent } from './visualisation-conges/table-conges/table-
 import {MatSliderModule} from "@angular/material/slider";
 import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
-import {CustomPaginator} from "./ConfigurationTs/CustomPaginatorConfiguration";
+import {CustomPaginator} from "./configuration-http/customPaginatorConfiguration";
 import {MatProgressSpinnerModule, MatSpinner} from "@angular/material/progress-spinner";
 import { MatCardAvatar } from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {MatExpansionModule, MatExpansionPanel} from "@angular/material/expansion";
 import { MatMenuPanel } from "@angular/material/menu";
+import {ConnexionService} from "./connexion/connexion.service";
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -64,8 +63,6 @@ import { MatMenuPanel } from "@angular/material/menu";
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    BaspageComponent,
     routingComponents,
     ListeFacturesComponent,
     DatePickerComponent,
@@ -116,7 +113,7 @@ import { MatMenuPanel } from "@angular/material/menu";
     MatExpansionModule,
   ],
   //providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  providers: [MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
+  providers: [ConnexionService, NavComponent ,MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 

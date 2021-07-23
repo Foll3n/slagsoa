@@ -1,102 +1,122 @@
-<section *ngIf="this.c.isLogged()">
-  <div class="opacity ">
-    <div class="list-group-item">
-      <h1 class="text-info text-center m-3"> Visualisation </h1>
-      <!------------------------------------- DatePicker -------------------------------------------------------------->
-      <app-date-picker (dateD)="fixerdateD($event)" (dateF)="fixerdateF($event)"></app-date-picker>
+<app-nav>
+  <section *ngIf="this.c.isLogged()">
+    <div class="opacity ">
+      <div class="list-group-item">
+        <h1 class="text-info text-center m-3"> Visualisation </h1>
+        <!------------------------------------- DatePicker -------------------------------------------------------------->
+        <app-date-picker (dateD)="fixerdateD($event)" (dateF)="fixerdateF($event)"></app-date-picker>
 
 
-      <!------------------------------------- Filtre Categories -------------------------------------------------------------->
+        <!------------------------------------- Filtre Categories -------------------------------------------------------------->
 
 
-      <div class="row justify-content-center">
-        <div class="container">
-          <div *ngIf="this.factures != null " class="row-cols-sm-2">
-            <div>
-              <div class="btn">
-                <button class="btn btn-outline-success mr-2 mb-2 petiteListe" (click)="check1.click()"
-                        [ngClass]="{'btn-success text-white' : tout}">Tout
-                </button>
-                <input #check1 type="checkbox" name="checkbox1" [(ngModel)]="this.tout" (change)="etat()">
+        <div class="row justify-content-center">
+          <div class="container">
+            <div *ngIf="this.factures != null " class="row-cols-sm-2">
+              <div>
+                <div class="btn">
+                  <button class="btn btn-outline-success mr-2 mb-2 petiteListe" (click)="check1.click()"
+                          [ngClass]="{'btn-success text-white' : tout}">Tout
+                  </button>
+                  <input #check1 type="checkbox" name="checkbox1" [(ngModel)]="this.tout" (change)="etat()">
+                </div>
               </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div *ngFor="let c of cf" class="btn mr-2 mt-2 mb-2">
-              <button class="btn text-dark border-dark small mr-2 petiteListe" (click)="check.click()"
-                      [ngClass]="{'btn-light text-dark' : c.checked}">{{c.cat.nom_Categorie}} </button>
-              <input #check type="checkbox" name="checkbox" class="" [(ngModel)]="c.checked" (change)="aff()">
+              <mat-divider></mat-divider>
+              <div *ngFor="let c of cf" class="btn mr-2 mt-2 mb-2">
+                <button class="btn text-dark border-dark small mr-2 petiteListe" (click)="check.click()"
+                        [ngClass]="{'btn-light text-dark' : c.checked}">{{c.cat.nom_Categorie}} </button>
+                <input #check type="checkbox" name="checkbox" class="" [(ngModel)]="c.checked" (change)="aff()">
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
 
-      <!------------------------------------- Filtre Categories -------------------------------------------------------------->
+        <!------------------------------------- Filtre Categories -------------------------------------------------------------->
 
 
-      <!-----------------------------------------------DEBUT MENU--------------------------------------------------------->
-      <div class="mt-5">
-        <div class="container bg-white">
-          <div class="w-25 mb-5 row">
+        <!-----------------------------------------------DEBUT MENU--------------------------------------------------------->
+        <div class="mt-5">
+          <div class="container bg-white">
+            <div class="w-25 mb-5 row">
 
-            <mat-card>
-              <div mat-card-avatar class="example-header-image mb-1">
-                <svg height="40" viewBox="0 0 59 59" width="40" xmlns="http://www.w3.org/2000/svg"><g id="044---Bank-Statement" fill="none"><path id="Shape" d="m39.02.51c-.0063362.20262127-.1262363.38440536-.31.47-1.691936 1.10939765-2.7108229 2.99678226-2.71 5.02 0 29.875.238 18.556-1.19 49.56-1.4426639 1.9489565-3.9178824 2.8361017-6.2701146 2.2472772-2.3522322-.5888244-4.1175737-2.5374913-4.4718854-4.9362772-.0678927-.4951038-.4882908-.8657179-.988-.871h-11v-46c0-3.3137085 2.6862915-6 6-6h20.43c.2812098.00109635.5089037.22879015.51.51z" fill="#33907c"/><path id="Shape" d="m30 58h-23.92c-2.86866285-.0028424-5.33513148-2.0333128-5.889-4.848-.04767389-.2893858.03528329-.5850248.22654866-.8073635.19126536-.2223388.47119081-.3485371.76445134-.3446365h21.9c.501029.0018265.9233702.3741536.988.871.4318456 2.9433268 2.9551634 5.1258051 5.93 5.129z" fill="#26b99a"/><rect id="Rectangle-path" fill="#2980ba" height="34" rx="2" width="22" x="1.08" y="14"/><rect id="Rectangle-path" fill="#3b97d3" height="34" rx="2" width="16.16" x="4" y="14"/><rect id="Rectangle-path" fill="#65ddb9" height="4" rx="1" width="14" x="5.08" y="18"/><g fill="#f3d55b"><circle id="Oval" cx="8.08" cy="28" r="2"/><circle id="Oval" cx="8.08" cy="35" r="2"/><circle id="Oval" cx="8.08" cy="42" r="2"/><circle id="Oval" cx="16.08" cy="28" r="2"/><circle id="Oval" cx="16.08" cy="35" r="2"/><circle id="Oval" cx="16.08" cy="42" r="2"/><path id="Shape"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           d="m50.4 13.94-15.52-6.911h-9.88c-.3956774.00979706-.7500446.24739486-.9093619.6097132s-.0948778.78407231.1653619 1.0822868l6.544 7.409 15.52 6.94z"/>
-                  <path id="Shape"
-                        d="m57.6 18.76c-.4807378-1.237426-1.4290428-2.2360199-2.64-2.78l-4.56-2.04-4.08 9.13 4.56 2.04c1.846862.8202529 4.0057033.4506374 5.4745024-.9372904 1.4687991-1.3879277 1.9599545-3.5224013 1.2454976-5.4127096z"/>
-                </g>
-                  <path id="Rectangle-path" d="m37.079 8.814h5.005v17.001h-5.005z" fill="#f0c419"
-                        transform="matrix(.408 -.913 .913 .408 7.637 46.4)"/>
-                  <path id="Rectangle-path" d="m45.185 17.322h10v3.997h-10z" fill="#bdc3c7"
-                        transform="matrix(.408 -.913 .913 .408 12.07 57.255)"/>
-                  <path id="Shape"
-                        d="m30.48 7.029-2.59 5.8-3.631-4.108c-.2599329-.29780288-.3246121-.71888767-.166039-1.08097362s.511903-.60010648.907039-.61102638z"
-                        fill="#464f5d"/>
-                  <path id="Shape" d="m34.88 7.029-4.08 9.101-2.91-3.3 2.59-5.801z" fill="#f9eab0"/>
-                  <path id="Shape"
-                        d="m57.49 22.59c-.5419237 1.2111015-1.5430002 2.1571454-2.7827772 2.6297987s-2.6165824.4331543-3.8272228-.1097987l-.91-.41 4.08-9.13.91.41c1.212888.5400683 2.1611743 1.5403614 2.6357767 2.7803306.4746024 1.2399691.4365466 2.6177881-.1057767 3.8296694z"
-                        fill="#ff5364"/>
-                  <circle id="Oval" cx="43" cy="43" fill="#f3d55b" r="15"/>
-                  <path id="Shape"
-                        d="m43 52c-5.684 0-7.309-6-5-6 .5522847 0 1 .4477153 1 1 0 1.654 1.794 3 4 3s4-1.346 4-3-1.794-3-4-3c-3.309 0-6-2.243-6-5s2.691-5 6-5c5.684 0 7.309 6 5 6-.5522847 0-1-.4477153-1-1 0-1.654-1.794-3-4-3s-4 1.346-4 3 1.794 3 4 3c3.309 0 6 2.243 6 5s-2.691 5-6 5z"
-                        fill="#f29c1f"/>
-                  <path id="Shape"
-                        d="m43 54c-.5522847 0-1-.4477153-1-1v-20c0-.5522847.4477153-1 1-1s1 .4477153 1 1v20c0 .5522847-.4477153 1-1 1z"
-                        fill="#f29c1f"/>
-                  <path id="Shape"
-                        d="m43 59c-8.836556 0-16-7.163444-16-16s7.163444-16 16-16 16 7.163444 16 16c-.0104696 8.8322157-7.1677843 15.9895304-16 16zm0-30c-7.7319865 0-14 6.2680135-14 14s6.2680135 14 14 14 14-6.2680135 14-14c-.0082673-7.7285595-6.2714405-13.9917327-14-14z"
-                        fill="#f0c419"/>
-                  <path id="Shape"
-                        d="m33.022 48.688c-.3905428-.0003541-.7451438-.2280329-.908-.583-1.6558489-3.6087427-1.4578852-7.7965491.531-11.233.2777992-.4774502.8900498-.6392992 1.3675-.3615s.6392992.8900498.3615 1.3675c-1.6606894 2.8738981-1.8261661 6.3742531-.444 9.392.1424288.3095429.1174402.6703058-.066305.957256-.1837453.2869502-.5009565.4605917-.841695.460744z"
-                        fill="#f29c1f"/>
-                  <path id="Shape"
-                        d="m52.978 48.688c-.3407385-.0001523-.6579497-.1737938-.841695-.460744-.1837452-.2869502-.2087338-.6477131-.066305-.957256 1.3821661-3.0177469 1.2166894-6.5181019-.444-9.392-.1797046-.3088561-.1809857-.6901222-.0033608-1.000179.177625-.3100568.5071705-.5017993.8645-.503s.6881562.1883229.8678608.497179c1.9888852 3.4364509 2.1868489 7.6242573.531 11.233-.1628562.3549671-.5174572.5826459-.908.583z"
-                        fill="#f29c1f"/>
-                </g>
-                </svg>
-              </div>
-              <mat-card-title>Total de la TVA: {{this.montantTotalTva}}€</mat-card-title>
-              <mat-card-subtitle>{{this.dateDebut}} à {{this.dateFin}}</mat-card-subtitle>
-            </mat-card>
+              <mat-card>
+                <div mat-card-avatar class="example-header-image mb-1">
+                  <svg height="40" viewBox="0 0 59 59" width="40" xmlns="http://www.w3.org/2000/svg">
+                    <g id="044---Bank-Statement" fill="none">
+                      <path id="Shape"
+                            d="m39.02.51c-.0063362.20262127-.1262363.38440536-.31.47-1.691936 1.10939765-2.7108229 2.99678226-2.71 5.02 0 29.875.238 18.556-1.19 49.56-1.4426639 1.9489565-3.9178824 2.8361017-6.2701146 2.2472772-2.3522322-.5888244-4.1175737-2.5374913-4.4718854-4.9362772-.0678927-.4951038-.4882908-.8657179-.988-.871h-11v-46c0-3.3137085 2.6862915-6 6-6h20.43c.2812098.00109635.5089037.22879015.51.51z"
+                            fill="#33907c"/>
+                      <path id="Shape"
+                            d="m30 58h-23.92c-2.86866285-.0028424-5.33513148-2.0333128-5.889-4.848-.04767389-.2893858.03528329-.5850248.22654866-.8073635.19126536-.2223388.47119081-.3485371.76445134-.3446365h21.9c.501029.0018265.9233702.3741536.988.871.4318456 2.9433268 2.9551634 5.1258051 5.93 5.129z"
+                            fill="#26b99a"/>
+                      <rect id="Rectangle-path" fill="#2980ba" height="34" rx="2" width="22" x="1.08" y="14"/>
+                      <rect id="Rectangle-path" fill="#3b97d3" height="34" rx="2" width="16.16" x="4" y="14"/>
+                      <rect id="Rectangle-path" fill="#65ddb9" height="4" rx="1" width="14" x="5.08" y="18"/>
+                      <g fill="#f3d55b">
+                        <circle id="Oval" cx="8.08" cy="28" r="2"/>
+                        <circle id="Oval" cx="8.08" cy="35" r="2"/>
+                        <circle id="Oval" cx="8.08" cy="42" r="2"/>
+                        <circle id="Oval" cx="16.08" cy="28" r="2"/>
+                        <circle id="Oval" cx="16.08" cy="35" r="2"/>
+                        <circle id="Oval" cx="16.08" cy="42" r="2"/>
+                        <path id="Shape"
+                              d="m50.4 13.94-15.52-6.911h-9.88c-.3956774.00979706-.7500446.24739486-.9093619.6097132s-.0948778.78407231.1653619 1.0822868l6.544 7.409 15.52 6.94z"/>
+                        <path id="Shape"
+                              d="m57.6 18.76c-.4807378-1.237426-1.4290428-2.2360199-2.64-2.78l-4.56-2.04-4.08 9.13 4.56 2.04c1.846862.8202529 4.0057033.4506374 5.4745024-.9372904 1.4687991-1.3879277 1.9599545-3.5224013 1.2454976-5.4127096z"/>
+                      </g>
+                      <path id="Rectangle-path" d="m37.079 8.814h5.005v17.001h-5.005z" fill="#f0c419"
+                            transform="matrix(.408 -.913 .913 .408 7.637 46.4)"/>
+                      <path id="Rectangle-path" d="m45.185 17.322h10v3.997h-10z" fill="#bdc3c7"
+                            transform="matrix(.408 -.913 .913 .408 12.07 57.255)"/>
+                      <path id="Shape"
+                            d="m30.48 7.029-2.59 5.8-3.631-4.108c-.2599329-.29780288-.3246121-.71888767-.166039-1.08097362s.511903-.60010648.907039-.61102638z"
+                            fill="#464f5d"/>
+                      <path id="Shape" d="m34.88 7.029-4.08 9.101-2.91-3.3 2.59-5.801z" fill="#f9eab0"/>
+                      <path id="Shape"
+                            d="m57.49 22.59c-.5419237 1.2111015-1.5430002 2.1571454-2.7827772 2.6297987s-2.6165824.4331543-3.8272228-.1097987l-.91-.41 4.08-9.13.91.41c1.212888.5400683 2.1611743 1.5403614 2.6357767 2.7803306.4746024 1.2399691.4365466 2.6177881-.1057767 3.8296694z"
+                            fill="#ff5364"/>
+                      <circle id="Oval" cx="43" cy="43" fill="#f3d55b" r="15"/>
+                      <path id="Shape"
+                            d="m43 52c-5.684 0-7.309-6-5-6 .5522847 0 1 .4477153 1 1 0 1.654 1.794 3 4 3s4-1.346 4-3-1.794-3-4-3c-3.309 0-6-2.243-6-5s2.691-5 6-5c5.684 0 7.309 6 5 6-.5522847 0-1-.4477153-1-1 0-1.654-1.794-3-4-3s-4 1.346-4 3 1.794 3 4 3c3.309 0 6 2.243 6 5s-2.691 5-6 5z"
+                            fill="#f29c1f"/>
+                      <path id="Shape"
+                            d="m43 54c-.5522847 0-1-.4477153-1-1v-20c0-.5522847.4477153-1 1-1s1 .4477153 1 1v20c0 .5522847-.4477153 1-1 1z"
+                            fill="#f29c1f"/>
+                      <path id="Shape"
+                            d="m43 59c-8.836556 0-16-7.163444-16-16s7.163444-16 16-16 16 7.163444 16 16c-.0104696 8.8322157-7.1677843 15.9895304-16 16zm0-30c-7.7319865 0-14 6.2680135-14 14s6.2680135 14 14 14 14-6.2680135 14-14c-.0082673-7.7285595-6.2714405-13.9917327-14-14z"
+                            fill="#f0c419"/>
+                      <path id="Shape"
+                            d="m33.022 48.688c-.3905428-.0003541-.7451438-.2280329-.908-.583-1.6558489-3.6087427-1.4578852-7.7965491.531-11.233.2777992-.4774502.8900498-.6392992 1.3675-.3615s.6392992.8900498.3615 1.3675c-1.6606894 2.8738981-1.8261661 6.3742531-.444 9.392.1424288.3095429.1174402.6703058-.066305.957256-.1837453.2869502-.5009565.4605917-.841695.460744z"
+                            fill="#f29c1f"/>
+                      <path id="Shape"
+                            d="m52.978 48.688c-.3407385-.0001523-.6579497-.1737938-.841695-.460744-.1837452-.2869502-.2087338-.6477131-.066305-.957256 1.3821661-3.0177469 1.2166894-6.5181019-.444-9.392-.1797046-.3088561-.1809857-.6901222-.0033608-1.000179.177625-.3100568.5071705-.5017993.8645-.503s.6881562.1883229.8678608.497179c1.9888852 3.4364509 2.1868489 7.6242573.531 11.233-.1628562.3549671-.5174572.5826459-.908.583z"
+                            fill="#f29c1f"/>
+                    </g>
+                  </svg>
+                </div>
+                <mat-card-title>Total de la TVA: {{this.montantTotalTva}}€</mat-card-title>
+                <mat-card-subtitle>{{this.dateDebut}} à {{this.dateFin}}</mat-card-subtitle>
+              </mat-card>
+            </div>
+            <mat-tab-group>
+              <mat-tab label="Liste">
+                <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD"
+                                    [dateFin]="dateF"
+                                    [factures]="facturesFiltre"
+                                    [categories]="selectedCategories" #childfactures></app-liste-factures>
+              </mat-tab>
+              <mat-tab label="Diagrammes">
+                <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre"
+                                 [categories]="categories"
+                                 [catPrincipal]="catPrincipal"></app-graph-ligne>
+              </mat-tab>
+            </mat-tab-group>
+
           </div>
-          <mat-tab-group>
-            <mat-tab label="Liste">
-              <app-liste-factures class="petit" [tableauCat]="tableauCategories" [dateDebut]="dateD"
-                                  [dateFin]="dateF"
-                                  [factures]="facturesFiltre"
-                                  [categories]="selectedCategories" #childfactures></app-liste-factures>
-            </mat-tab>
-            <mat-tab label="Diagrammes">
-              <app-graph-ligne [dateD]="dateDebut" [dateF]="dateFin" [factures]="facturesFiltre"
-                               [categories]="categories"
-                               [catPrincipal]="catPrincipal"></app-graph-ligne>
-            </mat-tab>
-          </mat-tab-group>
-
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</app-nav>

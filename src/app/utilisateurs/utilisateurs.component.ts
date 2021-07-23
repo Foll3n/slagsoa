@@ -4,6 +4,7 @@ import { HttpClient , HttpHeaders } from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Utilisateur } from "../Modeles/utilisateur";
 import {environment} from "../../environments/environment";
+import {ConnexionService} from "../connexion/connexion.service";
 
 export class Role{
   role!: string;
@@ -44,7 +45,7 @@ export class UtilisateursComponent implements OnInit {
 
   inscriptionForm!: FormGroup;
   modificationUtilisateur!: FormGroup;
-  constructor(public http: HttpClient, public con: ConnexionComponent) {
+  constructor(public http: HttpClient, public con: ConnexionService) {
     this.urlRole= environment.urlRole;
     this.urlUtilisateurs= environment.urlUtilisateurs;
   }
@@ -62,7 +63,10 @@ export class UtilisateursComponent implements OnInit {
       mdp1: new FormControl(),
       role: new FormControl()
     });
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+    this.httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    })
     this.roles = [];
     this.con.testLogin();
     this.chargerRoles();
@@ -119,26 +123,26 @@ export class UtilisateursComponent implements OnInit {
   }
 
   inscrireUtilisateur(){
-    let u = new Utilisateur();
+    //let u = new Utilisateur();
     // u.ndc = this.inscriptionForm.get('ndc')?.value;
     // u.mdp = this.inscriptionForm.get('mdp')?.value;
-    u.role = this.inscriptionForm.get('role')?.value;
-    let b =  JSON.stringify(u) ;
+    // u.role = this.inscriptionForm.get('role')?.value;
+    // let b =  JSON.stringify(u) ;
 
-    this.http.post(this.urlUtilisateurs, b, this.httpOptions).subscribe(
-      reponse=> {
-          let r= new Reponse();
-          // @ts-ignore
-          r= reponse;
-          if(r.reponse == "OK"){
-            this.inscriptionForm.reset();
-            //this.message = "L'utilisateur " + u.ndc + " a bien été inscrit, son role est " + u.role;
-          }
-      },
-      error => {
-        this.message = error;
-      }
-    )
+    // this.http.post(this.urlUtilisateurs, b, this.httpOptions).subscribe(
+    //   reponse=> {
+    //       let r= new Reponse();
+    //       // @ts-ignore
+    //       r= reponse;
+    //       if(r.reponse == "OK"){
+    //         this.inscriptionForm.reset();
+    //         //this.message = "L'utilisateur " + u.ndc + " a bien été inscrit, son role est " + u.role;
+    //       }
+    //   },
+    //   error => {
+    //     this.message = error;
+    //   }
+    // )
   }
 
   modifierUtilisateur(){

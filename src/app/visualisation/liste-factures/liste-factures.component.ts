@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ResultatUpload } from "../../ajouter/ajouter.component";
 import { ConnexionComponent } from "../../connexion/connexion.component";
 import {environment} from "../../../environments/environment";
+import {ConnexionService} from "../../connexion/connexion.service";
 
 //---------------------------------------------- Class temporaire qui stock la reponse de la requete delete -----------------
 export class reponseDelete{
@@ -74,7 +75,7 @@ export class ListeFacturesComponent implements OnChanges {
   modification!: FormGroup;
 
   urlFacture = ""
-  constructor(public con: ConnexionComponent, private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(public con: ConnexionService, private http: HttpClient, config: NgbModalConfig, private modalService: NgbModal) {
     this.urlFacture = environment.urlFacture;
     this.modification = new FormGroup({
       idFacture: new FormControl(),
@@ -104,7 +105,10 @@ export class ListeFacturesComponent implements OnChanges {
     if(this.sousCat != null){
       this.sousCat = this.tableauCat[0].nomSousCategorie;
     }
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+    this.httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    })
     let d = this.dateDebut.split('-');
     this.dateD = d[2] + '/' + d[1] + '/' + d[0];
     d = this.dateFin.split('-');

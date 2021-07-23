@@ -1,15 +1,16 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, MatSortable} from '@angular/material/sort';
-import {MatTable} from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {TableCongesDataSource, TableCongesItem} from './table-conges-datasource';
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Conge} from "../../Modeles/conge";
 import {environment} from "../../../environments/environment";
-import { dateFormatter } from "../../../environments/environment";
-import { CongesHttpService } from "../../ConfigurationTs/conges-http.service";
+import {dateFormatter} from "../../../environments/environment";
+import {CongesHttpService} from "../../configuration-http/conges-http.service";
+import {any} from "codelyzer/util/function";
 
 
 @Component({
@@ -27,7 +28,7 @@ export class TableCongesComponent implements AfterViewInit {
   displayedColumns = ['dateDebut', 'dateFin', 'type', 'etat', 'commentaire', 'actions'];
   closeResult = '';
   idConges = '';
-  data!: Conge[];
+  data: Conge[] = [];
   httpOptions = {
     headers: new HttpHeaders()
   };
@@ -37,33 +38,30 @@ export class TableCongesComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':'+sessionStorage.getItem('mdp'))})
+
+    this.httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
+    })
     this.recuperationConge();
     setTimeout(() => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.table.dataSource = this.dataSource;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;
       // @ts-ignore
       //this.table.dataSource.data.splice(0, 1);
-      if(this.data){
+      if (this.data) {
         // @ts-ignore
         this.table.dataSource.data = [...this.data];
       }
       this.dataSource.connect();
-    },200);
-
-
-
-
-
-
-
+    }, 200);
 
 
   }
 
   //---------------------------------------------MODAL---------------------------------------
-  open(content: any , id: string) {
+  open(content: any, id: string) {
     this.idConges = id;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -84,40 +82,49 @@ export class TableCongesComponent implements AfterViewInit {
 
 //---------------------------------------------MODAL---------------------------------------
 
-  recuperationConge(){
-    let res = this.dataSource.getConges();
-    res.subscribe(
-      resultat => {
-        console.log(resultat)
-        // @ts-ignore
-        this.data = resultat.listConges;
-        for(let i of this.data){
-          let a = i.dateDebut.split(' ');
-          let b = i.dateFin.split(' ');
-          if(a[1] == '12:00:00.0'){
-            i.dateDebut = dateFormatter(a[0]) +  " - Matin";
-          }
-          if(a[1] == '18:00:00.0'){
-            i.dateDebut = dateFormatter(a[0]) +  " - Après-midi";
-          }
-          if(b[1] == '12:00:00.0'){
-            i.dateFin = dateFormatter(b[0]) +  " - Matin";
-          }
-          if(b[1] == '18:00:00.0') {
-            i.dateFin =  dateFormatter(b[0]) +  " - Après-midi";
+  recuperationConge() {
+    if (this.dataSource) {
+      let res = this.httpConges.getConges();
+      res.subscribe(
+        resultat => {
+          console.log(resultat)
+
+          for(var i=0; i<resultat.listConges.length; i++){
+            if(resultat.listConges[i].idUtilisateur == sessionStorage.getItem('id')){
+              this.data.push(resultat.listConges[i]);
+            }
           }
 
+          if (this.data) {
+            for (let i of this.data) {
+              let a = i.dateDebut.split(' ');
+              let b = i.dateFin.split(' ');
+              if (a[1] == '12:00:00.0') {
+                i.dateDebut = dateFormatter(a[0]) + " - Matin";
+              }
+              if (a[1] == '18:00:00.0') {
+                i.dateDebut = dateFormatter(a[0]) + " - Après-midi";
+              }
+              if (b[1] == '12:00:00.0') {
+                i.dateFin = dateFormatter(b[0]) + " - Matin";
+              }
+              if (b[1] == '18:00:00.0') {
+                i.dateFin = dateFormatter(b[0]) + " - Après-midi";
+              }
+
+            }
+          }
+        },
+        error => {
+          console.log(error);
         }
-      },
-      error => {
-        console.log(error);
-      }
-    )
+      )
+    }
   }
 
   deleteConges() {
-    let res= this.httpConges.deleteConges(this.idConges).subscribe(
-      reponse=> {
+    let res = this.httpConges.deleteConges(this.idConges).subscribe(
+      reponse => {
         console.log(reponse);
         this.ngAfterViewInit();
       },
