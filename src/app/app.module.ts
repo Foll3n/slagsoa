@@ -4,21 +4,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConnexionComponent } from './connexion/connexion.component';
-import { VisualisationComponent } from './visualisation/visualisation.component';
-import { AjouterComponent } from './ajouter/ajouter.component';
-import { ListeFacturesComponent } from './visualisation/liste-factures/liste-factures.component';
+import { VisualisationComponent } from './Facture/visualisation/visualisation.component';
+import { AjouterComponent } from './Facture/ajouter/ajouter.component';
+import { ListeFacturesComponent } from './Facture/visualisation/liste-factures/liste-factures.component';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DatePickerComponent } from './visualisation/date-picker/date-picker.component';
-import { GraphLigneComponent } from './visualisation/graph-ligne/graph-ligne.component';
+import { DatePickerComponent } from './Facture/visualisation/date-picker/date-picker.component';
+import { GraphLigneComponent } from './Facture/visualisation/graph-ligne/graph-ligne.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { RecherchePipe } from './recherche.pipe';
 import { ChartsModule } from 'ng2-charts';
 import { RecherchecPipe } from './recherchec.pipe';
 import { RecherchescPipe } from './recherchesc.pipe';
-import { UtilisateursComponent } from './utilisateurs/utilisateurs.component';
-import { VisualisationCongesComponent } from './visualisation-conges/visualisation-conges.component';
+import { UtilisateursComponent } from './Parametres/utilisateurs/utilisateurs.component';
+import { VisualisationCongesComponent } from './Conges/visualisation-conges/visualisation-conges.component';
 import { NavComponent } from './nav/nav.component';
 
 //-------------------------------------------------------
@@ -31,7 +31,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
-import { TabComponent } from './visualisation/tab/tab.component';
+import { TabComponent } from './Facture/visualisation/tab/tab.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -44,11 +44,11 @@ import {MatTabGroup, MatTabsModule} from "@angular/material/tabs";
 import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDatepicker, MatDatepickerModule} from "@angular/material/datepicker";
 //--------------------------------------------------------------------------------------------------
-import { CongesEnAttenteComponent } from './conges-en-attente/conges-en-attente.component';
-import { TableCongesComponent } from './visualisation-conges/table-conges/table-conges.component';
+import { CongesEnAttenteComponent } from './Conges/conges-en-attente/conges-en-attente.component';
+import { TableCongesComponent } from './Conges/visualisation-conges/table-conges/table-conges.component';
 import {MatSliderModule} from "@angular/material/slider";
-import { TableCongesEnAttenteComponent } from './conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
-import { MonCompteComponent } from './mon-compte/mon-compte.component';
+import { TableCongesEnAttenteComponent } from './Conges/conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
+import { MonCompteComponent } from './Parametres/mon-compte/mon-compte.component';
 import {CustomPaginator} from "./configuration-http/customPaginatorConfiguration";
 import {MatProgressSpinnerModule, MatSpinner} from "@angular/material/progress-spinner";
 import { MatCardAvatar } from '@angular/material/card';
@@ -56,6 +56,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import {MatExpansionModule, MatExpansionPanel} from "@angular/material/expansion";
 import { MatMenuPanel } from "@angular/material/menu";
 import {ConnexionService} from "./connexion/connexion.service";
+import { StatCongesComponent } from './Conges/visualisation-conges/stat-conges/stat-conges.component';
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -81,6 +82,7 @@ import {ConnexionService} from "./connexion/connexion.service";
     TableCongesEnAttenteComponent,
     MonCompteComponent,
     DashboardComponent,
+    StatCongesComponent,
   ],
   imports: [
     BrowserModule,

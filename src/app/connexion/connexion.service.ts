@@ -32,7 +32,7 @@ export class ConnexionService {
   }
 
   public write(){
-    return(sessionStorage.getItem('role') == 'admin' || sessionStorage.getItem('role') == 'superAdmin');
+    return(sessionStorage.getItem('role') == 'admin' || sessionStorage.getItem('role') == 'MANAGER');
     //return true;
   }
 

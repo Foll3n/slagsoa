@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ConnexionService} from "../connexion/connexion.service";
+import {ConnexionService} from "../../connexion/connexion.service";
 
 @Component({
   selector: 'app-conges-en-attente',

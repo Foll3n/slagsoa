@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { Type } from "../Modeles/type";
+import { Type } from "../../Modeles/type";
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -10,15 +10,17 @@ import {
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import 'moment/locale/ja';
 import 'moment/locale/fr';
-import {TypesHttpService} from "../configuration-http/types-http.service";
-import {Conge} from "../Modeles/conge";
-import {environment} from "../../environments/environment";
+import {TypesHttpService} from "../../configuration-http/types-http.service";
+import {Conge} from "../../Modeles/conge";
+import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {CongesHttpService} from "../configuration-http/conges-http.service";
+import {CongesHttpService} from "../../configuration-http/conges-http.service";
 import * as _moment from 'moment';
-import {ConnexionService} from "../connexion/connexion.service";
-import {Utilisateur} from "../Modeles/utilisateur";
+import {ConnexionService} from "../../connexion/connexion.service";
+import {Utilisateur} from "../../Modeles/utilisateur";
 import {Subscription} from "rxjs";
+import {TableCongesComponent} from './table-conges/table-conges.component';
+import {NavComponent} from '../../nav/nav.component';
 const moment = _moment;
 
 export class date {
@@ -26,6 +28,7 @@ export class date {
   month!: string;
   year!: string;
 }
+
 
 @Component({
   selector: 'app-visualisation-conges',
@@ -48,9 +51,8 @@ export class date {
   ],
 })
 export class VisualisationCongesComponent implements OnInit {
-  congesCumules = '';
-  congesPoses = '';
-  congesRestant = '';
+
+  @ViewChild(TableCongesComponent ) child: TableCongesComponent | undefined ;
 
   typePreccedent: any;
 
@@ -58,12 +60,8 @@ export class VisualisationCongesComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
 
-  users!: Utilisateur[];
-  user!: Utilisateur;
 
-  userSubscription!: Subscription;
 
-  email = new FormControl('', [Validators.required, Validators.email]);
 
   messageErreur = '';
 
@@ -71,15 +69,9 @@ export class VisualisationCongesComponent implements OnInit {
   formulaire: FormGroup;
   messageSucces= '';
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
 
-  constructor(private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService, httpClient: HttpClient) {
+  constructor(private nav: NavComponent, private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService, httpClient: HttpClient) {
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
@@ -99,17 +91,7 @@ export class VisualisationCongesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.userSubscription = this.connexionService.usersSubject.subscribe(
-      (users: Utilisateur[]) => {
-        if(users){
-          this.users = users;
-          this.user = this.users[0];
-          this.congesCumules = this.user.nbCongesCumules;
-          this.congesPoses = this.user.nbCongesPoses;
-          this.congesRestant = this.user.nbCongesRestant;
-        }
-      }
-    );
+
     this._adapter.setLocale('fr');
     this.remplirTypes();
 
@@ -171,12 +153,13 @@ export class VisualisationCongesComponent implements OnInit {
     }
 
     if(this.formulaire.valid){
-      console.log(congeTemp);
       this.congesServices.addConges(congeTemp).subscribe(
         reponse => {
           this.formulaire.reset();
           this.messageSucces = "La demande de congé a bien été prise en compte";
 
+          this.child?.ngAfterViewInit();
+          this.child?.nav.getCongesEnAttente();
         },
         error => {
           this.messageErreur = 'Erreur formulaire incorrecte'

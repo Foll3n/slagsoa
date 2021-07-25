@@ -1,14 +1,14 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Facture} from "../../Modeles/facture";
+import {Facture} from "../../../Modeles/facture";
 import {Categorie, ReponseGetFacture} from "../visualisation.component";
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Categories1 } from "../../Modeles/categorie";
+import { Categories1 } from "../../../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ResultatUpload } from "../../ajouter/ajouter.component";
-import { ConnexionComponent } from "../../connexion/connexion.component";
-import {environment} from "../../../environments/environment";
-import {ConnexionService} from "../../connexion/connexion.service";
+import { ConnexionComponent } from "../../../connexion/connexion.component";
+import {environment} from "../../../../environments/environment";
+import {ConnexionService} from "../../../connexion/connexion.service";
 
 //---------------------------------------------- Class temporaire qui stock la reponse de la requete delete -----------------
 export class reponseDelete{

@@ -1,7 +1,10 @@
 import {Component, OnInit, Output} from '@angular/core';
-import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { EventEmitter } from '@angular/core';
-
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-date-picker',
@@ -10,6 +13,7 @@ import { EventEmitter } from '@angular/core';
 })
 
 export class DatePickerComponent implements OnInit{
+  model!: NgbDateStruct;
 
   //Attributs en lien avec le datePicker
   hoveredDate: NgbDate | null = null;

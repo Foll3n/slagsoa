@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ConnexionComponent } from "../connexion/connexion.component";
+import { ConnexionComponent } from "../../connexion/connexion.component";
 import { HttpClient , HttpHeaders } from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
-import {Utilisateur } from "../Modeles/utilisateur";
-import {environment} from "../../environments/environment";
-import {ConnexionService} from "../connexion/connexion.service";
+import {Utilisateur } from "../../Modeles/utilisateur";
+import {environment} from "../../../environments/environment";
+import {ConnexionService} from "../../connexion/connexion.service";
 
 export class Role{
   role!: string;

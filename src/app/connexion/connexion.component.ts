@@ -1,5 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {Observable, Subject} from 'rxjs';
@@ -37,9 +37,17 @@ export class ConnexionComponent implements OnInit {
   constructor(private connexionHttp: ConnexionHttpService, private http: HttpClient, private router: Router , private userHttp: UtilisateursHttpService, private connexionService: ConnexionService , private nav: NavComponent) {
     this.urlConnexion = environment.urlConnexion;
     this.logForm = new FormGroup({
-      ndc: new FormControl(),
+      ndc: new FormControl('', [Validators.required, Validators.email]),
       mdp: new FormControl()
     });
+  }
+
+  getErrorMessage() {
+    if (this.logForm.hasError('required')) {
+      return 'Champs incorrecte';
+    }
+
+    return this.logForm.hasError('ndc') ? 'Email incorrecte' : '';
   }
 
   ngOnInit(): void {

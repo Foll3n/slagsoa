@@ -6,11 +6,12 @@ import {TableCongesDataSource, TableCongesItem} from './table-conges-datasource'
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Conge} from "../../Modeles/conge";
-import {environment} from "../../../environments/environment";
-import {dateFormatter} from "../../../environments/environment";
-import {CongesHttpService} from "../../configuration-http/conges-http.service";
+import {Conge} from "../../../Modeles/conge";
+import {environment} from "../../../../environments/environment";
+import {dateFormatter} from "../../../../environments/environment";
+import {CongesHttpService} from "../../../configuration-http/conges-http.service";
 import {any} from "codelyzer/util/function";
+import {NavComponent} from '../../../nav/nav.component';
 
 
 @Component({
@@ -33,31 +34,17 @@ export class TableCongesComponent implements AfterViewInit {
     headers: new HttpHeaders()
   };
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef, private modalService: NgbModal, private httpClient: HttpClient, private httpConges: CongesHttpService) {
+  constructor(public nav: NavComponent ,private changeDetectorRefs: ChangeDetectorRef, private modalService: NgbModal, private httpClient: HttpClient, private httpConges: CongesHttpService) {
     this.dataSource = new TableCongesDataSource(httpClient);
   }
 
   ngAfterViewInit(): void {
-
+    console.log('cbo')
     this.httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
     })
     this.recuperationConge();
-    setTimeout(() => {
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.table.dataSource = this.dataSource;
-      // @ts-ignore
-      //this.table.dataSource.data.splice(0, 1);
-      if (this.data) {
-        // @ts-ignore
-        this.table.dataSource.data = [...this.data];
-      }
-      this.dataSource.connect();
-    }, 200);
-
-
   }
 
   //---------------------------------------------MODAL---------------------------------------
@@ -83,6 +70,7 @@ export class TableCongesComponent implements AfterViewInit {
 //---------------------------------------------MODAL---------------------------------------
 
   recuperationConge() {
+    this.data = [];
     if (this.dataSource) {
       let res = this.httpConges.getConges();
       res.subscribe(
@@ -114,6 +102,16 @@ export class TableCongesComponent implements AfterViewInit {
 
             }
           }
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.table.dataSource = this.dataSource;
+          // @ts-ignore
+          //this.table.dataSource.data.splice(0, 1);
+          if (this.data) {
+            // @ts-ignore
+            this.table.dataSource.data = [...this.data];
+          }
+          this.dataSource.connect();
         },
         error => {
           console.log(error);
@@ -125,8 +123,8 @@ export class TableCongesComponent implements AfterViewInit {
   deleteConges() {
     let res = this.httpConges.deleteConges(this.idConges).subscribe(
       reponse => {
-        console.log(reponse);
         this.ngAfterViewInit();
+        this.nav.getCongesEnAttente();
       },
       error => {
         console.log(error);

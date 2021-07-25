@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ConnexionComponent } from './connexion/connexion.component';
-import { VisualisationComponent } from './visualisation/visualisation.component';
-import { AjouterComponent } from './ajouter/ajouter.component';
-import { UtilisateursComponent } from "./utilisateurs/utilisateurs.component";
-import {VisualisationCongesComponent} from "./visualisation-conges/visualisation-conges.component";
-import {CongesEnAttenteComponent} from "./conges-en-attente/conges-en-attente.component";
-import {MonCompteComponent} from "./mon-compte/mon-compte.component";
+import { VisualisationComponent } from './Facture/visualisation/visualisation.component';
+import { AjouterComponent } from './Facture/ajouter/ajouter.component';
+import { UtilisateursComponent } from "./Parametres/utilisateurs/utilisateurs.component";
+import {VisualisationCongesComponent} from "./Conges/visualisation-conges/visualisation-conges.component";
+import {CongesEnAttenteComponent} from "./Conges/conges-en-attente/conges-en-attente.component";
+import {MonCompteComponent} from "./Parametres/mon-compte/mon-compte.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [

@@ -2,19 +2,14 @@
   <section class="padding-fenetre">
   <div class="opacity ">
     <div class="list-group-item">
-      <h1 class="text-info text-center m-3"> Visualisation Conges</h1>
+      <h1 class="text-info text-center m-3 mb-5" > Visualisation Conges</h1 >
       <!------------------------------------- STATISTIQUES -------------------------------------------------------------->
-      <div class="row justify-content-center list-group-horizontal mt-5">
-        <ul class="list-group-item  border-success">Jours de congés cumulés: {{congesCumules}}</ul>
-        <ul class="list-group-item border-danger">Jours de congés posés: {{congesPoses}}</ul>
-        <ul class="list-group-item border-left border-warning">Jours de congés restant: {{congesRestant}}</ul>
-      </div>
-
+      <app-stat-conges></app-stat-conges>
       <!------------------------------------- FIN STATISTIQUES -------------------------------------------------------------->
       <!--
       -->
       <!------------------------------------- MENU -------------------------------------------------------------->
-      <mat-tab-group>
+      <mat-tab-group class="mt-5">
         <!------------------------------------- ONGLET VISUALISATION -------------------------------------------------------------->
         <mat-tab label="Visualisation">
           <div class="mt-5">

@@ -33,7 +33,7 @@ export class NavComponent implements OnInit{
 
 
 
-  notificationsConges = 8;
+  notificationsConges!: number;
   @ViewChild('navdrop') dp: ElementRef | undefined;
 
   ngOnInit() {
@@ -76,13 +76,21 @@ export class NavComponent implements OnInit{
           }
         }
       );
+      this.getCongesEnAttente();
     }
   }
 
   getCongesEnAttente() {
+    let s=0;
     this.cgeService.getConges().subscribe(
       reponse => {
-        console.log(reponse);
+        for(var i=0; i<reponse.listConges.length ; i++){
+          let etatDeChaqueConge = reponse.listConges[i].etat;
+          if(etatDeChaqueConge == "EN_COURS")s++;
+
+        }
+        this.notificationsConges = s;
+        console.log(s);
       },
       error => {
         console.log(error);

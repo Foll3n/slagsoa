@@ -2,18 +2,18 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpHeaders, HttpClient, HttpClientModule} from "@angular/common/http";
 import {stringify} from "@angular/compiler/src/util";
 import {NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
-import { environment} from "../../environments/environment";
+import { environment} from "../../../environments/environment";
 import {Categorie, Resultat} from "../visualisation/visualisation.component";
 // @ts-ignore
 import * as url from "url";
-import {Facture} from "../Modeles/facture";
+import {Facture} from "../../Modeles/facture";
 import {tryCatch} from "rxjs/internal-compatibility";
-import {ConnexionComponent} from "../connexion/connexion.component";
-import {Categories1} from "../Modeles/categorie";
+import {ConnexionComponent} from "../../connexion/connexion.component";
+import {Categories1} from "../../Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DATEPICKER_VALIDATORS} from "@angular/material/datepicker";
 import WebViewer from "@pdftron/webviewer";
-import {ConnexionService} from "../connexion/connexion.service";
+import {ConnexionService} from "../../connexion/connexion.service";
 
 export class ResultatUpload {
   message!: string;
