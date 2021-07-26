@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
+import {HttpClient} from "@angular/common/http";
 
 // TODO: Replace this with your own data model type
 export interface TableCongesEnAttenteItem {
@@ -11,17 +12,17 @@ export interface TableCongesEnAttenteItem {
   commentaire: string;
   type: string;
   etat: string;
-  nom: string;
-  prenom: string;
+  nomUtilisateur: string;
+  prenomUtilisateur: string;
 }
 
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: TableCongesEnAttenteItem[] = [
-  { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'A' , prenom: 'str'},
-  { dateDebut: 'Oxygene', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'H' , prenom: 'str'},
-  { dateDebut: 'Azote', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'B' , prenom: 'str'},
-  { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'D' , prenom: 'str'}
-];
+// // TODO: replace this with real data from your application
+// const EXAMPLE_DATA: TableCongesEnAttenteItem[] = [
+//   { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'A' , prenom: 'str'},
+//   { dateDebut: 'Oxygene', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'H' , prenom: 'str'},
+//   { dateDebut: 'Azote', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'B' , prenom: 'str'},
+//   { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'D' , prenom: 'str'}
+// ];
 
 /**
  * Data source for the TableCongesEnAttente view. This class should
@@ -29,11 +30,12 @@ const EXAMPLE_DATA: TableCongesEnAttenteItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class TableCongesEnAttenteDataSource extends DataSource<TableCongesEnAttenteItem> {
-  data: TableCongesEnAttenteItem[] = EXAMPLE_DATA;
+  // data: TableCongesEnAttenteItem[] = EXAMPLE_DATA;
+  data: TableCongesEnAttenteItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor() {
+  constructor(httpClient: HttpClient) {
     super();
   }
 
@@ -91,8 +93,8 @@ export class TableCongesEnAttenteDataSource extends DataSource<TableCongesEnAtte
         case 'commentaire': return compare(a.commentaire, b.commentaire, isAsc);
         case 'type': return compare((a.type).toUpperCase(), (b.type).toUpperCase(), isAsc);
         case 'etat': return compare((a.etat).toUpperCase(), (b.etat).toUpperCase(), isAsc);
-        case 'nom': return compare((a.nom).toUpperCase(), (b.nom).toUpperCase(), isAsc);
-        case 'prenom': return compare((a.prenom).toUpperCase(), (b.prenom).toUpperCase(), isAsc);
+        case 'nomUtilisateur': return compare((a.nomUtilisateur).toUpperCase(), (b.nomUtilisateur).toUpperCase(), isAsc);
+        case 'prenomUtilisateur': return compare((a.prenomUtilisateur).toUpperCase(), (b.prenomUtilisateur).toUpperCase(), isAsc);
         default: return 0;
       }
     });

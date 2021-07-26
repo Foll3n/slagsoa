@@ -39,7 +39,6 @@ export class TableCongesComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('cbo')
     this.httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))

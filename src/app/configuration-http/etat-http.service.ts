@@ -5,20 +5,21 @@ import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class UtilisateursHttpService {
+export class EtatHttpService {
   constructor(private _httpClient: HttpClient) {
+    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`})
   }
   httpOptions = {
     headers: new HttpHeaders()
   };
 
-  getUtilisateurs(){
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`})
-    const href = environment.urlUtilisateurs;
+  getTypes(){
+    const href = environment.urlEtat;
+    console.log(sessionStorage.getItem('id'))
     const requestUrl =
       `${href}/${sessionStorage.getItem('id')}`;
 
     return this._httpClient.get<any>(requestUrl, this.httpOptions );
-  }
 
+  }
 }

@@ -9,6 +9,17 @@
           <!------------------------------------- ONGLET VISUALISATION DES CONGES EN ATTENTE-------------------------------------------------------------->
           <mat-tab label="Congés en attente">
             <div class="mt-5">
+              <!------------------------------------- FILTRE -------------------------------------------------------------->
+              <mat-form-field appearance="fill">
+                <mat-label>Select an option</mat-label>
+                <mat-select [(value)]="this.etat">
+                  <mat-option>None</mat-option>
+                  <mat-option value="option1">Option 1</mat-option>
+                  <mat-option value="option2">Option 2</mat-option>
+                  <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!------------------------------------- FILTRE -------------------------------------------------------------->
               <app-table-conges-en-attente></app-table-conges-en-attente>
             </div>
           </mat-tab>

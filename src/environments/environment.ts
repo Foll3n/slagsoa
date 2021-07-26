@@ -13,6 +13,7 @@ export const environment = {
   urlConnexion: 'http://5.196.8.160:4000/gateway/APIConnexion/1.0/connexion',
   urlConges: 'http://5.196.8.160:4000/gateway/APIConges/1.0/conges',
   urlTypes: 'http://5.196.8.160:4000/gateway/APIType/1.0/type',
+  urlEtat: 'http://5.196.8.160:4000/gateway/APIEtat/1.0/etat',
 };
 
 export function dateFormatter(date: string){

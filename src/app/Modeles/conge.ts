@@ -6,4 +6,6 @@ export class Conge {
   type!: string;
   commentaire!: string;
   idUtilisateur!: string;
+  nomUtilisateur!: string;
+  prenomUtilisateur!: string;
 }
