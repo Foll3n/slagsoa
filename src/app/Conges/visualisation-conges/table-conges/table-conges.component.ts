@@ -74,13 +74,18 @@ export class TableCongesComponent implements AfterViewInit {
       let res = this.httpConges.getConges();
       res.subscribe(
         resultat => {
-          console.log(resultat)
+          if(sessionStorage.getItem('role') == 'MANAGER'){
+            for(var i=0; i<resultat.listConges.length; i++){
+              if(resultat.listConges[i].idUtilisateur == sessionStorage.getItem('id')){
 
-          for(var i=0; i<resultat.listConges.length; i++){
-            if(resultat.listConges[i].idUtilisateur == sessionStorage.getItem('id')){
-              this.data.push(resultat.listConges[i]);
+                this.data.push(resultat.listConges[i]);
+              }
             }
           }
+          else{
+              this.data = resultat.listConges;
+          }
+
 
           if (this.data) {
             for (let i of this.data) {

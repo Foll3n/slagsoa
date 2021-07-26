@@ -45,15 +45,15 @@
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <a class="dropdown-item" href="conges-en-attente">
-                <div matBadge={{notificationsConges}} matBadgeSize="small" matBadgePosition="before">Congés en
+              <a *ngIf="this.c.isSuperAdmin() && this.c.isLogged()" class="dropdown-item" href="conges-en-attente">
+                <div  matBadge={{notificationsConges}} matBadgeColor="accent" matBadgeSize="small" matBadgePosition="before">Congés en
                   attente
                 </div>
               </a>
               <a class="dropdown-item" href="visualisation-conges">Visualisation Congés</a>
             </mat-expansion-panel>
           </mat-accordion>
-          <mat-accordion>
+          <mat-accordion *ngIf="this.c.isSuperAdmin() && this.c.isLogged()">
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -83,7 +83,7 @@
                   </svg>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <a class="dropdown-item" href="utilisateurs">Utilisateurs</a>
+              <a *ngIf="this.c.isSuperAdmin() && this.c.isLogged()" class="dropdown-item" href="utilisateurs">Utilisateurs</a>
               <a class="dropdown-item" href="mon-compte">Mon compte</a>
             </mat-expansion-panel>
           </mat-accordion>

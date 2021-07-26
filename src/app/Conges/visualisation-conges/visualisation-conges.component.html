@@ -61,8 +61,9 @@
                 <!---------------------------------- Types Conges ------------------------------------------------------------------>
                 <mat-form-field appearance="fill">
                   <mat-label>Type de congé</mat-label>
-                  <select formControlName="typeConge"  matNativeControl required> <!-- (change)="changementEtatCongeExceptionnel(this.formulaire.get('typeConge')!.value)"-->
+                  <select formControlName="typeConge"  matNativeControl required>
                     <!----------------------------- A COMPLETER ------------------------------------------------>
+                    <option></option>
                     <option *ngFor="let t of typesConges">{{t.nom}}</option>
                   </select>
                 </mat-form-field>
@@ -85,7 +86,7 @@
               </div>
               <!---------------------------------- RAISON CONGES EXCEPTIONNEL ------------------------------------------------------------------>
               <mat-form-field class="example-full-width ml-5" appearance="fill"> <!--*ngIf="this.formulaire.get('typeConge')!.value == 'URGENT'"-->
-                <mat-label>Raison du congé exceptionnel</mat-label>
+                <mat-label>Raison du congé</mat-label>
                 <textarea matInput formControlName="raisonConge" placeholder="Ex. Décès, Maladies..." matNativeControl required></textarea>
               </mat-form-field>
 

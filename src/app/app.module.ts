@@ -43,6 +43,7 @@ import {MatCalendar, MatDatepickerInput} from "@angular/material/datepicker";
 import {MatTabGroup, MatTabsModule} from "@angular/material/tabs";
 import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDatepicker, MatDatepickerModule} from "@angular/material/datepicker";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 //--------------------------------------------------------------------------------------------------
 import { CongesEnAttenteComponent } from './Conges/conges-en-attente/conges-en-attente.component';
 import { TableCongesComponent } from './Conges/visualisation-conges/table-conges/table-conges.component';
@@ -57,6 +58,8 @@ import {MatExpansionModule, MatExpansionPanel} from "@angular/material/expansion
 import { MatMenuPanel } from "@angular/material/menu";
 import {ConnexionService} from "./connexion/connexion.service";
 import { StatCongesComponent } from './Conges/visualisation-conges/stat-conges/stat-conges.component';
+import { FicheUtilisateurComponent } from './fiche-utilisateur/fiche-utilisateur.component';
+
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
@@ -83,6 +86,7 @@ import { StatCongesComponent } from './Conges/visualisation-conges/stat-conges/s
     MonCompteComponent,
     DashboardComponent,
     StatCongesComponent,
+    FicheUtilisateurComponent,
   ],
   imports: [
     BrowserModule,

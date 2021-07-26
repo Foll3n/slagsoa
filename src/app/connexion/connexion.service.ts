@@ -60,6 +60,7 @@ export class ConnexionService {
         for(let i of a){
           if(i.id == sessionStorage.getItem(`id`)){
             let a = new Utilisateur()
+            sessionStorage.setItem('role' , i.role);
             a.role = i.role;
             a.grade = i.grade;
             a.nom = i.nom

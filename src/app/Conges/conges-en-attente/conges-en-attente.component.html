@@ -1,4 +1,4 @@
-<app-nav>
+<app-nav *ngIf="this.c.isLogged() && this.c.isSuperAdmin()">
   <section class="padding-fenetre bg-white">
     <div class="opacity ">
       <div class="list-group-item">
@@ -11,13 +11,13 @@
             <div class="mt-5">
               <!------------------------------------- FILTRE -------------------------------------------------------------->
               <mat-form-field appearance="fill">
-                <mat-label>Select an option</mat-label>
-                <mat-select [(value)]="this.etat">
-                  <mat-option>None</mat-option>
-                  <mat-option value="option1">Option 1</mat-option>
-                  <mat-option value="option2">Option 2</mat-option>
-                  <mat-option value="option3">Option 3</mat-option>
-                </mat-select>
+                <mat-label>Type de congé</mat-label>
+                <select matNativeControl [(ngModel)]="this.etat" (change)="changerEtatTableau()">
+                  <!----------------------------- A COMPLETER ------------------------------------------------>
+
+                  <option *ngFor="let e of etats">{{e}}</option>
+                  <option >TOUT</option>
+                </select>
               </mat-form-field>
               <!------------------------------------- FILTRE -------------------------------------------------------------->
               <app-table-conges-en-attente></app-table-conges-en-attente>

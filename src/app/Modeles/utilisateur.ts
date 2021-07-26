@@ -1,4 +1,5 @@
 export class Utilisateur {
+  id!: string;
   role!: string
   grade!: string
   nom!: string

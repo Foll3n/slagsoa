@@ -91,7 +91,7 @@ export class VisualisationCongesComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.formulaire.reset();
     this._adapter.setLocale('fr');
     this.remplirTypes();
 
