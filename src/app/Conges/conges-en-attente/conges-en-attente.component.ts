@@ -3,6 +3,7 @@ import {ConnexionService} from "../../connexion/connexion.service";
 import {TableCongesEnAttenteComponent } from "./table-conges-en-attente/table-conges-en-attente.component";
 import {TypesHttpService} from "../../configuration-http/types-http.service";
 import {EtatHttpService} from "../../configuration-http/etat-http.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-conges-en-attente',

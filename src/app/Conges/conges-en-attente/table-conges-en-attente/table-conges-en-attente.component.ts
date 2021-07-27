@@ -16,6 +16,7 @@ import {Moment} from "moment";
 import {ConnexionService} from "../../../connexion/connexion.service";
 import {Utilisateur} from "../../../Modeles/utilisateur";
 import {UtilisateursHttpService} from "../../../configuration-http/utilisateurs-http.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-table-conges-en-attente',
@@ -46,14 +47,22 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
   };
 
   utilisateurs!: Utilisateur[];
+  formulaire: FormGroup;
 
   constructor(private utilisateurHttpService: UtilisateursHttpService, private c: ConnexionService, public nav: NavComponent, private changeDetectorRefs: ChangeDetectorRef, private modalService: NgbModal, private httpClient: HttpClient, private httpConges: CongesHttpService) {
     if (this.c.isLogged() && this.c.isSuperAdmin()) {
       this.dataSource = new TableCongesEnAttenteDataSource(httpClient);
     }
+    this.formulaire = new FormGroup({
+      choix: new FormControl(),
+      body: new FormControl(),
+      idUtilisateur: new FormControl(),
+      idConge: new FormControl(),
+    });
   }
 
   ngAfterViewInit(): void {
+    this.formulaire.reset();
     if (this.c.isLogged() && this.c.isSuperAdmin()) {
       this.httpOptions.headers = new HttpHeaders({
         'Content-Type': 'application/json',
@@ -65,17 +74,19 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
   }
 
   open(content: any , idConges: string, idUser: string) {
+    this.formulaire.reset();
     for(let i of this.utilisateurs){
       if(i.id == idUser){
         this.utilisateur = i;
+        this.formulaire.get('idUtilisateur')?.setValue(i.id);
       }
     }
     for(let i of this.data){
       if(i.idConges == idConges){
+        this.formulaire.get('idConge')?.setValue(i.idConges);
         this.conge = i;
       }
     }
-    console.log(this.utilisateur, this.conge);
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -173,5 +184,9 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
         console.log(error);
       }
     )
+  }
+
+  reponseConge() {
+    console.log(this.formulaire.value);
   }
 }

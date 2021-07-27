@@ -59,6 +59,7 @@ import { MatMenuPanel } from "@angular/material/menu";
 import {ConnexionService} from "./connexion/connexion.service";
 import { StatCongesComponent } from './Conges/visualisation-conges/stat-conges/stat-conges.component';
 import { FicheUtilisateurComponent } from './fiche-utilisateur/fiche-utilisateur.component';
+import { FicheCongeComponent } from './fiche-conge/fiche-conge.component';
 
 
 //import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
@@ -87,6 +88,7 @@ import { FicheUtilisateurComponent } from './fiche-utilisateur/fiche-utilisateur
     DashboardComponent,
     StatCongesComponent,
     FicheUtilisateurComponent,
+    FicheCongeComponent,
   ],
   imports: [
     BrowserModule,

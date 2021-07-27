@@ -1,0 +1,13 @@
+<mat-card flex-gt-sm>
+  <mat-list>
+    <h3 mat-card-title></h3>
+    <mat-list-item>
+      <mat-icon matListAvatar color="primary">date_range</mat-icon>
+      <h4 matLine>{{this.conge.dateDebut.split(' ')[0]}} - {{this.conge.dateFin.split(' ')[0]}}</h4>
+      <h4 matLine>{{this.conge.dateDebut.split(' ')[2]}} - {{this.conge.dateFin.split(' ')[2]}}</h4>
+      <p matLine>{{this.conge.type}} - {{this.conge.etat}}</p>
+      <p matLine>{{this.conge.commentaire}}</p>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
+
