@@ -1,0 +1,25 @@
+
+
+.case{
+  height: 100px;
+  margin: 10px;
+  border-radius: 10px;
+
+}
+
+.badgeAttention{
+  top:-15px;
+  right : 10%;
+  position: absolute;
+  background: #e8e5e5;
+  padding: 6px;
+  border-radius: 10px;
+  border:2px;
+  border-color: black;
+  cursor: pointer;
+}
+.badgeAttention:hover{
+  background-color: #8bc19a;
+}
+
+

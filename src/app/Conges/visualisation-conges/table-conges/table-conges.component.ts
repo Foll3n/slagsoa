@@ -6,7 +6,7 @@ import {TableCongesDataSource, TableCongesItem} from './table-conges-datasource'
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Conge} from "../../../Modeles/conge";
+import { Conge } from "../../../partage/Modeles/conge";
 import {environment} from "../../../../environments/environment";
 import {dateFormatter} from "../../../../environments/environment";
 import {CongesHttpService} from "../../../configuration-http/conges-http.service";

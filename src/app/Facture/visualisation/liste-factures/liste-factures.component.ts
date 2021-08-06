@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Facture} from "../../../Modeles/facture";
+import {Facture } from "../../../partage/Modeles/facture";
 import {Categorie, ReponseGetFacture} from "../visualisation.component";
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Categories1 } from "../../../Modeles/categorie";
+import { Categories1 } from "../../../partage/Modeles/categorie";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ResultatUpload } from "../../ajouter/ajouter.component";
 import { ConnexionComponent } from "../../../connexion/connexion.component";

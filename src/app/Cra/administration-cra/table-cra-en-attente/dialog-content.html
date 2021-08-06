@@ -1,0 +1,14 @@
+
+<!--Modal pop up pour mettre un message de refus de cra -->
+
+<h2 mat-dialog-title>Ajouter un commentaire</h2>
+<div mat-dialog-content>
+  <p>Ajoutez un commentaire si vous le souhaitez ?</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Commentaire</mat-label>
+    <input matInput [(ngModel)]="data.commentaire">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.commentaire" >Ok</button>
+</div>

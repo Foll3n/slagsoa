@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClientModule, HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Facture} from '../../Modeles/facture';
+import { Facture } from "../../partage/Modeles/facture";
 import { ConnexionComponent } from "../../connexion/connexion.component";
-import { Categories1 } from "../../Modeles/categorie";
+import { Categories1 } from "../../partage/Modeles/categorie";
 import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {environment} from "../../../environments/environment";
 import {ConnexionService} from "../../connexion/connexion.service";
@@ -341,4 +341,6 @@ export class VisualisationComponent implements OnInit {
     }
     this.filtrerFactures();
   }
+
+
 }

@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 import {environment} from "../../environments/environment";
 import { UtilisateursHttpService } from "../configuration-http/utilisateurs-http.service";
-import {Utilisateur} from "../Modeles/utilisateur";
+import {Utilisateur} from "../partage/Modeles/utilisateur";
 import {ConnexionService} from "./connexion.service";
 import {NavComponent} from "../nav/nav.component";
 import {ConnexionHttpService} from "../configuration-http/connexion-http.service";

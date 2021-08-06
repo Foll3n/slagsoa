@@ -1,0 +1,21 @@
+<mat-card flex-gt-sm>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon matListAvatar color="primary">account_box</mat-icon>
+      <h4 matLine>{{this.user.nom.toUpperCase().substr(0,1)}}. {{this.user.prenom.toUpperCase()}}</h4>
+      <p matLine>{{this.user.mail}}</p>
+      <p matLine>{{this.user.role}}</p>
+      <p matLine>{{this.user.grade}}</p>
+      <p matLine>Depuis le {{this.user.dateEntree}}</p>
+    </mat-list-item>
+    <mat-divider matInset></mat-divider>
+    <mat-list-item class=" mt-3">
+      <mat-icon matListAvatar color="primary">calendar_today</mat-icon>
+      <p matLineclass class="alert-warning font-weight-bold small">Jours de congés cumulés: {{this.user.nbCongesCumules}}</p>
+      <p matLineclass class="alert-danger  font-weight-bold small">Jours de congés posés:  {{this.user.nbCongesPoses}}</p>
+      <p matLineclass class="alert-success font-weight-bold small">Jours de congés restant: {{this.user.nbCongesRestant}}</p>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
+
+

@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpHeaders} from "@angular/common/http";
-import { Conge } from "../../../Modeles/conge";
+import { Conge } from "../../../partage/Modeles/conge";
 import { environment } from "../../../../environments/environment";
 
 // TODO: Replace this with your own data model type

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { Type } from "../../Modeles/type";
+import { Type } from "../../partage/Modeles/type";
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -11,13 +11,13 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import 'moment/locale/ja';
 import 'moment/locale/fr';
 import {TypesHttpService} from "../../configuration-http/types-http.service";
-import {Conge} from "../../Modeles/conge";
+import { Conge } from "../../partage/Modeles/conge";
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {CongesHttpService} from "../../configuration-http/conges-http.service";
 import * as _moment from 'moment';
 import {ConnexionService} from "../../connexion/connexion.service";
-import {Utilisateur} from "../../Modeles/utilisateur";
+import { Utilisateur} from "../../partage/Modeles/utilisateur";
 import {Subscription} from "rxjs";
 import {TableCongesComponent} from './table-conges/table-conges.component';
 import {NavComponent} from '../../nav/nav.component';

@@ -1,0 +1,61 @@
+<section class="section-update-projet">
+
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Gifi" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="table-visualisation-projet">
+
+      <!-- projet -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Voir </th>
+        <td mat-cell *matCellDef="let row"> <a (click)="this.setProjet(row)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" [attr.fill]="row.color" class="bi bi-eye clic-oeil" viewBox="0 0 16 16">
+          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+        </svg> </a>
+<!--          aria-expanded="false" aria-controls="target-15"-->
+        </td>
+      </ng-container>
+
+
+      <!-- Commande Column -->
+      <ng-container matColumnDef="code_projet">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Code projet </th>
+        <td mat-cell *matCellDef="let row" class="input-update" >{{row.code_projet}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="mode_realisation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> mode Realisation </th>
+        <td mat-cell *matCellDef="let row"> {{row.modeRealisation}}
+        </td>
+
+      </ng-container>
+      <ng-container matColumnDef="commandes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let row">
+
+        </td>
+
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+      <!-- Quand il n'y a rien qui match avec l'input -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Aucune data ne match avec "{{input.value}}"</td>
+      </tr>
+    </table>
+
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
+  </div>
+
+
+</section>
+<app-update-commande  [projet]="this.currentProjet" (emitter)="reload()"></app-update-commande>
+

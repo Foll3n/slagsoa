@@ -1,0 +1,158 @@
+<div class="container m-auto">
+  <mat-form-field appearance="standard">
+    <mat-label>Filtrer</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Cadre" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      </ng-container>
+
+      <!-- nom Column -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+        <td mat-cell class="p-3" *matCellDef="let row"> {{row.nom}}</td>
+      </ng-container>
+
+      <!-- prenom Column -->
+      <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+        <td mat-cell class="p-3" *matCellDef="let row"> {{row.prenom}} </td>
+      </ng-container>
+
+      <!-- mail Column -->
+      <ng-container matColumnDef="mail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td class="p-3" mat-cell *matCellDef="let row"> {{row.mail}} </td>
+      </ng-container>
+
+      <!-- grade Column -->
+      <ng-container matColumnDef="grade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Grade </th>
+        <td class="p-3" mat-cell *matCellDef="let row"> {{row.grade}} </td>
+      </ng-container>
+      <!-- role Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <td class="p-3" mat-cell *matCellDef="let row"> {{row.role}} </td>
+      </ng-container>
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="dateEntree">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date d'entrée </th>
+        <td class="p-3" mat-cell *matCellDef="let row"> {{row.dateEntree}} </td>
+      </ng-container>
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+        <td class="p-3" mat-cell *matCellDef="let row">
+          <svg (click)="open(content , row)" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="text-success bi bi-person-check" viewBox="0 0 16 16">
+            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Aucun utilisateur n'a été trouvé "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>
+
+
+<!---------------------------------- DEBUT MODAL  ------------------------------------------------------------------>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Formulaire de modification</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <!---------------------------------------- DEBUT DU FORM -------------------------------------------------->
+      <form class="form-group flex-column" appPassValidator (change)="resetMessage()" (submit)="modifierUtilisateur()" [formGroup]="modificationUtilisateur">
+
+        <!---------------------------------------- DEBUT MAIL -------------------------------------------------->
+        <div>
+          <mat-form-field  appearance="outline" class="w-75">
+            <mat-label>Mail</mat-label>
+            <input formControlName="mail" placeholder="{{this.modificationUtilisateur.get('mail')?.value}}" type="email" matInput required>
+            <mat-error>Mail vide, ou syntaxe incorrecte</mat-error>
+          </mat-form-field>
+        </div>
+        <!---------------------------------------- DEBUT NOM PRENOM -------------------------------------------------->
+        <div  class="row m-auto">
+          <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nom</mat-label>
+            <input formControlName="nom" placeholder="{{this.modificationUtilisateur.get('nom')?.value}}"  matInput required>
+            <mat-error>Veuillez insérer le nom</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Prenom</mat-label>
+            <input formControlName="prenom" placeholder="{{this.modificationUtilisateur.get('prenom')?.value}}"  matInput required>
+            <mat-error>Veuillez insérer le prénom</mat-error>
+          </mat-form-field>
+        </div>
+        <!---------------------------------------- DEBUT GRADE ROLE -------------------------------------------------->
+        <div  class="row mb-5 container">
+          <small>Grades</small>
+          <select id="grades" formControlName="grade" class="browser-default custom-select">
+            <option value="{{i}}" *ngFor="let i of this.grades">{{i}}</option>
+          </select>
+
+            <small>Roles</small>
+<!--            <mat-select formControlName="role" required>-->
+<!--              <mat-option value="{{i}}" *ngFor="let i of this.roles">{{i}}</mat-option>-->
+<!--            </mat-select>-->
+            <select id="roles" formControlName="role" class="browser-default custom-select">
+              <option value="{{i}}" *ngFor="let i of this.roles">{{i}}</option>
+            </select>
+
+        </div>
+
+        <!---------------------------------------- DEBUT NBJ CONGES + DATE ENTREE-------------------------------------------------->
+        <div  class="row m-auto">
+          <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nombre de jours de congés cumulés</mat-label>
+            <input type="number" formControlName="nbCongesCumules" placeholder="{{this.modificationUtilisateur.get('nbCongesCumules')?.value}}"  matInput required>
+            <mat-error>Champs obligatoire</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nombre de jours de congés posés</mat-label>
+            <input type="number" formControlName="nbCongesPoses" placeholder="{{this.modificationUtilisateur.get('nbCongesPoses')?.value}}" matInput required>
+            <mat-error>Champs obligatoire</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Nombre de jours de congés restants</mat-label>
+            <input type="number" formControlName="nbCongesRestant" placeholder="{{this.modificationUtilisateur.get('nbCongesRestant')?.value}}"  matInput required>
+            <mat-error>Champs obligatoire</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mr-3">
+            <mat-label>Date d'entrée</mat-label>
+            <input formControlName="dateEntree" placeholder="{{this.modificationUtilisateur.get('dateEntree')?.value}}" matInput required>
+            <mat-error>La date d'entrée est vide ou incorrecte, ex: 12/06/2021</mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+      <p class="alert-success">{{this.message}}</p>
+      <!---------------------------------------- FIN DU FORM -------------------------------------------------->
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+

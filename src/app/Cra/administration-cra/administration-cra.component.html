@@ -1,0 +1,110 @@
+<app-nav>
+  <section class="section-administration-cra">
+
+    <p id="titre-visualisation-cr">Visualisation Comptes rendus</p>
+    <!------------------------------------------------------------------------------------------>
+    <!-------------------Accordéon--------------------->
+    <!------------------------------------------------------------------------------------------>
+
+    <mat-accordion>
+      <!------------------------------------------------------------------------------------------>
+      <!---------Comptes rendus en cours de validation ----------------------->
+      <!------------------------------------------------------------------------------------------>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Comptes rendus en attente de validation
+          </mat-panel-title>
+          <mat-panel-description>
+            {{this.listeCraWaiting.length}} comptes rendus en attente
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <app-table-cra-en-attente (craWeekEmitter)="consulter($event)" [index]="''+1"></app-table-cra-en-attente>
+
+
+
+
+
+
+
+      </mat-expansion-panel>
+
+
+
+
+
+      <!--  <mat-expansion-panel hideToggle>-->
+      <!--    <mat-expansion-panel-header>-->
+      <!--      <mat-panel-title>-->
+      <!--        Comptes rendus en cours de validation-->
+      <!--      </mat-panel-title>-->
+      <!--      <mat-panel-description>-->
+      <!--        {{this.listeCraWaiting.length}} Comptes rendus en attente-->
+      <!--      </mat-panel-description>-->
+      <!--    </mat-expansion-panel-header>-->
+      <!--    <table mdbTable class="z-depth-1" *ngIf="this.listeCraWaiting.length > 0">-->
+      <!--      <thead >-->
+      <!--      <tr>-->
+      <!--        <th *ngFor="let col of headTableElements;-->
+      <!--         let i = index" scope="col"-->
+      <!--            [mdbTableSort]="headTableElements"-->
+      <!--            [sortBy]="headTableElements[i]">{{col | titlecase}}-->
+      <!--          <mdb-icon fas icon="sort"></mdb-icon>-->
+      <!--        </th>-->
+      <!--      </tr>-->
+      <!--      </thead>-->
+      <!--      <tbody>-->
+      <!--      <tr *ngFor="let cra of this.listeCraWaiting" >-->
+      <!--        &lt;!&ndash;          <th scope="row">{{ cra.dateStart }}</th>&ndash;&gt;-->
+      <!--        <td >{{ cra.dateStart  }}</td>-->
+      <!--        <td>{{ cra.dateEnd  }}</td>-->
+      <!--        <td>{{ cra.nomUsername  }}</td>-->
+      <!--        <td>{{ cra.prenomUsername  }}</td>-->
+      <!--        <td>-->
+      <!--          <button type="button" (click)="consulter(cra)" class="btn btn-dark">Consulter</button>-->
+      <!--          <button type="button" (click)="validerCra(cra)" class="btn btn-success">Valider</button>-->
+      <!--          <button type="button" (click)="refuserCra(cra)" class="btn btn-danger">Refuser</button>-->
+
+      <!--        </td>-->
+      <!--      </tr>-->
+      <!--      </tbody>-->
+      <!--    </table>-->
+      <!--  </mat-expansion-panel>-->
+      <!------------------------------------------------------------------------------------------>
+      <!---------Comptes rendus validés---------------------->
+      <!------------------------------------------------------------------------------------------>
+
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Comptes rendus validés
+          </mat-panel-title>
+          <mat-panel-description>
+            {{this.listeCraValidate.length}} comptes rendus validés
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <app-table-cra-en-attente (craWeekEmitter)="consulter($event)" [index]="'' + 2"></app-table-cra-en-attente>
+
+
+
+
+
+
+
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+    <!------------------------------------------------------------------------------------------>
+    <!---------Permet d'afficher le CRA à la semaine sans le nom de projet à coté pour le moment ----------------------->
+    <!------------------------------------------------------------------------------------------>
+
+    <app-compte-rendu-vue  [craWeek]="this.actualWeek" *ngIf="this.actualWeek"></app-compte-rendu-vue>
+
+  </section>
+
+</app-nav>

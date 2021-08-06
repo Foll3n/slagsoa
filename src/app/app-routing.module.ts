@@ -8,8 +8,20 @@ import {VisualisationCongesComponent} from "./Conges/visualisation-conges/visual
 import {CongesEnAttenteComponent} from "./Conges/conges-en-attente/conges-en-attente.component";
 import {MonCompteComponent} from "./Parametres/mon-compte/mon-compte.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {AdministrationProjetComponent} from "./Cra/administration-cra/administration-projet/administration-projet.component";
+import {CalendarMounthComponent} from "./Cra/calendar-mounth/calendar-mounth.component";
+import {CompteRenduActiviteComponent} from "./Cra/compte-rendu-activite/compte-rendu-activite.component";
+import {AdministrationCraComponent} from "./Cra/administration-cra/administration-cra.component";
+import {VisualisationProjetComComponent} from "./Cra/administration-cra/visualisation-projet-com/visualisation-projet-com.component";
+import {UpdateProjectComponent} from "./Cra/administration-cra/update-project/update-project.component";
 
 const routes: Routes = [
+  { path: 'develop', component : UpdateProjectComponent},
+  { path: 'administration-projet', component : AdministrationProjetComponent},
+  { path: 'test', component : VisualisationProjetComComponent},
+  { path: 'calendar', component : CalendarMounthComponent},
+  { path: 'compte-rendu-activite', component : CompteRenduActiviteComponent},
+  { path: 'administration-cra', component : AdministrationCraComponent},
   { path: 'connexion', component: ConnexionComponent },
   { path: 'visualisation', component: VisualisationComponent },
   { path: 'ajouter', component: AjouterComponent },

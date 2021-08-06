@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subject } from "rxjs";
-import {Utilisateur} from "../Modeles/utilisateur";
+import {Utilisateur} from "../partage/Modeles/utilisateur";
 import {HttpClient} from "@angular/common/http";
 import {UtilisateursHttpService} from "../configuration-http/utilisateurs-http.service";
 import {dateFormatter} from "../../environments/environment";

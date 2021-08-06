@@ -1,0 +1,27 @@
+<app-nav>
+  <section class="section-administration-projet">
+    <p id="titre-administration">Page d'administration</p>
+
+
+    <!------------------------------------------------------------------------------------------>
+    <!---------mat tab permet d'avoir deux slides pouvant glisser de gauche à droite ----------------------->
+    <!------------------------------------------------------------------------------------------>
+    <mat-tab-group>
+      <mat-tab label="Ajouter un projet" >
+        <!--    Composant pouvant ajouter un projet-->
+        <app-add-projet></app-add-projet>
+      </mat-tab>
+      <mat-tab label="Ajouter une commande">
+        <!--    composant permettant d'ajouter une commande-->
+        <app-add-commande></app-add-commande>
+      </mat-tab>
+      <mat-tab label="Visualisation projet / commande">
+<!--        <app-visualisation-projet-com></app-visualisation-projet-com>-->
+        <app-update-project></app-update-project>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </section>
+
+</app-nav>

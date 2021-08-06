@@ -4,7 +4,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 import {TableCongesEnAttenteDataSource, TableCongesEnAttenteItem} from './table-conges-en-attente-datasource';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Conge} from "../../../Modeles/conge";
+import { Conge } from "../../../partage/Modeles/conge";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {NavComponent} from "../../../nav/nav.component";
 import {CongesHttpService} from "../../../configuration-http/conges-http.service";
@@ -14,7 +14,7 @@ import {dateFormatter} from "../../../../environments/environment";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {Moment} from "moment";
 import {ConnexionService} from "../../../connexion/connexion.service";
-import {Utilisateur} from "../../../Modeles/utilisateur";
+import { Utilisateur } from "../../../partage/Modeles/utilisateur";
 import {UtilisateursHttpService} from "../../../configuration-http/utilisateurs-http.service";
 import {FormControl, FormGroup} from "@angular/forms";
 
@@ -57,11 +57,12 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
       choix: new FormControl(),
       body: new FormControl(),
       idUtilisateur: new FormControl(),
-      idConge: new FormControl(),
+      idConges: new FormControl(),
     });
   }
 
   ngAfterViewInit(): void {
+    this.c.chargerUtilisateur();
     this.formulaire.reset();
     if (this.c.isLogged() && this.c.isSuperAdmin()) {
       this.httpOptions.headers = new HttpHeaders({
@@ -83,7 +84,7 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
     }
     for(let i of this.data){
       if(i.idConges == idConges){
-        this.formulaire.get('idConge')?.setValue(i.idConges);
+        this.formulaire.get('idConges')?.setValue(i.idConges);
         this.conge = i;
       }
     }
@@ -187,6 +188,14 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
   }
 
   reponseConge() {
-    console.log(this.formulaire.value);
+    this.httpConges.responseConges(this.formulaire.value).subscribe(
+      reponse=> {
+        this.ngAfterViewInit();
+        this.modalService.dismissAll();
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }

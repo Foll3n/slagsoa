@@ -1,0 +1,195 @@
+.decalage {
+  margin-right: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  z-index : 1000;
+
+}
+
+.mat-grid-tile {
+  background-color: #5b5c68;
+
+}
+
+#jour {
+  text-align: center;
+}
+
+.mat-grid-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+
+
+.jourSemaine {
+  text-align: center;
+  height: 50px;
+}
+
+.colonneJour {
+  border-radius: 10px;
+  background-color: #5b5c68;
+  padding: 10px;
+}
+
+.d-flex flex-column {
+  vertical-align: middle;
+}
+
+.pbot {
+  padding-bottom: 200px;
+}
+
+.case {
+  height: 100px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+
+
+.decalageNomProjetHaut {
+  height: 70px;
+  margin: 10px;
+}
+
+.jourSemaine {
+  text-align: center;
+  height: 50px;
+  position: relative;
+
+
+}
+
+.textJour {
+  font-size: 30px;
+  color: white;
+}
+
+@media (400px <= width <= 700px) {
+  #designDays {
+    display: inline-block;
+    height: 60px;
+    width: 30px;
+  }
+
+
+}
+
+.mobile-view1 {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  background-color: red;
+}
+
+
+.nomCommandeResponsive {
+  display: inline-block;
+
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+  border: 1px;
+
+
+}
+
+.viewCommande {
+  display: none;
+}
+
+.tesst {
+
+}
+
+.jour-actuel {
+  border-bottom: 2px white solid;
+}
+
+.date-jour-afichage {
+  font-size: 32px;
+  margin: 10px;
+}
+
+.info-semaine {
+  font-size: 20px;
+  margin: 10px;
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+  border: 1px;
+}
+.topCra{
+  margin: 20px;
+}
+.add-commande {
+  display: inline-block;
+  padding: 2px;
+  margin: 0px;
+  position: absolute;
+  right: 5%;
+  border-radius: 10px;
+  background: #C9DAE3;
+}
+.enregistrer{
+  display: inline-block;
+  padding: 5px;
+  margin: 0px;
+  position: absolute;
+  right: 5%;
+  background: #C9DAE3;
+  color: #053F5E;
+}
+.set-status{
+  display: inline-block;
+  padding: 5px;
+  margin: 0px;
+  position: absolute;
+  right: 12%;
+  background: #C9DAE3;
+  color: #053F5E;
+
+}
+//.message-status{
+//  display: inline-block;
+//  padding: 10px;
+//  margin: 0px;
+//  position: absolute;
+//  right: 5%;
+//
+//}
+
+.commande-responsive{
+
+  padding: 10px;
+  margin-bottom: 20px;
+
+
+}
+
+.wait-notification{
+  color:blue;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.valid-notification{
+  color:green;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.notification-cra{
+    display: inline-block;
+    padding-top: 60px;
+    position: absolute;
+    right: 5%;
+
+    border-radius: 10px;
+
+
+}

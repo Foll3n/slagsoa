@@ -1,0 +1,31 @@
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------->
+<!--------------Affichage d'une case----------------------------------->
+<!------------------------------------------------------------------------------------------------------------------------->
+
+<div class="p-2" class="case" [ngClass]="{'list-group-item' : true}" style="background-color:{{color}}" >
+
+<!--  -------------------------------------------------------------------------------------------------------------------------------------->
+<!--  badge permettant de mettre la durée a 1 quand on clique dessus et de nous avertir que la case na pas été remplie-->
+  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+
+  <span (click)="setDureeToOne()" class="badgeAttention" *ngIf="this.duree == 0 && checkDureeTotale() && this.status < 1">Remplir</span>
+
+
+
+  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+<!--Formulaire permettant de saisir la durée associée au projet -->
+  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+
+      <mat-form-field class="w-75" color="warn" > <!-- le vert intérieur !-->
+        <mat-label>Duree</mat-label>
+        <input [disabled]="this.status > 0" pattern="^d{0,1}$" type="number" min="0" max="1" step="0.1" matInput size="2" maxlength="3" placeholder="0.0" [(ngModel)]="this.dureeString" (ngModelChange)="onModifyCase()">
+
+      </mat-form-field>
+
+
+</div>
+

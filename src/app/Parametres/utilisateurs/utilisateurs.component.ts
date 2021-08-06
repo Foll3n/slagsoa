@@ -1,27 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnexionComponent } from "../../connexion/connexion.component";
 import { HttpClient , HttpHeaders } from "@angular/common/http";
-import {FormControl, FormGroup} from "@angular/forms";
-import {Utilisateur } from "../../Modeles/utilisateur";
-import {environment} from "../../../environments/environment";
+import { RoleHttpService } from "../../configuration-http/role-http";
+import { GradeHttpService } from "../../configuration-http/grade-http";
+import { UtilisateursHttpService } from "../../configuration-http/utilisateurs-http.service";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators
+} from "@angular/forms";
+import { DateValidator } from "../../partage/Validators/date.validator";
 import {ConnexionService} from "../../connexion/connexion.service";
-
-export class Role{
-  role!: string;
-}
-export class ReponseUtilisateur{
-  message!: any;
-  reponse!: string;
-}
-
-
-
-
-export class Reponse{
-  message!: string;
-  reponse!: string;
-}
-
+import {formatDate} from "@angular/common";
+import {Utilisateur} from "../../partage/Modeles/utilisateur";
+// import { PassValidator } from "../../partage/Validators/passValidator";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -30,119 +23,130 @@ export class Reponse{
 })
 export class UtilisateursComponent implements OnInit {
 
-  roles!: string[];
+  //------------------------------- Attributs ----------------------------
+
+  roles: string[] = [];
+  grades: string[] = [];
   utilisateurs!: Utilisateur[];
-  urlRole = '';
-  urlUtilisateurs = '';
 
-  ru = new ReponseUtilisateur();
-  message = "";
-  active = 'top';
 
-  httpOptions = {
-    headers: new HttpHeaders()
-  };
+  //------------------------------- FORMULAIRE ----------------------------
 
   inscriptionForm!: FormGroup;
-  modificationUtilisateur!: FormGroup;
-  constructor(public http: HttpClient, public con: ConnexionService) {
-    this.urlRole= environment.urlRole;
-    this.urlUtilisateurs= environment.urlUtilisateurs;
+
+  //------------------------------- CONSTRUCTEUR ----------------------------
+  message!: string;
+  messageErreur!: string;
+
+  constructor(public http: HttpClient, public utilisateurHttpService: UtilisateursHttpService , public con: ConnexionService, public roleHttpService: RoleHttpService, public gradeHttpService: GradeHttpService) {
+
   }
 
+  //------------------------------- ngOnInit ----------------------------
   ngOnInit(): void {
+
+    //------------------------------- inscriptionForm ----------------------------
     this.inscriptionForm = new FormGroup({
-      ndc: new FormControl(),
-      mdp: new FormControl(),
-      mdp1: new FormControl(),
-      role: new FormControl()
-    });
-    this.modificationUtilisateur = new FormGroup({
-      ndc: new FormControl(),
-      mdp: new FormControl(),
-      mdp1: new FormControl(),
-      role: new FormControl()
-    });
-    this.httpOptions.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-    })
-    this.roles = [];
-    this.con.testLogin();
-    this.chargerRoles();
-    this.chargerUtilisateurs();
+      mail: new FormControl('',[Validators.required, Validators.email]),
+      prenom: new FormControl('',Validators.required),
+      nom: new FormControl('',Validators.required),
+      dateEntree: new FormControl('',[Validators.required,DateValidator.dateVaidator]),
+      nbCongesCumules: new FormControl('',Validators.required),
+      nbCongesPoses: new FormControl(),
+      nbCongesRestant: new FormControl(),
+      grade: new FormControl('',Validators.required),
+      role: new FormControl('',Validators.required),
+      mdp: new FormControl('',Validators.required),
+      confirmerMdp: new FormControl('',[Validators.required]),
+    }, );
+    // }, {validators: PassValidator} );
+
+
+    if(this.con.isLogged() && this.con.isSuperAdmin()){
+      //-------------------------------------- CHARGEMENT DES DONNEES SI CO -----------------------------------
+      this.chargerRoles();
+      this.chargerGrades();
+      this.chargerUtilisateurs();
+    }
+  }
+
+  get mdp(){
+    return this.inscriptionForm.get('mdp');
+  }
+  get confirmerMdp(){
+    return this.inscriptionForm.get('confirmerMdp');
   }
 
 
-//---------------------------------------------------- Roles --------------------------------------------------------------------
-  chargerRoles(){
-    this.message = '';
-    this.http.get(this.urlRole, this.httpOptions).subscribe(
-      reponse => {
-        // @ts-ignore
-        this.ru = reponse;
-        if(this.ru.reponse == 'OK'){
-          for(var i=0; i<this.ru.message.length; i++){
-            this.roles.push(this.ru.message[i].role);
-          }
+  mdpValide(){
+    if(this.mdp && this.confirmerMdp && this.mdp.value && this.confirmerMdp.value){
+      return(this.mdp?.value == this.confirmerMdp?.value);
+    }
+    return false;
+  }
+//---------------------------------------------------- CHARGEMENT --------------------------------------------------------------------
+  chargerGrades(){
+    this.grades = [];
+    this.gradeHttpService.getGrade().subscribe(
+      reponse=> {
+        let listeGrades = reponse.outputGrades;
+        for(let i of listeGrades){
+          this.grades.push(i.nom);
         }
-        else{
-          this.message = "Soucis côté serveur";
-        }
-
+        console.log(this.grades)
       },
-      error =>  {
-        this.message = ('Le serveur est inaccessbile pour le moment');
+      error =>{
+        console.log(error);
       }
     )
   }
-
-
+  chargerUtilisateurs(){
+    this.utilisateurHttpService.getUtilisateurs().subscribe(
+      reponse=> {
+        this.utilisateurs = reponse.getAllutilisateurOutput;
+      },
+      error =>{
+        console.log(error);
+      }
+    )
+  }
+  chargerRoles() {
+    this.roleHttpService.getRole().subscribe(
+      reponse=> {
+        let listeRoles = reponse.outputRoles;
+        for(let i of listeRoles){
+          this.roles.push(i.nom);
+        }
+        console.log(this.roles)
+      },
+      error =>{
+        console.log(error);
+      }
+    )
+  }
   //---------------------------------------------------- UTILISATEURS --------------------------------------------------------------------
 
 
-  chargerUtilisateurs(){
-    this.message = '';
-    this.http.get(this.urlUtilisateurs, this.httpOptions).subscribe(
-      reponse => {
-        // @ts-ignore
-        this.ru = reponse;
-        if(this.ru.reponse == 'OK'){
-          this.utilisateurs = this.ru.message;
-        }
-        else{
-          this.message = "Soucis côté serveur";
-        }
 
-      },
-      error =>  {
-        this.message = ('Le serveur est inaccessbile pour le moment');
-      }
-    )
-
-  }
 
   inscrireUtilisateur(){
-    //let u = new Utilisateur();
-    // u.ndc = this.inscriptionForm.get('ndc')?.value;
-    // u.mdp = this.inscriptionForm.get('mdp')?.value;
-    // u.role = this.inscriptionForm.get('role')?.value;
-    // let b =  JSON.stringify(u) ;
-
-    // this.http.post(this.urlUtilisateurs, b, this.httpOptions).subscribe(
-    //   reponse=> {
-    //       let r= new Reponse();
-    //       // @ts-ignore
-    //       r= reponse;
-    //       if(r.reponse == "OK"){
-    //         this.inscriptionForm.reset();
-    //         //this.message = "L'utilisateur " + u.ndc + " a bien été inscrit, son role est " + u.role;
-    //       }
-    //   },
-    //   error => {
-    //     this.message = error;
-    //   }
-    // )
+    this.inscriptionForm.get('nbCongesPoses')?.setValue('0');
+    this.inscriptionForm.get('nbCongesRestant')?.setValue('0');
+    let nbc = this.inscriptionForm.get('nbCongesCumules');
+    let date = this.inscriptionForm.get('dateEntree');
+    let vDate: string = date?.value;
+    date?.setValue(`${vDate.split('/')[2]}-${vDate.split('/')[1]}-${vDate.split('/')[0]}`);
+    nbc?.setValue(''+ nbc?.value);
+    this.utilisateurHttpService.addUtilisateurs(this.inscriptionForm.value).subscribe(
+      reponse=> {
+        this.message = "L'utilisateur a bien été créé"
+      },
+      error => {
+        this.messageErreur = error;
+      }
+    )
+    console.log(this.inscriptionForm);
+    this.inscriptionForm.reset();
   }
 
   modifierUtilisateur(){
@@ -151,5 +155,9 @@ export class UtilisateursComponent implements OnInit {
 
   supprimerUtilisateur(){
 
+  }
+
+  resetMessage() {
+    this.message = '';
   }
 }

@@ -37,7 +37,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef class="perso m-1"> Actions</th>
       <td mat-cell *matCellDef="let row">
-        <button mat-button title="Annuler" (click)="open(content, row.idConges, row.idUtilisateur)"
+        <button *ngIf="row.etat == 'EN_COURS' " mat-button title="Annuler" (click)="open(content, row.idConges, row.idUtilisateur)"
                 class="btn btn-outline-light text-success font-weight-bold">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
@@ -65,7 +65,7 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <app-fiche-utilisateur [user]="this.utilisateur" [conge]="this.conge"></app-fiche-utilisateur>
+    <app-fiche-utilisateur [user]="this.utilisateur"></app-fiche-utilisateur>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

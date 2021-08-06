@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Utilisateur} from '../../../Modeles/utilisateur';
+import { Utilisateur } from "../../../partage/Modeles/utilisateur";
 import {Subscription} from 'rxjs';
 import {ConnexionService} from '../../../connexion/connexion.service';
 

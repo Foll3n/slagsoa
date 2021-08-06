@@ -1,0 +1,64 @@
+
+
+
+<!--affichage du calendrier à la semaine sans les comptes rendus (les cases à remplir avec la durée) seront remplies dans <app-compte-rendu> -->
+
+<!--affichage des commandes dans un premier temps-->
+  <div [ngClass]="{ 'd-flex flex-row flex-wrap': width >= 768, 'mobile-view': width < 768}">
+    <div class="p-2" id="nomSousProjet">
+      <div class="d-flex flex-column ">
+        <div [ngClass]="{ 'decalageNomProjetHaut': width >= 768, 'viewCommande': width < 768 }" class="p-2">
+        </div>
+        <div *ngFor="let com of this.craWeek.listeCommandesWeek" [ngClass]="{'list-group-item' : true}"
+             [ngClass]="{ 'nomCommande': width >= 768, 'viewCommande': width < 768 }"
+             style="background-color:{{com.color}}">
+          <button *ngIf="canDelete()" (click)="deleteLine(com)" color="primary" mat-raised-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <p>{{ com.num_com }} </p>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let cra of craWeek.listeCra" class="p-2 " [ngClass]="{ 'width': width >= 768}">
+      <div  class="colonneJour">
+<!--        class="d-flex flex-column"-->
+        <div class="p-2 " class="jourSemaine"><p [ngClass]="{ 'jour-actuel': cra.date.getDate() == getDay().getDate() && cra.date.getMonth() == getDay().getMonth()}"
+                                                class="textJour">{{ afficherjour(cra.date.getDay())}} {{cra.date.getDate()}}</p>
+        </div>
+
+        <div class="div-span">
+          <span *ngIf="cra.duree_totale <  (1- cra.statusConge) && cra.statusConge<1" class="badge badge-info">Non complet</span>
+          <span *ngIf="cra.duree_totale == (1 - cra.statusConge) && cra.statusConge<1" class="badge badge-success">Complet</span>
+          <span *ngIf="cra.duree_totale> (1 - cra.statusConge) && cra.statusConge<1" class="badge badge-danger">Invalide</span>
+          <span *ngIf="cra.statusConge>=0.5" class="badge badge-info badge-conge">Congé</span>
+
+                </div>
+
+
+<!--        affiche chaque compte rendu (case) -->
+<!--        <div *ngIf="cra.statusConge==0.5">-->
+
+        <div *ngIf="cra.statusConge<1">
+          <app-compte-rendu  *ngFor="let sp of cra.listeCr ; let i = index"
+                             [cra] = cra
+                             [color]=sp.color
+                             [duree]=sp.duree
+                             [idCra]="sp.idCra"
+                             [index]="i"
+                             [indexWeek]="this.index"
+                             [nomSp]="sp.numCommande"
+                             [status]="this.getStatus()">
+          </app-compte-rendu>
+        </div>
+
+<!--        </div>-->
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+

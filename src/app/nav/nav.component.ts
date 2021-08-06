@@ -10,6 +10,8 @@ import { MatIcon } from "@angular/material/icon";
 import {Utilisateur} from "../Modeles/utilisateur";
 import {ConnexionService} from "../connexion/connexion.service";
 import {CongesHttpService} from "../configuration-http/conges-http.service";
+import {CraWaitingService} from "../services/craWaiting.service";
+import {CraWeekInsert} from "../Cra/models/logCra/craWeekInsert";
 
 
 @Component({
@@ -31,8 +33,8 @@ export class NavComponent implements OnInit{
 
   userSubscription!: Subscription;
 
-
-
+  notificationCraSubscription!: Subscription;
+  notificationsCraWait!:number;
   notificationsConges!: number;
   @ViewChild('navdrop') dp: ElementRef | undefined;
 
@@ -52,10 +54,13 @@ export class NavComponent implements OnInit{
     this.dp.nativeElement.classList.toggle("visibility");
   }
 
-  constructor(public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver) {
+  constructor(public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver, private craWaitService: CraWaitingService) {
     if(this.c.isLogged()){
       console.log('ici constructor');
       this.c.chargerUtilisateur();
+      this.notificationCraSubscription = this.craWaitService.waitingSubject.subscribe((res: CraWeekInsert[] )=> {
+          this.notificationsCraWait = res.length;
+      });
     }
     // c.chargerUtilisateur();
     // setTimeout(() => {this.user = c.getUtilisateur();}, 200);

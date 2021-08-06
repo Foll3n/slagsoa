@@ -1,5 +1,5 @@
-<app-nav>
-<section class="padding-fenetre bg-white"*ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
+<app-nav >
+<section class="padding-fenetre"*ngIf="this.con.isLogged() && this.con.isSuperAdmin()">
       <h1 class="text-info text-center m-3"> Conges en attente</h1>
 
       <!------------------------------------- MENU -------------------------------------------------------------->
@@ -7,63 +7,87 @@
         <!------------------------------------- ONGLET VISUALISATION DES CONGES EN ATTENTE-------------------------------------------------------------->
         <mat-tab label="Gestion utilisateurs">
           <!---------------------------------------------- DEBUT TAB GESTION DES UTILISATEURS ----------------------------------------->
-          <div class="mt-5">
-            <table class="table table-striped table-responsive ml-4 pl-4 thead-dark">
-              <thead>
-              <tr>
-                <th scope="col">ndc</th>
-                <th scope="col">role</th>
-                <th scpope="col">Actions</th>
-              </tr>
-              </thead>
-
-              <tbody>
-
-              <tr *ngFor="let u of this.utilisateurs">
-                <!--<td>{{u.ndc}}</td>-->
-                <td><small>{{u.role}}</small></td>
-
-                <td class="overflow-hidden">
-                  <div ngbDropdown container="body">
-                    <button class="btn btn-outline-info btn-sm mt-3" ngbDropdownToggle *ngIf="this.con.isLogged()">Actions
-                    </button>
-                    <div ngbDropdownMenu>
-                      <button ngbDropdownItem >Voir plus</button>
-                      <div *ngIf="this.con.isLogged() && this.con.write()" class="dropdown-divider"></div>
-                      <button *ngIf="this.con.isLogged() && this.con.write()"ngbDropdownItem>Supprimer
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+          <app-table-utilisateurs [utilisateurs]="utilisateurs" [grades]="grades" [roles]="roles"></app-table-utilisateurs>
           <!---------------------------------------------- FIN TAB GESTION DES UTILISATEURS ----------------------------------------->
         </mat-tab>
         <!------------------------------------- ONGLET INSCRIPTION UTILISATEUR -------------------------------------------------------------->
         <mat-tab label="Inscription">
           <!------------------------------------- DEBUT FORMULAIRE INSCRIPTION UTILISATEUR -------------------------------------------------------------->
-          <form [formGroup]="inscriptionForm" class="container form-group mt-4" (submit)="inscrireUtilisateur()">
-            <small>Nom de compte</small>
-            <input  formControlName="ndc" class="form-control border-success" [ngClass]="{'border-danger' : (this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null) }">
-            <small>Mot de passe</small>
-            <input formControlName="mdp" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
-            <small>Confirmer mot de passe</small>
-            <input formControlName="mdp1" type="password" class="form-control border-success" [ngClass]="{'border-danger' : !(this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value))}">
-            <small class="mr-1">role</small>
-            <select formControlName="role" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (this.inscriptionForm.get('role')!.value == '' || this.inscriptionForm.get('role')!.value == null) }">
-              <option class='option' *ngFor='let option of this.roles' [value]="option">{{option}}</option>
-            </select>
-            <small class="mr-1">grade</small>
-            <select formControlName="grade" class='select-option mt-2 mr-2 text-info btn border-success' [ngClass]="{'border-danger' : (this.inscriptionForm.get('role')!.value == '' || this.inscriptionForm.get('role')!.value == null) }">
-              <option class='option' *ngFor='let option of this.roles' [value]="option">{{option}}</option>
-            </select>
-            <br>
-            <p class="alert-danger">{{message}}</p>
-            <input type="submit" class="btn btn-outline-info mt-3" *ngIf="( (!(this.inscriptionForm.get('ndc')!.value== '' || this.inscriptionForm.get('ndc') == null))     &&    (this.inscriptionForm.get('mdp')!.value!= '' &&this.inscriptionForm.get('mdp')!.value!= null && (this.inscriptionForm.get('mdp')!.value == this.inscriptionForm.get('mdp1')!.value)) && ((this.inscriptionForm.get('role')!.value != null) && (this.inscriptionForm.get('role')!.value != ''))  )">
+          <div class="container row justify-content-center mt-5">
+            <!---------------------------------------- DEBUT DU FORM -------------------------------------------------->
+            <form class="form-group flex-column" appPassValidator (change)="resetMessage()" (submit)="inscrireUtilisateur()" [formGroup]="inscriptionForm">
+              <mat-card-title class="mt-2 mb-2">Formulaire d'inscription</mat-card-title>
+              <!---------------------------------------- DEBUT MAIL -------------------------------------------------->
+              <div>
+                <mat-form-field  appearance="outline" class="w-75">
+                  <mat-label>Mail</mat-label>
+                  <input formControlName="mail" type="email" matInput required>
+                  <mat-error>Mail vide, ou syntaxe incorrecte</mat-error>
+                </mat-form-field>
+              </div>
+              <!---------------------------------------- DEBUT NOM PRENOM -------------------------------------------------->
+              <div  class="row m-auto">
+                <mat-form-field appearance="outline" class="mr-3">
+                  <mat-label>Nom</mat-label>
+                  <input formControlName="nom" matInput required>
+                  <mat-error>Veuillez insérer le nom</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Prenom</mat-label>
+                  <input formControlName="prenom" matInput required>
+                  <mat-error>Veuillez insérer le prénom</mat-error>
+                </mat-form-field>
+              </div>
+              <!---------------------------------------- DEBUT MDP et CONFIRMERMDP -------------------------------------------------->
+              <div  class="row m-auto" id="mdp">
+                <mat-form-field appearance="outline" class="mr-3">
+                  <mat-label>Mot de passe</mat-label>
+                  <input type="password" formControlName="mdp" matInput required>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Retaper le mot de passe</mat-label>
+                  <input type="password" formControlName="confirmerMdp" matInput required>
+                </mat-form-field>
+              </div>
+              <label for="mdp" *ngIf="this.mdp && this.confirmerMdp && this.mdp?.value && this.confirmerMdp?.value && !mdpValide()" class="text-danger mb-5">Mot de passe incorrecte</label>
+              <!---------------------------------------- DEBUT GRADE ROLE -------------------------------------------------->
+              <div  class="row m-auto">
+                <mat-form-field appearance="outline" class="mr-3" required>
+                  <mat-label>Grade</mat-label>
+                  <mat-select formControlName="grade" required>
+                    <mat-option value="{{i}}" *ngFor="let i of this.grades">{{i}}</mat-option>
+                  </mat-select>
+                  <mat-error>Veuillez séléctionner un grade</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-3" required>
+                  <mat-label>Role</mat-label>
+                  <mat-select formControlName="role" required>
+                    <mat-option value="{{i}}" *ngFor="let i of this.roles">{{i}}</mat-option>
+                  </mat-select>
+                  <mat-error>Veuillez séléctionner un role</mat-error>
+                </mat-form-field>
+              </div>
 
-          </form>
+              <!---------------------------------------- DEBUT NBJ CONGES + DATE ENTREE-------------------------------------------------->
+              <div  class="row m-auto">
+                <mat-form-field appearance="outline" class="mr-3">
+                  <mat-label>Nombre de jours de congés</mat-label>
+                  <input type="number" formControlName="nbCongesCumules" matInput required>
+                  <mat-error>Le nombre de jours de congés est vide ou incorrecte</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mr-3">
+                  <mat-label>Date d'entrée</mat-label>
+                  <input formControlName="dateEntree" placeholder="DD/MM/YYYY" matInput required>
+                  <mat-error>La date d'entrée est vide ou incorrecte, ex: 12/06/2021</mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <input *ngIf="inscriptionForm.valid && this.mdpValide()" type="submit" value="Inscrire" class="btn btn-outline-secondary mt-5">
+              </div>
+            </form>
+            <p class="alert-success">{{this.message}}</p>
+            <!---------------------------------------- FIN DU FORM -------------------------------------------------->
+          </div>
           <!------------------------------------- DEBUT FORMULAIRE INSCRIPTION UTILISATEUR -------------------------------------------------------------->
         </mat-tab>
       </mat-tab-group>

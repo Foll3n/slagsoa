@@ -1,0 +1,154 @@
+.decalage {
+  margin-right: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+
+}
+
+.mat-grid-tile {
+  background-color: #5b5c68;
+
+}
+
+#jour {
+  text-align: center;
+}
+
+.mat-grid-list {
+
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.mat-grid-list > * {
+  flex: 1 1 60px;
+}
+
+
+.colonneJour {
+  border-radius: 10px;
+  background-color: #5b5c68;
+  padding: 10px;
+  width: 100%;
+
+
+}
+
+.persoTest {
+  width: 50%;
+  padding-bottom: 1000px;
+}
+
+.d-flex flex-column {
+  vertical-align: middle;
+}
+
+
+.nomCommande {
+  height: 100px;
+  width: 200px;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 10px;
+  //background-color: red;
+}
+
+.decalageNomProjetHaut {
+  height: 70px;
+  margin: 10px;
+}
+
+.jourSemaine {
+  text-align: center;
+  height: 50px;
+
+
+
+}
+
+.textJour {
+  font-size: 30px;
+  color: white;
+}
+
+@media (400px <= width <= 700px) {
+  #designDays {
+    display: inline-block;
+    height: 60px;
+    width: 30px;
+  }
+
+
+}
+
+.mobile-view1 {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  background-color: red;
+}
+
+
+.nomCommandeResponsive {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+  border: 1px;
+
+
+}
+
+.viewCommande {
+  display: none;
+}
+
+.tesst {
+
+}
+
+.jour-actuel {
+  border-bottom: 2px white solid;
+}
+
+.date-jour-afichage {
+  font-size: 32px;
+  margin: 10px;
+}
+
+
+.add-commande {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  position: absolute;
+  right: 5%;
+
+}
+
+add-commande-responsive {
+
+  padding: 10px;
+  margin: 1000px;
+}
+
+.button-delete{
+  border: none;
+  background: transparent;
+}
+
+.width{
+  width: 16%;
+}
+
+.badge-conge{
+  right: 0px;
+  margin-top: 5px;
+  position: absolute;
+}
+
+.div-span{
+  position: relative;
+}

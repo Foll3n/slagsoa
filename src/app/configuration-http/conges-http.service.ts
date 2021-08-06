@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Conge} from "../Modeles/conge";
+import {Conge} from "../partage/Modeles/conge";
+
+export class responseConge{
+  body!: string;
+  choix!: string;
+  idConges!: string;
+  idUtilisateur!: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -36,4 +43,16 @@ export class CongesHttpService {
     return this._httpClient.post<any>(requestUrl, cge, this.httpOptions);
   }
 
+  responseConges(rc: responseConge){
+    let idu = sessionStorage.getItem('id');
+    if(idu) {
+      rc.idUtilisateur = idu;
+    }
+    const href = environment.urlConges;
+    const requestUrl =
+      `${href}`;
+    return this._httpClient.put<any>(requestUrl, rc,  this.httpOptions);
+  }
 }
+
+

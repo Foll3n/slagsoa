@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import { Facture } from '../../../Modeles/facture';
+import { Facture } from "../../../partage/Modeles/facture";
 import {Categorie} from "../visualisation.component";
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';

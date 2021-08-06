@@ -1,0 +1,31 @@
+.bg-pink {
+  .cal-month-view {
+    .cal-cell.cal-event-highlight {
+      background-color: hotpink !important;
+    }
+  }
+}
+.badge-day{
+  margin-top: 18px;
+  margin-left: 10px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: 10px;
+  background-color: darkblue;
+  color: white;
+  opacity: 0.3;
+}
+.duree-calendar{
+  background-color: red;
+  display: inline-block;
+}
+.section-calendar{
+  margin:5%;
+}

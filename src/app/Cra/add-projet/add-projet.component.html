@@ -1,0 +1,25 @@
+<!------------------------------------------------------------------------------------------>
+<!--------Ajouter un projet avec une couleur et un mode de réalisation---------------------->
+<!------------------------------------------------------------------------------------------>
+
+<div class="addProjet">
+  <form class="form-group" [formGroup]="projet" (submit)="addProjet()">
+  <div class="inputNomProjet">
+    <input type="text" class="form-control" required formControlName="code_projet" placeholder="Code projet">
+  </div>
+  <div class="color-projet">
+    <input class="colorPicker" formControlName="color" placeholder="couleur"  [style.background]="color" [(colorPicker)]="color">
+  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Selectionner un mode</mat-label>
+      <mat-select formControlName="modeRealisation" required>
+        <mat-option *ngFor="let mode of this.modeRealisations" [value]="mode">
+          {{mode}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <input *ngIf="this.projet.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
+    <p class="notification-add-projet" *ngIf="this.isAdd">Projet ajouté</p>
+  </form>
+</div>
+
