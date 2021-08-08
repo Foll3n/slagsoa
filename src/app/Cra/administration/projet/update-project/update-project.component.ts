@@ -14,6 +14,7 @@ import {CraWeekInsert} from '../../../models/logCra/craWeekInsert';
 import {DialogContent} from '../../administration-cra/table-cra-en-attente/table-cra-en-attente.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DialogProjetComponent} from './dialog-projet/dialog-projet.component';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-update-project',
@@ -21,6 +22,11 @@ import {DialogProjetComponent} from './dialog-projet/dialog-projet.component';
   styleUrls: ['./update-project.component.scss']
 })
 export class UpdateProjectComponent implements OnInit {
+  minWidth = environment.minWidth;
+
+  public get width() {
+    return window.innerWidth;
+  }
   constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog) {
     this.projetService.projetSubject.subscribe((projets: Projet[]) => {
       this.listeProjets = (projets);

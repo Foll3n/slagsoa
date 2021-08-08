@@ -1,4 +1,4 @@
-<section class="section-update-projet">
+<section [ngClass]="{ 'section-update-projet': width >= minWidth, 'section-update-projet-responsive': width < minWidth }">
 
   <mat-form-field appearance="standard">
     <mat-label>Filter</mat-label>

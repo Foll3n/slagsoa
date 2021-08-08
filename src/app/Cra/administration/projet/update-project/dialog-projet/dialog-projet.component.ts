@@ -66,8 +66,8 @@ export class DialogProjetComponent implements OnInit{
 
   revert(){
     this.projet = this.copyProjet(this.data.projet);
-    this.projetService.updateProjet(this.projet);
-    // this.commandeService.emitCommandeSubject();
+    // this.projetService.updateProjet(this.projet);
+    this.commandeService.emitCommandeSubject();
   }
   chargementTable(){
     this.dataSource.paginator = this.paginator;
