@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Projet} from '../../../models/projet/Projet';
 import {ProjetService} from '../../../../services/projet.service';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
 import {resetForm} from "../../../../../environments/environment";
 import {Subscription} from "rxjs";
 
@@ -43,11 +43,11 @@ export class AddProjetComponent implements OnInit {
   /**
    * Ajoute un projet grâce au service projetService ce qui permet d'avoir à tous moment la liste des projets
    */
-  addProjet(){
+  addProjet(formDirective: FormGroupDirective){
     let projet = new Projet(this.projet.get('code_projet')?.value,this.color,'', this.projet.get('modeRealisation')?.value);
     this.projetService.addProjet(projet);
-      this.projet.reset();
       resetForm(this.projet);
+    formDirective.resetForm();
 
   }
 

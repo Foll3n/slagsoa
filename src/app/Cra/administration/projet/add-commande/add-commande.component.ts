@@ -4,13 +4,14 @@ import {Subscription} from 'rxjs';
 import {ProjetService} from '../../../../services/projet.service';
 import {CommandeInsert} from '../../../models/commande/CommandeInsert';
 import {RealisationPost} from '../../../models/realisation/RealisationPost';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {CommandeHttpDatabase} from '../../../../configuration-http/CommandeHttpDatabase';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
 import {Utilisateur} from "../../../../Modeles/utilisateur";
 import {UserService} from "../../../../services/user.service";
 import {resetForm} from "../../../../../environments/environment";
+import {Realisation} from '../../../models/realisation/Realisation';
 
 
 @Component({
@@ -78,7 +79,7 @@ export class AddCommandeComponent implements OnInit {
   /**
    * ajoute une commande à un projet. On créé la commande grâce aux champs du formulaire
    */
-  addCommande(){
+  addCommande(formDirective: FormGroupDirective){
       if(this.commandeProjet){
         let commande = new CommandeInsert(this.commandeProjet.get('codeCommande')?.value, this.commandeProjet.get('projet')?.value , '' , '');
         const commandeHttp = new CommandeHttpDatabase(this.httpClient);
@@ -96,16 +97,19 @@ export class AddCommandeComponent implements OnInit {
             this.isAddCom = false;
           }
         });
+
+
+        // this.commandeProjet.clearValidators();
         resetForm(this.commandeProjet);
+        formDirective.resetForm();
       }
   }
 
   /**
    * Ajoute une commande à un utilisateur à l'aide du formulaire
    */
-  addRealisation(){
+  addRealisation(formDirective: FormGroupDirective){
     if(this.commandeUtilisateur){
-      // let realisation = new RealisationPost(this.commandeUtilisateur.get('utilisateur')?.value, this.commandeUtilisateur.get('commande')?.value);
       let realisation = new RealisationPost(this.commandeUtilisateur.get('utilisateur')?.value, this.commandeUtilisateur.get('commande')?.value,  `${sessionStorage.getItem('id')}`);
       console.log("ma réalisation" + realisation.id_com + " " + realisation.id_usr);
       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
@@ -125,6 +129,8 @@ export class AddCommandeComponent implements OnInit {
 
       });
       resetForm(this.commandeUtilisateur);
+      formDirective.resetForm();
+      // this.commandeUtilisateur.reset();
     }
 }
 
@@ -132,20 +138,42 @@ export class AddCommandeComponent implements OnInit {
    * Récupère la liste des commandes d'un projet
    * @param projet
    */
-  getCommandeProjet(projet: Projet){
+  getCommandeProjetUser(projet: Projet){
+    if(this.commandeUtilisateur.get('utilisateur')?.value){
+      let realisations: Realisation[] = [];
+      const commandeHttp = new CommandeHttpDatabase(this.httpClient);
+      const response = commandeHttp.getAllCommandsUser(this.commandeUtilisateur.get('utilisateur')?.value);
+      response.subscribe(reponse => {
+        if (reponse.status == 'OK'){
+          if (reponse.realisations)
+          realisations = reponse.realisations;
+          else realisations = [];
+          const rep = commandeHttp.getAllCommandsProjet(projet.id);
+          rep.subscribe(reponse => {
+            if (reponse.status =='OK'){
+              console.log(reponse);
+              this.listeCommandeProjet = [];
+              if(reponse.listeCommande)
+              for (const com of reponse.listeCommande){
+                if (!realisations.find(elem => elem.id === com.id)){
+                  this.listeCommandeProjet.push(com);
+                }
+              }
+            }
+            else{
+              console.log("Erreur: getAllCommandesProjet");
+            }
 
-    const commandeHttp = new CommandeHttpDatabase(this.httpClient);
-    const response = commandeHttp.getAllCommandsProjet(projet.id);
-    response.subscribe(reponse => {
-      if (reponse.status =='OK'){
-        console.log(reponse);
-        this.listeCommandeProjet = reponse.listeCommande;
-      }
-      else{
-        console.log("Erreur: getAllCommandesProjet");
-      }
+          });
+        }
+        else{
+          console.log("Erreur : getAllCommandsUser");
+        }
 
-    });
+      });
+    }
+
+
   }
 
   /**

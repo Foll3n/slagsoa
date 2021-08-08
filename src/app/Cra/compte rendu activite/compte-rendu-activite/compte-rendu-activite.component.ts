@@ -80,7 +80,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   constructor(public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig) {
     config.interval = 0;
     config.wrap = true;
-    config.keyboard = false;
+    config.keyboard = false;`${sessionStorage.getItem('id')}`
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
     config.showNavigationIndicators = true;

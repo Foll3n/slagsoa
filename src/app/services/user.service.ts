@@ -20,7 +20,7 @@ export class UserService {
       'Content-Type': 'application/json',
       Authorization: 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
     });
-    this.getCommandeFromServer();
+    this.getCommandeFromServer(`${sessionStorage.getItem('id')}`);
     this.getUsersFromServer();
 
   }
@@ -47,12 +47,11 @@ export class UserService {
 
     });
   }
-  getCommandeFromServer(): void {
+  getCommandeFromServer(idUser: string): void {
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
-    const response = commandeHttp.getAllCommandsUser();
+    const response = commandeHttp.getAllCommandsUser(idUser);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        if(reponse.realisations)
         this.listeRealisations = reponse.realisations;
         this.emitRealisationSubject();
       }
@@ -62,7 +61,6 @@ export class UserService {
 
     });
   }
-
 }
 
 //

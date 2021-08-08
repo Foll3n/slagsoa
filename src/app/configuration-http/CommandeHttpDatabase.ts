@@ -29,14 +29,14 @@ export class CommandeHttpDatabase{
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
   }
   // tslint:disable-next-line:variable-name
-  getAllCommandsUser(){
+  getAllCommandsUser(idUser:string){
     const href = environment.urlRealisation;
     // tslint:disable-next-line:max-line-length
-    const requestUrl = href + '/' + `${sessionStorage.getItem('id')}` ;
+    const requestUrl = href + '/' + idUser ;
     return this._httpClient.get<BigRealisation>(requestUrl, this.httpOptions);
   }
   updateCommands(commandes: CommandeInsert[]){
-    const send = new BigInsertCommande(`${sessionStorage.getItem('id')}`,commandes);
+    const send = new BigInsertCommande(`${sessionStorage.getItem('id')}`, commandes);
     const json =  JSON.stringify(send);
     const href = environment.urlCommande;
     // tslint:disable-next-line:max-line-length

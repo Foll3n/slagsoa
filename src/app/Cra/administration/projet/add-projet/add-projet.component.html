@@ -3,7 +3,7 @@
 <!------------------------------------------------------------------------------------------>
 
 <div class="addProjet">
-  <form class="form-group" [formGroup]="projet" (submit)="addProjet()">
+  <form class="form-group" [formGroup]="projet"  #formDirective="ngForm"(submit)="addProjet(formDirective)">
   <div class="inputNomProjet">
     <input type="text" class="form-control" required formControlName="code_projet" placeholder="Code projet">
   </div>

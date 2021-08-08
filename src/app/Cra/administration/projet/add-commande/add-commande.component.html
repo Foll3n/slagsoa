@@ -5,7 +5,7 @@
 <!------------------------- AJOUTER UNE COMMANDE A UN PROJET------------------------------->
 <!----------------------------------------------------------------------------------------------------------------->
 
-<form class="form-group" [formGroup]="commandeProjet" (submit)="addCommande()">
+<form class="form-group" [formGroup]="commandeProjet" #formDirective="ngForm" (submit)="addCommande(formDirective)">
   <div class="inputNomCommande">
     <input type="text" class="form-control" required formControlName="codeCommande" placeholder="Code commande">
   </div>
@@ -26,7 +26,7 @@
 <p class="titre">Ajouter une commande a un utilisateur</p>
 
 
-<form class="form-group" [formGroup]="commandeUtilisateur" (submit)="addRealisation()">
+<form class="form-group" [formGroup]="commandeUtilisateur"  #formDirective="ngForm" (submit)="addRealisation(formDirective)">
 
   <!----------------------------------------------------------------------------------------------------------------->
   <!------------------------- SELECTION DU L'UTILISATEUR------------------------------->
@@ -45,7 +45,7 @@
   <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
     <mat-label>Selectionner un projet</mat-label>
     <mat-select formControlName="projet" required>
-      <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id" (click)="getCommandeProjet(projet)">
+      <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id" (click)="getCommandeProjetUser(projet)">
         {{projet.code_projet}}
       </mat-option>
     </mat-select>

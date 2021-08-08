@@ -38,6 +38,9 @@ export function resetForm(form: FormGroup) {
   Object.keys(form.controls).forEach(key => {
     form.get(key)!.setErrors(null) ;
   });
+  form.clearValidators();
+
+
 }
 
 /*
