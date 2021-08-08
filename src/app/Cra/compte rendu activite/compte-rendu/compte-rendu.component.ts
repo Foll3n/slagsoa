@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CraService} from '../../services/cra.service';
-import {Cra} from '../models/cra/Cra';
+import {CraService} from '../../../services/cra.service';
+import {Cra} from '../../models/cra/Cra';
 
 @Component({
   selector: 'app-compte-rendu',

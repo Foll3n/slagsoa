@@ -10,7 +10,7 @@ import {MonCompteComponent} from "./Parametres/mon-compte/mon-compte.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {AdministrationProjetComponent} from "./Cra/administration/projet/administration-projet/administration-projet.component";
 import {CalendarMounthComponent} from "./Cra/calendar-mounth/calendar-mounth.component";
-import {CompteRenduActiviteComponent} from "./Cra/compte-rendu-activite/compte-rendu-activite.component";
+import {CompteRenduActiviteComponent} from "./Cra/compte rendu activite/compte-rendu-activite/compte-rendu-activite.component";
 import {AdministrationCraComponent} from "./Cra/administration/administration-cra/administration-cra.component";
 import {VisualisationProjetComComponent} from "./Cra/administration/administration-cra/visualisation-projet-com/visualisation-projet-com.component";
 import {UpdateProjectComponent} from "./Cra/administration/projet/update-project/update-project.component";

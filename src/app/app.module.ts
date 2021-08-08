@@ -50,11 +50,11 @@ import { CongesEnAttenteComponent } from './Conges/conges-en-attente/conges-en-a
 import { TableCongesComponent } from './Conges/visualisation-conges/table-conges/table-conges.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { TableCongesEnAttenteComponent} from './Conges/conges-en-attente/table-conges-en-attente/table-conges-en-attente.component';
-import { CompteRenduVueComponent } from './Cra/compte-rendu-vue/compte-rendu-vue.component';
+import { CompteRenduVueComponent } from './Cra/compte rendu activite/compte-rendu-vue/compte-rendu-vue.component';
 import {CraService} from './services/cra.service';
-import { CompteRenduComponent } from './Cra/compte-rendu/compte-rendu.component';
+import { CompteRenduComponent } from './Cra/compte rendu activite/compte-rendu/compte-rendu.component';
 
-import { CompteRenduActiviteComponent } from './Cra/compte-rendu-activite/compte-rendu-activite.component';
+import { CompteRenduActiviteComponent } from './Cra/compte rendu activite/compte-rendu-activite/compte-rendu-activite.component';
 import {UserService} from './services/user.service';
 import { AdministrationCraComponent } from './Cra/administration/administration-cra/administration-cra.component';
 import { AdministrationProjetComponent } from './Cra/administration/projet/administration-projet/administration-projet.component';

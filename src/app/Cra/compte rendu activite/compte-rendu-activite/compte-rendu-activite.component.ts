@@ -1,15 +1,15 @@
 import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
-import {Cra} from '../models/cra/Cra';
-import {CompteRendu} from '../models/compteRendu/CompteRendu';
+import {Cra} from '../../models/cra/Cra';
+import {CompteRendu} from '../../models/compteRendu/CompteRendu';
 import {Subscription} from 'rxjs';
-import {CraService} from '../../services/cra.service';
+import {CraService} from '../../../services/cra.service';
 import {NgbCarousel, NgbCarouselConfig, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
-import {CraWeek} from '../models/cra/craWeek';
-import {CommandeInsert} from '../models/commande/CommandeInsert';
-import {UserService} from '../../services/user.service';
-import {Realisation} from '../models/realisation/Realisation';
-import {CraWaitingService} from "../../services/craWaiting.service";
-import {environment} from '../../../environments/environment';
+import {CraWeek} from '../../models/cra/craWeek';
+import {CommandeInsert} from '../../models/commande/CommandeInsert';
+import {UserService} from '../../../services/user.service';
+import {Realisation} from '../../models/realisation/Realisation';
+import {CraWaitingService} from "../../../services/craWaiting.service";
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-compte-rendu-activite',
