@@ -30,7 +30,7 @@ export class CraService {
   httpOptions = {
     headers: new HttpHeaders()
   };
-  currentSlide!: number;
+  currentSlide=0;
   dateToday!: Date;
   listeCraWeek!: CraWeek[];
   craWeekLast!: CraWeek;
@@ -73,7 +73,8 @@ export class CraService {
       var diff = (save.getTime() - firstDate.getTime());
       var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
       console.log("save get time", save.valueOf(), firstDate.valueOf(), diffDays);
-      if ((diffDays) < 7 && diffDays> 0) {
+      if ((diffDays) < 7 && diffDays >0 ) {
+        console.log("---->"+diffDays,firstDate );
         this.currentSlide = id;
       }
       this.listeCraWeek.push(new CraWeek(id, firstDate));
@@ -235,6 +236,7 @@ export class CraService {
         }
       }
       this.listeCraWeek[index].listeCra.push(new Cra(id, idUsr, new Date(cra.date), duree, status, listCr));
+      console.log(this.listeCraWeek);
     }
 
   }
@@ -336,7 +338,7 @@ export class CraService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.liste_cra != null) {
-
+          reponse.liste_cra=reponse.liste_cra.reverse(); /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           this.transform(reponse.liste_cra, index);
           this.getCraWeekStatus(index);
         } else {

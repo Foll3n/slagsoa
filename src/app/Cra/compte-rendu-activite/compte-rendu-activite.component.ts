@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {Cra} from '../models/cra/Cra';
 import {CompteRendu} from '../models/compteRendu/CompteRendu';
 import {Subscription} from 'rxjs';
@@ -9,17 +9,20 @@ import {CommandeInsert} from '../models/commande/CommandeInsert';
 import {UserService} from '../../services/user.service';
 import {Realisation} from '../models/realisation/Realisation';
 import {CraWaitingService} from "../../services/craWaiting.service";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-compte-rendu-activite',
   templateUrl: './compte-rendu-activite.component.html',
   styleUrls: ['./compte-rendu-activite.component.scss'],
   styles: [`
-     /*/deep/ .carousel-item.active {*/
-     /*   border: solid 0.3em;*/
-     /*   border-color: red;*/
-     /*}*/
-  `, `
+    /deep/ .carousel-item.active {
+        border: none;
+     }`, `
+    /deep/ .carousel {
+        outline: none;
+     }`, `
+
      /deep/  .carousel-indicators> li {
             background-color: #97C8E2;
        box-sizing: content-box;
@@ -33,7 +36,7 @@ import {CraWaitingService} from "../../services/craWaiting.service";
        cursor: pointer;
        background-clip: padding-box;
        border-top: 10px solid transparent;
-       border-bottom: 10px solid transparent;
+       border-bottqdom: 10px solid transparent;
        opacity: .5;
        transition: opacity .6s ease;
 
@@ -51,6 +54,10 @@ import {CraWaitingService} from "../../services/craWaiting.service";
 })
 export class CompteRenduActiviteComponent implements OnInit {
   @ViewChild('caroussel') myCarousel: NgbCarousel | undefined;
+  // tslint:disable-next-line:typedef
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    this.keyDown(event);
+  }
   public craWeek!: CraWeek[] ;
   selectedWeek!: number;
   currentSlide!:string;
@@ -65,13 +72,14 @@ export class CompteRenduActiviteComponent implements OnInit {
   listeRealisations: Realisation[] = [];
   realisationSubscription!: Subscription;
   listeAddCommande: CommandeInsert[] = [];
+  minWidth = environment.minWidth;
 
   public get width() {
     return window.innerWidth;
   }
   constructor(public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig) {
     config.interval = 0;
-    config.wrap = false;
+    config.wrap = true;
     config.keyboard = false;
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
@@ -79,7 +87,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   }
   ngOnInit(){
     this.selectedWeek = this.craService.currentSlide;
-    this.currentSlide ='ngb-slide-' + this.selectedWeek.toString();
+    this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
     this.listeCraSubscription = this.craService.craSubject.subscribe(
       (craWeek: CraWeek[]) => {this.craWeek = craWeek;
         this.update();
@@ -91,6 +99,19 @@ export class CompteRenduActiviteComponent implements OnInit {
 
     console.log('test');
     this.craService.emitCraSubject();
+  }
+
+  keyDown($event: Event){
+    const event = ($event) as KeyboardEvent;
+    if ( event.key === 'ArrowLeft' || event.key === 'q') {
+      console.log($event);
+      this.myCarousel?.prev();
+    }
+    else if ( event.key === 'ArrowRight' || event.key === 'd') {
+      console.log($event);
+      this.myCarousel?.next();
+    }
+
   }
   /**
    * Récupère une commande précise réalisée par un utilisateur

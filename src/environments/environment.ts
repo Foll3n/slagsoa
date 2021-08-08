@@ -6,11 +6,12 @@ import { HttpHeaders} from '@angular/common/http';
 import {FormGroup} from "@angular/forms";
 
 export const environment = {
+  minWidth: 1200,
   production: true,
   urlFacture: 'http://5.196.8.160:4000/gateway/APIFacture/1.0/facture',
   urlCategories: 'http://5.196.8.160:4000/gateway/APICategorie/1.0/categorie',
   urlRole: 'http://5.196.8.160:4000/gateway/APIRole/1.0/role',
-  urlGrade:'http://5.196.8.160:4000/gateway/APIGrade/1.0/grade',
+  urlGrade: 'http://5.196.8.160:4000/gateway/APIGrade/1.0/grade',
   urlUtilisateurs: 'http://5.196.8.160:4000/gateway/APIUtilisateur/1.0/utilisateur',
   urlConnexion: 'http://5.196.8.160:4000/gateway/APIConnexion/1.0/connexion',
   urlConges: 'http://5.196.8.160:4000/gateway/APIConges/1.0/conges',

@@ -81,7 +81,6 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",this.listeCraWaiting);
 
     if (this.index == '1') {
-
       this.dataSource.setListe(this.listeCraWaiting);
     }
     else if (this.index == '2') {

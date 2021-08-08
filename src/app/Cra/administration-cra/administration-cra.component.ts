@@ -32,10 +32,11 @@ export class AdministrationCraComponent implements OnInit{
   listeCraWaiting: CraWeekInsert[] = [];
   listeCraValidate: CraWeekInsert[] = [];
   actualWeek!: CraWeek | undefined;
-  listeCraSubscription!:Subscription;
+  listeCraSubscription!: Subscription;
+  displayTables = [false, false];
 
 
-  constructor(private httpClient : HttpClient, public craWaitingService: CraWaitingService) {
+  constructor(private httpClient: HttpClient, public craWaitingService: CraWaitingService) {
 
 
 
@@ -45,6 +46,7 @@ export class AdministrationCraComponent implements OnInit{
   ngOnInit(): void {
     this.listeCraSubscription = this.craWaitingService.waitingSubject.subscribe(
       (craWeek: CraWeekInsert[]) => {this.listeCraWaiting = craWeek;
+
       });
     this.listeCraSubscription = this.craWaitingService.validateSubject.subscribe(
       (craWeek: CraWeekInsert[]) => {this.listeCraValidate = craWeek;
@@ -104,6 +106,7 @@ export class AdministrationCraComponent implements OnInit{
     }
 
   }
+
   // /**
   //  * récupère un cra précis dans un CRA à la semaine
   //  * @param cra

@@ -1,83 +1,83 @@
-<app-nav>
+<app-nav  >
+<!--<div (keydown)="this.keyDown($event)"  class="test">-->
+  <section class="decalage pbot ">
+    <a *ngIf="this.craService.back" href="calendar"> Retour au calendrier</a>
+    <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+    <!--div qui afiche le jour actuel la date et le bouton permettant d'ajouter une commande-->
+    <!--  -------------------------------------------------------------------------------------------------------------------------------------->
 
-<section class="decalage pbot ">
-  <a *ngIf="this.craService.back" href="calendar"> Retour au calendrier</a>
-  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
-  <!--div qui afiche le jour actuel la date et le bouton permettant d'ajouter une commande-->
-  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="topCra" >
+      <p class="date-jour-afichage">{{this.getDateToday()}}</p>
+      <p class="info-semaine">Semaine du {{this.firstDate}}  au {{this.lastDate}} </p>
 
-  <div class="topCra">
-    <p class="date-jour-afichage">{{this.getDateToday()}}</p>
-    <p class="info-semaine">Semaine du {{this.firstDate}}  au {{this.lastDate}} </p>
+      <!--    -------------------------------------------------------------------------------------------------- -->
+      <!--    ajouter une commande    -->
+      <!--    -------------------------------------------------------------------------------------------------- -->
+      <div class="notification-cra">
+        <p class="wait-notification" *ngIf="seeMessage()==1 && !seeButton()"> En attente de validation </p>
+        <p class="valid-notification" *ngIf="seeMessage()==2 && !seeButton()"> Validé par l'administration </p>
+      </div>
 
-<!--    -------------------------------------------------------------------------------------------------- -->
-<!--    ajouter une commande    -->
-    <!--    -------------------------------------------------------------------------------------------------- -->
-    <div class="notification-cra">
-      <p class="wait-notification" *ngIf="seeMessage()==1 && !seeButton()"> En attente de validation </p>
-      <p class="valid-notification" *ngIf="seeMessage()==2 && !seeButton()"> Validé par l'administration </p>
+      <mat-form-field appearance="fill" *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">
+        <mat-label>Ajouter commande</mat-label>
+        <mat-select class="yy">
+          <mat-option *ngFor="let com of this.listeAddCommande" [value]="com.id" (click)="addSousProjet(com)">
+            {{com.num_com}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
-    <mat-form-field appearance="fill" *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= 768, 'add-commande-responsive': width < 768 }">
-      <mat-label>Ajouter commande</mat-label>
-      <mat-select class="yy">
-        <mat-option *ngFor="let com of this.listeAddCommande" [value]="com.id" (click)="addSousProjet(com)">
-          {{com.num_com}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+    <!--affiche chaque commande de facon responsive en haut de la page-->
+    <!--  -------------------------------------------------------------------------------------------------------------------------------------->
 
-  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
-  <!--affiche chaque commande de facon responsive en haut de la page-->
-  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+    <div  [ngClass]="{ 'commande-responsive': width < minWidth }">
+      <div *ngFor="let com of this.listeCommande" [ngClass]="{ 'viewCommande': width >= minWidth, 'nomCommandeResponsive': width < minWidth }"
+           style="background-color: {{com.color}}">
+        <p>{{ com.num_com }} </p>
 
-  <div [ngClass]="{ 'commande-responsive': width < 768 }">
-    <div *ngFor="let com of this.listeCommande" [ngClass]="{ 'viewCommande': width >= 768, 'nomCommandeResponsive': width < 768 }"
-         style="background-color: {{com.color}}">
-      <p>{{ com.num_com }} </p>
-
+      </div>
     </div>
-  </div>
 
-  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
-  <!--  affiche chaque compte rendu pour chaque cra en passant la main à la vue compte-rendu-->
-  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
-<!--  <a class="carousel-control-prev"  role="button" data-slide="prev">-->
-<!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--    <span class="sr-only">Previous</span>-->
-<!--  </a>-->
-<!--  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">-->
-<!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--    <span class="sr-only">Next</span>-->
-<!--  </a>-->
+    <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+    <!--  affiche chaque compte rendu pour chaque cra en passant la main à la vue compte-rendu-->
+    <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+    <!--  <a class="carousel-control-prev"  role="button" data-slide="prev">-->
+    <!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+    <!--    <span class="sr-only">Previous</span>-->
+    <!--  </a>-->
+    <!--  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">-->
+    <!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+    <!--    <span class="sr-only">Next</span>-->
+    <!--  </a>-->
 
-<!--  </div>-->
-  <div>
-    <div class='col-12'>
-
-
-      <ngb-carousel  #selectedWeek [activeId]="this.currentSlide" (slide)="onSlide($event)">
-        ---------------- {{selectedWeek}}-----------------
-
-<!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
-        <ng-template ngbSlide *ngFor="let week of this.craWeek; let i = index" >
-          <app-compte-rendu-vue [index]="i" [craWeek]="week" *ngIf="week.listeCra.length != 0"></app-compte-rendu-vue>
-        </ng-template>
+    <!--  </div>-->
+    <div >
+      <div class='col-12'>
 
 
-      </ngb-carousel>
+        <ngb-carousel #caroussel [activeId]="this.currentSlide" (slide)="onSlide($event)">
+          ---------------- {{selectedWeek}}-----------------
 
+          <!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
+          <ng-template ngbSlide *ngFor="let week of this.craWeek; let i = index" >
+            <app-compte-rendu-vue [index]="i" [craWeek]="week" *ngIf="week.listeCra.length != 0"></app-compte-rendu-vue>
+          </ng-template>
+
+
+        </ngb-carousel>
+
+      </div>
     </div>
-  </div>
 
 
-      <button *ngIf=" seeButton()" (click)="push()" [ngClass]="{ 'enregistrer': width >= 768, 'add-commande-responsive': width < 768 }"
-              color="primary" mat-raised-button>Enregistrer
-      </button>
-  <button *ngIf="canUpdateStatus() && seeButton()" class="set-status" (click)="save()" color="primary" mat-raised-button>Sauvegarder</button>
+    <button *ngIf=" seeButton()" (click)="push()" [ngClass]="{ 'enregistrer': width >= minWidth, 'add-commande-responsive': width < minWidth }"
+            color="primary" mat-raised-button>Enregistrer
+    </button>
+    <button *ngIf="canUpdateStatus() && seeButton()" class="set-status" (click)="save()" color="primary" mat-raised-button>Sauvegarder</button>
 
 
 
-</section>
+  </section>
 </app-nav>

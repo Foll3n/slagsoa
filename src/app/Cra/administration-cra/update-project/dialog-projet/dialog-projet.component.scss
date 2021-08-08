@@ -1,0 +1,39 @@
+.input-update{
+  border:none;
+  width: 100%;
+}
+.show-commande{
+  display: inline-block;
+  margin :30px;
+  position: absolute;
+  top:50px;
+  width: 20%;
+}
+.show-commande-responsive{
+  display: block;
+  margin :30px;
+  width: 80%;
+}
+.projet-name{
+  margin: 10px;
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.message-add{
+  display: inline-block;
+  color:green;
+  position: absolute;
+  bottom: -10px;
+  margin-left: 10%;
+}
+.picker{
+  width: 20%;
+  margin:10px;
+}
+.table-visualisation-commande{
+  width: 100%;
+}
+.selection-mode-projet{
+  width: 60%;
+}

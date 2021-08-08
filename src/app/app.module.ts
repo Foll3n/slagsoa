@@ -44,7 +44,7 @@ import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 // --------------------------------------------------------------------------------------------------
 
-import { TableUtilisateursComponent} from "./Parametres/utilisateurs/table-utilisateurs/table-utilisateurs.component";
+import { TableUtilisateursComponent} from './Parametres/utilisateurs/table-utilisateurs/table-utilisateurs.component';
 
 import { CongesEnAttenteComponent } from './Conges/conges-en-attente/conges-en-attente.component';
 import { TableCongesComponent } from './Conges/visualisation-conges/table-conges/table-conges.component';
@@ -85,8 +85,9 @@ import {FicheCongeComponent} from './fiche-conge/fiche-conge.component';
 import { VisualisationProjetComComponent } from './Cra/administration-cra/visualisation-projet-com/visualisation-projet-com.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { UpdateProjectComponent } from './Cra/administration-cra/update-project/update-project.component';
+import {UpdateProjectComponent} from './Cra/administration-cra/update-project/update-project.component';
 import { UpdateCommandeComponent } from './Cra/administration-cra/update-commande/update-commande.component';
+import { DialogProjetComponent} from './Cra/administration-cra/update-project/dialog-projet/dialog-projet.component';
 registerLocaleData(localeFr);
 
 
@@ -127,7 +128,8 @@ registerLocaleData(localeFr);
     FicheCongeComponent,
     VisualisationProjetComComponent,
     UpdateProjectComponent,
-    UpdateCommandeComponent
+    UpdateCommandeComponent,
+    DialogProjetComponent
   ],
   imports: [
     BrowserModule,
@@ -167,6 +169,7 @@ registerLocaleData(localeFr);
     MatDialogModule
   ],
   // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  // tslint:disable-next-line:max-line-length
   providers: [CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })

@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {CompteRendu} from '../models/compteRendu/CompteRendu';
 import {CraWeek} from '../models/cra/craWeek';
 import {CommandeInsert} from '../models/commande/CommandeInsert';
+import {environment} from '../../../environments/environment';
 
 @Component({
     selector: 'app-compte-rendu-vue',
@@ -16,6 +17,7 @@ export class CompteRenduVueComponent implements OnInit {
   index!: number;
   @Input()
   craWeek!: CraWeek;
+  minWidth = environment.minWidth;
     // listeCr: CompteRendu[] = []; // rajouter la liste des comptes rendus
   listeCraSubscription!: Subscription;
   listeCommande: CommandeInsert[] = [];

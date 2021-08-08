@@ -27,6 +27,7 @@ export class TableCraAdministration extends DataSource<CraWeekInsert> {
   index!: string;
   constructor(private httpClient: HttpClient) {
     super();
+    this.data = [];
 
 
 
