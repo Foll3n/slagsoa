@@ -1,0 +1,13 @@
+<div style="display: block;">
+  <canvas baseChart
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"
+          [options]="pieChartOptions"
+          [plugins]="pieChartPlugins"
+          [legend]="pieChartLegend">
+  </canvas>
+</div>
+<button (click)="modify(100,200,300)">change to data [100,200,300]</button><br/>
+<button (click)="modify(200,100,400)">change to data [200,100,400]</button><br/>
+<button (click)="modify(300,400,100)">change to data [300,400,100]</button><br/>

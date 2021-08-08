@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Projet} from "../../models/projet/Projet";
-import {CommandeHttpDatabase} from "../../../configuration-http/CommandeHttpDatabase";
-import {ProjetHttpDatabase} from "../../../configuration-http/ProjetHttpDatabase";
+import {Projet} from "../../../models/projet/Projet";
+import {CommandeHttpDatabase} from "../../../../configuration-http/CommandeHttpDatabase";
+import {ProjetHttpDatabase} from "../../../../configuration-http/ProjetHttpDatabase";
 import {HttpClient} from "@angular/common/http";
-import {CommandeInsert} from "../../models/commande/CommandeInsert";
+import {CommandeInsert} from "../../../models/commande/CommandeInsert";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";

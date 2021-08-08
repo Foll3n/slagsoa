@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CommandeInsert} from '../../../models/commande/CommandeInsert';
-import {Projet} from '../../../models/projet/Projet';
+import {CommandeInsert} from '../../../../models/commande/CommandeInsert';
+import {Projet} from '../../../../models/projet/Projet';
 import {MatTableDataSource} from '@angular/material/table';
-import {CommandeService} from '../../../../services/commande.service';
-import {ProjetService} from '../../../../services/projet.service';
+import {CommandeService} from '../../../../../services/commande.service';
+import {ProjetService} from '../../../../../services/projet.service';
 import {Subscription} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -27,7 +27,7 @@ export class DialogProjetComponent implements OnInit{
   choice = ['forfait','regie'];
   listeCommandes!: CommandeInsert[];
   commandesSubject!: Subscription;
-  displayedColumns: string[] = ['num_com'];
+  displayedColumns: string[] = ['num_com', 'checked'];
   dataSource!: MatTableDataSource<CommandeInsert>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -66,7 +66,8 @@ export class DialogProjetComponent implements OnInit{
 
   revert(){
     this.projet = this.copyProjet(this.data.projet);
-    this.commandeService.emitCommandeSubject();
+    this.projetService.updateProjet(this.projet);
+    // this.commandeService.emitCommandeSubject();
   }
   chargementTable(){
     this.dataSource.paginator = this.paginator;

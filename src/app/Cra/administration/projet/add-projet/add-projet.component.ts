@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Projet} from '../models/projet/Projet';
-import {ProjetService} from '../../services/projet.service';
+import {Projet} from '../../../models/projet/Projet';
+import {ProjetService} from '../../../../services/projet.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {resetForm} from "../../../environments/environment";
+import {resetForm} from "../../../../../environments/environment";
 import {Subscription} from "rxjs";
 
 @Component({

@@ -165,7 +165,7 @@ export class VisualisationCongesComponent implements OnInit {
           this.messageErreur = 'Erreur formulaire incorrecte'
 
         }
-      )
+      );
     }
 
   }

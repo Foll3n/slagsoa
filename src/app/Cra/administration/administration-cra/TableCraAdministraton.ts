@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {CraWeekInsert} from '../models/logCra/craWeekInsert';
+import {CraWeekInsert} from '../../models/logCra/craWeekInsert';
 import {PDFNet} from "@pdftron/webviewer";
 
 // TODO: Replace this with your own data model type

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {CraHttpDatabase} from '../../../configuration-http/CraHttpDatabase';
-import {ProjetHttpDatabase} from '../../../configuration-http/ProjetHttpDatabase';
+import {CraHttpDatabase} from '../../../../configuration-http/CraHttpDatabase';
+import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
 import {HttpClient} from '@angular/common/http';
-import {Projet} from '../../models/projet/Projet';
-import {ProjetService} from '../../../services/projet.service';
-import {CraWeek} from '../../models/cra/craWeek';
+import {Projet} from '../../../models/projet/Projet';
+import {ProjetService} from '../../../../services/projet.service';
+import {CraWeek} from '../../../models/cra/craWeek';
 import {Subscription} from 'rxjs';
 
 @Component({

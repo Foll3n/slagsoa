@@ -1,22 +1,22 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {CraWeekInsert} from '../models/logCra/craWeekInsert';
-import {CraHttpDatabase} from '../../configuration-http/CraHttpDatabase';
+import {CraWeekInsert} from '../../models/logCra/craWeekInsert';
+import {CraHttpDatabase} from '../../../configuration-http/CraHttpDatabase';
 import {HttpClient} from '@angular/common/http';
-import {Cra} from '../models/cra/Cra';
-import {CraService} from '../../services/cra.service';
-import {CraWeek} from '../models/cra/craWeek';
-import {InsertCra} from '../models/cra/InsertCra';
-import {CompteRendu} from '../models/compteRendu/CompteRendu';
+import {Cra} from '../../models/cra/Cra';
+import {CraService} from '../../../services/cra.service';
+import {CraWeek} from '../../models/cra/craWeek';
+import {InsertCra} from '../../models/cra/InsertCra';
+import {CompteRendu} from '../../models/compteRendu/CompteRendu';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {TableCraAdministration, TableCraItem} from './TableCraAdministraton';
-import {Realisation} from '../models/realisation/Realisation';
-import {CraWaitingService} from '../../services/craWaiting.service';
+import {Realisation} from '../../models/realisation/Realisation';
+import {CraWaitingService} from '../../../services/craWaiting.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {CommandeHttpDatabase} from "../../configuration-http/CommandeHttpDatabase";
+import {CommandeHttpDatabase} from "../../../configuration-http/CommandeHttpDatabase";
 
 
 

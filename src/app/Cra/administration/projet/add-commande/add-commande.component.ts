@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Projet} from '../models/projet/Projet';
+import {Projet} from '../../../models/projet/Projet';
 import {Subscription} from 'rxjs';
-import {ProjetService} from '../../services/projet.service';
-import {CommandeInsert} from '../models/commande/CommandeInsert';
-import {RealisationPost} from '../models/realisation/RealisationPost';
+import {ProjetService} from '../../../../services/projet.service';
+import {CommandeInsert} from '../../../models/commande/CommandeInsert';
+import {RealisationPost} from '../../../models/realisation/RealisationPost';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CommandeHttpDatabase} from '../../configuration-http/CommandeHttpDatabase';
+import {CommandeHttpDatabase} from '../../../../configuration-http/CommandeHttpDatabase';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ProjetHttpDatabase} from '../../configuration-http/ProjetHttpDatabase';
-import {Utilisateur} from "../../Modeles/utilisateur";
-import {UserService} from "../../services/user.service";
-import {resetForm} from "../../../environments/environment";
+import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
+import {Utilisateur} from "../../../../Modeles/utilisateur";
+import {UserService} from "../../../../services/user.service";
+import {resetForm} from "../../../../../environments/environment";
 
 
 @Component({

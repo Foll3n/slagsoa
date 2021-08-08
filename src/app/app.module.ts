@@ -56,11 +56,11 @@ import { CompteRenduComponent } from './Cra/compte-rendu/compte-rendu.component'
 
 import { CompteRenduActiviteComponent } from './Cra/compte-rendu-activite/compte-rendu-activite.component';
 import {UserService} from './services/user.service';
-import { AdministrationCraComponent } from './Cra/administration-cra/administration-cra.component';
-import { AdministrationProjetComponent } from './Cra/administration-cra/administration-projet/administration-projet.component';
+import { AdministrationCraComponent } from './Cra/administration/administration-cra/administration-cra.component';
+import { AdministrationProjetComponent } from './Cra/administration/projet/administration-projet/administration-projet.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { AddProjetComponent} from './Cra/add-projet/add-projet.component';
-import { AddCommandeComponent } from './Cra/add-commande/add-commande.component';
+import { AddProjetComponent} from './Cra/administration/projet/add-projet/add-projet.component';
+import { AddCommandeComponent } from './Cra/administration/projet/add-commande/add-commande.component';
 import {ProjetService} from './services/projet.service';
 import {CommandeService} from './services/commande.service';
 import { CalendarMounthComponent } from './Cra/calendar-mounth/calendar-mounth.component';
@@ -68,13 +68,13 @@ import {CalendarModule, CalendarMonthModule, DateAdapter} from 'angular-calendar
 import {RouterModule} from '@angular/router';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import { TableCraEnAttenteComponent } from './Cra/administration-cra/table-cra-en-attente/table-cra-en-attente.component';
+import { TableCraEnAttenteComponent } from './Cra/administration/administration-cra/table-cra-en-attente/table-cra-en-attente.component';
 import {CraWaitingService} from './services/craWaiting.service';
 import {CalendarService} from './services/calendar.service';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { StatCongesComponent } from './Conges/visualisation-conges/stat-conges/stat-conges.component';
 
-import {DialogContent} from './Cra/administration-cra/table-cra-en-attente/table-cra-en-attente.component';
+import {DialogContent} from './Cra/administration/administration-cra/table-cra-en-attente/table-cra-en-attente.component';
 import {ConnexionService} from './connexion/connexion.service';
 import {CustomPaginator} from './configuration-http/customPaginatorConfiguration';
 import {ColorPickerModule} from 'ngx-color-picker';
@@ -82,12 +82,13 @@ import {MonCompteComponent} from './Parametres/mon-compte/mon-compte.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {FicheUtilisateurComponent} from './fiche-utilisateur/fiche-utilisateur.component';
 import {FicheCongeComponent} from './fiche-conge/fiche-conge.component';
-import { VisualisationProjetComComponent } from './Cra/administration-cra/visualisation-projet-com/visualisation-projet-com.component';
+import { VisualisationProjetComComponent } from './Cra/administration/administration-cra/visualisation-projet-com/visualisation-projet-com.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import {UpdateProjectComponent} from './Cra/administration-cra/update-project/update-project.component';
-import { UpdateCommandeComponent } from './Cra/administration-cra/update-commande/update-commande.component';
-import { DialogProjetComponent} from './Cra/administration-cra/update-project/dialog-projet/dialog-projet.component';
+import {UpdateProjectComponent} from './Cra/administration/projet/update-project/update-project.component';
+import { UpdateCommandeComponent } from './Cra/administration/projet/update-commande/update-commande.component';
+import { DialogProjetComponent} from './Cra/administration/projet/update-project/dialog-projet/dialog-projet.component';
+import { VisualisationProjetComponent } from './Cra/administration/projet/update-project/visualisation-projet/visualisation-projet.component';
 registerLocaleData(localeFr);
 
 
@@ -129,7 +130,8 @@ registerLocaleData(localeFr);
     VisualisationProjetComComponent,
     UpdateProjectComponent,
     UpdateCommandeComponent,
-    DialogProjetComponent
+    DialogProjetComponent,
+    VisualisationProjetComponent
   ],
   imports: [
     BrowserModule,

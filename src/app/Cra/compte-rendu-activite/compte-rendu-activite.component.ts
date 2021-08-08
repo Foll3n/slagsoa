@@ -141,7 +141,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   }
 
   /**
-   * Permet de renvoyer la liste des commandes possible à ajouter pour un utilisateur dans sa semaine
+   * Permet de renvoyer la liste des commandes possible à ajouter pour un utilisateur dans sa semaine ( c'est à dire qu'il n'est pas déja en train de la réaliser )
    */
   getAvailableCommande(){
     this.listeAddCommande = [];

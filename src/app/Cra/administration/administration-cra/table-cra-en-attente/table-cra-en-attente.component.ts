@@ -2,22 +2,22 @@ import {AfterViewInit, Component, EventEmitter, Inject, Input, OnInit, Output, V
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
-import {CraWeekInsert} from '../../models/logCra/craWeekInsert';
+import {CraWeekInsert} from '../../../models/logCra/craWeekInsert';
 import {TableCraAdministration} from '../TableCraAdministraton';
 import {HttpClient} from '@angular/common/http';
-import {CraService} from '../../../services/cra.service';
-import {CraHttpDatabase} from '../../../configuration-http/CraHttpDatabase';
-import {CraWeek} from '../../models/cra/craWeek';
-import {InsertCra} from '../../models/cra/InsertCra';
-import {CompteRendu} from '../../models/compteRendu/CompteRendu';
-import {Cra} from '../../models/cra/Cra';
+import {CraService} from '../../../../services/cra.service';
+import {CraHttpDatabase} from '../../../../configuration-http/CraHttpDatabase';
+import {CraWeek} from '../../../models/cra/craWeek';
+import {InsertCra} from '../../../models/cra/InsertCra';
+import {CompteRendu} from '../../../models/compteRendu/CompteRendu';
+import {Cra} from '../../../models/cra/Cra';
 import {Subscription} from 'rxjs';
-import {CraWaitingService} from '../../../services/craWaiting.service';
+import {CraWaitingService} from '../../../../services/craWaiting.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
-import {CommandeHttpDatabase} from "../../../configuration-http/CommandeHttpDatabase";
+import {CommandeHttpDatabase} from "../../../../configuration-http/CommandeHttpDatabase";
 
 
 @Component({

@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {CommandeInsert} from "../../models/commande/CommandeInsert";
-import {Projet} from "../../models/projet/Projet";
+import {CommandeInsert} from "../../../models/commande/CommandeInsert";
+import {Projet} from "../../../models/projet/Projet";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {Subscription} from "rxjs";
-import {CommandeService} from "../../../services/commande.service";
-import {ProjetService} from "../../../services/projet.service";
-import {CraWeekInsert} from "../../models/logCra/craWeekInsert";
+import {CommandeService} from "../../../../services/commande.service";
+import {ProjetService} from "../../../../services/projet.service";
+import {CraWeekInsert} from "../../../models/logCra/craWeekInsert";
 
 @Component({
   selector: 'app-update-commande',
