@@ -20,16 +20,26 @@
 <!--</div>-->
 
 
-<div class="conteneur-switch">
-
-
-<div class="toggle">
-  <input type="checkbox" id="toggle" (click)="putAllCommandsFalse()" [ngModel]="projet.available=='true'?true:false" (ngModelChange)="projet.available=$event?'true':'false'" />
-<!--  [(ngModel)]="isChecked"-->
-  <label for="toggle"></label>
+<div class="onoffswitch">
+  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0" (click)="putAllCommandsFalse()" [ngModel]="projet.available=='true'?true:false" (ngModelChange)="projet.available=$event?'true':'false'" >
+  <label class="onoffswitch-label" for="myonoffswitch">
+    <span class="onoffswitch-inner"></span>
+    <span class="onoffswitch-switch"></span>
+  </label>
 </div>
 
-</div>
+<!--///////// marche//////////-->
+<!--<div class="conteneur-switch">-->
+
+
+<!--<div class="toggle">-->
+<!--  <input type="checkbox" id="toggle" (click)="putAllCommandsFalse()" [ngModel]="projet.available=='true'?true:false" (ngModelChange)="projet.available=$event?'true':'false'" />-->
+<!--&lt;!&ndash;  [(ngModel)]="isChecked"&ndash;&gt;-->
+<!--  <label for="toggle"></label>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--///////////////////-->
 <!--  <div class="container-toogle ">-->
 
 
@@ -39,7 +49,7 @@
 <!--    </div>-->
 <!--  </div>-->
 
-<input class="picker colorPicker d-inline-block" placeholder="couleur"  [style.background]="projet.color" [(colorPicker)]="projet.color">
+<input class="picker colorPicker " placeholder="couleur"  [style.background]="projet.color" [(colorPicker)]="projet.color">
 <mat-form-field appearance="outline" class="selection-mode-projet">
   <mat-label>Mode</mat-label>
   <mat-select [(value)]="projet.modeRealisation">
