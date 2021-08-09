@@ -85,7 +85,7 @@ export class UpdateCommandeComponent implements OnChanges {
     if(!this.projet)return [];
     for (let com of this.listeCommandes){
       if(com.id_projet == this.projet.id){
-        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.color);
+        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.available,com.color);
         res.push(c);
       }
     }

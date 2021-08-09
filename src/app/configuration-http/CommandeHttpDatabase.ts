@@ -52,12 +52,14 @@ export class CommandeHttpDatabase{
   getAllCommandsProjet(code_projet: string){
     const href = environment.urlCommande;
     // tslint:disable-next-line:max-line-length
-    const requestUrl = href + '/' + '?code_projet=' + code_projet + "/&idUserDoRequest=" +  `${sessionStorage.getItem('id')}`;
+    const requestUrl = href + '/' + '?code_projet=' + code_projet + "&idUserDoRequest=" +  `${sessionStorage.getItem('id')}`;
+    console.log(requestUrl);
     return this._httpClient.get<BigCommande>(requestUrl, this.httpOptions);
   }
   addCommande(commande: CommandeInsert){
     const send = new InserCommande( `${sessionStorage.getItem('id')}`,commande)
     const json =  JSON.stringify(send);
+    console.log("commande : ",commande);
     const href = environment.urlCommande;
     // tslint:disable-next-line:max-line-length
     return this._httpClient.post<Result>(href, json, this.httpOptions);

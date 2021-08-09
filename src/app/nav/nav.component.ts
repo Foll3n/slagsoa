@@ -58,6 +58,7 @@ export class NavComponent implements OnInit{
     if(this.c.isLogged()){
       console.log('ici constructor');
       this.c.chargerUtilisateur();
+      craWaitService.initialisation();
       this.notificationCraSubscription = this.craWaitService.waitingSubject.subscribe((res: CraWeekInsert[] )=> {
           this.notificationsCraWait = res.length;
       });

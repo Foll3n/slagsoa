@@ -19,7 +19,7 @@
       </mat-select>
     </mat-form-field>
     <input *ngIf="this.projet.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
-    <p class="notification-add-projet" *ngIf="this.isAdd">Projet ajouté</p>
+    <p class="notification-add-projet" *ngIf="this.valueAdd.contenu.length>0">{{valueAdd.contenu}}</p>
   </form>
 </div>
 

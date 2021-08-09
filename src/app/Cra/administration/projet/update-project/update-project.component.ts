@@ -8,7 +8,6 @@ import {HttpClient} from '@angular/common/http';
 import {CommandeHttpDatabase} from '../../../../configuration-http/CommandeHttpDatabase';
 import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
 import {ComProjet} from '../../administration-cra/visualisation-projet-com/visualisation-projet-com.component';
-import {UpdateCommandeComponent} from '../update-commande/update-commande.component';
 import {ProjetService} from '../../../../services/projet.service';
 import {CraWeekInsert} from '../../../models/logCra/craWeekInsert';
 import {DialogContent} from '../../administration-cra/table-cra-en-attente/table-cra-en-attente.component';
@@ -45,7 +44,6 @@ export class UpdateProjectComponent implements OnInit {
   dataSource!: MatTableDataSource<Projet>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(UpdateCommandeComponent) child!: UpdateCommandeComponent;
 
   ngOnInit(): void {
   }

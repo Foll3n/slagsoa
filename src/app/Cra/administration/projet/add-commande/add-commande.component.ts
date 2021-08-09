@@ -10,8 +10,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
 import {Utilisateur} from "../../../../Modeles/utilisateur";
 import {UserService} from "../../../../services/user.service";
-import {resetForm} from "../../../../../environments/environment";
+import {resetForm, shortMessage} from '../../../../../environments/environment';
 import {Realisation} from '../../../models/realisation/Realisation';
+import {CommandeService} from '../../../../services/commande.service';
+import {Message} from '../../../models/message';
 
 
 @Component({
@@ -27,19 +29,23 @@ export class AddCommandeComponent implements OnInit {
     headers: new HttpHeaders()
   };
   listeCommandeProjet!: CommandeInsert[];
-  listeProjets!: Projet[];
+  listeProjets: Projet[]= [];
+
   listeUsers!:Utilisateur[];
   listeProjetSubscription!: Subscription;
   listeUsersSubscription!:Subscription;
+
+  commandeAdd:Message = new Message('');
+
   isAddCom = false;
   isAddRealisation = false;
   commandeProjet!: FormGroup;
   commandeUtilisateur!: FormGroup;
 
-  constructor(private projetService: ProjetService, private httpClient: HttpClient, private userService: UserService) {
+  constructor(private projetService: ProjetService, private httpClient: HttpClient, private userService: UserService, private commandeService: CommandeService) {
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
 
-
+    // this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => this.listeCommandes = commandes );
     //Création des différents formulaires nécessaires
     this.commandeProjet = new FormGroup({
       codeCommande: new FormControl(),
@@ -57,7 +63,7 @@ export class AddCommandeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listeProjetSubscription = this.projetService.projetSubject.subscribe(
+    this.listeProjetSubscription = this.projetService.projetAvailableSubject.subscribe(
       (projets: Projet[]) => {
         this.listeProjets = projets;
       });
@@ -75,35 +81,59 @@ export class AddCommandeComponent implements OnInit {
     return window.innerWidth;
   }
 
+  getCommandesProjet(){
+    console.log("lllllllllllll");
+    const commandeHttp = new CommandeHttpDatabase(this.httpClient);
+    const rep = commandeHttp.getAllCommandsProjet(this.commandeProjet.get('projet')?.value);
+    rep.subscribe(reponse => {
+      console.log("je suis ic iiiii", reponse);
+      if (reponse.status =='OK'){
+        console.log("crash",reponse);
+        this.listeCommandeProjet = [];
+        if(reponse.listeCommande)
+          this.listeCommandeProjet = reponse.listeCommande;
+      }
+      else{
+        console.log("Erreur: getAllCommandesProjet");
+      }
+
+    });
+  }
 
   /**
    * ajoute une commande à un projet. On créé la commande grâce aux champs du formulaire
    */
-  addCommande(formDirective: FormGroupDirective){
-      if(this.commandeProjet){
-        let commande = new CommandeInsert(this.commandeProjet.get('codeCommande')?.value, this.commandeProjet.get('projet')?.value , '' , '');
+  addCommande(formDirective: FormGroupDirective) {
+    if (this.commandeProjet) {
+      const commande = new CommandeInsert(this.commandeProjet.get('codeCommande')?.value, this.commandeProjet.get('projet')?.value, '', 'true','');
+
+      if (this.listeCommandeProjet && this.listeCommandeProjet.find(c => c.num_com === commande.num_com)) {
+        shortMessage(this.commandeAdd,'Commande déja présente');
+
+      } else {
+
+
         const commandeHttp = new CommandeHttpDatabase(this.httpClient);
         const response = commandeHttp.addCommande(commande);
         response.subscribe(reponse => {
-          if(reponse.status == 'OK'){
+          if (reponse.status === 'OK') {
             console.log(reponse);
-            this.isAddCom = true;
-            setTimeout(() => {
-              this.isAddCom = false;
-            }, 3000);
-          }
-          else{
+            shortMessage(this.commandeAdd,'Commande ajoutée');
+
+          } else {
             console.log("Erreur de requete de base de données");
-            this.isAddCom = false;
+            shortMessage(this.commandeAdd,'Erreur de base de données');
           }
         });
 
-
-        // this.commandeProjet.clearValidators();
-        resetForm(this.commandeProjet);
-        formDirective.resetForm();
       }
+      // this.commandeProjet.clearValidators();
+      resetForm(this.commandeProjet);
+      formDirective.resetForm();
+    }
+
   }
+
 
   /**
    * Ajoute une commande à un utilisateur à l'aide du formulaire
@@ -144,6 +174,7 @@ export class AddCommandeComponent implements OnInit {
       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
       const response = commandeHttp.getAllCommandsUser(this.commandeUtilisateur.get('utilisateur')?.value);
       response.subscribe(reponse => {
+        console.log("le premier marche !!!",reponse);
         if (reponse.status == 'OK'){
           if (reponse.realisations)
           realisations = reponse.realisations;
@@ -181,7 +212,7 @@ export class AddCommandeComponent implements OnInit {
     */
   getListeProjet(){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
-    const response = projetHttp.getAllProjects();
+    const response = projetHttp.getAllProjectsAvailable();
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
         console.log(reponse);

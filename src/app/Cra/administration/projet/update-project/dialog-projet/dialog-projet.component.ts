@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CommandeInsert} from '../../../../models/commande/CommandeInsert';
@@ -20,7 +20,7 @@ export interface DialogData {
   templateUrl: './dialog-projet.component.html',
   styleUrls: ['./dialog-projet.component.scss']
 })
-export class DialogProjetComponent implements OnInit{
+export class DialogProjetComponent implements AfterViewInit{
   projet!: Projet;
   isAddCom = false;
   isAddProjet = false;
@@ -36,9 +36,13 @@ export class DialogProjetComponent implements OnInit{
     public dialogRef: MatDialogRef<DialogProjetComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
+    // const test:CommandeInsert[] = [];
+    // this.dataSource =  new MatTableDataSource(test);
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
     this.projet = this.copyProjet(data.projet);
 
-    console.log(this.projet,"iciiiiiiiiiii");
+
 
     this.projetService.ajout.subscribe((bool: boolean) => {
       this.isAddProjet = bool;
@@ -49,7 +53,6 @@ export class DialogProjetComponent implements OnInit{
 
     this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
       this.listeCommandes = commandes;
-      console.log('je reçois' , this.projet, '------------: ', this.getCommandeById());
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -58,7 +61,7 @@ export class DialogProjetComponent implements OnInit{
 // récupérer si la commande a bien été ajouté
   }
   private copyProjet(projet: Projet): Projet{
-    return new Projet(projet.code_projet, projet.color, projet.id, projet.modeRealisation);
+    return new Projet(projet.code_projet, projet.color, projet.id, projet.modeRealisation, projet.available);
   }
   public width(){
     return window.innerWidth;
@@ -78,13 +81,14 @@ export class DialogProjetComponent implements OnInit{
     if(!this.projet)return [];
     for (let com of this.listeCommandes){
       if(com.id_projet == this.projet.id){
-        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.color);
+        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.available,com.color);
         res.push(c);
       }
     }
     return res;
   }
   updateProjet(commandes: CommandeInsert[]){
+    console.log("projet actuel :", this.projet);
     this.commandeService.updateCommandes(commandes);
     this.projetService.updateProjet(this.projet);
 
@@ -94,11 +98,23 @@ export class DialogProjetComponent implements OnInit{
     if (this.getCommandeById().length> 0) return true;
     return false;
   }
+  putAllCommandsFalse(){
+    console.log("ici je test 3",this.projet);
+    for(const com of this.dataSource.data){
+      this.projet.available=='true'?com.available='false':com.available='true';
+      // com.available = this.projet.available;
+    }
 
+  }
 
   ngOnInit(): void {
     this.commandeService.emitCommandeSubject();
+
     console.log("test on Init");
+  }
+
+  ngAfterViewInit(): void {
+    this.commandeService.emitCommandeSubject();
   }
 }
 

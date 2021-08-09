@@ -6,7 +6,8 @@ export class Projet {
     public code_projet: string,
     public color: string,
     public id: string,
-    public modeRealisation: string
+    public modeRealisation: string,
+    public available: string
 
 
   ) {}

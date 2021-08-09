@@ -33,6 +33,12 @@ export class ProjetHttpDatabase{
     // tslint:disable-next-line:max-line-length
     return this._httpClient.get<BigProjet>(href, this.httpOptions);
   }
+  getAllProjectsAvailable(){
+    const href = environment.urlProjet + "/available" +  "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`;
+    // tslint:disable-next-line:max-line-length
+    return this._httpClient.get<BigProjet>(href, this.httpOptions);
+  }
+
   addProjet(projet: Projet){
     const send = new InsertProjet( `${sessionStorage.getItem('id')}`,projet);
     const json =  JSON.stringify(send);

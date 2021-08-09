@@ -63,6 +63,7 @@ export class CommandeService {
     toCom.num_com = com.num_com;
     toCom.id_projet = com.id_projet;
     toCom.color = com.color;
+    toCom.available = com.available;
   }
   updateCommands(commandes:CommandeInsert[]){
     for (let com of commandes){
@@ -90,6 +91,7 @@ export class CommandeService {
       if (reponse.status == 'OK'){
 
         console.log(reponse);
+        if (reponse.listeCommande)
         this.listeCommandes = reponse.listeCommande;
         this.emitCommandeSubject();
       }

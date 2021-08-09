@@ -19,18 +19,15 @@ export class CraWaitingService {
   public listeCraValidate: CraWeekInsert[] = [];
   constructor(private httpClient: HttpClient) {
 
-    this.httpOptions.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
-    });
-    this.fillListeCraWaiting('1');
-    this.fillListeCraWaiting('2');
-
 
   }
   httpOptions = {
     headers: new HttpHeaders()
   };
+  initialisation(){
+    this.fillListeCraWaiting('1');
+    this.fillListeCraWaiting('2');
+  }
 
   emitCraWaintingSubject(): void {
     this.waitingSubject.next(this.listeCraWaiting.slice());

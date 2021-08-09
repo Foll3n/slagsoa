@@ -4,6 +4,7 @@
 
 import { HttpHeaders} from '@angular/common/http';
 import {FormGroup} from "@angular/forms";
+import {Message} from '../app/Cra/models/message';
 
 export const environment = {
   minWidth: 1200,
@@ -39,8 +40,13 @@ export function resetForm(form: FormGroup) {
     form.get(key)!.setErrors(null) ;
   });
   form.clearValidators();
-
-
+}
+// tslint:disable-next-line:typedef
+export function shortMessage(variable: Message, message: string){
+  variable.contenu = message;
+  setTimeout(() => {
+    variable.contenu = '';
+  }, 3000);
 }
 
 /*

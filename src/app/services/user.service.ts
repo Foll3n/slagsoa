@@ -38,7 +38,8 @@ export class UserService {
     const response = userHttp.getUtilisateurs();
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        this.listeUsers = reponse.getAllutilisateurOutput;
+        if(reponse.getAllutilisateurOutput)
+          this.listeUsers = reponse.getAllutilisateurOutput;
         this.emitUsersSubject();
       }
       else{
@@ -52,6 +53,7 @@ export class UserService {
     const response = commandeHttp.getAllCommandsUser(idUser);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
+        if (reponse.realisations)
         this.listeRealisations = reponse.realisations;
         this.emitRealisationSubject();
       }

@@ -84,6 +84,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
     config.showNavigationIndicators = true;
+    craService.initialisation(new Date());
   }
   ngOnInit(){
     this.selectedWeek = this.craService.currentSlide;
@@ -124,12 +125,12 @@ export class CompteRenduActiviteComponent implements OnInit {
   }
 
   /**
-   * Fonction permettant de vérifier si la réalisation d'un utilisateur est dans la liste des commandes
+   * Fonction permettant de vérifier si la réalisation d'un utilisateur est dans la liste des commandes et que la commande est dispo
    * @param num_com
    */
   checkRelInListeCommande(num_com: string): boolean{
     if (this.listeCommande){
-      console.log('coucou' + this.listeCommande);
+      console.log('coucou' , this.listeCommande);
       for (const com of this.listeCommande){
         if (com.num_com === num_com){
           return true;
@@ -150,7 +151,7 @@ export class CompteRenduActiviteComponent implements OnInit {
       if (!this.checkRelInListeCommande(real.num_commande) ) // listeCommande est la liste des commandes d'un cra
       {
 
-            const commande = new CommandeInsert(real.num_commande, '0', real.id, real.color);
+            const commande = new CommandeInsert(real.num_commande, '0', real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
             this.listeAddCommande.push(commande);
 
       }

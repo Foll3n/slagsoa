@@ -11,8 +11,10 @@ import {ProjetHttpDatabase} from '../configuration-http/ProjetHttpDatabase';
 @Injectable()
 export class ProjetService {
   userId = '10';
-  listeProjet!: Projet[];
+  listeProjet: Projet[] = [];
+  listeProjetAvailable: Projet[] = [];
   projetSubject = new Subject<Projet[]>();
+  projetAvailableSubject = new Subject<Projet[]>();
   ajout = new Subject<boolean>();
   constructor(private httpClient: HttpClient) {
 
@@ -21,6 +23,7 @@ export class ProjetService {
       Authorization: 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
     });
     this.chargerProjet();
+    this.chargerProjetAvailable();
   }
 
   httpOptions = {
@@ -29,6 +32,9 @@ export class ProjetService {
 
   emitProjetSubject(): void {
     this.projetSubject.next(this.listeProjet.slice());
+  }
+  emitProjetAvailableSubject(): void {
+    this.projetAvailableSubject.next(this.listeProjetAvailable.slice());
   }
   emitAjoutSubject(value:boolean): void {
     this.ajout.next(value);
@@ -60,6 +66,7 @@ export class ProjetService {
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
         this.chargerProjet();
+        this.chargerProjetAvailable();
         this.emitAjoutSubject(true);
       }
       else{
@@ -74,9 +81,26 @@ export class ProjetService {
     const response = projetHttp.getAllProjects();
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse);
+        console.log(reponse,'ppppppppppppppppppppppppppp');
+        if (reponse.liste_projet)
         this.listeProjet = reponse.liste_projet;
         this.emitProjetSubject();
+      }
+      else{
+        console.log("Erreur de requete de base de données");
+      }
+
+    });
+  }
+  chargerProjetAvailable(){
+    const projetHttp = new ProjetHttpDatabase(this.httpClient);
+    const response = projetHttp.getAllProjectsAvailable();
+    response.subscribe(reponse => {
+      if(reponse.status == 'OK'){
+        console.log(reponse,'ppppppppppppppppppppppppppp');
+        if (reponse.liste_projet)
+          this.listeProjetAvailable = reponse.liste_projet;
+        this.emitProjetAvailableSubject();
       }
       else{
         console.log("Erreur de requete de base de données");

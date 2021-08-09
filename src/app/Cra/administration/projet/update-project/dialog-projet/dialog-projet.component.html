@@ -1,3 +1,8 @@
+<div class="dialog-projet">
+
+</div>
+
+
 <p class="projet-name">
   <input class="form-control input-update-projet d-inline-block" type="text" [(ngModel)]="projet.code_projet">
 </p>
@@ -14,17 +19,25 @@
 <!--  </div>-->
 <!--</div>-->
 
+
 <div class="conteneur-switch">
 
 
 <div class="toggle">
-  <input type="checkbox" id="toggle"   />
+  <input type="checkbox" id="toggle" (click)="putAllCommandsFalse()" [ngModel]="projet.available=='true'?true:false" (ngModelChange)="projet.available=$event?'true':'false'" />
 <!--  [(ngModel)]="isChecked"-->
   <label for="toggle"></label>
 </div>
 
 </div>
+<!--  <div class="container-toogle ">-->
 
+
+<!--    <input type="checkbox" id="toggle" class="w-25"/>-->
+<!--    <div class="divtoggle">-->
+<!--      <label for="toggle"></label>-->
+<!--    </div>-->
+<!--  </div>-->
 
 <input class="picker colorPicker d-inline-block" placeholder="couleur"  [style.background]="projet.color" [(colorPicker)]="projet.color">
 <mat-form-field appearance="outline" class="selection-mode-projet">
@@ -36,7 +49,6 @@
   </mat-select>
 </mat-form-field>
 <table *ngIf=" displayListNotEmpty()" mat-table [dataSource]="dataSource" matSort>
-
   <!-- Commande Column -->
   <ng-container matColumnDef="num_com">
     <th mat-header-cell *matHeaderCellDef>Commandes</th>
@@ -45,18 +57,17 @@
   <ng-container matColumnDef="checked">
     <th mat-header-cell *matHeaderCellDef>Disponible</th>
     <td mat-cell *matCellDef="let row; let i=index"> <div class="custom-control custom-switch">
-      <input type="checkbox" class="custom-control-input" id="{{i}}" >
+      <input type="checkbox" class="custom-control-input" id="{{i}}" [ngModel]="row.available=='true'?true:false" (ngModelChange)="row.available=$event?'true':'false'" >
       <label class="custom-control-label" for="{{i}}"></label>
     </div> </td>
   </ng-container>
 
-
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
+
 
 <div class="bouton-valider">
   <button (click)="this.revert()" class="btn btn-danger text-white personal-size-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-down" viewBox="0 0 16 16">

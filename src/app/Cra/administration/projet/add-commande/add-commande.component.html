@@ -12,13 +12,13 @@
   <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
     <mat-label>Selectionner un projet</mat-label>
     <mat-select formControlName="projet" required>
-      <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id">
+      <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id" (click)="getCommandesProjet()">
         {{projet.code_projet}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <input *ngIf="this.commandeProjet.valid" type="submit" value="Ajouter" class="btn btn-info" >
-  <p class="notification-add" *ngIf="this.isAddCom">Commande ajoutée</p>
+  <p class="notification-add" *ngIf="this.commandeAdd.contenu.length> 0">{{commandeAdd.contenu}}</p>
 </form>
 <!----------------------------------------------------------------------------------------------------------------->
 <!------------------------- AJOUTER UNE COMMANDE A UN UTILISATEUR------------------------------>
@@ -26,7 +26,7 @@
 <p class="titre">Ajouter une commande a un utilisateur</p>
 
 
-<form class="form-group" [formGroup]="commandeUtilisateur"  #formDirective="ngForm" (submit)="addRealisation(formDirective)">
+<form class="form-group" [formGroup]="commandeUtilisateur"  #formDirective1="ngForm" (submit)="addRealisation(formDirective1)">
 
   <!----------------------------------------------------------------------------------------------------------------->
   <!------------------------- SELECTION DU L'UTILISATEUR------------------------------->

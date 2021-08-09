@@ -24,15 +24,15 @@ export class CraService {
 
   constructor(private httpClient: HttpClient,private craWaintingService: CraWaitingService) {
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
-    this.initialisation(new Date());
+
   }
 
   httpOptions = {
     headers: new HttpHeaders()
   };
-  currentSlide=0;
+  currentSlide = 0;
   dateToday!: Date;
-  listeCraWeek!: CraWeek[];
+  listeCraWeek: CraWeek[] = [];
   craWeekLast!: CraWeek;
   craWeek!: CraWeek;
   craWeekNext!: CraWeek;
@@ -338,7 +338,6 @@ export class CraService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.liste_cra != null) {
-          reponse.liste_cra=reponse.liste_cra.reverse(); /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           this.transform(reponse.liste_cra, index);
           this.getCraWeekStatus(index);
         } else {
