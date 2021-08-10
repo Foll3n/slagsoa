@@ -12,6 +12,7 @@ import {Projet} from '../Cra/models/projet/Projet';
 import {ProjetAdd} from '../Cra/models/projet/ProjetAdd';
 import {InsertProjet} from "../Cra/models/projet/InsertProjet";
 import {Result} from "../Cra/models/Result";
+import {BigStats} from '../Cra/models/projet/BigStats';
 
 
 /**
@@ -39,6 +40,29 @@ export class ProjetHttpDatabase{
     return this._httpClient.get<BigProjet>(href, this.httpOptions);
   }
 
+  ///////////////////////////////// STATS ///////////////////////////////////////////////
+
+  getAllStatsCommandes(dateDebut:string, dateFin:string, codeProjet: string){
+    const href = environment.urlProjet + "/stats/commandes" +  "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`
+      + "&dateDebut="+dateDebut + "&dateFin=" + dateFin + "&codeProjet=" + codeProjet;
+    // tslint:disable-next-line:max-line-length
+    return this._httpClient.get<BigStats>(href, this.httpOptions);
+  }
+  getAllStatsUsers(dateDebut:string, dateFin:string, codeProjet: string){
+    const href = environment.urlProjet + "/stats/users" +  "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`
+      + "&dateDebut="+dateDebut + "&dateFin=" + dateFin + "&codeProjet=" + codeProjet;
+    // tslint:disable-next-line:max-line-length
+    return this._httpClient.get<BigStats>(href, this.httpOptions);
+  }
+  getAllStatsDurees(dateDebut:string, dateFin:string){
+    const href = environment.urlProjet + "/stats/duree" +  "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`
+                                        + "&dateDebut="+dateDebut + "&dateFin=" + dateFin;
+    // tslint:disable-next-line:max-line-length
+    return this._httpClient.get<BigStats>(href, this.httpOptions);
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////
+
+
   addProjet(projet: Projet){
     const send = new InsertProjet( `${sessionStorage.getItem('id')}`,projet);
     const json =  JSON.stringify(send);
@@ -59,4 +83,5 @@ export class ProjetHttpDatabase{
     // tslint:disable-next-line:max-line-length
     return this._httpClient.delete(href, this.httpOptions);
   }
+
 }

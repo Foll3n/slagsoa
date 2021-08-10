@@ -58,6 +58,14 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+<mat-form-field appearance="outline" class="selection-responsable-projet">
+  <mat-label>Responsable</mat-label>
+  <mat-select [(value)]="projet.responsable">
+    <mat-option *ngFor="let resp of this.listeResponsables" [value]="resp.idResponsable">
+      {{resp.nom}} {{resp.prenom}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <table *ngIf=" displayListNotEmpty()" mat-table [dataSource]="dataSource" matSort>
   <!-- Commande Column -->
   <ng-container matColumnDef="num_com">

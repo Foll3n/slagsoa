@@ -9,6 +9,8 @@ import {ProjetService} from '../../../../../services/projet.service';
 import {Subscription} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {Responsable} from '../../../../models/responsable/responsable';
+import {ResponsableService} from '../../../../../services/responsable.service';
 
 
 export interface DialogData {
@@ -27,12 +29,14 @@ export class DialogProjetComponent implements AfterViewInit{
   choice = ['forfait','regie'];
   listeCommandes!: CommandeInsert[];
   commandesSubject!: Subscription;
+  listeResponsables: Responsable[] = [];
   displayedColumns: string[] = ['num_com', 'checked'];
   dataSource!: MatTableDataSource<CommandeInsert>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     public commandeService: CommandeService, private projetService: ProjetService,
+    private responsableService: ResponsableService,
     public dialogRef: MatDialogRef<DialogProjetComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
@@ -42,7 +46,7 @@ export class DialogProjetComponent implements AfterViewInit{
     // this.dataSource.sort = this.sort;
     this.projet = this.copyProjet(data.projet);
 
-
+    this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables; console.log("je recois le responsable",this.listeResponsables)});
 
     this.projetService.ajout.subscribe((bool: boolean) => {
       this.isAddProjet = bool;
@@ -61,7 +65,7 @@ export class DialogProjetComponent implements AfterViewInit{
 // récupérer si la commande a bien été ajouté
   }
   private copyProjet(projet: Projet): Projet{
-    return new Projet(projet.code_projet, projet.color, projet.id, projet.modeRealisation, projet.available);
+    return new Projet(projet.code_projet, projet.color, projet.id, projet.modeRealisation, projet.available,projet.responsable); ////////////////////////////////////////////////////////////////////////////////////////
   }
   public width(){
     return window.innerWidth;
@@ -109,6 +113,7 @@ export class DialogProjetComponent implements AfterViewInit{
 
   ngOnInit(): void {
     this.commandeService.emitCommandeSubject();
+    this.responsableService.emitResponsablesSubject();
 
     console.log("test on Init");
   }

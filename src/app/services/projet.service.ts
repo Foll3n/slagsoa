@@ -49,6 +49,8 @@ export class ProjetService {
         console.log(reponse);
         projet.id = reponse.idProjet;
         this.listeProjet.push(projet);
+        this.listeProjetAvailable.push(projet);
+        this.emitProjetAvailableSubject();
         this.emitProjetSubject();
         this.emitAjoutSubject(true);
 

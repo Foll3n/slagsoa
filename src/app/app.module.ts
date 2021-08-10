@@ -89,6 +89,8 @@ import {UpdateProjectComponent} from './Cra/administration/projet/update-project
 import { UpdateCommandeComponent } from './Cra/administration/projet/update-commande/update-commande.component';
 import { DialogProjetComponent} from './Cra/administration/projet/update-project/dialog-projet/dialog-projet.component';
 import { VisualisationProjetComponent } from './Cra/administration/projet/update-project/visualisation-projet/visualisation-projet.component';
+import { ProjetPdfComponent } from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
+import {ResponsableService} from './services/responsable.service';
 registerLocaleData(localeFr);
 
 
@@ -131,7 +133,8 @@ registerLocaleData(localeFr);
     UpdateProjectComponent,
     UpdateCommandeComponent,
     DialogProjetComponent,
-    VisualisationProjetComponent
+    VisualisationProjetComponent,
+    ProjetPdfComponent
   ],
   imports: [
     BrowserModule,
@@ -172,7 +175,7 @@ registerLocaleData(localeFr);
   ],
   // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   // tslint:disable-next-line:max-line-length
-  providers: [CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
+  providers: [ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 

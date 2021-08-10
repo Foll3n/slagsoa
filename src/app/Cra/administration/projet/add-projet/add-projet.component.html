@@ -18,6 +18,14 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Selectionner un responsable</mat-label>
+      <mat-select formControlName="responsable" required>
+        <mat-option *ngFor="let resp of this.listeResponsables" [value]="resp.idResponsable">
+          {{resp.nom}} - {{resp.prenom}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <input *ngIf="this.projet.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
     <p class="notification-add-projet" *ngIf="this.valueAdd.contenu.length>0">{{valueAdd.contenu}}</p>
   </form>

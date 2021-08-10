@@ -1,19 +1,20 @@
-<div [ngClass]="{ 'chart1': width >= minWidth, 'chart1-responsive': width < minWidth }">
-  <div style="display: block;">
+<div  [ngClass]="{ 'chart1': width >= minWidth, 'chart1-responsive': width < minWidth }">
+  <div style="display: block;"  *ngIf="doughnutChartLabels && doughnutChartData">
     <canvas baseChart
-            [data]="pieChartData"
-            [labels]="pieChartLabels"
-            [chartType]="pieChartType"
-            [options]="pieChartOptions"
-            [plugins]="pieChartPlugins"
-            [legend]="pieChartLegend">
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"
+            [colors]="doughnutChartColors"
+            [options]="doughnutChartOptions"
+            [plugins]="doughnutChartPlugins"
+            [legend]="doughnutChartLegend">
     </canvas>
   </div>
 
   <div>
-    <button (click)="modify(100,200,300)">change to data [100,200,300]</button><br/>
-    <button (click)="modify(200,100,400)">change to data [200,100,400]</button><br/>
-    <button (click)="modify(300,400,100)">change to data [300,400,100]</button><br/>
+    <button (click)="modify(0)">projet duree</button><br/>
+    <button (click)="modify(1)">projet commandes</button><br/>
+    <button (click)="modify(2)">projet utilisateurs</button><br/>
   </div>
 
 

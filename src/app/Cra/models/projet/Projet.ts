@@ -7,7 +7,8 @@ export class Projet {
     public color: string,
     public id: string,
     public modeRealisation: string,
-    public available: string
+    public available: string,
+    public responsable: string
 
 
   ) {}

@@ -147,12 +147,13 @@ export class CompteRenduActiviteComponent implements OnInit {
   getAvailableCommande(){
     this.listeAddCommande = [];
     for (const real of this.listeRealisations ){
-      console.log(real.id + 'jjjjjjjjjjjj');
+
       if (!this.checkRelInListeCommande(real.num_commande) ) // listeCommande est la liste des commandes d'un cra
       {
 
             const commande = new CommandeInsert(real.num_commande, '0', real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-            this.listeAddCommande.push(commande);
+        console.log(real.id + 'jjjjjjjjjjjj',commande);
+        this.listeAddCommande.push(commande);
 
       }
     }
@@ -186,7 +187,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     if (!com.color){
       com.color = '';
     }
-    const commande = new CommandeInsert(com.num_com, com.id_projet, com.id, com.color);    // id -> 1 ou id 2 pour le projet pour le moment et 2/5 pour id commande
+    const commande = new CommandeInsert(com.num_com, com.id_projet, com.id, 'true', com.color);    // id -> 1 ou id 2 pour le projet pour le moment et 2/5 pour id commande
     this.craService.addCr(new CompteRendu(0, com.id, 0.0, com.color), this.selectedWeek, commande);
 
   }

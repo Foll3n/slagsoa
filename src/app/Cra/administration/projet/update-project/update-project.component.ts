@@ -14,7 +14,10 @@ import {DialogContent} from '../../administration-cra/table-cra-en-attente/table
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DialogProjetComponent} from './dialog-projet/dialog-projet.component';
 import {environment} from '../../../../../environments/environment';
-
+import { jsPDF } from "jspdf";
+import {Router} from '@angular/router';
+import {Responsable} from '../../../models/responsable/responsable';
+import {ResponsableService} from '../../../../services/responsable.service';
 @Component({
   selector: 'app-update-project',
   templateUrl: './update-project.component.html',
@@ -26,7 +29,8 @@ export class UpdateProjectComponent implements OnInit {
   public get width() {
     return window.innerWidth;
   }
-  constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog) {
+  constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog, private router: Router) {
+
     this.projetService.projetSubject.subscribe((projets: Projet[]) => {
       this.listeProjets = (projets);
 
@@ -40,7 +44,7 @@ export class UpdateProjectComponent implements OnInit {
 
   listeProjets!: Projet[];
   listeCommandes: CommandeInsert[] = [];
-  displayedColumns: string[] = ['id', 'code_projet', 'mode_realisation'];
+  displayedColumns: string[] = ['id', 'code_projet', 'mode_realisation','pdf'];
   dataSource!: MatTableDataSource<Projet>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -62,6 +66,11 @@ export class UpdateProjectComponent implements OnInit {
       console.log(result);
     });
 
+  }
+
+  makePdf(projet:Projet){
+    console.log(projet,"projet");
+    this.router.navigate(['/generate-pdf'], { queryParams: projet ,  skipLocationChange: true });
   }
 
   getTarget(id: string){
