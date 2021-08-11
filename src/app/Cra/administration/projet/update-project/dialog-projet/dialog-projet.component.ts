@@ -79,10 +79,7 @@ export class DialogProjetComponent implements AfterViewInit{
     // this.projetService.updateProjet(this.projet);
     this.commandeService.emitCommandeSubject();
   }
-  chargementTable(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+
   getCommandeById(){
     let res = [];
     if(!this.projet)return [];
@@ -95,7 +92,6 @@ export class DialogProjetComponent implements AfterViewInit{
     return res;
   }
   updateProjet(commandes: CommandeInsert[]){
-    console.log("projet actuel :", this.projet);
     this.commandeService.updateCommandes(commandes);
     this.projetService.updateProjet(this.projet);
 
@@ -106,7 +102,6 @@ export class DialogProjetComponent implements AfterViewInit{
     return false;
   }
   putAllCommandsFalse(){
-    console.log("ici je test 3",this.projet);
     for(const com of this.dataSource.data){
       this.projet.available=='true'?com.available='false':com.available='true';
       // com.available = this.projet.available;
@@ -118,7 +113,6 @@ export class DialogProjetComponent implements AfterViewInit{
     this.commandeService.emitCommandeSubject();
     this.responsableService.emitResponsablesSubject();
 
-    console.log("test on Init");
   }
 
   ngAfterViewInit(): void {

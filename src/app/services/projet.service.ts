@@ -46,7 +46,6 @@ export class ProjetService {
     const response = projetHttp.addProjet(projet);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse);
         projet.id = reponse.idProjet;
         this.listeProjet.push(projet);
         this.listeProjetAvailable.push(projet);
@@ -83,7 +82,6 @@ export class ProjetService {
     const response = projetHttp.getAllProjects();
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse,'ppppppppppppppppppppppppppp');
         if (reponse.liste_projet)
         this.listeProjet = reponse.liste_projet;
         this.emitProjetSubject();
@@ -99,7 +97,6 @@ export class ProjetService {
     const response = projetHttp.getAllProjectsAvailable();
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse,'ppppppppppppppppppppppppppp');
         if (reponse.liste_projet)
           this.listeProjetAvailable = reponse.liste_projet;
         this.emitProjetAvailableSubject();

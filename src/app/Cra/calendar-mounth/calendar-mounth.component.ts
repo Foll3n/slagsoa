@@ -48,7 +48,6 @@ export class CalendarMounthComponent implements OnInit {
         let i = 0;
         this.listeCra = listeCra;
         this.listeCra[20];
-        console.log('je suis la aaaaaaaaaaaaaaaaaaaaaaaaaaa', this.listeCra);
         for (const cra of this.listeCra){
           console.log(i);
           i++;

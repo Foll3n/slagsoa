@@ -82,13 +82,10 @@ export class AddCommandeComponent implements OnInit {
   }
 
   getCommandesProjet(){
-    console.log("lllllllllllll");
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
     const rep = commandeHttp.getAllCommandsProjet(this.commandeProjet.get('projet')?.value);
     rep.subscribe(reponse => {
-      console.log("je suis ic iiiii", reponse);
       if (reponse.status =='OK'){
-        console.log("crash",reponse);
         this.listeCommandeProjet = [];
         if(reponse.listeCommande)
           this.listeCommandeProjet = reponse.listeCommande;
@@ -117,11 +114,9 @@ export class AddCommandeComponent implements OnInit {
         const response = commandeHttp.addCommande(commande);
         response.subscribe(reponse => {
           if (reponse.status === 'OK') {
-            console.log(reponse);
             shortMessage(this.commandeAdd,'Commande ajoutée');
 
           } else {
-            console.log("Erreur de requete de base de données");
             shortMessage(this.commandeAdd,'Erreur de base de données');
           }
         });
@@ -141,12 +136,10 @@ export class AddCommandeComponent implements OnInit {
   addRealisation(formDirective: FormGroupDirective){
     if(this.commandeUtilisateur){
       let realisation = new RealisationPost(this.commandeUtilisateur.get('utilisateur')?.value, this.commandeUtilisateur.get('commande')?.value,  `${sessionStorage.getItem('id')}`);
-      console.log("ma réalisation" + realisation.id_com + " " + realisation.id_usr);
       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
       const response = commandeHttp.addCommandeUser(realisation);
       response.subscribe(reponse => {
         if(reponse.status == 'OK'){
-          console.log(reponse);
           this.isAddRealisation = true;
           setTimeout(() => {
             this.isAddRealisation = false;
@@ -174,7 +167,6 @@ export class AddCommandeComponent implements OnInit {
       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
       const response = commandeHttp.getAllCommandsUser(this.commandeUtilisateur.get('utilisateur')?.value);
       response.subscribe(reponse => {
-        console.log("le premier marche !!!",reponse);
         if (reponse.status == 'OK'){
           if (reponse.realisations)
           realisations = reponse.realisations;
@@ -182,7 +174,6 @@ export class AddCommandeComponent implements OnInit {
           const rep = commandeHttp.getAllCommandsProjet(projet.id);
           rep.subscribe(reponse => {
             if (reponse.status =='OK'){
-              console.log(reponse);
               this.listeCommandeProjet = [];
               if(reponse.listeCommande)
               for (const com of reponse.listeCommande){
@@ -215,7 +206,6 @@ export class AddCommandeComponent implements OnInit {
     const response = projetHttp.getAllProjectsAvailable();
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse);
         this.listeProjets = reponse.liste_projet;
       }
       else{

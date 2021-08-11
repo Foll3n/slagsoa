@@ -37,11 +37,8 @@ export class CraWaitingService {
   fillListeCraWaiting(index:string){
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.getCraWeekWaiting(index);
-    console.log("reponse ::::: " , response);
     response.subscribe(reponse => {
-      console.log(reponse.status + '______________________________________');
       if(reponse.status == 'OK'){
-        console.log(" -----kkkkkkkkkkkkkkkkk ---" ,reponse);
         // this.listeCraWaiting = this.sortList(reponse.listeCraWeek);
         if (index == '1' && reponse.listeCraWeek){
           this.listeCraWaiting = reponse.listeCraWeek;
@@ -111,11 +108,9 @@ export class CraWaitingService {
     }
     commentaire.substr(0,254);
     let log = new Log('',`${sessionStorage.getItem('id')}`,cra.idUsr,cra.status,commentaire,cra.idCra!.toString());
-    console.log("log : ",log);
     const logHttp = new LogCraHttpDatabase(this.httpClient);
     const res = logHttp.addLog(log);
     res.subscribe(reponse => {
-      console.log(reponse);
     });
   }
 }

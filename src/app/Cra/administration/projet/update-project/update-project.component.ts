@@ -33,7 +33,7 @@ export class UpdateProjectComponent implements OnInit {
   constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog, private router: Router) {
 
     this.projetSubscription = this.projetService.projetSubject.subscribe((projets: Projet[]) => {
-      this.listeProjets = (projets);
+      this.listeProjets = projets;
 
       this.dataSource = new MatTableDataSource(this.listeProjets);
       this.dataSource.paginator = this.paginator;
@@ -52,11 +52,6 @@ export class UpdateProjectComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // setProjet(projet:Projet){
-  //   console.log("ooo :",projet);
-  //   let copy = new Projet(projet.code_projet, projet.color,projet.id,projet.modeRealisation);
-  //   this.currentProjet = copy;
-  // }
 
   openDialog(projet: Projet): void {
     const dialogRef = this.dialog.open(DialogProjetComponent, {
@@ -95,8 +90,7 @@ export class UpdateProjectComponent implements OnInit {
 
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+
   }
 
 

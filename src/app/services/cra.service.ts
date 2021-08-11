@@ -221,7 +221,6 @@ export class CraService {
    */
 // tslint:disable-next-line:variable-name
   public transform(liste_cra: InsertCra[], index: number): void {
-    console.log("je suis dans le transform --------->", liste_cra);
     this.listeCraWeek[index].listeCra = [];
     for (const cra of liste_cra) {
 
@@ -261,13 +260,6 @@ export class CraService {
     return res;
   }
 
-  // setCurrentWeek(index: number, ind:number){
-  //   switch (index){
-  //     case 0 : {this.listeCraWeek[ind] = this.craWeekLast; break; }
-  //     case 1 : {this.listeCraWeek[ind] = this.craWeek; break; }
-  //     case 2 : {this.listeCraWeek[ind] = this.craWeekNext; break; }
-  //   }
-  // }
   /**
    * Appel API pour supprimer un cra à la semaine mais jamais utilisé
    * @param index
@@ -386,19 +378,16 @@ export class CraService {
    * @param index
    */
   saveCra(index: number) {
-    console.log('je passe bien ici');
     const send: CompteRenduInsert[] = [];
     for (const cra of this.listeCraWeek[index].listeCra) {
       for (const cr of cra.listeCr) {
         send.push(new CompteRenduInsert(cr.idCra.toString(), cr.numCommande.toString(), cr.duree.toString(), cr.color));
       }
     }
-    console.log(send);
     const json = JSON.stringify(send);
     this.httpClient.put<Result>(environment.urlCr, json, this.httpOptions).subscribe(
       response => {
         if (response.status == 'OK') {
-          console.log(response);
         } else {
           console.log("Erreur de requete de base de données");
         }
@@ -419,9 +408,7 @@ export class CraService {
 
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
-        console.log(" je récupère le status" + reponse);
         this.listeCraWeek[index].setStatus(reponse.statusCra);
-        console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" + reponse.statusCra);
         this.emitCraSubject();
       } else {
         console.log("Erreur de requete de base de données");
@@ -438,7 +425,6 @@ export class CraService {
     const response = craHttp.addCraWeek(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, '0',  `${sessionStorage.getItem('id')}`));
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
-        console.log(reponse);
         this.addCraServer(index);
       } else {
         console.log("Erreur de requete de base de données");
@@ -457,9 +443,7 @@ export class CraService {
     const response = craHttp.updateStatusCraWeek(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, status,  `${sessionStorage.getItem('id')}`));
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
-        console.log(reponse);
         this.listeCraWeek[index].status = status;
-        console.log("liste craweek index " + this.listeCraWeek[index].status);
         this.emitCraSubject();
         this.craWaintingService.listeCraWaiting.push(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, status,  `${sessionStorage.getItem('id')}`));
         this.craWaintingService.emitCraWaintingSubject();
@@ -474,7 +458,6 @@ export class CraService {
    * @param index
    */
   addCraServer(index: number): void {
-    console.log('je rentre bien ici !! post');
     // tslint:disable-next-line:ban-types
     const listeCraWeek: InsertCra [] = [];
     for (let i = 0; i < 5; i++) {
@@ -485,9 +468,7 @@ export class CraService {
     console.log(json);
     this.httpClient.post<Result>(environment.urlCra, json, this.httpOptions).subscribe(
       response => {
-        console.log(response);
         if (response.status == 'OK') {
-          console.log(response);
           this.getCraToServer(index);
         } else {
           console.log("Erreur de requete de base de données");
@@ -523,11 +504,9 @@ export class CraService {
    * @param index
    */
   deleteLineToServer(commande: CommandeInsert, index: number) {
-    console.log("ooooooooooooooooo ooooooooo " + commande.id);
     const requestUrl = environment.urlCr + '?commande=' + commande.id + '&date_start=' + this.listeCraWeek[index].firstDateWeekFormat + '&date_end=' + this.listeCraWeek[index].lastDateWeekFormat + '&id_usr=' +  `${sessionStorage.getItem('id')}`;
     this.httpClient.delete(requestUrl, this.httpOptions).subscribe(
       response => {
-        console.log(response);
         this.deleteLine(commande, index);
         this.emitCraSubject();
       },
@@ -544,7 +523,6 @@ export class CraService {
   setStatusCongeUserToServer(index: number) {
     console.log('je passe bien ici dans l update de status');
     const json = JSON.stringify(this.transformToInsertCra(this.listeCraWeek[index].listeCra));
-    console.log(json);
     this.httpClient.put(environment.urlCra, json, this.httpOptions).subscribe(
       response => {
         console.log("probleme de status a jour" + response);

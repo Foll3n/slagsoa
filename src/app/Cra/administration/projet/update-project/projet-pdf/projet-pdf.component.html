@@ -1,7 +1,11 @@
 <button (click)="this.makePdf()">
 </button>
-<div #content>
-  <p>
-    ceci est un test
-  </p>
+<!--<button class="mat-button" (click)="">-->
+<!--</button>-->
+<div  *ngIf="pdf && pdfList">
+<!--  <div *ngFor="this.listeUtilisateurs">-->
+    <app-conteneur-pdf *ngIf="pdf && pdfList" [ligne]="this.pdfList" [pdf]="pdf"></app-conteneur-pdf>
+<!--  </div>-->
 </div>
+
+

@@ -32,7 +32,6 @@ export class UpdateClientResponsableComponent implements OnInit {
     });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients:Client[]) =>
     {
-      console.log("client : ", clients);
       this.listeClients = clients;
       this.dataSource = new MatTableDataSource(this.listeClients);
       this.dataSource.paginator = this.paginator;
@@ -40,7 +39,6 @@ export class UpdateClientResponsableComponent implements OnInit {
     });
   }
   updateClient(client: Client){
-    console.log("update Client",client);
     this.clientService.updateClient(client);
   }
   ngOnInit(): void {

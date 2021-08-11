@@ -10,7 +10,7 @@ import {NavComponent} from "../../../nav/nav.component";
 import {CongesHttpService} from "../../../configuration-http/conges-http.service";
 import {TableCongesDataSource} from "../../visualisation-conges/table-conges/table-conges-datasource";
 import {MatCalendar} from "@angular/material/datepicker";
-import {dateFormatter} from "../../../../environments/environment";
+import {dateFormatter} from '../../../../environments/environment';
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {Moment} from "moment";
 import {ConnexionService} from "../../../connexion/connexion.service";

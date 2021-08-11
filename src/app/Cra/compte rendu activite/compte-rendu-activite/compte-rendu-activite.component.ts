@@ -98,7 +98,6 @@ export class CompteRenduActiviteComponent implements OnInit {
         this.update();
       });
 
-    console.log('test');
     this.craService.emitCraSubject();
   }
 
@@ -130,7 +129,6 @@ export class CompteRenduActiviteComponent implements OnInit {
    */
   checkRelInListeCommande(num_com: string): boolean{
     if (this.listeCommande){
-      console.log('coucou' , this.listeCommande);
       for (const com of this.listeCommande){
         if (com.num_com === num_com){
           return true;
@@ -152,7 +150,6 @@ export class CompteRenduActiviteComponent implements OnInit {
       {
 
             const commande = new CommandeInsert(real.num_commande, '0', real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-        console.log(real.id + 'jjjjjjjjjjjj',commande);
         this.listeAddCommande.push(commande);
 
       }
@@ -214,7 +211,6 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Appuie sur le bouton enregistrer de notre IHM
    */
   push() {
-    // this.craService.addCraServer(2);
 
     this.craService.saveCra(this.selectedWeek);
   }

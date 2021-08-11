@@ -36,7 +36,6 @@ export class ClientService {
       if(reponse.status == 'OK'){
         if(reponse.listeClients)
           this.listeClients = reponse.listeClients;
-        console.log("reponse client bdd -> ", reponse);
         this.emitClientSubject();
       }
       else{
@@ -47,14 +46,11 @@ export class ClientService {
   }
 
   addClient(client: Client): void {
-    console.log("client a envoyer",client);
     const clientHttp = new ClientHttpService(this.httpClient);
     const response = clientHttp.addClient(client);
     response.subscribe(reponse => {
-    console.log(reponse,'response add ________');
       if(reponse.status == 'OK'){
           this.listeClients.push(client);
-        console.log("reponse client bdd ajout client -> ", reponse);
         this.emitClientSubject();
       }
       else{
@@ -68,7 +64,6 @@ export class ClientService {
     const clientHttp = new ClientHttpService(this.httpClient);
     const response = clientHttp.updateClient(client);
     response.subscribe(reponse => {
-      console.log(reponse,'----------', client);
       if(reponse.status == 'OK'){
         this.updateInList(client);
         // this.getAllClientsFromServer();

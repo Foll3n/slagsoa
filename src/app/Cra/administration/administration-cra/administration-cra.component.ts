@@ -7,12 +7,6 @@ import {CraService} from '../../../services/cra.service';
 import {CraWeek} from '../../models/cra/craWeek';
 import {InsertCra} from '../../models/cra/InsertCra';
 import {CompteRendu} from '../../models/compteRendu/CompteRendu';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTable} from '@angular/material/table';
-
-import {TableCraAdministration, TableCraItem} from './TableCraAdministraton';
-import {Realisation} from '../../models/realisation/Realisation';
 import {CraWaitingService} from '../../../services/craWaiting.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
@@ -38,9 +32,6 @@ export class AdministrationCraComponent implements OnInit{
 
   constructor(private httpClient: HttpClient, public craWaitingService: CraWaitingService) {
 
-
-
-    // this.listeCraValidate = this.sortList(this.listeCraValidate);
   }
 
   ngOnInit(): void {
@@ -51,7 +42,6 @@ export class AdministrationCraComponent implements OnInit{
     this.listeCraSubscription = this.craWaitingService.validateSubject.subscribe(
       (craWeek: CraWeekInsert[]) => {this.listeCraValidate = craWeek;
       });
-    //this.craWaitingService.emitCraWaintingSubject();
     console.log("iciiii ", this.listeCraValidate);
   }
 
@@ -67,16 +57,11 @@ export class AdministrationCraComponent implements OnInit{
       this.actualWeek!.listeCommandesWeek= listeCom.listeCommande;
     });
 
-    const status = cra.status;
-
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.getCra(cra.dateStart, cra.dateEnd, cra.idUsr);
     response.subscribe(reponse => {
-      console.log("la réponse ici : ", reponse);
       if (reponse.status == 'OK'){
-        console.log(reponse);
         this.transform(reponse.liste_cra);
-        console.log("cra est tu vide : ",this.actualWeek);
 
       }
       else{
@@ -87,7 +72,6 @@ export class AdministrationCraComponent implements OnInit{
 
   }
   public transform(liste_cra: InsertCra[]): void {
-    console.log('je suis ici ahahhahahhahahaha');
     // tslint:disable-next-line:no-non-null-assertion
     this.actualWeek!.listeCra = [];
     for (const cra of liste_cra) {

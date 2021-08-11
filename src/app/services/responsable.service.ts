@@ -49,7 +49,6 @@ export class ResponsableService {
     });
   }
   addResponsable(responsable: Responsable): void {
-    console.log("client a envoyer",responsable);
     const responsableHttp = new ResponsableHttpService(this.httpClient);
     const response = responsableHttp.addResponsable(responsable);
     response.subscribe(reponse => {
@@ -68,7 +67,6 @@ export class ResponsableService {
     const responsableHttp = new ResponsableHttpService(this.httpClient);
     const response = responsableHttp.updateResponsable(responsable);
     response.subscribe(reponse => {
-      console.log(reponse,'----------', responsable);
       if(reponse.status == 'OK'){
         this.updateInList(responsable);
         // this.getAllClientsFromServer();

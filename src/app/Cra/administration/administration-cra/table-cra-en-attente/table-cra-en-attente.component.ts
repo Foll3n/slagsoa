@@ -51,7 +51,6 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     this.dataSource = new TableCraAdministration(this.httpClient);
   }
   envoieParent(cra:CraWeekInsert) {
-    console.log("je suis dans le fils",cra);
     this.craWeekEmitter.emit(cra);
   }
   ngOnInit(): void {
@@ -71,14 +70,12 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.commentaire = result;
-      console.log('Dialog result:', this.commentaire);
       this.refuserCra(cra);
     });
 
   }
 
   update(){
-    console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",this.listeCraWaiting);
 
     if (this.index == '1') {
       this.dataSource.setListe(this.listeCraWaiting);
@@ -89,7 +86,6 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   }
 
   validerCra(cra: CraWeekInsert){
-    console.log('iciiiiiiii i i i i ', cra);
     this.craWaitingService.validerCra(cra, 'OK');
   }
   refuserCra(cra: CraWeekInsert){

@@ -34,7 +34,6 @@ export class UpdateReponsableComponent implements OnInit {
     });
     this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsable:Responsable[]) =>
     {
-      console.log("client : ", responsable);
       this.listeresponsables = responsable;
       this.dataSource = new MatTableDataSource(this.listeresponsables);
       this.dataSource.paginator = this.paginator;
@@ -46,7 +45,6 @@ export class UpdateReponsableComponent implements OnInit {
     });
   }
   updateResponsable(responsable: Responsable){
-    console.log("update Client",responsable);
     this.responsableService.updateResponsable(responsable);
   }
   ngOnInit(): void {

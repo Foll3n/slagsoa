@@ -3,12 +3,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CommandeHttpDatabase} from '../configuration-http/CommandeHttpDatabase';
 import {Subject} from 'rxjs';
-import {Realisation} from '../Cra/models/realisation/Realisation';
-import {Projet} from '../Cra/models/projet/Projet';
-import {ProjetHttpDatabase} from '../configuration-http/ProjetHttpDatabase';
 import {CommandeInsert} from '../Cra/models/commande/CommandeInsert';
-import {RealisationPost} from '../Cra/models/realisation/RealisationPost';
-import {Cra} from "../Cra/models/cra/Cra";
+
 
 
 @Injectable()
@@ -36,7 +32,6 @@ export class CommandeService {
   };
 
   emitCommandeSubject(): void {
-    console.log("j'envoie :",this.listeCommandes);
     this.commandeSubject.next(this.listeCommandes.slice());
   }
   emitAddCommandeSubject(bool:boolean): void {

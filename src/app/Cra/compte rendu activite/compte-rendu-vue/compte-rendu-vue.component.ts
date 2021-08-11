@@ -18,7 +18,6 @@ export class CompteRenduVueComponent implements OnInit {
   @Input()
   craWeek!: CraWeek;
   minWidth = environment.minWidth;
-    // listeCr: CompteRendu[] = []; // rajouter la liste des comptes rendus
   listeCraSubscription!: Subscription;
   listeCommande: CommandeInsert[] = [];
     constructor(public craService: CraService) {
@@ -38,7 +37,6 @@ export class CompteRenduVueComponent implements OnInit {
      return this.craWeek.status === '0';
   }
     ngOnInit(){
-      console.log("je suis la !!" + this.craWeek);
       //this.craWeek.listeCommandesWeek;
       // this.listeCraSubscription = this.craService.craSubject.subscribe(
       //   (craWeek: CraWeek[]) => {this.listeCra = craWeek[this.index].listeCra;
