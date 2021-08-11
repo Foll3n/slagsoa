@@ -91,6 +91,9 @@ import { DialogProjetComponent} from './Cra/administration/projet/update-project
 import { VisualisationProjetComponent } from './Cra/administration/projet/update-project/visualisation-projet/visualisation-projet.component';
 import { ProjetPdfComponent } from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
 import {ResponsableService} from './services/responsable.service';
+import { UpdateClientResponsableComponent } from './Cra/administration/projet/update-client/update-client-responsable.component';
+import {ClientService} from './services/client.service';
+import { UpdateReponsableComponent } from './Cra/administration/projet/update-reponsable/update-reponsable.component';
 registerLocaleData(localeFr);
 
 
@@ -134,7 +137,9 @@ registerLocaleData(localeFr);
     UpdateCommandeComponent,
     DialogProjetComponent,
     VisualisationProjetComponent,
-    ProjetPdfComponent
+    ProjetPdfComponent,
+    UpdateClientResponsableComponent,
+    UpdateReponsableComponent
   ],
   imports: [
     BrowserModule,
@@ -175,7 +180,7 @@ registerLocaleData(localeFr);
   ],
   // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   // tslint:disable-next-line:max-line-length
-  providers: [ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
+  providers: [ClientService, ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 

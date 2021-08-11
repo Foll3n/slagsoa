@@ -13,6 +13,7 @@ import {ProjetAdd} from '../Cra/models/projet/ProjetAdd';
 import {InsertProjet} from "../Cra/models/projet/InsertProjet";
 import {Result} from "../Cra/models/Result";
 import {BigStats} from '../Cra/models/projet/BigStats';
+import {BigPdf} from '../Cra/models/projet/BigPdf';
 
 
 /**
@@ -48,6 +49,8 @@ export class ProjetHttpDatabase{
     // tslint:disable-next-line:max-line-length
     return this._httpClient.get<BigStats>(href, this.httpOptions);
   }
+
+
   getAllStatsUsers(dateDebut:string, dateFin:string, codeProjet: string){
     const href = environment.urlProjet + "/stats/users" +  "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`
       + "&dateDebut="+dateDebut + "&dateFin=" + dateFin + "&codeProjet=" + codeProjet;
@@ -61,7 +64,12 @@ export class ProjetHttpDatabase{
     return this._httpClient.get<BigStats>(href, this.httpOptions);
   }
   /////////////////////////////////////////////////////////////////////////////////////////
-
+  getPdF(dateDebut:string, dateFin:string, codeProjet: string, idUser: string){
+    const href = environment.urlProjet + "/pdf" + "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`
+      + "&dateStart="+dateDebut + "&dateEnd=" + dateFin + "&codeProjet=" + codeProjet + "&idUser=" + idUser;
+    // tslint:disable-next-line:max-line-length
+    return this._httpClient.get<BigPdf>(href, this.httpOptions);
+  }
 
   addProjet(projet: Projet){
     const send = new InsertProjet( `${sessionStorage.getItem('id')}`,projet);

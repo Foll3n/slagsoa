@@ -32,6 +32,9 @@ export class DialogProjetComponent implements AfterViewInit{
   listeResponsables: Responsable[] = [];
   displayedColumns: string[] = ['num_com', 'checked'];
   dataSource!: MatTableDataSource<CommandeInsert>;
+  responsableSubsciption!: Subscription;
+  ajoutSubscription!: Subscription;
+  commandeSubscription!: Subscription;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -46,16 +49,16 @@ export class DialogProjetComponent implements AfterViewInit{
     // this.dataSource.sort = this.sort;
     this.projet = this.copyProjet(data.projet);
 
-    this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables; console.log("je recois le responsable",this.listeResponsables)});
+    this.responsableSubsciption = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables; console.log("je recois le responsable",this.listeResponsables)});
 
-    this.projetService.ajout.subscribe((bool: boolean) => {
+    this.ajoutSubscription = this.projetService.ajout.subscribe((bool: boolean) => {
       this.isAddProjet = bool;
       setTimeout(() => {
         this.isAddProjet = false;
       }, 3000);
     });
 
-    this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
+    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
       this.listeCommandes = commandes;
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;

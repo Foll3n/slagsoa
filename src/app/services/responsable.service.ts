@@ -8,6 +8,8 @@ import {Utilisateur} from "../Modeles/utilisateur";
 import {UtilisateursHttpService} from "../configuration-http/utilisateurs-http.service";
 import {Responsable} from '../Cra/models/responsable/responsable';
 import {ResponsableHttpService} from '../configuration-http/responsableHttp.service';
+import {Client} from '../Cra/models/client/Client';
+import {ClientHttpService} from '../configuration-http/clientHttp.service';
 
 
 @Injectable()
@@ -46,7 +48,49 @@ export class ResponsableService {
 
     });
   }
+  addResponsable(responsable: Responsable): void {
+    console.log("client a envoyer",responsable);
+    const responsableHttp = new ResponsableHttpService(this.httpClient);
+    const response = responsableHttp.addResponsable(responsable);
+    response.subscribe(reponse => {
+      if(reponse.status == 'OK'){
+        this.listeResponsables.push(responsable);
+        this.emitResponsablesSubject();
+      }
+      else{
+        console.log("Erreur : add responsable");
+      }
 
+    });
+  }
+
+  updateResponsable(responsable: Responsable){
+    const responsableHttp = new ResponsableHttpService(this.httpClient);
+    const response = responsableHttp.updateResponsable(responsable);
+    response.subscribe(reponse => {
+      console.log(reponse,'----------', responsable);
+      if(reponse.status == 'OK'){
+        this.updateInList(responsable);
+        // this.getAllClientsFromServer();
+        this.emitResponsablesSubject();
+      }
+      else{
+        console.log("Erreur : get All clients");
+      }
+
+    });
+  }
+
+  updateInList(responsable: Responsable){
+    for (const c of this.listeResponsables){
+      if (c.idResponsable == responsable.idResponsable){
+        c.nom = responsable.nom;
+        c.prenom = responsable.prenom;
+        c.mail = responsable.mail;
+        c.idClient = responsable.idClient;
+      }
+    }
+  }
 }
 
 //

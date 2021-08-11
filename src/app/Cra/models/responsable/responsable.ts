@@ -1,7 +1,10 @@
 export class Responsable{
-  idResponsable!: string;
-  nom!: string;
-  prenom!: string;
-  mail!: string;
-  idClient!: string;
+  constructor(
+    public idResponsable: string,
+    public nom: string,
+    public prenom: string,
+    public mail: string,
+    public idClient: string
+){}
+
 }

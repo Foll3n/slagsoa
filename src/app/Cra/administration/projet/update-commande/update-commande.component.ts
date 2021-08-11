@@ -24,6 +24,7 @@ export class UpdateCommandeComponent implements OnChanges {
   listeCommandes!:CommandeInsert[];
   commandesSubject!:Subscription;
   displayedColumns: string[] = ['num_com'];
+  commandeSubscription!: Subscription;
   dataSource!: MatTableDataSource<CommandeInsert>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -44,7 +45,7 @@ export class UpdateCommandeComponent implements OnChanges {
       }, 3000);
     });
 
-    this.commandeService.commandeSubject.subscribe((commandes:CommandeInsert[]) =>{
+    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes:CommandeInsert[]) =>{
       this.listeCommandes = commandes;
       console.log("je reçois: ",this.listeCommandes);
       this.dataSource =  new MatTableDataSource(this.getCommandeById());

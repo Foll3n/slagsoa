@@ -9,6 +9,7 @@ import {Message} from '../app/Cra/models/message';
 export const environment = {
   minWidth: 1200,
   production: true,
+  urlClient: 'http://5.196.8.160:4000/gateway/APIClient/1.0/client',
   urlResponsable: 'http://5.196.8.160:4000/gateway/APIResponsable/1.0/responsable',
   urlFacture: 'http://5.196.8.160:4000/gateway/APIFacture/1.0/facture',
   urlCategories: 'http://5.196.8.160:4000/gateway/APICategorie/1.0/categorie',

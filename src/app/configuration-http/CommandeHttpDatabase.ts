@@ -38,6 +38,7 @@ export class CommandeHttpDatabase{
   updateCommands(commandes: CommandeInsert[]){
     const send = new BigInsertCommande(`${sessionStorage.getItem('id')}`, commandes);
     const json =  JSON.stringify(send);
+
     const href = environment.urlCommande;
     // tslint:disable-next-line:max-line-length
     return this._httpClient.put<Result>(href, json, this.httpOptions);

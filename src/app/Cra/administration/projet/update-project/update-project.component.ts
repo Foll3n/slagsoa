@@ -18,6 +18,7 @@ import { jsPDF } from "jspdf";
 import {Router} from '@angular/router';
 import {Responsable} from '../../../models/responsable/responsable';
 import {ResponsableService} from '../../../../services/responsable.service';
+import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-update-project',
   templateUrl: './update-project.component.html',
@@ -25,13 +26,13 @@ import {ResponsableService} from '../../../../services/responsable.service';
 })
 export class UpdateProjectComponent implements OnInit {
   minWidth = environment.minWidth;
-
+  projetSubscription!: Subscription;
   public get width() {
     return window.innerWidth;
   }
   constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog, private router: Router) {
 
-    this.projetService.projetSubject.subscribe((projets: Projet[]) => {
+    this.projetSubscription = this.projetService.projetSubject.subscribe((projets: Projet[]) => {
       this.listeProjets = (projets);
 
       this.dataSource = new MatTableDataSource(this.listeProjets);

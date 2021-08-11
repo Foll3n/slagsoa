@@ -43,7 +43,22 @@ import {Router} from '@angular/router';
 export class CalendarMounthComponent implements OnInit {
 
   constructor(private craService: CraService, private calendarService: CalendarService, private router: Router) {
-
+    this.calendarCra = this.calendarService.calendarSubject.subscribe(
+      (listeCra: InsertCra[]) => {
+        let i = 0;
+        this.listeCra = listeCra;
+        this.listeCra[20];
+        console.log('je suis la aaaaaaaaaaaaaaaaaaaaaaaaaaa', this.listeCra);
+        for (const cra of this.listeCra){
+          console.log(i);
+          i++;
+          if (cra.listeCr) {
+            for (const cr of cra.listeCr){
+              this.addEvent('Commande: ' + cr.id_commande, cra.date, cr.color, cr.duree);
+            }
+          }
+        }
+      });
   }
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
@@ -72,22 +87,7 @@ export class CalendarMounthComponent implements OnInit {
   ngOnInit(
   ) {
 
-    this.calendarCra = this.calendarService.calendarSubject.subscribe(
-      (listeCra: InsertCra[]) => {
-        let i = 0;
-        this.listeCra = listeCra;
-        this.listeCra[20];
-        console.log('je suis la aaaaaaaaaaaaaaaaaaaaaaaaaaa', this.listeCra);
-        for (const cra of this.listeCra){
-          console.log(i);
-          i++;
-          if (cra.listeCr) {
-          for (const cr of cra.listeCr){
-            this.addEvent('Commande: ' + cr.id_commande, cra.date, cr.color, cr.duree);
-          }
-          }
-        }
-      });
+
 
   }
 
