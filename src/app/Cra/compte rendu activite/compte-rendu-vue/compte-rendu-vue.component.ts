@@ -6,6 +6,7 @@ import {CompteRendu} from '../../models/compteRendu/CompteRendu';
 import {CraWeek} from '../../models/cra/craWeek';
 import {CommandeInsert} from '../../models/commande/CommandeInsert';
 import {environment} from '../../../../environments/environment';
+import {ProjetService} from '../../../services/projet.service';
 
 @Component({
     selector: 'app-compte-rendu-vue',
@@ -20,7 +21,7 @@ export class CompteRenduVueComponent implements OnInit {
   minWidth = environment.minWidth;
   listeCraSubscription!: Subscription;
   listeCommande: CommandeInsert[] = [];
-    constructor(public craService: CraService) {
+    constructor(public craService: CraService, private projetService: ProjetService) {
     }
 
   /**
@@ -74,5 +75,8 @@ export class CompteRenduVueComponent implements OnInit {
    */
   afficherjour(day: number): string {
         return ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][day];
+    }
+    getProjetName(id:string){
+        return this.projetService.getNameProjet(id)
     }
 }

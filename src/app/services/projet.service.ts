@@ -61,6 +61,14 @@ export class ProjetService {
 
     });
   }
+  getNameProjet(id:string): string{
+    for (const projet of this.listeProjet){
+      if (projet.id == id){
+        return projet.code_projet;
+      }
+    }
+    return "";
+  }
   updateProjet(projet:Projet){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
     const response = projetHttp.updateProjet(projet);

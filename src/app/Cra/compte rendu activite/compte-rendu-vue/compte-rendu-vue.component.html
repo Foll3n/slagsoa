@@ -15,7 +15,7 @@
           <button *ngIf="canDelete()" (click)="deleteLine(com)" color="primary" mat-raised-button>
             <mat-icon>delete</mat-icon>
           </button>
-          <p>{{ com.num_com }} {{com.color}} </p>
+          <p>{{ com.num_com }} --- {{this.getProjetName(com.id_projet)}} </p>
         </div>
       </div>
     </div>
