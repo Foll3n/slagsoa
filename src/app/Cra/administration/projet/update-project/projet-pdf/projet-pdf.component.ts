@@ -32,7 +32,10 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
 
   projet!: Projet;
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private utilisateurService: UserService) {
-    this.projet = this.route.snapshot.queryParams as Projet;
+    this.route.queryParams.subscribe(params => {
+      this.projet = this.route.snapshot.queryParams as Projet;
+      console.log("--------", this.projet.code_projet);
+    });
 
 
     this.listeUtilisateursSubscription = utilisateurService.usersSubject.subscribe( (listeUsers: Utilisateur[]) => {
@@ -44,6 +47,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
           this.initCurrentMonth(+user);
         }
         console.log("iciiii ",this.listepdf);
+        this.makePdf();
       }
 
       // this.initCurrentMonth();
@@ -98,14 +102,13 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
 
 
   }
-  makePdf(user:string='42227'){
+  makePdf(){
     let index = 0;
     for (let usr of this.listeUtilisateurs){
       this.chargerProjet(usr.id, index);
       console.log("ooo");
       index ++;
     }
-    this.load = true;
 
 
     // console.log("projet ---> ",this.projet);
@@ -136,11 +139,14 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
       if(reponse.status == 'OK'){
 
         this.pdfInfoListe[index] = reponse.result;
+        if(reponse.result.listeFill){
+          this.fill(index);
+          console.log("this.pdf list", this.pdfInfoListe);
+          console.log("this.listepdf ", this.listepdf);
+        }
         // this.pdf = reponse.result;
         // this.getDaysInMonth();
-        this.fill(index);
-        console.log("this.pdf list", this.pdfInfoListe);
-        console.log("this.listepdf ", this.listepdf);
+
         // console.log('ici-> pdf bien formé' , this.pdfList);
 
       }

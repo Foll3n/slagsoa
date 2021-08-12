@@ -33,7 +33,7 @@ export class PdfConteneurComponent implements OnInit, AfterViewInit {
 
   }
   public openPDF():void {
-    let DATA = document.getElementById('test');
+    let DATA = document.getElementById('display');
 
     if (DATA) {
       html2canvas(DATA).then(canvas => {

@@ -1,10 +1,9 @@
-<button (click)="this.makePdf()">
-</button>
+<a href="administration-projet">revenir en arriere</a>
 <!--<button class="mat-button" (click)="">-->
 <!--</button>-->
 <div>
   <div *ngFor="let u of this.listeUtilisateurs; let i = index">
-    <app-pdf-conteneur *ngIf="load" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" ></app-pdf-conteneur>
+    <app-pdf-conteneur *ngIf="this.pdfInfoListe[i]" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" ></app-pdf-conteneur>
   </div>
 </div>
 

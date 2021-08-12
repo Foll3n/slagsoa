@@ -6,7 +6,7 @@
   </mat-form-field>
   <div #content *ngIf="true"> <p>test</p></div>
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort class="table-visualisation-projet">
+    <table mat-table [dataSource]="dataSource" matSort class ="full-width-table" [ngClass]="{ 'table-visualisation-projet': width >= minWidth, 'table-visualisation-projet-responsive': width < minWidth }">
 
       <!-- projet -->
       <ng-container matColumnDef="id">
@@ -23,7 +23,7 @@
       <!-- Commande Column -->
       <ng-container matColumnDef="code_projet">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Code projet </th>
-        <td mat-cell *matCellDef="let row" class="input-update" >{{row.code_projet}}</td>
+        <td mat-cell *matCellDef="let row" >{{row.code_projet}}</td>
       </ng-container>
 
       <ng-container matColumnDef="mode_realisation">
@@ -59,8 +59,8 @@
     <mat-paginator #paginatorUpdate [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
   </div>
 
-
+  <app-visualisation-projet ></app-visualisation-projet>
 </section>
 <!--<app-update-commande  [projet]="this.currentProjet" (emitter)="reload()"></app-update-commande>-->
 
-<app-visualisation-projet ></app-visualisation-projet>
+

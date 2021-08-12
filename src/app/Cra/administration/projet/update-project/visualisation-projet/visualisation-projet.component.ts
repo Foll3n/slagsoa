@@ -34,10 +34,10 @@ export class VisualisationProjetComponent implements OnInit {
   }
   constructor(private httpClient: HttpClient) {
     monkeyPatchChartJsTooltip();
-    monkeyPatchChartJsLegend()
-    this.statsUsers('projet1');
-    // this.statsCommandes('projet1');
-    // this.statsDurees();
+    monkeyPatchChartJsLegend();
+    this.statsUsers('Lidl');
+    this.statsCommandes('gifi projet');
+    this.statsDurees();
   }
 
   ngOnInit() {

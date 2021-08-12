@@ -2,7 +2,7 @@
 <html >
 
 
-<div #content class="container" id="test">
+<div #content class="container" id="display">
   <p>
     {{pdf.nomSociete}}
   </p>
@@ -12,13 +12,13 @@
   <p>
     {{pdf.responsableNom}}{{pdf.responsableNom}}
   </p>
-  <h1>Les tableaux Bootstrap</h1>
+  <h2>Recapitulatif</h2>
   <table class="table table-responsive-sm">
     <thead>
     <tr *ngFor="let elem of this.ligne" class="ligne-pdf">
-      <th>{{elem.date}}</th>
-      <th>{{elem.codeProjet}}</th>
-      <th>{{elem.duree}}</th>
+      <th><div class="table-ligne">Date: {{elem.date}}</div></th>
+      <th><div class="table-ligne">Commande: {{elem.codeProjet}}</div></th>
+      <th><div class="table-ligne">Duree: {{elem.duree}} jours </div></th>
     </tr>
     </thead>
     <tbody>

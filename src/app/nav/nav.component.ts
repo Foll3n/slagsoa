@@ -90,6 +90,7 @@ export class NavComponent implements OnInit{
     let s=0;
     this.cgeService.getConges().subscribe(
       reponse => {
+        if (reponse.listeConges)
         for(var i=0; i<reponse.listConges.length ; i++){
           let etatDeChaqueConge = reponse.listConges[i].etat;
           if(etatDeChaqueConge == "EN_COURS")s++;

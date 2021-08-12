@@ -1,19 +1,26 @@
 .input-update{
-  width: 50%;
+  //width: 50%;
 }
 .section-update-projet{
-  position: absolute;
-  width: 30%;
+  width: 100%;
   display: inline-block;
   margin:30px;
   padding-bottom: 100px;
+  padding-right: 70px;/////////////////////????????????? armen
 }
-.section-update-projet-reponsive{
-  width: 30%;
+.section-update-projet-responsive{
+  width: 100%;
   display: inline-block;
   margin:30px;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
 }
 .clic-oeil{
   cursor:pointer;
+}
+.table-visualisation-projet{
+  width: 100%;
+}
+
+.table-visualisation-projet-reponsive{
+  width: 100%;
 }
