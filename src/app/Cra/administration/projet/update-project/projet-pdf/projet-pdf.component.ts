@@ -22,7 +22,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   firstDay!:Date;
   lastDay!:Date;
   pdf!:Pdf;
-  pdfList:ListPdf[] = [];
+  pdfList!:ListPdf[];
   listeUtilisateursSubscription!: Subscription;
   listeUtilisateurs: Utilisateur[] = [];
   idUser = '99';

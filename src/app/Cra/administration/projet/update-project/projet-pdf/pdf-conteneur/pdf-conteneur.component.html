@@ -1,0 +1,30 @@
+<html >
+
+
+<div #content class="container">
+  <p>
+    {{pdf.nomSociete}}
+  </p>
+  <p>
+    {{pdf.codeProjet}}
+  </p>
+  <p>
+    {{pdf.responsableNom}}{{pdf.responsableNom}}
+  </p>
+  <h1>Les tableaux Bootstrap</h1>
+  <table class="table table-responsive-sm">
+    <thead>
+    <tr *ngFor="let elem of this.ligne">
+      <th>{{elem.date}}</th>
+      <th>{{elem.codeProjet}}</th>
+      <th>{{elem.date}}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    </tbody>
+  </table>
+</div>
+
+</html>
