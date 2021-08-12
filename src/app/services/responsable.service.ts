@@ -53,8 +53,10 @@ export class ResponsableService {
     const response = responsableHttp.addResponsable(responsable);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        this.listeResponsables.push(responsable);
-        this.emitResponsablesSubject();
+        // this.listeResponsables.push(responsable);
+        // this.emitResponsablesSubject();
+        ////////////////// patch pour pouvoir modifier l'utilisateur qu'on ajoute (fait un appel api de plus quand on ajoute pour recharger)
+        this.getAllResponsablesFromServer();
       }
       else{
         console.log("Erreur : add responsable");

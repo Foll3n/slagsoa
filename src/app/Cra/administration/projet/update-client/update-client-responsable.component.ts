@@ -22,7 +22,6 @@ export class UpdateClientResponsableComponent implements OnInit {
   listeClients!: Client[];
   clientSubscription!: Subscription;
   clientForm!: FormGroup;
-  newClient: Client = new Client('','','','','');
   constructor(private clientService: ClientService) {
     this.clientForm = new FormGroup({
       mail: new FormControl(),
@@ -48,7 +47,6 @@ addClient(formDirective: FormGroupDirective){
       this.clientForm.get('adresse')?.value,
       this.clientForm.get('mail')?.value,
   this.clientForm.get('siret')?.value));
-    this.newClient = new Client('','','','','');
 
   resetForm(this.clientForm);
   formDirective.resetForm();

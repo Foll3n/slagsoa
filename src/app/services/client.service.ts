@@ -50,8 +50,11 @@ export class ClientService {
     const response = clientHttp.addClient(client);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-          this.listeClients.push(client);
-        this.emitClientSubject();
+        //   this.listeClients.push(client);
+        // this.emitClientSubject();
+
+        //////////////// patch pour pouvoir modifier un client qu'on ajoute
+        this.getAllClientsFromServer();
       }
       else{
         console.log("Erreur : add clients");

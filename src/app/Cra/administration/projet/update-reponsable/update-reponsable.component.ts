@@ -32,7 +32,7 @@ export class UpdateReponsableComponent implements OnInit {
       mail: new FormControl(),
       idClient : new FormControl()
     });
-    this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsable:Responsable[]) =>
+    this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsable: Responsable[]) =>
     {
       this.listeresponsables = responsable;
       this.dataSource = new MatTableDataSource(this.listeresponsables);
@@ -48,6 +48,8 @@ export class UpdateReponsableComponent implements OnInit {
     this.responsableService.updateResponsable(responsable);
   }
   ngOnInit(): void {
+    this.clientService.emitClientSubject();
+    this.responsableService.emitResponsablesSubject();
   }
   addResponsable(formDirective: FormGroupDirective){
     this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value,
