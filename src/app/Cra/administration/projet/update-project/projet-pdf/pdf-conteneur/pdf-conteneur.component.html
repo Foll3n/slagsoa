@@ -1,7 +1,8 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 <html >
 
 
-<div #content class="container">
+<div #content class="container" id="test">
   <p>
     {{pdf.nomSociete}}
   </p>
@@ -14,10 +15,10 @@
   <h1>Les tableaux Bootstrap</h1>
   <table class="table table-responsive-sm">
     <thead>
-    <tr *ngFor="let elem of this.ligne">
+    <tr *ngFor="let elem of this.ligne" class="ligne-pdf">
       <th>{{elem.date}}</th>
       <th>{{elem.codeProjet}}</th>
-      <th>{{elem.date}}</th>
+      <th>{{elem.duree}}</th>
     </tr>
     </thead>
     <tbody>
@@ -25,6 +26,9 @@
 
     </tbody>
   </table>
+  <p>
+    {{user.nom}}{{user.prenom}}
+  </p>
 </div>
 
 </html>

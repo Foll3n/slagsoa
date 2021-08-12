@@ -2,10 +2,10 @@
 </button>
 <!--<button class="mat-button" (click)="">-->
 <!--</button>-->
-<div  *ngIf="pdf && pdfList">
-<!--  <div *ngFor="this.listeUtilisateurs">-->
-    <app-pdf-conteneur *ngIf="pdf && pdfList" [ligne]="this.pdfList" [pdf]="this.pdf" ></app-pdf-conteneur>
-<!--  </div>-->
+<div>
+  <div *ngFor="let u of this.listeUtilisateurs; let i = index">
+    <app-pdf-conteneur *ngIf="load" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" ></app-pdf-conteneur>
+  </div>
 </div>
 
 

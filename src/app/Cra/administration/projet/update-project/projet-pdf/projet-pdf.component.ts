@@ -22,70 +22,91 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   firstDay!:Date;
   lastDay!:Date;
   pdf!:Pdf;
+  pdfInfoListe = new Array<Pdf>();
+  listepdf= new Array<ListPdf[]>();
   pdfList!:ListPdf[];
+  load = false;
   listeUtilisateursSubscription!: Subscription;
-  listeUtilisateurs: Utilisateur[] = [];
+  listeUtilisateurs!: Utilisateur[];
   idUser = '99';
 
   projet!: Projet;
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private utilisateurService: UserService) {
+    this.projet = this.route.snapshot.queryParams as Projet;
+
+
     this.listeUtilisateursSubscription = utilisateurService.usersSubject.subscribe( (listeUsers: Utilisateur[]) => {
-      console.log("je charle les utilisateurs",listeUsers);
-      this.listeUtilisateurs = listeUsers;
+      console.log("je charle les utilisateurs",listeUsers, this.projet);
+      if(this.projet){
+        this.listeUtilisateurs = listeUsers;
+        for (let user in this.listeUtilisateurs){
+          console.log("user :",user);
+          this.initCurrentMonth(+user);
+        }
+        console.log("iciiii ",this.listepdf);
+      }
+
+      // this.initCurrentMonth();
     });
 
 
   }
 
   ngOnInit(): void {
-    this.utilisateurService.emitUsersSubject();
-    this.projet = this.route.snapshot.queryParams as Projet;
 
-    this.initCurrentMonth();
+    this.utilisateurService.emitUsersSubject();
+
+
     // this.getDaysInMonth();
 
   }
-  initList(){
-    this.getDaysInMonth();
-  }
-  fill() {
-    if (this.pdf){
-      for (let elem of this.pdfList) {
-        let e = this.isInpdfList(this.pdf.listeFill, elem);
+
+  fill(index:number) {
+
+      for (let elem of this.listepdf[index]) {
+        let e = this.isInpdfList(this.pdfInfoListe[index].listeFill, elem);
         elem.duree = e.duree;
         elem.date = e.date;
       }
       console.log('je suis dans fill pdf',this.pdf);
-    }
+
 
 
   }
 
 
-  initCurrentMonth(){
+  initCurrentMonth(user: number){
     this.pdfList=[];
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     this.firstDayString = formatDate(new Date(y, m, 1),'yyyy-MM-dd','fr');
     this.lastDayString = formatDate(new Date(y, m + 1, 0),'yyyy-MM-dd','fr');
     this.firstDay = new Date(y, m, 1);
     this.lastDay = new Date(y, m + 1, 0);
-    this.getDaysInMonth();
+    this.getDaysInMonth(user);
   }
-  getDaysInMonth() {
+  getDaysInMonth(user: number) {
+    this.listepdf[user] = [];
     this.pdfList = [];
     console.log("--------------------",this.projet);
     let first = new Date(this.firstDay);
       while(first < this.lastDay){
         let dateString = formatDate(first,'yyyy-MM-dd','fr');
-        console.log(this.projet.code_projet+'<------------');
-          this.pdfList.push(new ListPdf(dateString, this.projet.code_projet+'', '0'));
+        let res = new ListPdf(dateString, this.projet.code_projet+'', '0');
+          this.listepdf[user].push(res);
           first.setDate(first.getDate()+1);
       }
-      console.log("iciiii ",this.pdfList);
+
 
   }
-  makePdf(user:string='99'){
-    this.chargerProjet(user);
+  makePdf(user:string='42227'){
+    let index = 0;
+    for (let usr of this.listeUtilisateurs){
+      this.chargerProjet(usr.id, index);
+      console.log("ooo");
+      index ++;
+    }
+    this.load = true;
+
 
     // console.log("projet ---> ",this.projet);
     // let pdf = new jsPDF('p','pt','a4');
@@ -107,16 +128,20 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     return pdf;
   }
 
-  chargerProjet(idUser:string){
+  chargerProjet(idUser:string, index:number){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
+
     const response = projetHttp.getPdF(this.firstDayString,this.lastDayString,this.projet.code_projet,idUser);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse,'ppppppppppppppppppppppppppp');
-        this.pdf = reponse.result;
-        this.getDaysInMonth();
-        this.fill();
-        console.log('ici' , this.pdfList);
+
+        this.pdfInfoListe[index] = reponse.result;
+        // this.pdf = reponse.result;
+        // this.getDaysInMonth();
+        this.fill(index);
+        console.log("this.pdf list", this.pdfInfoListe);
+        console.log("this.listepdf ", this.listepdf);
+        // console.log('ici-> pdf bien formé' , this.pdfList);
 
       }
       else{
