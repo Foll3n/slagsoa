@@ -4,8 +4,11 @@
 
 <div class="addProjet">
   <form class="form-group" [formGroup]="projet"  #formDirective="ngForm"(submit)="addProjet(formDirective)">
-  <div class="inputNomProjet">
-    <input type="text" class="form-control" required formControlName="code_projet" placeholder="Code projet">
+  <div class="form">
+    <input type="text" id="name" formControlName="code_projet" autocomplete="off" required="required">
+    <label for="name" class="label-name">
+      <span class="content-name">Code projet</span>
+    </label>
   </div>
   <div class="color-projet">
     <input class="colorPicker" formControlName="color" placeholder="couleur"  [style.background]="color" [(colorPicker)]="color">

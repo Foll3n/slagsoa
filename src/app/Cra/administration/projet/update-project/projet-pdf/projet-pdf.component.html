@@ -9,6 +9,7 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+<button *ngIf="listeUtilisateurs.length>0" (click)="this.generateTrue()">Générer le pdf</button>
 <button (click)="this.initUsersProjet()">Generer un pdf pour tous les utilsiateurs</button>
 
 <div>

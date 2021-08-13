@@ -3,25 +3,52 @@
 
 
 <div #content class="container" id="display">
-  <p>
-    {{pdf.nomSociete}}
-  </p>
-  <p>
-    {{pdf.codeProjet}}
-  </p>
+  <div class="logo">
+    <img class="logo-pdf" src="assets/images/logoSlag.png" alt="logo">
+  </div>
+  <div class="d-flex justify-content-start">
+    Client: {{pdf.nomSociete}}
+  </div>
+  <div class="d-flex justify-content-start">
+    Commande: {{pdf.codeProjet}}
+  </div>
+
   <p>
     {{pdf.responsableNom}}{{pdf.responsableNom}}
   </p>
-  <h2>Recapitulatif</h2>
+  <h2>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h2>
   <table class="table table-responsive-sm">
     <thead>
-    <tr *ngFor="let elem of this.ligne" class="ligne-pdf">
-      <th><div class="table-ligne">Date: {{elem.date}}</div></th>
-      <th><div class="table-ligne">Commande: {{elem.codeProjet}}</div></th>
-      <th><div class="table-ligne">Duree: {{elem.duree}} jours </div></th>
+    <tr >
+      <th class="footer-pdf-recap" colspan="4">Récapitulatif</th>
     </tr>
     </thead>
     <tbody>
+    <tr *ngFor="let elem of this.ligne" class="ligne-pdf">
+      <td><div class="table-ligne">{{getDateElem(elem)}}</div></td>
+      <td><div class="table-ligne">{{elem.codeProjet}}</div></td>
+      <td><div class="table-ligne">Imputation Jours Hommes_{{pdf.nomSociete}}</div></td>
+      <td><div class="table-ligne"> {{getDuree(elem)}} </div></td>
+    </tr>
+    <tr class="footer-pdf-recap">
+      <th colspan="1">OTP </th>
+      <th colspan="2">DESCRIPTION </th>
+      <th colspan="1">TEMPS </th>
+    </tr>
+    <tr>
+      <td>{{this.pdf.codeProjet}} </td>
+      <td>Imputation Jours Homme_{{pdf.nomSociete}} </td>
+      <td>{{sommeDuree()}} jours </td>
+    </tr>
+    <tr class="footer-pdf-signature">
+      <th  colspan="4">Signatures </th>
+    </tr>
+    <tr>
+      <td>Collaborateur </td>
+    </tr>
+    <tr>
+      <td>{{currentDate}} jours </td>
+    </tr>
 
 
     </tbody>

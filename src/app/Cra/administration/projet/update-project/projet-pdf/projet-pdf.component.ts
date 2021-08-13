@@ -30,7 +30,6 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   load = false;
   listeUtilisateurs!: UtilisateurSimple[];
   listeAllUsers!: UtilisateurSimple[];
-  idUser = '99';
   generate = false;
 
   projet!: Projet;
@@ -38,14 +37,21 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     this.route.queryParams.subscribe(params => {
       this.projet = this.route.snapshot.queryParams as Projet;
       console.log("--------", this.projet.code_projet);
-      this.initUsersProjet();
+      this.initAllPdf();
     });
   }
-
+  initUsersProjet(){
+    this.generate = true;
+    this.initAllPdf();
+  }
   loadUserPdf(usr:UtilisateurSimple){
     this.listeUtilisateurs = [usr];
+    this.generate = false;
   }
-  initUsersProjet(): void {
+  generateTrue(){
+    this.generate = true;
+  }
+  initAllPdf(): void {
     const userHttp = new UtilisateursHttpService(this.httpClient);
     const response = userHttp.getUtilisateursProjet(this.projet.code_projet);
     response.subscribe(reponse => {

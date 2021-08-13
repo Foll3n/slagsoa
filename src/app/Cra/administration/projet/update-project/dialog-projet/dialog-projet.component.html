@@ -70,7 +70,16 @@
   <!-- Commande Column -->
   <ng-container matColumnDef="num_com">
     <th mat-header-cell *matHeaderCellDef>Commandes</th>
-    <td mat-cell *matCellDef="let row"> <input class="form-control input-update-commande" type="text" [(ngModel)]="row.num_com"></td>
+    <td mat-cell *matCellDef="let row">
+
+      <div class="form">
+        <input type="text" id="name" [(ngModel)]="row.num_com" formControlName="code_projet" autocomplete="off" required="required">
+        <label for="name" class="label-name">
+          <span class="content-name">Commande</span>
+        </label>
+      </div>
+
+    </td>
   </ng-container>
   <ng-container matColumnDef="checked">
     <th mat-header-cell *matHeaderCellDef>Disponible</th>
