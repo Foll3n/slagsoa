@@ -31,6 +31,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   listeUtilisateurs!: UtilisateurSimple[];
   listeAllUsers!: UtilisateurSimple[];
   idUser = '99';
+  generate = false;
 
   projet!: Projet;
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private utilisateurService: UserService) {

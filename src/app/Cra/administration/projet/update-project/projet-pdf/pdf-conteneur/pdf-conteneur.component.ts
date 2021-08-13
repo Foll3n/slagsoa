@@ -1,28 +1,34 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ListPdf} from '../../../../../models/projet/ListPdf';
 import {Pdf} from '../../../../../models/projet/Pdf';
 import jsPDF, {Html2CanvasOptions} from 'jspdf';
 import {Utilisateur} from '../../../../../../Modeles/utilisateur';
 import html2canvas from 'html2canvas';
 import {UtilisateurSimple} from '../../../../../../Modeles/utilisateurSimple';
+
 @Component({
   selector: 'app-pdf-conteneur',
   templateUrl: './pdf-conteneur.component.html',
   styleUrls: ['./pdf-conteneur.component.scss']
 })
-export class PdfConteneurComponent implements OnInit, AfterViewInit {
-  @ViewChild('content', {static:false}) el!: ElementRef
+export class PdfConteneurComponent implements OnChanges {
+  @ViewChild('content', {static: false}) el!: ElementRef;
   @Input()
-  ligne!:ListPdf[];
+  ligne!: ListPdf[];
   @Input()
-  pdf!:Pdf;
+  pdf!: Pdf;
   @Input()
-  user!:UtilisateurSimple;
+  user!: UtilisateurSimple;
   @Input()
-  generate!:boolean;
+  generate!: boolean;
+
   constructor() {
 
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.makePdf();
+    }
 
 
   makePdf(){
@@ -53,9 +59,6 @@ export class PdfConteneurComponent implements OnInit, AfterViewInit {
         PDF.save('test.pdf');
       });
     }
-  }
-  ngAfterViewInit(): void {
-    this.makePdf();
   }
 
   ngOnInit(): void {

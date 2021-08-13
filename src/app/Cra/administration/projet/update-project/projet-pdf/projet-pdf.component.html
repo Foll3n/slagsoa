@@ -13,7 +13,7 @@
 
 <div>
   <div *ngFor="let u of this.listeUtilisateurs; let i = index">
-    <app-pdf-conteneur *ngIf="this.pdfInfoListe[i]" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" [generate]="false" ></app-pdf-conteneur>
+    <app-pdf-conteneur *ngIf="this.pdfInfoListe[i]" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" [generate]="this.generate" ></app-pdf-conteneur>
   </div>
 </div>
 
