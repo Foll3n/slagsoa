@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Utilisateur} from "../partage/Modeles/utilisateur";
+import {Projet} from '../Cra/models/projet/Projet';
 
 export class UpdatedUser {
   idUtilisateur!: string;
@@ -23,6 +24,13 @@ export class UtilisateursHttpService {
     const href = environment.urlUtilisateurs;
     const requestUrl =
       `${href}/${sessionStorage.getItem('id')}`;
+
+    return this._httpClient.get<any>(requestUrl, this.httpOptions );
+  }
+  getUtilisateursProjet(projetCode:string){
+    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`})
+    const href = environment.urlUtilisateurs;
+    const requestUrl = href + "?codeProjet = " + projetCode + "&idUtilisateur = " + `${sessionStorage.getItem('id')}`;
 
     return this._httpClient.get<any>(requestUrl, this.httpOptions );
   }

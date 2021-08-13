@@ -10,6 +10,7 @@ import {ListPdf} from '../../../../models/projet/ListPdf';
 import {Subscription} from 'rxjs';
 import {UserService} from '../../../../../services/user.service';
 import {Utilisateur} from '../../../../../Modeles/utilisateur';
+import {UtilisateursHttpService} from '../../../../../configuration-http/utilisateurs-http.service';
 @Component({
   selector: 'app-projet-pdf',
   templateUrl: './projet-pdf.component.html',
@@ -38,6 +39,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     });
 
 
+
     this.listeUtilisateursSubscription = utilisateurService.usersSubject.subscribe( (listeUsers: Utilisateur[]) => {
       console.log("je charle les utilisateurs",listeUsers, this.projet);
       if(this.projet){
@@ -55,7 +57,20 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
 
 
   }
-
+  initUsersProjet(): void {
+    // const userHttp = new UtilisateursHttpService(this.httpClient);
+    // const response = userHttp.getUtilisateursProjet(this.projet.code_projet);
+    // response.subscribe(reponse => {
+    //   if(reponse.status == 'OK'){
+    //     if(reponse.users)
+    //     //   this.listeUsers = reponse.getAllutilisateurOutput;
+    //     // this.emitUsersSubject();
+    //   }
+    //   else{
+    //     console.log("Erreur : get All users");
+    //   }
+    // });
+  }
   ngOnInit(): void {
 
     this.utilisateurService.emitUsersSubject();

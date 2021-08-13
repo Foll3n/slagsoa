@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CommandeHttpDatabase} from '../configuration-http/CommandeHttpDatabase';
 import {Subject} from 'rxjs';
 import {CommandeInsert} from '../Cra/models/commande/CommandeInsert';
+import {Realisation} from '../Cra/models/realisation/Realisation';
+import {Projet} from '../Cra/models/projet/Projet';
 
 
 
@@ -68,6 +70,23 @@ export class CommandeService {
     console.log(this.listeCommandes);
     this.emitAddCommandeSubject(true);
     this.emitCommandeSubject();
+  }
+  projectHaveCommande(numCommande: string, idProjet: string){
+    for (const commande of this.listeCommandes){
+      if (commande.num_com == numCommande) {
+        if (commande.id_projet == idProjet){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  isProjetInRealisations(listeRealisation: Realisation[], projet: Projet){
+     for (const real of listeRealisation) {
+       return (this.projectHaveCommande(real.num_commande, projet.id))
+     }
+     return false;
   }
   /**
    * récupère un cra précis dans la liste des semaines de cra

@@ -45,7 +45,6 @@ export class UserService {
       else{
         console.log("Erreur : get All users");
       }
-
     });
   }
   getCommandeFromServer(idUser: string): void {
