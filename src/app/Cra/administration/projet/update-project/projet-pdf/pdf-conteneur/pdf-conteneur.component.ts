@@ -4,6 +4,7 @@ import {Pdf} from '../../../../../models/projet/Pdf';
 import jsPDF, {Html2CanvasOptions} from 'jspdf';
 import {Utilisateur} from '../../../../../../Modeles/utilisateur';
 import html2canvas from 'html2canvas';
+import {UtilisateurSimple} from '../../../../../../Modeles/utilisateurSimple';
 @Component({
   selector: 'app-pdf-conteneur',
   templateUrl: './pdf-conteneur.component.html',
@@ -16,13 +17,16 @@ export class PdfConteneurComponent implements OnInit, AfterViewInit {
   @Input()
   pdf!:Pdf;
   @Input()
-  user!:Utilisateur;
+  user!:UtilisateurSimple;
+  @Input()
+  generate!:boolean;
   constructor() {
 
   }
 
 
   makePdf(){
+    if(this.generate)
     this.openPDF();
     // let pdf = new jsPDF('p','pt','a4');
     // pdf.html(this.el.nativeElement,{

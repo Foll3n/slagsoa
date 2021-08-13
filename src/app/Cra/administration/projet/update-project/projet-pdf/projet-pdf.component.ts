@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
 import {UserService} from '../../../../../services/user.service';
 import {Utilisateur} from '../../../../../Modeles/utilisateur';
 import {UtilisateursHttpService} from '../../../../../configuration-http/utilisateurs-http.service';
+import {UtilisateurSimple} from '../../../../../Modeles/utilisateurSimple';
 @Component({
   selector: 'app-projet-pdf',
   templateUrl: './projet-pdf.component.html',
@@ -27,8 +28,8 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   listepdf= new Array<ListPdf[]>();
   pdfList!:ListPdf[];
   load = false;
-  listeUtilisateursSubscription!: Subscription;
-  listeUtilisateurs!: Utilisateur[];
+  listeUtilisateurs!: UtilisateurSimple[];
+  listeAllUsers!: UtilisateurSimple[];
   idUser = '99';
 
   projet!: Projet;
@@ -36,41 +37,34 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     this.route.queryParams.subscribe(params => {
       this.projet = this.route.snapshot.queryParams as Projet;
       console.log("--------", this.projet.code_projet);
+      this.initUsersProjet();
     });
+  }
 
-
-
-    this.listeUtilisateursSubscription = utilisateurService.usersSubject.subscribe( (listeUsers: Utilisateur[]) => {
-      console.log("je charle les utilisateurs",listeUsers, this.projet);
-      if(this.projet){
-        this.listeUtilisateurs = listeUsers;
+  loadUserPdf(usr:UtilisateurSimple){
+    this.listeUtilisateurs = [usr];
+  }
+  initUsersProjet(): void {
+    const userHttp = new UtilisateursHttpService(this.httpClient);
+    const response = userHttp.getUtilisateursProjet(this.projet.code_projet);
+    response.subscribe(reponse => {
+      console.log("reponse ---> ", reponse);
+      if(reponse.status == 'OK'){
+        if(reponse.users)
+          this.listeUtilisateurs = reponse.users;
+          this.listeAllUsers = reponse.users;
         for (let user in this.listeUtilisateurs){
-          console.log("user :",user);
           this.initCurrentMonth(+user);
         }
         console.log("iciiii ",this.listepdf);
         this.makePdf();
       }
-
-      // this.initCurrentMonth();
+      else{
+        console.log("Erreur : get All users");
+      }
     });
-
-
   }
-  initUsersProjet(): void {
-    // const userHttp = new UtilisateursHttpService(this.httpClient);
-    // const response = userHttp.getUtilisateursProjet(this.projet.code_projet);
-    // response.subscribe(reponse => {
-    //   if(reponse.status == 'OK'){
-    //     if(reponse.users)
-    //     //   this.listeUsers = reponse.getAllutilisateurOutput;
-    //     // this.emitUsersSubject();
-    //   }
-    //   else{
-    //     console.log("Erreur : get All users");
-    //   }
-    // });
-  }
+
   ngOnInit(): void {
 
     this.utilisateurService.emitUsersSubject();

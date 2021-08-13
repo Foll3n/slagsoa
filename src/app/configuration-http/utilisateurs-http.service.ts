@@ -27,10 +27,10 @@ export class UtilisateursHttpService {
 
     return this._httpClient.get<any>(requestUrl, this.httpOptions );
   }
-  getUtilisateursProjet(projetCode:string){
+  getUtilisateursProjet(projetCode: string){
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`})
     const href = environment.urlUtilisateurs;
-    const requestUrl = href + "?codeProjet = " + projetCode + "&idUtilisateur = " + `${sessionStorage.getItem('id')}`;
+    const requestUrl = href + "/projet/?codeProjet=" + projetCode.toString() + "&idUtilisateur=" + `${sessionStorage.getItem('id')}`;
 
     return this._httpClient.get<any>(requestUrl, this.httpOptions );
   }

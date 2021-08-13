@@ -1,9 +1,19 @@
 <a href="administration-projet">revenir en arriere</a>
 <!--<button class="mat-button" (click)="">-->
 <!--</button>-->
+<mat-form-field appearance="outline">
+  <mat-label>Choisir utilisateur</mat-label>
+  <mat-select class="yy">
+    <mat-option *ngFor="let usr of this.listeAllUsers" [value]="usr.id" (click)="loadUserPdf(usr)">
+      {{usr.nom}} {{usr.prenom}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button (click)="this.initUsersProjet()">Generer un pdf pour tous les utilsiateurs</button>
+
 <div>
   <div *ngFor="let u of this.listeUtilisateurs; let i = index">
-    <app-pdf-conteneur *ngIf="this.pdfInfoListe[i]" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" ></app-pdf-conteneur>
+    <app-pdf-conteneur *ngIf="this.pdfInfoListe[i]" [ligne]="this.listepdf[i]" [pdf]="this.pdfInfoListe[i]" [user]="u" [generate]="false" ></app-pdf-conteneur>
   </div>
 </div>
 
