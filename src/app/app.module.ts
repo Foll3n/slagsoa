@@ -95,6 +95,8 @@ import { UpdateClientResponsableComponent } from './Cra/administration/projet/up
 import {ClientService} from './services/client.service';
 import { UpdateReponsableComponent } from './Cra/administration/projet/update-reponsable/update-reponsable.component';
 import { PdfConteneurComponent } from './Cra/administration/projet/update-project/projet-pdf/pdf-conteneur/pdf-conteneur.component';
+import { AideAjoutProjetComponent } from './Cra/aide-ajout-projet/aide-ajout-projet.component';
+import { Slide1Component } from './Cra/aide-ajout-projet/slide1/slide1.component';
 
 registerLocaleData(localeFr);
 
@@ -142,7 +144,9 @@ registerLocaleData(localeFr);
     ProjetPdfComponent,
     UpdateClientResponsableComponent,
     UpdateReponsableComponent,
-    PdfConteneurComponent
+    PdfConteneurComponent,
+    AideAjoutProjetComponent,
+    Slide1Component
   ],
   imports: [
     BrowserModule,

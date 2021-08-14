@@ -15,9 +15,10 @@ import {AdministrationCraComponent} from "./Cra/administration/administration-cr
 import {VisualisationProjetComComponent} from "./Cra/administration/administration-cra/visualisation-projet-com/visualisation-projet-com.component";
 import {UpdateProjectComponent} from "./Cra/administration/projet/update-project/update-project.component";
 import {ProjetPdfComponent} from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
+import {AideAjoutProjetComponent} from './Cra/aide-ajout-projet/aide-ajout-projet.component';
 
 const routes: Routes = [
-  { path: 'develop', component : UpdateProjectComponent},
+  { path: 'develop', component : AideAjoutProjetComponent},
   { path: 'generate-pdf', component : ProjetPdfComponent},
   { path: 'administration-projet', component : AdministrationProjetComponent},
   { path: 'test', component : VisualisationProjetComComponent},

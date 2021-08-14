@@ -44,6 +44,7 @@
       "prefix": "app",
       "architect": {
         "build": {
+          "defaultConfiguration": "production",
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/Intranet-slagsoa",
@@ -78,13 +79,13 @@
                 }
               ],
 
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
+              "namedChunks": true,
+              "extractLicenses": false,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -101,6 +102,7 @@
           }
         },
         "serve": {
+          "defaultConfiguration": "development",
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "Intranet-slagsoa:build"

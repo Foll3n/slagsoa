@@ -1,0 +1,36 @@
+<app-nav>
+  <div class="header">
+
+  </div>
+<div class='col-12'>
+
+
+  <ngb-carousel class="caroussel-1" #caroussel [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
+    ---------------- {{numeroPage}}-----------------
+
+    <!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
+    <ng-template class="template" ngbSlide>
+      <div class="template" >
+        <div class="phrase-slide">
+          <p id="first-p">Félicitation pour ce nouveau projet acquéri ! </p><br>
+          <p id="second-p">Tout d'abord, quel est son client ?</p>
+        </div>
+        <app-slide1 (eventItem)="setClient($event)"></app-slide1>
+      </div>
+    </ng-template>
+    <ng-template class="template" ngbSlide>
+      <div class="template">
+        <app-slide1 (eventItem)="setClient($event)"></app-slide1>
+      </div>
+    </ng-template>
+    <ng-template class="template" ngbSlide>
+      <div class="template">
+        <app-slide1 (eventItem)="setClient(client)"></app-slide1>
+      </div>
+    </ng-template>
+
+
+  </ngb-carousel>
+
+</div>
+</app-nav>

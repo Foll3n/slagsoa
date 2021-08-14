@@ -49,6 +49,6 @@ addClient(formDirective: FormGroupDirective){
   this.clientForm.get('siret')?.value));
 
   resetForm(this.clientForm);
-  formDirective.resetForm();
+    formDirective.resetForm();
 }
 }

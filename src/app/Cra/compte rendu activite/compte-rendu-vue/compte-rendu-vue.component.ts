@@ -77,6 +77,6 @@ export class CompteRenduVueComponent implements OnInit {
         return ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][day];
     }
     getProjetName(id:string){
-        return this.projetService.getNameProjet(id)
+        return this.projetService.getNameProjet(id);
     }
 }
