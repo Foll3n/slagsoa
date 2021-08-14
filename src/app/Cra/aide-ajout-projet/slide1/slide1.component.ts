@@ -17,7 +17,7 @@ export class Slide1Component implements OnInit {
   clientSubscription!: Subscription;
   clientForm!: FormGroup;
   societeNom: string = '';
-  tempClient!: Client | undefined;
+  tempClient: Client | undefined;
   constructor(private clientService: ClientService) {
 
     this.clientForm = new FormGroup({
@@ -51,7 +51,7 @@ export class Slide1Component implements OnInit {
   }
   sendClient(){
     console.log("je passe meme pas laaa");
-    const client = new Client('', this.clientForm.get('nomSociete')?.value,
+    const client = new Client(this.tempClient ? this.tempClient.idClient : '', this.clientForm.get('nomSociete')?.value,
       this.clientForm.get('adresse')?.value,
       this.clientForm.get('mail')?.value,
       this.clientForm.get('siret')?.value);
@@ -61,9 +61,6 @@ export class Slide1Component implements OnInit {
     this.eventItem.emit(client);
   }
   searchTerm(){
-    let test = 'tata'.includes('tatu');
-    console.log('test ->>>', test);
-    console.log('oooo',this.societeNom,'tttt', this.listeClients);
     this.tempClient = this.listeClients.find(c => this.societeNom.length > 1 && c.nomSociete.toLowerCase().includes(this.societeNom.toLowerCase()));
   }
 }

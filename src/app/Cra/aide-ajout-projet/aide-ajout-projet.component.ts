@@ -38,7 +38,7 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
     console.log(event,"èèèèèèèèèèèèèèèèèèèèè");
     const c = event as Client;
     this.client = new Client(c.idClient,c.nomSociete,c.adresse,c.mail,c.siret);
-    console.log("client dans le pere:", this.client.nomSociete);
+    console.log("client dans le pere:", this.client);
     this.myCarousel?.next();
   }
   public get width() {
