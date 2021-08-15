@@ -7,10 +7,10 @@
 <div class="numero-page">
   <p>Etape {{numeroPage+1}} / 4</p>
 </div>
-  <ngb-carousel #caroussel2 class="caroussel-1" [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
+  <ngb-carousel #caroussel2 [ngClass]="{ 'caroussel1': width >= minWidth, 'caroussel1-responsive': width < minWidth }" [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
 
     <ng-template class="template" ngbSlide>
-      <div class="template1" >
+      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
           <p id="first-p">Félicitation pour ce nouveau projet acquéri ! </p><br>
           <p id="second-p">Tout d'abord, pour quelle société est-ce ? ?</p>
@@ -18,8 +18,8 @@
         <app-slide1 (eventItem)="setClient($event)"></app-slide1>
       </div>
     </ng-template>
-    <ng-template class="template" ngbSlide>
-      <div class="template1" >
+    <ng-template class="template" class="template" ngbSlide>
+      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
       <div class="phrase-slide">
         <p id="first-p">Quel en sera le responsable ? </p><br>
         <p id="second-p">dites nous tout ?</p>
@@ -28,7 +28,7 @@
       </div>
     </ng-template>
     <ng-template class="template" ngbSlide>
-      <div class="template1" >
+      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
           <p id="first-p">A présent paramétrez le projet ? </p><br>
           <p id="second-p">Donnez nous ces informations?</p>

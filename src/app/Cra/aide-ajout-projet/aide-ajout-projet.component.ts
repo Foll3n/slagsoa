@@ -4,6 +4,7 @@ import {Client} from '../models/client/Client';
 import {Event} from '@angular/router';
 import {Responsable} from '../models/responsable/responsable';
 import {Projet} from '../models/projet/Projet';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-aide-ajout-projet',
@@ -25,6 +26,7 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
   client!: Client;
   responsable!: Responsable;
   projet!: Projet;
+  minWidth = environment.minWidth;
 
   constructor(config: NgbCarouselConfig) {
 
