@@ -47,6 +47,7 @@ export class AddProjetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.projetService.emitProjetSubject();
   }
 
   /**

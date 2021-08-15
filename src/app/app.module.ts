@@ -97,6 +97,9 @@ import { UpdateReponsableComponent } from './Cra/administration/projet/update-re
 import { PdfConteneurComponent } from './Cra/administration/projet/update-project/projet-pdf/pdf-conteneur/pdf-conteneur.component';
 import { AideAjoutProjetComponent } from './Cra/aide-ajout-projet/aide-ajout-projet.component';
 import { Slide1Component } from './Cra/aide-ajout-projet/slide1/slide1.component';
+import { Slide2Component } from './Cra/aide-ajout-projet/slide2/slide2.component';
+import { Slide3Component } from './Cra/aide-ajout-projet/slide3/slide3.component';
+import { SlideRecapComponent } from './Cra/aide-ajout-projet/slide-recap/slide-recap.component';
 
 registerLocaleData(localeFr);
 
@@ -146,7 +149,10 @@ registerLocaleData(localeFr);
     UpdateReponsableComponent,
     PdfConteneurComponent,
     AideAjoutProjetComponent,
-    Slide1Component
+    Slide1Component,
+    Slide2Component,
+    Slide3Component,
+    SlideRecapComponent
   ],
   imports: [
     BrowserModule,

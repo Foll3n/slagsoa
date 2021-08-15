@@ -91,6 +91,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
     this.listeCraSubscription = this.craService.craSubject.subscribe(
       (craWeek: CraWeek[]) => {this.craWeek = craWeek;
+        console.log("ici : // + ",this.craWeek);
         this.update();
       });
     this.realisationSubscription = this.userService.realisationsSubject.subscribe(

@@ -3,29 +3,29 @@
   <form class="form-group " [formGroup]="clientForm"  (submit)="this.sendClient()">
     <div class="search-div">
     <div class="form">
-      <input type="text" id="name" (input)="searchTerm()" [(ngModel)]="societeNom" formControlName="nomSociete" autocomplete="off" placeholder="Nom de la societe" required="required">
+      <input type="text" id="name" (input)="searchTerm()" [(ngModel)]="societeNom" formControlName="nomSociete" autocomplete="off"  required="required">
       <label for="name" class="label-name" >
-        <span  *ngIf="tempClient" class="content-name">{{tempClient.nomSociete}}</span>
+        <span class="content-name">Nom de la société</span>
       </label>
     </div>
-      <div class="proposition" *ngIf="tempClient" >
+      <div class="proposition" *ngIf="tempClient && !selectedClient">
         <p (click)="applyClient()"> Appliquer le client {{tempClient.nomSociete}} </p>
       </div>
     </div>
     <div class="form">
-      <input type="text" id="mail" formControlName="mail" required="required">
+      <input type="text" id="mail" formControlName="mail" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
       <label for="mail" class="label-name">
         <span class="content-name">Mail</span>
       </label>
     </div>
     <div class="form">
-      <input type="text" id="adresse" formControlName="adresse" autocomplete="off" required="required">
+      <input type="text" id="adresse" formControlName="adresse" autocomplete="off" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
       <label for="adresse" class="label-name">
         <span class="content-name">Adresse</span>
       </label>
     </div>
     <div class="form">
-      <input type="text" id="siret" formControlName="siret" autocomplete="off" required="required">
+      <input type="text" id="siret" formControlName="siret" autocomplete="off" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
       <label for="siret" class="label-name">
         <span class="content-name">Numero siret</span>
       </label>

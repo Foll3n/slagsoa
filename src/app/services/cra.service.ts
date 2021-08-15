@@ -330,9 +330,11 @@ export class CraService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.liste_cra != null) {
+          console.log("reponse server : error :", reponse);
           this.transform(reponse.liste_cra, index);
           this.getCraWeekStatus(index);
         } else {
+          console.log("je ne dois jamais rentrer ici");
           this.addCraWeek(index);
 
           //this.getCraToServer(index);

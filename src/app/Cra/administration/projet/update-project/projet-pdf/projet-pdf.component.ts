@@ -80,7 +80,17 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     // this.getDaysInMonth();
 
   }
-
+  indexOflisteUtilisateurs(user: UtilisateurSimple){
+    let index = 0;
+    for (let usr of this.listeAllUsers){
+      if(usr.id == user.id){
+        console.log("je retroune l'index de ",user.nom,"-------",this.pdfInfoListe[index],"  index : ",index,' pdf info liste ', this.pdfInfoListe);
+        return index;
+      }
+      index ++;
+    }
+    return 0;
+  }
   fill(index:number) {
 
       for (let elem of this.listepdf[index]) {

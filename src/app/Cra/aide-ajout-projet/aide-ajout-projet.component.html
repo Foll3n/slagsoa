@@ -4,30 +4,53 @@
   </div>
 <div class='col-12'>
 
+<div class="numero-page">
+  <p>Etape {{numeroPage+1}} / 4</p>
+</div>
+  <ngb-carousel #caroussel2 class="caroussel-1" [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
 
-  <ngb-carousel class="caroussel-1" #caroussel [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
-    ---------------- {{numeroPage}}-----------------
-
-    <!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
     <ng-template class="template" ngbSlide>
-      <div class="template" >
+      <div class="template1" >
         <div class="phrase-slide">
           <p id="first-p">Félicitation pour ce nouveau projet acquéri ! </p><br>
-          <p id="second-p">Tout d'abord, quel est son client ?</p>
+          <p id="second-p">Tout d'abord, pour quelle société est-ce ? ?</p>
         </div>
         <app-slide1 (eventItem)="setClient($event)"></app-slide1>
       </div>
     </ng-template>
     <ng-template class="template" ngbSlide>
-      <div class="template">
-        <app-slide1 (eventItem)="setClient($event)"></app-slide1>
+      <div class="template1" >
+      <div class="phrase-slide">
+        <p id="first-p">Quel en sera le responsable ? </p><br>
+        <p id="second-p">dites nous tout ?</p>
+      </div>
+      <app-slide2 (eventItem)="setResponsable($event)"></app-slide2>
       </div>
     </ng-template>
     <ng-template class="template" ngbSlide>
-      <div class="template">
-        <app-slide1 (eventItem)="setClient(client)"></app-slide1>
+      <div class="template1" >
+        <div class="phrase-slide">
+          <p id="first-p">A présent paramétrez le projet ? </p><br>
+          <p id="second-p">Donnez nous ces informations?</p>
+        </div>
+        <app-slide3 (eventItem)="setProjet($event)"></app-slide3>
       </div>
     </ng-template>
+
+
+<!--/////////// slide recap ///////-->
+    <ng-template class="template" ngbSlide>
+      <div class="template1" >
+        <div class="phrase-slide">
+          <p id="first-p">Recapitulatif </p><br>
+        </div>
+        <app-slide-recap [client]="this.client" [reponsable]="responsable" [projet]="this.projet"></app-slide-recap>
+      </div>
+<!--      /////////////////////////////////////////-->
+    </ng-template>
+
+
+
 
 
   </ngb-carousel>

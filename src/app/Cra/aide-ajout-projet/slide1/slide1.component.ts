@@ -17,7 +17,9 @@ export class Slide1Component implements OnInit {
   clientSubscription!: Subscription;
   clientForm!: FormGroup;
   societeNom: string = '';
-  tempClient: Client | undefined;
+  tempClient: Client | undefined = undefined;
+  selectedClient: Client | undefined = undefined;
+
   constructor(private clientService: ClientService) {
 
     this.clientForm = new FormGroup({
@@ -28,6 +30,7 @@ export class Slide1Component implements OnInit {
     });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
     {
+      console.log("je recupere");
       this.listeClients = clients;
     });
   }
@@ -38,7 +41,7 @@ export class Slide1Component implements OnInit {
       siret: client.siret,
       nomSociete : client.nomSociete
     });
-
+    this.selectedClient = client;
   }
   ngOnInit(): void {
     this.clientService.emitClientSubject();
@@ -47,11 +50,11 @@ export class Slide1Component implements OnInit {
   applyClient(){
     // tslint:disable-next-line:no-non-null-assertion
     this.updateClient(this.tempClient!);
-    this.tempClient = undefined;
+    // this.tempClient = undefined;
   }
   sendClient(){
     console.log("je passe meme pas laaa");
-    const client = new Client(this.tempClient ? this.tempClient.idClient : '', this.clientForm.get('nomSociete')?.value,
+    const client = new Client(this.selectedClient ? this.selectedClient.idClient : '', this.clientForm.get('nomSociete')?.value,
       this.clientForm.get('adresse')?.value,
       this.clientForm.get('mail')?.value,
       this.clientForm.get('siret')?.value);
@@ -61,6 +64,8 @@ export class Slide1Component implements OnInit {
     this.eventItem.emit(client);
   }
   searchTerm(){
+    this.selectedClient = undefined;
     this.tempClient = this.listeClients.find(c => this.societeNom.length > 1 && c.nomSociete.toLowerCase().includes(this.societeNom.toLowerCase()));
+    console.log(this.tempClient);
   }
 }

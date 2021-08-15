@@ -28,6 +28,7 @@ export class PdfConteneurComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("je change dans pdf", this.user, this.ligne);
     this.makePdf();
     }
 

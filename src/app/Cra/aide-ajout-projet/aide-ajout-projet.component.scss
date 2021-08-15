@@ -11,6 +11,7 @@
   background-color: #94c1f5;
   border-radius: 25px;
   padding: 5%;
+  margin: 20px;
 }
 
 #first-p{
@@ -28,4 +29,21 @@
   text-align: center;
   margin:auto;
 
+}
+.numero-page{
+  text-align: center;
+  margin:auto;
+  //width:50px;
+  width: 150px;
+  position: relative;
+}
+.numero-page p {
+  font-size: 20px;
+  border-radius: 50px;
+  padding: 20px;
+  color: white;
+  background-color: #1a1a1a;
+  position: absolute;
+  top:0px;
+  z-index: 1000;
 }

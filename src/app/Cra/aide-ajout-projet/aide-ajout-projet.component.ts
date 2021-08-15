@@ -2,6 +2,8 @@ import {Component, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild} fr
 import {NgbCarousel, NgbCarouselConfig, NgbSlideEvent} from '@ng-bootstrap/ng-bootstrap';
 import {Client} from '../models/client/Client';
 import {Event} from '@angular/router';
+import {Responsable} from '../models/responsable/responsable';
+import {Projet} from '../models/projet/Projet';
 
 @Component({
   selector: 'app-aide-ajout-projet',
@@ -17,10 +19,12 @@ import {Event} from '@angular/router';
   ]
 })
 export class AideAjoutProjetComponent implements OnInit, OnChanges{
-  @ViewChild('caroussel') myCarousel: NgbCarousel | undefined;
+  @ViewChild('caroussel2') myCarousel: NgbCarousel | undefined;
 
-  numeroPage=0;
+  numeroPage = 0;
   client!: Client;
+  responsable!: Responsable;
+  projet!: Projet;
 
   constructor(config: NgbCarouselConfig) {
 
@@ -40,6 +44,20 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
     this.client = new Client(c.idClient,c.nomSociete,c.adresse,c.mail,c.siret);
     console.log("client dans le pere:", this.client);
     this.myCarousel?.next();
+  }
+  setResponsable(event: Responsable){
+    console.log(event,"èèèèèèèèèèèèèèèèèèèèè");
+    const c = event as Responsable;
+    this.responsable = c;
+    console.log("responsable dans le pere:", this.responsable);
+    this.myCarousel?.next();
+  }
+
+  setProjet(event: Projet){
+    console.log('projet ! :', event);
+    this.projet = event;
+    this.myCarousel?.next();
+
   }
   public get width() {
     return window.innerWidth;
