@@ -60,7 +60,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     this.keyDown(event);
   }
   public craWeek!: CraWeek[] ;
-  selectedWeek!: number;
+  selectedWeek = 1;
   currentSlide!:string;
   // @Input()
   // date!: number;
@@ -88,7 +88,9 @@ export class CompteRenduActiviteComponent implements OnInit {
     config.showNavigationIndicators = true;
 
     this.route.params.subscribe(params => {
-      console.log('è=------------->', new Date(params.date));
+      this.currentSlide = '';
+
+      console.log('è=--------------------------------------------------------->', new Date(params.date));
       this.givenDate = params.date;
       if (this.givenDate) {
         this.craService.initialisation(new Date(this.givenDate));
@@ -97,19 +99,30 @@ export class CompteRenduActiviteComponent implements OnInit {
       }
 
 
-      this.selectedWeek = this.craService.currentSlide;
-      this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
+
+
       this.listeCraSubscription = this.craService.craSubject.subscribe(
         (craWeek: CraWeek[]) => {this.craWeek = craWeek;
+
+          console.log('///////////////////////////////////////////////////////////////////////////////');
+          console.log('cra week', this.craWeek,'   craweek -> ', this.currentSlide);
+          console.log('///////////////////////////////////////////////////////////////////////////////');
           console.log("ici : // + ",this.craWeek);
-          this.update();
+          this.selectedWeek = this.craService.currentSlide;
+          this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
+          // this.update();
+          this.userService.emitRealisationSubject();
         });
       this.realisationSubscription = this.userService.realisationsSubject.subscribe(
+
+
         (realisations: Realisation[]) => {this.listeRealisations = realisations;
+          console.log('///////////////////////////// pk je rentre //////////////////////////////////////////////////');
           this.update();
         });
 
       this.craService.emitCraSubject();
+
     });
     console.log("constructeur compte rendu activite");
     // craService.initialisation(new Date());
@@ -266,11 +279,18 @@ export class CompteRenduActiviteComponent implements OnInit {
    * @param $event
    */
   onSlide($event: NgbSlideEvent) {
-
     let res = ($event.current.split("-").pop());
-    if (res)
-      this.selectedWeek = +res;
-    console.log("res :" + res);
+    if (res){
+      if (+res > this.craWeek.length)
+        this.selectedWeek = 0;
+      else{
+
+        this.selectedWeek = +res;
+      }
+
+    }
+
+    console.log("res :" + res, $event.current, this.myCarousel?.slides.toString()); //////////////////////////////////
     this.update();
   }
 
@@ -278,10 +298,11 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Fonction permettant d'initialiser les commandes Disponibles dans la semaine ainsi que d'initialiser les dates de la semaine
    */
   update(){
-    console.log("je passe bien dans le update");
+    console.log("je passe bien dans le update", this.selectedWeek);
     this.initDates();
     this.initListeCommandes();
     this.getAvailableCommande();
+
 
     //this.craService.emitCraSubject();
   }
@@ -311,7 +332,6 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Permet de ne pas afficher le bouton si le status est validé
    */
   seeButton(){
-    console.log("jhe suis au bouton "+ this.craWeek[this.selectedWeek].status);
     return this.craWeek[this.selectedWeek].status === '0';
 
   }

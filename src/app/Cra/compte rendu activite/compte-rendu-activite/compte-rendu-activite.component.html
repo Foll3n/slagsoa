@@ -56,8 +56,7 @@
     <div >
       <div class='col-12'>
 
-
-        <ngb-carousel #caroussel [activeId]="this.currentSlide" (slide)="onSlide($event)">
+        <ngb-carousel #caroussel (slide)="onSlide($event)">
 
           <!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
           <ng-template ngbSlide *ngFor="let week of this.craWeek; let i = index" >

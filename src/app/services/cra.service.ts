@@ -73,7 +73,7 @@ export class CraService {
     while (firstDate.getTime() < lastDate.getTime()) {
       var diff = (save.getTime() - firstDate.getTime());
       var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-      console.log("save get time", save.valueOf(), firstDate.valueOf(), diffDays);
+      console.log("________________________________________________________________________save get time", save.valueOf(), firstDate.valueOf(), diffDays);
       if ((diffDays) < 7 && diffDays >0 ) {
         console.log("---->"+diffDays,firstDate );
         this.currentSlide = id;
@@ -340,7 +340,7 @@ export class CraService {
 
           //this.getCraToServer(index);
         }
-        this.getDistinctCommandsWeek(index, `${sessionStorage.getItem('id')}`);
+
       } else {
         console.log("Erreur de requete de base de données");
       }
@@ -412,7 +412,8 @@ export class CraService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         this.listeCraWeek[index].setStatus(reponse.statusCra);
-        // this.emitCraSubject();
+        this.getDistinctCommandsWeek(index, `${sessionStorage.getItem('id')}`);
+
       } else {
         console.log("Erreur de requete de base de données");
       }
