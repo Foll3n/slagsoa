@@ -12,6 +12,9 @@ import {ConnexionService} from "../connexion/connexion.service";
 import {CongesHttpService} from "../configuration-http/conges-http.service";
 import {CraWaitingService} from "../services/craWaiting.service";
 import {CraWeekInsert} from "../Cra/models/logCra/craWeekInsert";
+import {Router} from '@angular/router';
+import {CraService} from '../services/cra.service';
+import {formatDate} from '@angular/common';
 
 
 @Component({
@@ -53,8 +56,11 @@ export class NavComponent implements OnInit{
     // @ts-ignore
     this.dp.nativeElement.classList.toggle("visibility");
   }
+  goToCompteRenduActivite(){
+    this.router.navigate(['/compte-rendu-activite',formatDate(new Date(),'MM-dd-yyyy','en')]);
+  }
 
-  constructor(public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver, private craWaitService: CraWaitingService) {
+  constructor(private router: Router, public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver, private craWaitService: CraWaitingService, private craService:CraService) {
     if(this.c.isLogged()){
       console.log('ici constructor');
       this.c.chargerUtilisateur();

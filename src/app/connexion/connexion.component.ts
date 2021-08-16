@@ -59,8 +59,8 @@ export class ConnexionComponent implements OnInit {
 
 
   onSubmit() {
-    console.log('ici')
-    this.connexionHttp.connexion(this.logForm.get('ndc')?.value , this.logForm.get('mdp')?.value).subscribe(
+    this.connexionHttp.connexion(this.logForm.get('ndc')?.value,
+      this.logForm.get('mdp')?.value).subscribe(
       resultat => {
         if(resultat.id){
           sessionStorage.setItem('id' , resultat.id);
@@ -72,9 +72,6 @@ export class ConnexionComponent implements OnInit {
         this.message = "erreur lors de l'identification";
       }
     )
-
-
-
   }
 
 

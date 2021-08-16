@@ -100,6 +100,7 @@ import { Slide1Component } from './Cra/aide-ajout-projet/slide1/slide1.component
 import { Slide2Component } from './Cra/aide-ajout-projet/slide2/slide2.component';
 import { Slide3Component } from './Cra/aide-ajout-projet/slide3/slide3.component';
 import { SlideRecapComponent } from './Cra/aide-ajout-projet/slide-recap/slide-recap.component';
+import { Slide4Component } from './Cra/aide-ajout-projet/slide4/slide4.component';
 
 registerLocaleData(localeFr);
 
@@ -152,7 +153,8 @@ registerLocaleData(localeFr);
     Slide1Component,
     Slide2Component,
     Slide3Component,
-    SlideRecapComponent
+    SlideRecapComponent,
+    Slide4Component
   ],
   imports: [
     BrowserModule,

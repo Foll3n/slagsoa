@@ -45,6 +45,7 @@ export class CraService {
    * @param date
    */
   initialisation(date: Date, back = false) {
+    console.log("j'initialise service cra", date);
     this.back = back;
 
     this.dateToday = new Date();
@@ -411,7 +412,7 @@ export class CraService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         this.listeCraWeek[index].setStatus(reponse.statusCra);
-        this.emitCraSubject();
+        // this.emitCraSubject();
       } else {
         console.log("Erreur de requete de base de données");
       }

@@ -6,6 +6,8 @@ import {Subject} from 'rxjs';
 import {CommandeInsert} from '../Cra/models/commande/CommandeInsert';
 import {Realisation} from '../Cra/models/realisation/Realisation';
 import {Projet} from '../Cra/models/projet/Projet';
+import {FormGroupDirective} from '@angular/forms';
+import {resetForm, shortMessage} from '../../environments/environment';
 
 
 
@@ -39,16 +41,31 @@ export class CommandeService {
   emitAddCommandeSubject(bool:boolean): void {
     this.addCommandeSubject.next(bool);
   }
+  /**
+   * ajoute une commande à un projet. On créé la commande grâce aux champs du formulaire
+   */
+  addCommande(commande: CommandeInsert) {
+        const commandeHttp = new CommandeHttpDatabase(this.httpClient);
+        const response = commandeHttp.addCommande(commande);
+        response.subscribe(reponse => {
+          if (reponse.status === 'OK') {
+            console.log("commande bien ajoutée");
+            this.getAllCommandes();
+          } else {
+            console.log("commande non ajoutée");
+          }
+        });
+
+  }
+
   updateCommandes(commandes: CommandeInsert[]){
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
     const response = commandeHttp.updateCommands(commandes);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-
         console.log(reponse);
         this.updateCommands(commandes);
         // this.getAllCommandes();
-
       }
       else{
         this.emitAddCommandeSubject(false);

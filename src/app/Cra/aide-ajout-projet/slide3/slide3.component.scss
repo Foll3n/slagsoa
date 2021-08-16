@@ -19,14 +19,17 @@
   display: inline-block;
 }
 
-.form input,.select-mode{
+.form input{
   width: 100%;
   height: 100%;
   border:none;
   outline:none;
   background: transparent;
 }
-
+.select-mode{
+  width: 100%;
+  height: 100%;
+}
 .form label{
   position:absolute;
   bottom:0px;

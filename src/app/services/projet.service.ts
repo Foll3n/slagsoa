@@ -40,6 +40,7 @@ export class ProjetService {
     this.ajout.next(value);
   }
 
+
   addProjet(projet: Projet) {
     console.log(projet);
     const projetHttp = new ProjetHttpDatabase(this.httpClient);

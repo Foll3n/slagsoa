@@ -5,6 +5,7 @@ import {Event} from '@angular/router';
 import {Responsable} from '../models/responsable/responsable';
 import {Projet} from '../models/projet/Projet';
 import {environment} from '../../../environments/environment';
+import {CommandeInsert} from '../models/commande/CommandeInsert';
 
 @Component({
   selector: 'app-aide-ajout-projet',
@@ -26,6 +27,7 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
   client!: Client;
   responsable!: Responsable;
   projet!: Projet;
+  listeCommandes: CommandeInsert[] = [];
   minWidth = environment.minWidth;
 
   constructor(config: NgbCarouselConfig) {
@@ -45,6 +47,11 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
     const c = event as Client;
     this.client = new Client(c.idClient,c.nomSociete,c.adresse,c.mail,c.siret);
     console.log("client dans le pere:", this.client);
+    this.myCarousel?.next();
+  }
+  setListeCom(commandes: CommandeInsert[]){
+    this.listeCommandes = commandes;
+    console.log("je suis dans le pere je recois les commandes :", this.listeCommandes);
     this.myCarousel?.next();
   }
   setResponsable(event: Responsable){

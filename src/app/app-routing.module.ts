@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'administration-projet', component : AdministrationProjetComponent},
   { path: 'test', component : VisualisationProjetComComponent},
   { path: 'calendar', component : CalendarMounthComponent},
-  { path: 'compte-rendu-activite', component : CompteRenduActiviteComponent},
+  { path: 'compte-rendu-activite/:date', component : CompteRenduActiviteComponent},
   { path: 'administration-cra', component : AdministrationCraComponent},
   { path: 'connexion', component: ConnexionComponent },
   { path: 'visualisation', component: VisualisationComponent },

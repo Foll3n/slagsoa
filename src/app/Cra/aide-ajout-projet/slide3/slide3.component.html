@@ -23,7 +23,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div *ngIf="this.projet.valid" class="valider">
+    <div *ngIf="this.projet.valid && !projetNotPresent()" class="valider">
       <label class="label-valider">
         <input type="submit" class="bouton-valider" value=""  >
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square" viewBox="0 0 16 16">

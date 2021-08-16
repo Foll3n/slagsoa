@@ -30,7 +30,7 @@ export class Slide1Component implements OnInit {
     });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
     {
-      console.log("je recupere");
+      console.log("je recupere", clients);
       this.listeClients = clients;
     });
   }

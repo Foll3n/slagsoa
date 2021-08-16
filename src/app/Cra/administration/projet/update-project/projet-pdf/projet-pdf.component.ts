@@ -36,7 +36,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private utilisateurService: UserService) {
     this.route.queryParams.subscribe(params => {
       this.projet = this.route.snapshot.queryParams as Projet;
-      console.log("--------", this.projet.code_projet);
+      console.log("--------", this.projet);
       this.initAllPdf();
     });
   }

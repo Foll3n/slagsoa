@@ -5,7 +5,8 @@
 <div class='col-12'>
 
 <div class="numero-page">
-  <p>Etape {{numeroPage+1}} / 4</p>
+  <p *ngIf="numeroPage<4">Etape {{numeroPage+1}} / 4</p>
+  <p *ngIf="numeroPage>=4">Recapitulatif</p>
 </div>
   <ngb-carousel #caroussel2 [ngClass]="{ 'caroussel1': width >= minWidth, 'caroussel1-responsive': width < minWidth }" [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
 
@@ -13,7 +14,7 @@
       <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
           <p id="first-p">Félicitation pour ce nouveau projet acquéri ! </p><br>
-          <p id="second-p">Tout d'abord, pour quelle société est-ce ? ?</p>
+          <p id="second-p">Tout d'abord, pour quelle société est-ce ?</p>
         </div>
         <app-slide1 (eventItem)="setClient($event)"></app-slide1>
       </div>
@@ -36,6 +37,15 @@
         <app-slide3 (eventItem)="setProjet($event)"></app-slide3>
       </div>
     </ng-template>
+    <ng-template class="template" ngbSlide>
+      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
+        <div class="phrase-slide">
+          <p id="first-p">Désirez vous ajouter des commandes ? </p><br>
+          <p id="second-p">Donnez nous ces informations?</p>
+        </div>
+        <app-slide4 (listeCom)="setListeCom($event)" ></app-slide4>
+      </div>
+    </ng-template>
 
 
 <!--/////////// slide recap ///////-->
@@ -44,7 +54,7 @@
         <div class="phrase-slide">
           <p id="first-p">Recapitulatif </p><br>
         </div>
-        <app-slide-recap [client]="this.client" [reponsable]="responsable" [projet]="this.projet"></app-slide-recap>
+        <app-slide-recap *ngIf="this.projet && this.client && this.listeCommandes && this.responsable" [client]="this.client" [reponsable]="responsable" [projet]="this.projet" [listeCommandes]="this.listeCommandes"></app-slide-recap>
       </div>
 <!--      /////////////////////////////////////////-->
     </ng-template>

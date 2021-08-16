@@ -25,6 +25,7 @@ export class ClientService {
     headers: new HttpHeaders()
   };
   emitClientSubject(): void {
+    console.log("jenvoie le client depuis le service");
     this.clientSubject.next(this.listeClients.slice());
   }
 

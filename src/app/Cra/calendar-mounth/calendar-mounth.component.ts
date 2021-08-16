@@ -20,6 +20,7 @@ import {CalendarService} from '../../services/calendar.service';
 import {CraWeekInsert} from '../models/logCra/craWeekInsert';
 import {InsertCra} from '../models/cra/InsertCra';
 import {Router} from '@angular/router';
+import {formatDate} from '@angular/common';
 
 
 
@@ -137,8 +138,9 @@ export class CalendarMounthComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
       if ( events.length === 0){
-        this.craService.initialisation(date, true);
-        this.router.navigate(['/compte-rendu-activite']);
+        // this.craService.initialisation(date, true);
+        this.router.navigate(['/compte-rendu-activite',formatDate(date,'dd-MM-yyyy','fr')]);
+
 
       }
       this.viewDate = date;
@@ -150,8 +152,7 @@ export class CalendarMounthComponent implements OnInit {
     // console.log("iciii");
     // this.modalData = { event, action };
     // this.modal.open(this.modalContent, { size: 'lg' });
-    this.craService.initialisation(event.start, true);
-    this.router.navigate(['/compte-rendu-activite']);
+    this.router.navigate(['/compte-rendu-activite',formatDate(event.start,'MM-dd-yyyy','en')]);
   }
 
   addEvent(titre: string, start: string , color: any, duree: string): void {
