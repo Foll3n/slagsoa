@@ -57,7 +57,8 @@ export class NavComponent implements OnInit{
     this.dp.nativeElement.classList.toggle("visibility");
   }
   goToCompteRenduActivite(){
-    this.router.navigate(['/compte-rendu-activite',formatDate(new Date(),'MM-dd-yyyy','en')]);
+    // this.router.navigate(['/compte-rendu-activite'], { queryParams: { date: formatDate(new Date(),'MM-dd-yyyy','en') }});
+    this.router.navigate(['/compte-rendu-activite', formatDate(new Date(),'MM-dd-yyyy','en')]);
   }
 
   constructor(private router: Router, public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver, private craWaitService: CraWaitingService, private craService:CraService) {

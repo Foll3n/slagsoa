@@ -72,8 +72,13 @@
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-
+<!--              <a [routerLink]="['/users']"-->
+<!--                 [queryParams]="{ filter: 'new' }"-->
+<!--                 queryParamsHandling="merge">-->
+<!--                Compte rendu d'activité-->
+<!--              </a>-->
               <a class="dropdown-item" (click)="goToCompteRenduActivite()">Compte rendu d'activité</a>
+<!--              <a class="dropdown-item" href="compte-rendu-activite">Calendrier</a>-->
               <a class="dropdown-item" href="calendar">Calendrier</a>
             </mat-expansion-panel>
           </mat-accordion>

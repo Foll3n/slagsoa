@@ -8,10 +8,9 @@ import {CraWeek} from '../../models/cra/craWeek';
 import {CommandeInsert} from '../../models/commande/CommandeInsert';
 import {UserService} from '../../../services/user.service';
 import {Realisation} from '../../models/realisation/Realisation';
-import {CraWaitingService} from '../../../services/craWaiting.service';
+import {CraWaitingService} from "../../../services/craWaiting.service";
 import {environment} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
-import {Projet} from '../../models/projet/Projet';
 
 @Component({
   selector: 'app-compte-rendu-activite',
@@ -25,7 +24,7 @@ import {Projet} from '../../models/projet/Projet';
       outline: none;
     }`, `
 
-    /deep/ .carousel-indicators > li {
+    /deep/  .carousel-indicators> li {
       background-color: #97C8E2;
       box-sizing: content-box;
       flex: 0 1 auto;
@@ -44,9 +43,9 @@ import {Projet} from '../../models/projet/Projet';
 
     }`,
     `
-      /deep/ .carousel-indicators {
+      /deep/  .carousel-indicators {
         position: absolute;
-        top: -80px;
+        top : -80px;
         height: 20px;
         margin-top: 40px;
 
@@ -56,15 +55,13 @@ import {Projet} from '../../models/projet/Projet';
 })
 export class CompteRenduActiviteComponent implements OnInit {
   @ViewChild('caroussel') myCarousel: NgbCarousel | undefined;
-
   // tslint:disable-next-line:typedef
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.keyDown(event);
   }
-
-  public craWeek!: CraWeek[];
+  public craWeek!: CraWeek[] ;
   selectedWeek!: number;
-  currentSlide!: string;
+  currentSlide!:string;
   // @Input()
   // date!: number;
 
@@ -77,68 +74,63 @@ export class CompteRenduActiviteComponent implements OnInit {
   realisationSubscription!: Subscription;
   listeAddCommande: CommandeInsert[] = [];
   minWidth = environment.minWidth;
+  givenDate!: Date;
 
   public get width() {
     return window.innerWidth;
   }
-
-  constructor(public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig, private router: ActivatedRoute) {
+  constructor(public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig, private route: ActivatedRoute) {
     config.interval = 0;
     config.wrap = true;
     config.keyboard = false;
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
     config.showNavigationIndicators = true;
-    // let date = this.router.snapshot.queryParamMap.get('date');
-    // if(date) craService.initialisation(new Date(date));
-    // else craService.initialisation(new Date());
-    // console.log("ddaaaatteeeeeeeeeeeeeee ", date);
-    this.router.params.subscribe(params => {
+
+    this.route.params.subscribe(params => {
       console.log('è=------------->', new Date(params.date));
-      let date = params.date;
-      if (date) {
-        craService.initialisation(new Date(date));
+      this.givenDate = params.date;
+      if (this.givenDate) {
+        this.craService.initialisation(new Date(this.givenDate));
       } else {
-        craService.initialisation(new Date());
+        this.craService.initialisation(new Date());
       }
+
 
       this.selectedWeek = this.craService.currentSlide;
       this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
+      this.listeCraSubscription = this.craService.craSubject.subscribe(
+        (craWeek: CraWeek[]) => {this.craWeek = craWeek;
+          console.log("ici : // + ",this.craWeek);
+          this.update();
+        });
+      this.realisationSubscription = this.userService.realisationsSubject.subscribe(
+        (realisations: Realisation[]) => {this.listeRealisations = realisations;
+          this.update();
+        });
 
-
+      this.craService.emitCraSubject();
     });
-    this.listeCraSubscription = this.craService.craSubject.subscribe(
-      (craWeek: CraWeek[]) => {
-        this.craWeek = craWeek;
-        console.log('ici : // + ', this.craWeek);
-        this.update();
-      });
-    this.realisationSubscription = this.userService.realisationsSubject.subscribe(
-      (realisations: Realisation[]) => {
-        this.listeRealisations = realisations;
-        this.update();
-      });
-
+    console.log("constructeur compte rendu activite");
+    // craService.initialisation(new Date());
+  }
+  ngOnInit(){
+    // if(this.givenDate)this.craService.initialisation(this.givenDate);
 
   }
 
-  ngOnInit() {
-
-
-  }
-
-  keyDown($event: Event) {
+  keyDown($event: Event){
     const event = ($event) as KeyboardEvent;
-    if (event.key === 'ArrowLeft' || event.key === 'q') {
+    if ( event.key === 'ArrowLeft' || event.key === 'q') {
       console.log($event);
       this.myCarousel?.prev();
-    } else if (event.key === 'ArrowRight' || event.key === 'd') {
+    }
+    else if ( event.key === 'ArrowRight' || event.key === 'd') {
       console.log($event);
       this.myCarousel?.next();
     }
 
   }
-
   /**
    * Récupère une commande précise réalisée par un utilisateur
    * @param num
@@ -153,10 +145,10 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Fonction permettant de vérifier si la réalisation d'un utilisateur est dans la liste des commandes et que la commande est dispo
    * @param num_com
    */
-  checkRelInListeCommande(num_com: string): boolean {
-    if (this.listeCommande) {
-      for (const com of this.listeCommande) {
-        if (com.num_com === num_com) {
+  checkRelInListeCommande(num_com: string): boolean{
+    if (this.listeCommande){
+      for (const com of this.listeCommande){
+        if (com.num_com === num_com){
           return true;
         }
       }
@@ -168,11 +160,11 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * Permet de renvoyer la liste des commandes possible à ajouter pour un utilisateur dans sa semaine ( c'est à dire qu'il n'est pas déja en train de la réaliser )
    */
-  getAvailableCommande() {
+  getAvailableCommande(){
     this.listeAddCommande = [];
-    for (const real of this.listeRealisations) {
+    for (const real of this.listeRealisations ){
 
-      if (!this.checkRelInListeCommande(real.num_commande)) // listeCommande est la liste des commandes d'un cra
+      if (!this.checkRelInListeCommande(real.num_commande) ) // listeCommande est la liste des commandes d'un cra
       {
 
         const commande = new CommandeInsert(real.num_commande, '0', real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -185,16 +177,15 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * renvoie la liste des commandes d'une semaine de cra
    */
-  initListeCommandes() {
+  initListeCommandes(){
 
     this.listeCommande = this.craWeek[this.selectedWeek].listeCommandesWeek;
 
   }
-
   /**
    Met à jour la date de début de semaine et de fin de semaine afin de les afficher au dessus de mon calendrier
    */
-  initDates() {
+  initDates(){
     this.firstDate = this.craWeek[this.selectedWeek].firstDate;
     this.lastDate = this.craWeek[this.selectedWeek].lastDate;
   }
@@ -208,7 +199,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     // @ts-ignore
     // this.craService.getCraToServer();
     // this.craService.addCraServer();
-    if (!com.color) {
+    if (!com.color){
       com.color = '';
     }
     const commande = new CommandeInsert(com.num_com, com.id_projet, com.id, 'true', com.color);    // id -> 1 ou id 2 pour le projet pour le moment et 2/5 pour id commande
@@ -219,14 +210,14 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * Renvoie la date du jour actuel
    */
-  getDay(): Date {
+  getDay(): Date{
     return new Date();
   }
 
   /**
    * Renvoie la date du jour sous forme de string que l'on utilise tout en haut de la page pour afficher la date du jour actuel
    */
-  getDateToday(): string {
+  getDateToday(): string{
     return this.afficherjour(this.getDay().getDay()) + ' ' + this.craService.getDateToday();
   }
 
@@ -263,32 +254,31 @@ export class CompteRenduActiviteComponent implements OnInit {
    * @param day
    */
   afficherjour(day: number): string {
-    return ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][day];
+    return ['Dimanche','Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][day];
   }
 
-  test1() {
+  test1(){
     console.log('pppppppppppppppppppp');
   }
-  /**
 
+  /**
    * Fonction appelée lors du slide du caroussel qui permet de sélectionner le cra de la semaine dans la liste
    * @param $event
    */
   onSlide($event: NgbSlideEvent) {
-    let res = ($event.current.split('-').pop());
-    if (res) {
+
+    let res = ($event.current.split("-").pop());
+    if (res)
       this.selectedWeek = +res;
-    }
-    console.log('res :' + res);
-    console.log('ooooooooooooonnnnnnSSSSSSSSSLlliiiiddddeee', this.selectedWeek);
+    console.log("res :" + res);
     this.update();
   }
 
   /**
    * Fonction permettant d'initialiser les commandes Disponibles dans la semaine ainsi que d'initialiser les dates de la semaine
    */
-  update() {
-    console.log('je passe bien dans le update');
+  update(){
+    console.log("je passe bien dans le update");
     this.initDates();
     this.initListeCommandes();
     this.getAvailableCommande();
@@ -299,7 +289,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * permet à l'utilisateur de valider sa semaine elle sera donc envoyé aux administrateurs afin qu'ils la valident définitivement
    */
-  save() {
+  save(){
     this.push();
     this.craService.setStatusUser(this.selectedWeek, '1');
 
@@ -308,9 +298,9 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * Est ce que la semaine est correctement remplie ? c'est à dire que chaque jour à une durée totale à 1
    */
-  canUpdateStatus() {
-    for (const cra of this.craWeek[this.selectedWeek].listeCra) {
-      if (cra.duree_totale < (1 - cra.statusConge)) {
+  canUpdateStatus(){
+    for (const cra of this.craWeek[this.selectedWeek].listeCra){
+      if ( cra.duree_totale < (1-cra.statusConge)){
         return false;
       }
     }
@@ -320,8 +310,8 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * Permet de ne pas afficher le bouton si le status est validé
    */
-  seeButton() {
-    console.log('jhe suis au bouton ' + this.craWeek[this.selectedWeek].status);
+  seeButton(){
+    console.log("jhe suis au bouton "+ this.craWeek[this.selectedWeek].status);
     return this.craWeek[this.selectedWeek].status === '0';
 
   }
@@ -329,7 +319,6 @@ export class CompteRenduActiviteComponent implements OnInit {
   /**
    * permet de renvoyer le status du cra à la semaine afin de gérer l'affichage en fonction de son status
    */
-  seeMessage() {
+  seeMessage(){
     return +this.craWeek[this.selectedWeek].status;
-  }
-}
+  }}

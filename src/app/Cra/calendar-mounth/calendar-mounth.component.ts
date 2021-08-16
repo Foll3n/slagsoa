@@ -139,7 +139,7 @@ export class CalendarMounthComponent implements OnInit {
       }
       if ( events.length === 0){
         // this.craService.initialisation(date, true);
-        this.router.navigate(['/compte-rendu-activite',formatDate(date,'dd-MM-yyyy','fr')]);
+        this.router.navigate(['/compte-rendu-activite',formatDate(date,'MM-dd-yyyy','en')]);
 
 
       }
