@@ -1,7 +1,7 @@
   <div class="header">
 
   </div>
-<div class='col-12'>
+<div class='col-12 all'>
 
 <div class="numero-page">
   <p *ngIf="numeroPage<4">Etape {{numeroPage+1}} / 4</p>
@@ -24,7 +24,7 @@
         <p id="first-p">Quel en sera le responsable ? </p><br>
         <p id="second-p">dites nous tout ?</p>
       </div>
-      <app-slide2 (eventItem)="setResponsable($event)"></app-slide2>
+      <app-slide2 (eventBack)="this.myCarousel!.prev()" (eventItem)="setResponsable($event)"></app-slide2>
       </div>
     </ng-template>
     <ng-template class="template" ngbSlide>
@@ -33,7 +33,7 @@
           <p id="first-p">A présent paramétrez le projet ? </p><br>
           <p id="second-p">Donnez nous ces informations?</p>
         </div>
-        <app-slide3 (eventItem)="setProjet($event)"></app-slide3>
+        <app-slide3 (eventBack)="this.myCarousel!.prev()" (eventItem)="setProjet($event)"></app-slide3>
       </div>
     </ng-template>
     <ng-template class="template" ngbSlide>
@@ -42,7 +42,7 @@
           <p id="first-p">Désirez vous ajouter des commandes ? </p><br>
           <p id="second-p">Donnez nous ces informations?</p>
         </div>
-        <app-slide4 (listeCom)="setListeCom($event)" ></app-slide4>
+        <app-slide4 (eventBack)="this.myCarousel!.prev()" (listeCom)="setListeCom($event)" ></app-slide4>
       </div>
     </ng-template>
 
@@ -53,9 +53,11 @@
         <div class="phrase-slide">
           <p id="first-p">Recapitulatif </p><br>
         </div>
-        <app-slide-recap *ngIf="this.projet && this.client && this.listeCommandes && this.responsable" [client]="this.client" [reponsable]="responsable" [projet]="this.projet" [listeCommandes]="this.listeCommandes"></app-slide-recap>
+        <app-slide-recap *ngIf="this.projet && this.client && this.listeCommandes && this.responsable" (eventBack)="this.myCarousel!.prev()" [client]="this.client" [reponsable]="responsable" [projet]="this.projet" [listeCommandes]="this.listeCommandes"></app-slide-recap>
       </div>
 <!--      /////////////////////////////////////////-->
+
+
     </ng-template>
 
 
@@ -63,5 +65,7 @@
 
 
   </ngb-carousel>
+
+
 
 </div>

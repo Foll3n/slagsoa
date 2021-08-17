@@ -70,5 +70,18 @@
 .valider-commandes{
   border:none;
   background-color: transparent;
-  padding-bottom: 50px;
+    position:absolute;
+    bottom: 50px;
+    right: 50px;
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+}
+.retour-arriere{
+  z-index: 10000;
+  position: absolute;
+  top:50px;
+  left:20px;
+  background: transparent;
+  border:none;
 }

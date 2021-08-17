@@ -12,6 +12,7 @@ import {ResponsableService} from '../../../services/responsable.service';
 })
 export class Slide2Component implements OnInit {
   @Output() eventItem = new EventEmitter<Responsable>();
+  @Output() eventBack = new EventEmitter();
   listeResponsables!: Responsable[];
   responsableSubscription!: Subscription;
   responsableForm!: FormGroup;

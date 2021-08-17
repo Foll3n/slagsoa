@@ -10,7 +10,7 @@ import {CraHttpDatabase} from '../configuration-http/CraHttpDatabase';
 @Injectable()
 export class CalendarService {
   userId = '10';
-  listeCra!: InsertCra[];
+  listeCra: InsertCra[] = [];
   calendarSubject = new Subject<InsertCra[]>();
 
   constructor(private httpClient: HttpClient) {
@@ -37,7 +37,8 @@ export class CalendarService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK'){
         console.log(reponse);
-        this.listeCra = reponse.liste_cra;
+        if (reponse.liste_cra)
+           this.listeCra = reponse.liste_cra;
         this.emitCalendarSubject();
       }
       else{

@@ -12,6 +12,8 @@ import {resetForm} from '../../../../environments/environment';
 })
 export class Slide4Component implements OnInit {
   @Output() listeCom = new EventEmitter<CommandeInsert[]>();
+  @Output() eventBack = new EventEmitter();
+
   commandes!: FormGroup;
   listeCommandes: CommandeInsert[] = [];
 

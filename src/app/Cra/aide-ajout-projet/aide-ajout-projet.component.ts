@@ -33,11 +33,11 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
   constructor(config: NgbCarouselConfig) {
 
     config.interval = 0;
-    config.wrap = true;
+    config.wrap = false;
     config.keyboard = false;
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
-    config.showNavigationIndicators = true;
+    config.showNavigationIndicators = false;
     config.animation = true;
   }
   ngOnInit(): void {

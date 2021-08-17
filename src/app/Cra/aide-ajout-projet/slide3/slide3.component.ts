@@ -16,6 +16,8 @@ import {ProjetService} from '../../../services/projet.service';
 })
 export class Slide3Component implements OnInit {
   @Output() eventItem = new EventEmitter<Projet>();
+  @Output() eventBack = new EventEmitter();
+
   projet!: FormGroup;
   color = '#B6E0F7';
   isAdd = false;

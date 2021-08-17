@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Projet} from '../../models/projet/Projet';
 import {Client} from '../../models/client/Client';
 import {Responsable} from '../../models/responsable/responsable';
@@ -27,6 +27,7 @@ export class SlideRecapComponent implements OnInit {
   reponsable!: Responsable;
   @Input()
   listeCommandes!: CommandeInsert[];
+  @Output() eventBack = new EventEmitter();
   clientSubscription!:Subscription;
   responsableSubscription!:Subscription;
   projetSscription!:Subscription;

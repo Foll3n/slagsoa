@@ -93,7 +93,9 @@
   color: #151414;
 }
 .valider{
-  padding-top: 40px;
+  position:absolute;
+  bottom: 50px;
+  right: 50px;
   text-align: center;
   margin: auto;
   cursor: pointer;
@@ -109,4 +111,13 @@
 }
 .input-valid{
   pointer-events: all;
+}
+
+.retour-arriere{
+  z-index: 10000;
+  position: absolute;
+  top:50px;
+  left:20px;
+  background: transparent;
+  border:none;
 }

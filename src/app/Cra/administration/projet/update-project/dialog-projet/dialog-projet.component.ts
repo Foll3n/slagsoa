@@ -18,7 +18,7 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'dialog-projetComponent',
+  selector: 'app-dialog-projet',
   templateUrl: './dialog-projet.component.html',
   styleUrls: ['./dialog-projet.component.scss']
 })
