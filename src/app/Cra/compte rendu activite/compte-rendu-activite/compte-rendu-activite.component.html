@@ -55,11 +55,11 @@
     <!--  </div>-->
     <div >
       <div class='col-12'>
-        --------------{{this.currentSlide}}
-        <ngb-carousel [activeId]="this.currentSlide" #carousel *ngIf="this.craWeek.length>0 && this.currentSlide" (slide)="onSlide($event)">
+<!--        &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;{{this.currentSlide}}-->
+        <ngb-carousel *ngIf="this.craWeek.length>0 && this.currentSlide"  [activeId]="this.currentSlide" #carousel (slide)="onSlide($event)">
 
           <!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
-          <ng-template (slid)="this.selectedWeek = i" ngbSlide *ngFor="let week of this.craWeek; index as i" >
+          <ng-template ngbSlide *ngFor="let week of this.craWeek; index as i" [id]="'ngb-slide-'+i">
 <!--            let i = index"-->
             <app-compte-rendu-vue [index]="i" [craWeek]="week" *ngIf="week.listeCra.length != 0"></app-compte-rendu-vue>
           </ng-template>

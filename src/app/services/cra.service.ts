@@ -45,7 +45,6 @@ export class CraService {
    * @param date
    */
   initialisation(date: Date, back = false) {
-    console.log("j'initialise service cra", date);
     this.back = back;
 
     this.dateToday = new Date();
@@ -73,16 +72,13 @@ export class CraService {
     while (firstDate.getTime() < lastDate.getTime()) {
       var diff = (save.getTime() - firstDate.getTime());
       var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-      console.log("________________________________________________________________________save get time", save.valueOf(), firstDate.valueOf(), diffDays);
-      if ((diffDays) < 7 && diffDays >0 ) {
-        console.log("---->"+diffDays,firstDate );
+      if ((diffDays) <= 7 && diffDays >0 ) {
         this.currentSlide = id;
       }
       this.listeCraWeek.push(new CraWeek(id, firstDate));
       id++;
       firstDate.setDate(firstDate.getDate() + 7);
     }
-    console.log(this.listeCraWeek);
 
 
   }
@@ -92,7 +88,6 @@ export class CraService {
    */
   emitCraSubject(): void {
     // tslint:disable-next-line:triple-equals
-    console.log("_____ emit__________", this.listeCraWeek);
     this.craSubject.next(this.listeCraWeek.slice());
   }
 
@@ -237,7 +232,6 @@ export class CraService {
         }
       }
       this.listeCraWeek[index].listeCra.push(new Cra(id, idUsr, new Date(cra.date), duree, status, listCr));
-      console.log(this.listeCraWeek);
     }
 
   }
@@ -271,7 +265,7 @@ export class CraService {
     this.httpClient.delete<Result>(environment.urlCra, this.httpOptions).subscribe(
       response => {
         if (response.status == 'OK') {
-          console.log(response);
+          console.log("récupération datas");
         } else {
           console.log("Erreur de requete de base de données");
         }
@@ -290,7 +284,6 @@ export class CraService {
    * @param commande
    */
   addCraLine(index: number, listeCompteRendu: CompteRendu[], commande: CommandeInsert) {
-    console.log('Ajout d une ligne dans le serveur');
     // tslint:disable-next-line:ban-types
     const listeCompte: CompteRenduInsert [] = [];
 
@@ -298,11 +291,9 @@ export class CraService {
       listeCompte.push(new CompteRenduInsert(cr.idCra.toString(), cr.numCommande, '0.0', cr.color));
     }
     const json = JSON.stringify(listeCompte);
-    console.log(json);
     this.httpClient.post<Result>(environment.urlCr, json, this.httpOptions).subscribe(
       response => {
         if (response.status == 'OK') {
-          console.log(response);
           // this.getDistinctCommandsWeek(index);
           if (this.listeCraWeek[index].listeCommandesWeek) {
             this.listeCraWeek[index].addCom(commande); ///////////////////////////////////////////////////////////////////////////////
@@ -313,7 +304,6 @@ export class CraService {
         } else {
           console.log("Erreur de requete de base de données");
         }
-        console.log(response);
 
       },
       error => {
@@ -332,11 +322,9 @@ export class CraService {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.liste_cra != null) {
-          console.log("reponse server : error :", reponse);
           this.transform(reponse.liste_cra, index);
           this.getCraWeekStatus(index);
         } else {
-          console.log("je ne dois jamais rentrer ici");
           this.addCraWeek(index);
 
           //this.getCraToServer(index);
@@ -526,11 +514,9 @@ export class CraService {
    * @param index
    */
   setStatusCongeUserToServer(index: number) {
-    console.log('je passe bien ici dans l update de status');
     const json = JSON.stringify(this.transformToInsertCra(this.listeCraWeek[index].listeCra));
     this.httpClient.put(environment.urlCra, json, this.httpOptions).subscribe(
       response => {
-        console.log("probleme de status a jour" + response);
       },
       error => {
         // this.setStatusUser(index, 0); // s'il y a une erreur je remet le status a 0

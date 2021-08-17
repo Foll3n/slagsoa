@@ -55,14 +55,13 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class CompteRenduActiviteComponent implements OnInit {
   // @ViewChild(NgbCarousel) myCarousel!: NgbCarousel ;
-  @ViewChild('carousel', {static: false, read: NgbCarousel}) myCarousel: NgbCarousel | undefined;
+  @ViewChild('carousel', {static: true}) myCarousel: NgbCarousel | undefined;
   // tslint:disable-next-line:typedef
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.keyDown(event);
   }
   // ngAfterViewInit() {
   //   setTimeout(() => {
-  //     console.log("pppppppppppppppppppppppppppppppppppppppppp", this.currentSlide);
   //     this.myCarousel!.select(this.currentSlide);
   //   });
   // }
@@ -71,7 +70,6 @@ export class CompteRenduActiviteComponent implements OnInit {
   currentSlide!:string;
   // @Input()
   // date!: number;
-  activeIndex = 2;
   listeCraSubscription!: Subscription;
   listeCrSubscription!: Subscription;
   firstDate = '';
@@ -96,7 +94,6 @@ export class CompteRenduActiviteComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.currentSlide = '';
-      console.log('è=--------------------------------------------------------->', new Date(params.date));
       this.givenDate = params.date;
       if (this.givenDate) {
         this.craService.initialisation(new Date(this.givenDate));
@@ -110,13 +107,9 @@ export class CompteRenduActiviteComponent implements OnInit {
       this.listeCraSubscription = this.craService.craSubject.subscribe(
         (craWeek: CraWeek[]) => {this.craWeek = craWeek;
 
-          console.log('///////////////////////////////////////////////////////////////////////////////');
-          console.log('cra week', this.craWeek,'   craweek -> ', this.currentSlide);
-          console.log('///////////////////////////////////////////////////////////////////////////////');
-          console.log("ici : // + ",this.craWeek);
           this.selectedWeek = this.craService.currentSlide
           this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
-          this.myCarousel!.select(this.currentSlide);
+          // this.myCarousel!.select(this.currentSlide);
           // this.activeIndex = this.selectedWeek;
           // this.update();
           this.userService.emitRealisationSubject();
@@ -125,14 +118,12 @@ export class CompteRenduActiviteComponent implements OnInit {
 
 
         (realisations: Realisation[]) => {this.listeRealisations = realisations;
-          console.log('///////////////////////////// pk je rentre //////////////////////////////////////////////////');
           this.update();
         });
 
       this.craService.emitCraSubject();
 
     });
-    console.log("constructeur compte rendu activite");
     // craService.initialisation(new Date());
   }
   ngOnInit(){
@@ -143,11 +134,9 @@ export class CompteRenduActiviteComponent implements OnInit {
   keyDown($event: Event){
     const event = ($event) as KeyboardEvent;
     if ( event.key === 'ArrowLeft' || event.key === 'q') {
-      console.log($event);
       this.myCarousel?.prev();
     }
     else if ( event.key === 'ArrowRight' || event.key === 'd') {
-      console.log($event);
       this.myCarousel?.next();
     }
 
@@ -244,7 +233,6 @@ export class CompteRenduActiviteComponent implements OnInit {
 
 
   // select(slideId: string, source: NgbSlideEventSource){
-  //   console.log("testttt"+slideId);
   // }
   /**
    * Appuie sur le bouton enregistrer de notre IHM
@@ -282,22 +270,19 @@ export class CompteRenduActiviteComponent implements OnInit {
     console.log('pppppppppppppppppppp');
   }
 
+
   /**
    * Fonction appelée lors du slide du caroussel qui permet de sélectionner le cra de la semaine dans la liste
    * @param $event
    */
   onSlide($event: NgbSlideEvent) {
-
-    console.log("current",$event.current," active id", this.myCarousel?.activeId, " ooo ", this.activeIndex, "week ->",this.selectedWeek);
     let res = ($event.current.split("-").pop());
     if (res){
         this.selectedWeek = +res;
       }
-      console.log("event$", $event.current, " caroussel id ", this.myCarousel?.activeId);
 
-    // }
 
-    console.log("res :" + res, $event.current, this.myCarousel?.slides.toString()); //////////////////////////////////
+
     this.update();
   }
 
@@ -305,7 +290,6 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Fonction permettant d'initialiser les commandes Disponibles dans la semaine ainsi que d'initialiser les dates de la semaine
    */
   update(){
-    console.log("je passe bien dans le update", this.selectedWeek);
     this.initDates();
     this.initListeCommandes();
     this.getAvailableCommande();
