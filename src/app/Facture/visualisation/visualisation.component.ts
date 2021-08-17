@@ -122,26 +122,28 @@ export class VisualisationComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('dateD') != null && sessionStorage.getItem('dateF')!=null){
-      let s1 = sessionStorage.getItem('dateD');
-      let s2 = sessionStorage.getItem('dateF');
-      if(s1 != null && s2!= null){
-        this.dateD = s1;
-        this.dateF = s2;
-      }
-    }
-    this.httpOptions.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-    })
     this.c.testLogin();
-    this.catPrincipal = [];
-    this.sousCat = [];
-    this.facturesFiltre = [];
-    this.chargerFacture(this.dateD, this.dateF);
-    this.selectedCategories = [];
-    this.getCategories();
-    this.tout = true;
+    if(this.c.isLogged()){
+      if(sessionStorage.getItem('dateD') != null && sessionStorage.getItem('dateF')!=null){
+        let s1 = sessionStorage.getItem('dateD');
+        let s2 = sessionStorage.getItem('dateF');
+        if(s1 != null && s2!= null){
+          this.dateD = s1;
+          this.dateF = s2;
+        }
+      }
+      this.httpOptions.headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      })
+      this.catPrincipal = [];
+      this.sousCat = [];
+      this.facturesFiltre = [];
+      this.chargerFacture(this.dateD, this.dateF);
+      this.selectedCategories = [];
+      this.getCategories();
+      this.tout = true;
+    }
   }
 
   //----------------------------------------Méthodes chargement----------------------------------------------------

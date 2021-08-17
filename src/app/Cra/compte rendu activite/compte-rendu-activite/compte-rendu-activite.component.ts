@@ -289,20 +289,16 @@ export class CompteRenduActiviteComponent implements OnInit {
   onSlide($event: NgbSlideEvent) {
 
     console.log("current",$event.current," active id", this.myCarousel?.activeId, " ooo ", this.activeIndex, "week ->",this.selectedWeek);
-    // let res = ($event.current.split("-").pop());
-    // if (res){
-    //   if (+res > this.craWeek.length)
-    //     this.selectedWeek = 0;
-    //   else{
-    //
-    //     this.selectedWeek = +res;
-    //   }
-    //   console.log("event$", $event.current, " caroussel id ", this.myCarousel?.activeId);
-    //
+    let res = ($event.current.split("-").pop());
+    if (res){
+        this.selectedWeek = +res;
+      }
+      console.log("event$", $event.current, " caroussel id ", this.myCarousel?.activeId);
+
     // }
-    //
-    // console.log("res :" + res, $event.current, this.myCarousel?.slides.toString()); //////////////////////////////////
-    // this.update();
+
+    console.log("res :" + res, $event.current, this.myCarousel?.slides.toString()); //////////////////////////////////
+    this.update();
   }
 
   /**

@@ -7,43 +7,57 @@
    width: 100%;
    font-size: 20px;
  }
-.show-commande{
-  display: inline-block;
-  margin :30px;
-  position: absolute;
-  top:50px;
-  width: 20%;
-}
-.show-commande-responsive{
-  display: block;
-  margin :30px;
-  width: 80%;
-}
-.projet-name{
-  margin: 10px;
-  font-size: 35px;
-  //border:none;
+
+
+
+//
+//.message-add{
+//  display: inline-block;
+//  color:green;
+//
+//  margin-left: 10%;
+//}
+//.picker, responsable, mode{
+//  width: 150px;
+//  padding:10px;
+//  display: block;
+//  align-content: center;
+//  //display: inline-block;
+//}
+.picker, .picker:hover, .picker:valid{
+  position: relative;
+  top:20px;
+  left:10px;
+  width: 70px;
+  border-radius: 15px;
+  padding:5px;
+  border:none;
 }
 
-.message-add{
-  display: inline-block;
-  color:green;
-
-  margin-left: 10%;
-}
-.picker{
-  width: 20%;
-  margin:10px;
-  //display: inline-block;
-}
 .table-visualisation-commande{
   width: 100%;
 }
-.selection-mode-projet{
-  width: 50%;
+
+.position-absolute{
+  position: absolute;
+}
+//.selection-mode-projet, .selection-responsable-projet{
+//  width: 150px;
+//  height:50px;
+//  padding: 10px;
+//}
+//.bouton-valider{
+//  margin: 20px;
+//
+//}
+
+.dialog-projet{
+  text-align: center;
+  margin:auto;
+
 }
 .bouton-valider{
-  margin: 20px;
+  text-align: center;
 }
 ////////////////// INPUT ////////////
 
@@ -61,7 +75,7 @@
 .form input{
   width: 100%;
   height: 100%;
-  color:darkblue;
+  color: #27272d;
   border:none;
   outline:none;
 }
@@ -79,7 +93,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  border-bottom: 3px solid #5fa8d3;
+  border-bottom: 3px solid #393944;
   left:0px;
   bottom:-1px;
   transform: translateX(-100%);

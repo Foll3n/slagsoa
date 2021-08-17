@@ -1,7 +1,9 @@
 <div class="dialog-projet">
 
-</div>
 
+<div class="position-absolute">
+  <input class="picker colorPicker" placeholder="couleur"  [style.background]="projet.color" [(colorPicker)]="projet.color">
+</div>
 
 <p class="projet-name">
   <input class="form-control input-update-projet d-inline-block" type="text" [(ngModel)]="projet.code_projet">
@@ -28,29 +30,9 @@
   </label>
 </div>
 
-<!--///////// marche//////////-->
-<!--<div class="conteneur-switch">-->
 
 
-<!--<div class="toggle">-->
-<!--  <input type="checkbox" id="toggle" (click)="putAllCommandsFalse()" [ngModel]="projet.available=='true'?true:false" (ngModelChange)="projet.available=$event?'true':'false'" />-->
-<!--&lt;!&ndash;  [(ngModel)]="isChecked"&ndash;&gt;-->
-<!--  <label for="toggle"></label>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--///////////////////-->
-<!--  <div class="container-toogle ">-->
-
-
-<!--    <input type="checkbox" id="toggle" class="w-25"/>-->
-<!--    <div class="divtoggle">-->
-<!--      <label for="toggle"></label>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<input class="picker colorPicker " placeholder="couleur"  [style.background]="projet.color" [(colorPicker)]="projet.color">
-<mat-form-field appearance="outline" class="selection-mode-projet">
+<mat-form-field class="mode" appearance="outline" class="selection-mode-projet">
   <mat-label>Mode</mat-label>
   <mat-select [(value)]="projet.modeRealisation">
     <mat-option *ngFor="let mode of ['forfait','regie']" [value]="mode">
@@ -58,7 +40,7 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<mat-form-field appearance="outline" class="selection-responsable-projet">
+<mat-form-field class="responsable" appearance="outline" class="selection-responsable-projet">
   <mat-label>Responsable</mat-label>
   <mat-select [(value)]="projet.responsable">
     <mat-option *ngFor="let resp of this.listeResponsables" [value]="resp.idResponsable">
@@ -66,14 +48,18 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<table  mat-table [dataSource]="dataSource" matSort>
+
+</div>
+
+  <div class="table-enrober-commande">
+<table class="table-visualisation-commande" *ngIf=" displayListNotEmpty()" mat-table [dataSource]="dataSource" matSort>
   <!-- Commande Column -->
   <ng-container matColumnDef="num_com">
     <th mat-header-cell *matHeaderCellDef>Commandes</th>
     <td mat-cell *matCellDef="let row">
 
       <div class="form">
-        <input type="text" id="name" [(ngModel)]="row.num_com" placeholder="row.num_com" formControlName="code_projet" autocomplete="off" required="required">
+        <input type="text" id="name" [(ngModel)]="row.num_com"  autocomplete="off" required="required">
         <label for="name" class="label-name">
           <span class="content-name">Commande</span>
         </label>
@@ -93,6 +79,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 </table>
+  </div>
 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
 
 
@@ -107,4 +94,5 @@
   </svg></button>
   <p class="message-add"  *ngIf="this.isAddProjet">Projet mis à jour</p>
 </div>
+
 

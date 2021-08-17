@@ -92,6 +92,7 @@ export class CraService {
    */
   emitCraSubject(): void {
     // tslint:disable-next-line:triple-equals
+    console.log("_____ emit__________", this.listeCraWeek);
     this.craSubject.next(this.listeCraWeek.slice());
   }
 

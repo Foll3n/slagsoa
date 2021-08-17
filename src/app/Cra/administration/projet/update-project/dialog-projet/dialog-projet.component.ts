@@ -43,10 +43,10 @@ export class DialogProjetComponent implements AfterViewInit{
     public dialogRef: MatDialogRef<DialogProjetComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
-    // const test:CommandeInsert[] = [];
-    // this.dataSource =  new MatTableDataSource(test);
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    const test:CommandeInsert[] = [];
+    this.dataSource =  new MatTableDataSource(test);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.projet = this.copyProjet(data.projet);
 
     this.responsableSubsciption = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables; console.log("je recois le responsable",this.listeResponsables)});
@@ -59,8 +59,8 @@ export class DialogProjetComponent implements AfterViewInit{
     });
 
     this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
+      console.log("je recois la commande");
       this.listeCommandes = commandes;
-      console.log("recup commandes :", this.getCommandeById());
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

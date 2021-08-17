@@ -11,6 +11,7 @@ import {ClientService} from '../../../services/client.service';
 import {ResponsableService} from '../../../services/responsable.service';
 import {Subscription} from 'rxjs';
 import {Message} from '../../models/message';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-slide-recap',
@@ -30,7 +31,7 @@ export class SlideRecapComponent implements OnInit {
   responsableSubscription!:Subscription;
   projetSscription!:Subscription;
   valueAdd: Message = new Message('');
-  constructor(private projetService: ProjetService, private commmandeService: CommandeService, private clientService: ClientService, private responsableService: ResponsableService) {
+  constructor(private router: Router, private projetService: ProjetService, private commmandeService: CommandeService, private clientService: ClientService, private responsableService: ResponsableService) {
     this.projetSscription = this.projetService.projetSubject.subscribe( (projets:Projet[]) => {
       console.log("je recup le bon projet");
       for( const p of projets){
@@ -43,8 +44,10 @@ export class SlideRecapComponent implements OnInit {
     this.projetService.ajout.subscribe(
       (isAdd: boolean) => {
         if(isAdd)
-        shortMessage(this.valueAdd,'Super le projet a bien été ajouté');
-        else shortMessage(this.valueAdd,'Le projet n\'a pas pu être ajouté');
+          this.shortMessageWithRouting(this.valueAdd,'Super le projet a bien été ajouté');
+        else this.shortMessageWithRouting(this.valueAdd,'Le projet n\'a pas pu être ajouté');
+
+
 
       });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
@@ -73,7 +76,13 @@ export class SlideRecapComponent implements OnInit {
     });
   }
 
-
+  shortMessageWithRouting(variable: Message, message: string){
+    variable.contenu = message;
+    setTimeout(() => {
+      variable.contenu = '';
+      this.router.navigate(['/accueil']);
+    }, 3000);
+  }
   ngOnInit( ): void {
   }
   /**

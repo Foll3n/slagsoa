@@ -29,7 +29,7 @@
       <tbody>
 
       <tr *ngFor="let f of factures | recherche: searchTerm | recherchec: searchTerm1 | recherchesc:searchTerm2 | slice: (page-1) * pageSize : page * pageSize; index as i ">
-        <th scope="row">{{ (page -1) * pageSize + i + 1 }}</th>
+<!--        <th scope="row">{{ (page -1) * pageSize + i + 1 }}</th>-->
         <td>{{f.idFacture}}</td>
         <td><small>{{f.dateFacture}}</small></td>
         <td><small>{{f.categorie}}</small></td>
