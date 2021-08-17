@@ -55,7 +55,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class CompteRenduActiviteComponent implements OnInit {
   // @ViewChild(NgbCarousel) myCarousel!: NgbCarousel ;
-  @ViewChild('carousel', {static: true}) myCarousel: NgbCarousel | undefined;
+  @ViewChild('carousel', {static: false}) myCarousel: NgbCarousel | undefined;
   // tslint:disable-next-line:typedef
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.keyDown(event);
@@ -132,12 +132,16 @@ export class CompteRenduActiviteComponent implements OnInit {
   }
 
   keyDown($event: Event){
+
     const event = ($event) as KeyboardEvent;
+    console.log(event.key);
     if ( event.key === 'ArrowLeft' || event.key === 'q') {
-      this.myCarousel?.prev();
+      // tslint:disable-next-line:no-non-null-assertion
+      this.myCarousel!.prev();
     }
     else if ( event.key === 'ArrowRight' || event.key === 'd') {
-      this.myCarousel?.next();
+      // tslint:disable-next-line:no-non-null-assertion
+      this.myCarousel!.next();
     }
 
   }
