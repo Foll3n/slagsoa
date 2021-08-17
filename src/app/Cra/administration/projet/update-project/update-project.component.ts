@@ -27,6 +27,8 @@ import {Subscription} from 'rxjs';
 export class UpdateProjectComponent implements OnInit {
   minWidth = environment.minWidth;
   projetSubscription!: Subscription;
+  indexGraph = 0;
+  selectedProjet!:string;
   public get width() {
     return window.innerWidth;
   }
@@ -45,12 +47,13 @@ export class UpdateProjectComponent implements OnInit {
 
   listeProjets!: Projet[];
   listeCommandes: CommandeInsert[] = [];
-  displayedColumns: string[] = ['id', 'code_projet', 'mode_realisation','pdf'];
+  displayedColumns: string[] = ['id', 'code_projet', 'mode_realisation','pdf', 'graph-com', 'graph-user'];
   dataSource!: MatTableDataSource<Projet>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
+
   }
 
   openDialog(projet: Projet): void {
@@ -63,7 +66,11 @@ export class UpdateProjectComponent implements OnInit {
     });
 
   }
-
+  displayGraph(projet: Projet, index: number){
+    console.log("displayGraph -> ", projet);
+    this.indexGraph = index;
+    this.selectedProjet = projet.code_projet;
+  }
   makePdf(projet:Projet){
     console.log(projet,"projet");
     this.router.navigate(['/generate-pdf'], { queryParams: projet ,  skipLocationChange: true });

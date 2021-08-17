@@ -60,6 +60,7 @@ export class DialogProjetComponent implements AfterViewInit{
 
     this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
       this.listeCommandes = commandes;
+      console.log("recup commandes :", this.getCommandeById());
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

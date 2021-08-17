@@ -5,7 +5,7 @@
   <div class="questionnaire">
     <form class="form-group" [formGroup]="commandes"  #formDirective="ngForm"(submit)="addCommandesList(formDirective)">
       <div class="form">
-        <input type="text" id="name" formControlName="num_com" autocomplete="off" required="required">
+        <input type="text" id="name" formControlName="num_com" autocomplete="nope" required="required">
         <label for="name" class="label-name">
           <span class="content-name">Commande</span>
         </label>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet} from 'ng2-charts';
 import {environment} from '../../../../../../environments/environment';
@@ -6,14 +6,18 @@ import {CraHttpDatabase} from '../../../../../configuration-http/CraHttpDatabase
 import {ProjetHttpDatabase} from '../../../../../configuration-http/ProjetHttpDatabase';
 import {HttpClient} from '@angular/common/http';
 import {Stat} from '../../../../models/projet/Stat';
+import {Projet} from '../../../../models/projet/Projet';
 
 @Component({
   selector: 'app-visualisation-projet',
   templateUrl: './visualisation-projet.component.html',
   styleUrls: ['./visualisation-projet.component.scss']
 })
-export class VisualisationProjetComponent implements OnInit {
-
+export class VisualisationProjetComponent implements OnInit, OnChanges {
+  @Input()
+  index!:number;
+  @Input()
+  projet!: string;
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -35,12 +39,14 @@ export class VisualisationProjetComponent implements OnInit {
   constructor(private httpClient: HttpClient) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
-    this.statsUsers('Lidl');
-    this.statsCommandes('gifi projet');
+    this.statsUsers(this.projet);
+    this.statsCommandes(this.projet);
     this.statsDurees();
   }
 
   ngOnInit() {
+    console.log("init affichage graph");
+
   }
   fillChart(stats: Stat[]){
     console.log("je rempli le chart");
@@ -126,13 +132,18 @@ export class VisualisationProjetComponent implements OnInit {
     });
   }
   // @ts-ignore
-  modify(value) {
-    switch (value){
+  modify() {
+    switch (this.index){
       case 0 :{ this.statsDurees(); break;}
-      case 1 :{ this.statsCommandes('projet1'); break;}
-      case 2 :{ this.statsUsers('projet1'); break;}
+      case 1 :{ this.statsCommandes(this.projet); break;}
+      case 2 :{ this.statsUsers(this.projet); break;}
 
     }
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("on changes affichage graph");
+    this.modify();
   }
 }

@@ -66,14 +66,14 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<table *ngIf=" displayListNotEmpty()" mat-table [dataSource]="dataSource" matSort>
+<table  mat-table [dataSource]="dataSource" matSort>
   <!-- Commande Column -->
   <ng-container matColumnDef="num_com">
     <th mat-header-cell *matHeaderCellDef>Commandes</th>
     <td mat-cell *matCellDef="let row">
 
       <div class="form">
-        <input type="text" id="name" [(ngModel)]="row.num_com" formControlName="code_projet" autocomplete="off" required="required">
+        <input type="text" id="name" [(ngModel)]="row.num_com" placeholder="row.num_com" formControlName="code_projet" autocomplete="off" required="required">
         <label for="name" class="label-name">
           <span class="content-name">Commande</span>
         </label>

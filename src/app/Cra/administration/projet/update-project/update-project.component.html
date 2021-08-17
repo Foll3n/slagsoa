@@ -44,6 +44,26 @@
 
       </ng-container>
 
+      <ng-container matColumnDef="graph-com">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Graphique Commandes</th>
+        <td mat-cell *matCellDef="let row">
+          <a (click)="this.displayGraph(row,1)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pie-chart-fill" viewBox="0 0 16 16">
+            <path d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778l-5.5 5.5zM8.5.015V7.5h7.485A8.001 8.001 0 0 0 8.5.015z"/>
+          </svg>
+          </a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="graph-user">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Graphique utilisateurs</th>
+        <td mat-cell *matCellDef="let row">
+          <a (click)="this.displayGraph(row,2)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pie-chart-fill" viewBox="0 0 16 16">
+            <path d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778l-5.5 5.5zM8.5.015V7.5h7.485A8.001 8.001 0 0 0 8.5.015z"/>
+          </svg>
+          </a>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -59,7 +79,7 @@
     <mat-paginator #paginatorUpdate [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
   </div>
 
-  <app-visualisation-projet ></app-visualisation-projet>
+  <app-visualisation-projet [index]="this.indexGraph" [projet]="this.selectedProjet"></app-visualisation-projet>
 </section>
 <!--<app-update-commande  [projet]="this.currentProjet" (emitter)="reload()"></app-update-commande>-->
 
