@@ -66,13 +66,13 @@ export class PdfConteneurComponent implements OnChanges {
     if (DATA) {
       html2canvas(DATA).then(canvas => {
 
-        let fileWidth = 170;
-        let fileHeight = canvas.height * fileWidth / canvas.width;
+        let fileWidth = 210.2;
+        let fileHeight = 297.3;
 
         const FILEURI = canvas.toDataURL('image/png', 1.0);
         let PDF = new jsPDF('p', 'mm', 'a4');
-        let position = 10;
-        PDF.addImage(FILEURI, 'PNG', 20, position, fileWidth, fileHeight);
+        let position = 0;
+        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
 
         PDF.save('test.pdf');
       });
