@@ -24,7 +24,7 @@
         <p id="first-p">Quel en sera le responsable ? </p><br>
         <p id="second-p">dites nous tout ?</p>
       </div>
-      <app-slide2 (eventBack)="this.myCarousel!.prev()" (eventItem)="setResponsable($event)"></app-slide2>
+      <app-slide2 *ngIf="this.client" [client]="this.client" (eventBack)="this.myCarousel!.prev()" (eventItem)="setResponsable($event)"></app-slide2>
       </div>
     </ng-template>
     <ng-template class="template" ngbSlide>

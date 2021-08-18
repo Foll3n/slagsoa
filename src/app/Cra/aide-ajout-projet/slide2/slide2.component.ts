@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Responsable} from '../../models/responsable/responsable';
 import {ResponsableService} from '../../../services/responsable.service';
+import {Client} from '../../models/client/Client';
 
 
 @Component({
@@ -10,7 +11,8 @@ import {ResponsableService} from '../../../services/responsable.service';
   templateUrl: './slide2.component.html',
   styleUrls: ['./slide2.component.scss']
 })
-export class Slide2Component implements OnInit {
+export class Slide2Component implements OnInit, OnChanges {
+  @Input() client!: Client;
   @Output() eventItem = new EventEmitter<Responsable>();
   @Output() eventBack = new EventEmitter();
   listeResponsables!: Responsable[];
@@ -29,8 +31,8 @@ export class Slide2Component implements OnInit {
       });
     this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) =>
     {
-      console.log("je recupere");
-      this.listeResponsables = responsables;
+      console.log("je recupere" ,this.client.idClient);
+      this.listeResponsables = responsables.filter(resp => resp.idClient == this.client.idClient);
     });
   }
   updateResponsable(responsable: Responsable){
@@ -65,5 +67,9 @@ export class Slide2Component implements OnInit {
     this.selectedResponsable = undefined;
     this.tempResponsable = this.listeResponsables.find(r => this.responsableNom.length > 1 && r.nom.toLowerCase().includes(this.responsableNom.toLowerCase()));
     console.log(this.tempResponsable);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.responsableService.emitResponsablesSubject();
   }
 }

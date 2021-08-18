@@ -22,7 +22,7 @@ export class CompteRenduVueComponent implements OnInit {
   listeCraSubscription!: Subscription;
   listeCommande: CommandeInsert[] = [];
     constructor(public craService: CraService, private projetService: ProjetService) {
-      console.log("---------------------------oooo-----------------------", this.index);
+
     }
 
   /**
@@ -39,6 +39,7 @@ export class CompteRenduVueComponent implements OnInit {
      return this.craWeek.status === '0';
   }
     ngOnInit(){
+      console.log("---------------------------oooo-----------------------", this.index, this.craWeek);
       //this.craWeek.listeCommandesWeek;
       // this.listeCraSubscription = this.craService.craSubject.subscribe(
       //   (craWeek: CraWeek[]) => {this.listeCra = craWeek[this.index].listeCra;

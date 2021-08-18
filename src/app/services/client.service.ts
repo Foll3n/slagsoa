@@ -29,6 +29,12 @@ export class ClientService {
     this.clientSubject.next(this.listeClients.slice());
   }
 
+  getClientById(idClient: string){
+    return this.listeClients.find((c => c.idClient === idClient));
+  }
+  getClientByNomSociete(nomSociete: string){
+    return this.listeClients.find((c => c.nomSociete === nomSociete));
+  }
   getAllClientsFromServer(): void {
     const clientHttp = new ClientHttpService(this.httpClient);
     const response = clientHttp.getAllClients();

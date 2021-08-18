@@ -51,7 +51,7 @@ export class CompteRenduComponent implements OnInit {
    * retourne la durée totale d'un compte rendu
    */
   checkDureeTotale() {
-    return this.cra.duree_totale < (1 - this.cra.statusConge)
+    return this.cra.duree_totale < (1 - this.cra.statusConge);
   }
 
   /**
@@ -65,6 +65,7 @@ export class CompteRenduComponent implements OnInit {
    * Permet de mettre la durée d'une case à 1
    */
   setDureeToOne() {
+    console.log("indeeeeeeeeexxxxxxxxxxx", this.indexWeek);
     const duree = this.craService.getDureeTotaleCra(this.idCra, this.indexWeek);
     this.dureeString = ((1-this.cra.statusConge) - duree).toPrecision(1).toString();
     this.onModifyCase();

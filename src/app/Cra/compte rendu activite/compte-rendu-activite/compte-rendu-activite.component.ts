@@ -68,7 +68,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   //   });
   // }
   craWeek!: CraWeek[] ;
-  selectedWeek = 1;
+  selectedWeek = -1;
   currentSlide!:string;
   // @Input()
   // date!: number;
@@ -106,8 +106,8 @@ export class CompteRenduActiviteComponent implements OnInit {
 
       this.listeCraSubscription = this.craService.craSubject.subscribe(
         (craWeek: CraWeek[]) => {this.craWeek = craWeek;
-
-          this.selectedWeek = this.craService.currentSlide
+          if (this.selectedWeek==-1)
+          this.selectedWeek = this.craService.currentSlide;
           this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
           // this.myCarousel!.select(this.currentSlide);
           // this.activeIndex = this.selectedWeek;

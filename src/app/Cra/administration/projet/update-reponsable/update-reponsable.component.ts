@@ -51,6 +51,12 @@ export class UpdateReponsableComponent implements OnInit {
     this.clientService.emitClientSubject();
     this.responsableService.emitResponsablesSubject();
   }
+  getClientName(responsable: Responsable){
+    const client = this.clientService.getClientById(responsable.idClient);
+    if (client)
+      return client.nomSociete;
+    return '';
+  }
   addResponsable(formDirective: FormGroupDirective){
     this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value,
       this.responsableForm.get('prenom')?.value,
