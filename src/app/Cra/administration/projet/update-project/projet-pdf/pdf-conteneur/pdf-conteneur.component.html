@@ -1,4 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>-->
 <html >
 
 
@@ -6,56 +6,70 @@
   <div class="logo">
     <img class="logo-pdf" src="assets/images/logoSlag.png" alt="logo">
   </div>
-  <div class="d-flex justify-content-start">
-    Client: {{pdf.nomSociete}}
+  <div class="d-flex justify-content-center">
+    <p class="nom-client-top">Client: {{pdf.nomSociete}}</p>
   </div>
-  <div class="d-flex justify-content-start">
-    Commande: {{pdf.codeProjet}}
+  <div class="d-flex justify-content-left">
+    <p>Commande: {{pdf.codeProjet}}</p>
   </div>
 
-  <p>
-    {{pdf.responsableNom}}{{pdf.responsableNom}}
-  </p>
-  <h2>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h2>
-  <table class="table table-responsive-sm">
+  <!--  <p>-->
+  <!--    {{pdf.responsableNom}}{{pdf.responsableNom}}-->
+  <!--  </p>-->
+  <h4>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h4>
+  <table class="table w-12">
     <thead>
     <tr >
-      <th class="footer-pdf-recap" colspan="4">Récapitulatif</th>
+      <th class="bandeau" colspan="4">Semaine du {{getDateElem(this.ligne[0])}} au {{getDateElem(this.ligne[this.ligne.length-1])}}</th>
     </tr>
+
     </thead>
     <tbody>
-    <tr *ngFor="let elem of this.ligne" class="ligne-pdf">
-      <td><div class="table-ligne">{{getDateElem(elem)}}</div></td>
-      <td><div class="table-ligne">{{elem.codeProjet}}</div></td>
-      <td><div class="table-ligne">Imputation Jours Hommes_{{pdf.nomSociete}}</div></td>
-      <td><div class="table-ligne"> {{getDuree(elem)}} </div></td>
+    <tr *ngFor="let elem of this.ligne" class="ligne-pdf" >
+<!--      <div class="ligne-pdf" >-->
+<!--        <td ><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{getDayElem(elem)}}</div></td>-->
+        <td ><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{getDayElem(elem)}} {{getDateElem(elem)}}</div></td>
+        <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{elem.codeProjet}}</div></td>
+        <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">Imputation Jours Hommes_{{pdf.nomSociete}}</div></td>
+        <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne"> {{getDuree(elem)}} </div></td>
+<!--      </div>-->
+
     </tr>
-    <tr class="footer-pdf-recap">
-      <th colspan="1">OTP </th>
-      <th colspan="2">DESCRIPTION </th>
+    <tr class="bandeau">
+      <th colspan="2">OTP </th>
+      <th colspan="1">DESCRIPTION </th>
       <th colspan="1">TEMPS </th>
     </tr>
     <tr>
       <td>{{this.pdf.codeProjet}} </td>
+      <td></td>
+<!--      <td></td>-->
       <td>Imputation Jours Homme_{{pdf.nomSociete}} </td>
+
       <td>{{sommeDuree()}} jours </td>
     </tr>
-    <tr class="footer-pdf-signature">
+    <tr class="bandeau">
       <th  colspan="4">Signatures </th>
     </tr>
-    <tr>
+    <tr class="fin-tableau-signatures">
       <td>Collaborateur </td>
+      <td></td>
+<!--      <td></td>-->
+      <td>Client {{this.pdf.responsableNom}} {{this.pdf.responsablePrenom}}</td>
+      <td></td>
     </tr>
     <tr>
-      <td>{{currentDate}} jours </td>
+      <td>Date: {{currentDate}}  </td>
+      <td></td>
+<!--      <td></td>-->
+      <td>Date: {{currentDate}}  </td>
+      <td></td>
+
     </tr>
 
 
     </tbody>
   </table>
-  <p>
-    {{user.nom}}{{user.prenom}}
-  </p>
 </div>
 
 </html>

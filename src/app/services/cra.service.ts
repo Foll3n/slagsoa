@@ -318,7 +318,7 @@ export class CraService {
    */
   getCraToServer(index: number): void {
     const craHttp = new CraHttpDatabase(this.httpClient);
-    const response = craHttp.getCra(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, `${sessionStorage.getItem('id')}`);
+    const response = craHttp.getCra(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, `${sessionStorage.getItem('id')}`, 'true');
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.liste_cra != null) {
@@ -344,7 +344,7 @@ export class CraService {
     const requestUrl = environment.urlCommande + '/' + this.listeCraWeek[index].firstDateWeekFormat + '/' + this.listeCraWeek[index].lastDateWeekFormat + '/' + id_usr;
     this.httpClient.get<BigCommande>(requestUrl, this.httpOptions).subscribe(
       response => {
-        this.listeCraWeek[index].listeCommandesWeek = response.listeCommande;
+        this.listeCraWeek[index].listeCommandesWeek = this.findAllAvailableCommandes(response.listeCommande); ///////////////////////////////////////// a ckeck
         // this.getCraToServer(index); // patch car je reload tout le serveur
         this.emitCraSubject();
       },
@@ -353,7 +353,16 @@ export class CraService {
       }
     );
   }
-
+  findAllAvailableCommandes(commandes: CommandeInsert[]){
+    let res = [];
+    if(commandes)
+    for(const com of commandes){
+      if(com.available=='true'){
+        res.push(com);
+      }
+    }
+    return res;
+  }
   /**
    * Ajoute + 1 à la date actuelle et renvoie le résultat sous forme de string bien formé
    * @param date

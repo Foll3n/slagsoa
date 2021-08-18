@@ -11,6 +11,8 @@ import {Realisation} from '../../models/realisation/Realisation';
 import {CraWaitingService} from "../../../services/craWaiting.service";
 import {environment} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
+import {CommandeService} from '../../../services/commande.service';
+import {ProjetService} from '../../../services/projet.service';
 
 @Component({
   selector: 'app-compte-rendu-activite',
@@ -84,7 +86,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   public get width() {
     return window.innerWidth;
   }
-  constructor(public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig, private route: ActivatedRoute) {
+  constructor(private projetService : ProjetService, private commandeService: CommandeService, public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig, private route: ActivatedRoute) {
     config.interval = 0;
     config.wrap = true;
     config.keyboard = false;
@@ -93,6 +95,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     config.showNavigationIndicators = true;
 
     this.route.params.subscribe(params => {
+      console.log("je rentre dans les params");
       this.currentSlide = '';
       this.givenDate = params.date;
       if (this.givenDate) {
@@ -100,9 +103,6 @@ export class CompteRenduActiviteComponent implements OnInit {
       } else {
         this.craService.initialisation(new Date());
       }
-
-
-
 
       this.listeCraSubscription = this.craService.craSubject.subscribe(
         (craWeek: CraWeek[]) => {this.craWeek = craWeek;
@@ -159,16 +159,16 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Fonction permettant de vérifier si la réalisation d'un utilisateur est dans la liste des commandes et que la commande est dispo
    * @param num_com
    */
-  checkRelInListeCommande(num_com: string): boolean{
+  checkRelInListeCommande(real: Realisation): CommandeInsert | null{
     if (this.listeCommande){
       for (const com of this.listeCommande){
-        if (com.num_com === num_com){
-          return true;
+        if (com.id === real.id ){
+          return com;
         }
       }
 
     }
-    return false;
+    return null;
   }
 
   /**
@@ -177,17 +177,19 @@ export class CompteRenduActiviteComponent implements OnInit {
   getAvailableCommande(){
     this.listeAddCommande = [];
     for (const real of this.listeRealisations ){
-
-      if (!this.checkRelInListeCommande(real.num_commande) ) // listeCommande est la liste des commandes d'un cra
+      let com = this.checkRelInListeCommande(real);
+      if (!com) // listeCommande est la liste des commandes d'un cra
       {
-
-        const commande = new CommandeInsert(real.num_commande, '0', real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+        let projetId = this.commandeService.getProjetId(real.id);
+        const commande = new CommandeInsert(real.num_commande, projetId , real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
         this.listeAddCommande.push(commande);
 
       }
     }
   }
-
+  getProjetName(id:string){
+    return this.projetService.getNameProjet(id);
+  }
   /**
    * renvoie la liste des commandes d'une semaine de cra
    */
@@ -216,6 +218,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     if (!com.color){
       com.color = '';
     }
+    console.log("ajout d'un projet semaine :", this.selectedWeek);
     const commande = new CommandeInsert(com.num_com, com.id_projet, com.id, 'true', com.color);    // id -> 1 ou id 2 pour le projet pour le moment et 2/5 pour id commande
     this.craService.addCr(new CompteRendu(0, com.id, 0.0, com.color), this.selectedWeek, commande);
 
@@ -316,7 +319,8 @@ export class CompteRenduActiviteComponent implements OnInit {
    */
   canUpdateStatus(){
     for (const cra of this.craWeek[this.selectedWeek].listeCra){
-      if ( cra.duree_totale < (1-cra.statusConge)){
+      console.log(cra.duree_totale);
+      if ( cra.duree_totale < (1-cra.statusConge) || cra.duree_totale > (1-cra.statusConge)){
         return false;
       }
     }
@@ -327,6 +331,7 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Permet de ne pas afficher le bouton si le status est validé
    */
   seeButton(){
+    console.log("selected week", this.selectedWeek,this.craWeek[this.selectedWeek].status);
     return this.craWeek[this.selectedWeek].status === '0';
 
   }

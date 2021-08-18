@@ -22,7 +22,7 @@
         <mat-label>Ajouter commande</mat-label>
         <mat-select class="yy">
           <mat-option *ngFor="let com of this.listeAddCommande" [value]="com.id" (click)="addSousProjet(com)">
-            {{com.num_com}}
+            {{com.num_com}} {{this.getProjetName(com.id_projet)}}
           </mat-option>
         </mat-select>
       </mat-form-field>

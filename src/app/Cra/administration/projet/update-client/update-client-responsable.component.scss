@@ -8,60 +8,15 @@
 .table-client{
   margin: 5%;
 }
-//////////// INPUT /////
-.form{
-  margin-right: 20px;
+
+input{
   width: 150px;
-  position: relative;
-  height: 50px;
-  top:0px;
-  overflow: hidden;
-  margin-top: 20px;
-  display: inline-block;
-}
-
-.form input{
-  width: 100%;
-  height: 100%;
+  margin:10px;
   border:none;
-  outline:none;
 }
-
-.form label{
-  position:absolute;
-  bottom:0px;
-  left:0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  border-bottom: 1px solid black;
+a{
+  cursor: pointer;
 }
-.form label::after{
-  content:"";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border-bottom: 3px solid #5fa8d3;
-  left:0;
-  bottom:-1px;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
+.gestion-client-section{
+  padding-top:50px;
 }
-.content-name{
-  position: absolute;
-  bottom: 5px;
-  left:0;
-  transition:all 0.3s ease;
-}
-.form input:valid + .label-name .content-name, .fom input:focus + .label-name .content-name{
-  transform: translateY(-100%);
-  font-size: 14px;
-  color:#5fa8d3
-}
-.form input:focus + .label-name::after,
-.form input:valid + .label-name::after
-{
-  transform: translateX(0%);
-}
-
-//////////////////

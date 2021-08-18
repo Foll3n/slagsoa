@@ -22,6 +22,7 @@ export class CompteRenduVueComponent implements OnInit {
   listeCraSubscription!: Subscription;
   listeCommande: CommandeInsert[] = [];
     constructor(public craService: CraService, private projetService: ProjetService) {
+      console.log("---------------------------oooo-----------------------", this.index);
     }
 
   /**
@@ -79,4 +80,12 @@ export class CompteRenduVueComponent implements OnInit {
     getProjetName(id:string){
         return this.projetService.getNameProjet(id);
     }
+  LightenDarkenColor(col:string, amt:number) {
+    var num = parseInt(col, 16);
+    var r = (num >> 16) + amt;
+    var b = ((num >> 8) & 0x00FF) + amt;
+    var g = (num & 0x0000FF) + amt;
+    var newColor = g | (b << 8) | (r << 16);
+    return '#'+newColor.toString(16);
+  }
 }

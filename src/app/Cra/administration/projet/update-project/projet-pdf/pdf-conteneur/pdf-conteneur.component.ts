@@ -5,8 +5,6 @@ import jsPDF, {Html2CanvasOptions} from 'jspdf';
 import {Utilisateur} from '../../../../../../Modeles/utilisateur';
 import html2canvas from 'html2canvas';
 import {UtilisateurSimple} from '../../../../../../Modeles/utilisateurSimple';
-import {formatDate} from '@angular/common';
-
 @Component({
   selector: 'app-pdf-conteneur',
   templateUrl: './pdf-conteneur.component.html',
@@ -24,16 +22,19 @@ export class PdfConteneurComponent implements OnChanges {
   generate!: boolean;
   currentDate!:string;
   constructor() {
-      this.currentDate = formatDate(new Date(),'MM-dd-yyyy','fr');
+    this.currentDate = formatDate(new Date(),'dd-MM-yyyy','fr');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log("je change dans pdf", this.user, this.ligne);
     this.makePdf();
-    }
+  }
+  getDayElem(elem: ListPdf){
+    return formatDate(elem.date,'EE','fr');
 
+  }
   getDateElem(elem:ListPdf){
-    return formatDate(elem.date,'EEEE dd / MM / yyyy','fr');
+    return formatDate(elem.date,'dd / MM / yyyy','fr');
   }
   sommeDuree(){
     let res = 0;
@@ -50,7 +51,7 @@ export class PdfConteneurComponent implements OnChanges {
   }
   makePdf(){
     if(this.generate)
-    this.openPDF();
+      this.openPDF();
     // let pdf = new jsPDF('p','pt','a4');
     // pdf.html(this.el.nativeElement,{
     //   callback:(pdf) => {
@@ -81,3 +82,5 @@ export class PdfConteneurComponent implements OnChanges {
   ngOnInit(): void {
   }
 }
+
+import {formatDate} from '@angular/common';

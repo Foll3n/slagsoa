@@ -42,7 +42,7 @@ export class CompteRenduComponent implements OnInit {
    * Fonction appelée lorsque l'on modifie une case de notre emploi du temps à la semaine
    */
   onModifyCase() {
-
+    // console.log(this.indexWeek,'<---------');
     this.craService.editCraDuree(this.idCra, +this.dureeString, this.index, this.indexWeek);
     // this.craService.getCraById(this.idCra, this.indexWeek);
   }

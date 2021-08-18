@@ -1,10 +1,10 @@
 
-<section class="test">
+<section class="gestion-client-section">
 <!--<input type="text" class="form-control" [(ngModel)]="newClient.nomSociete" placeholder="nom Societe">-->
 <!--<input type="text" class="form-control" [(ngModel)]="newClient.adresse">-->
 <!--<input type="text" class="form-control" [(ngModel)]="newClient.siret">-->
 <!--<input type="text" class="form-control" [(ngModel)]="newClient.mail">-->
-<p>Ajout d'un client</p>
+<h4>Ajout d'un client</h4>
 
 <form class="form-group " [formGroup]="clientForm"  #formDirective="ngForm"(submit)="addClient(formDirective)">
     <div class="form">
@@ -43,46 +43,30 @@
     <ng-container matColumnDef="nomSociete">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom societe </th>
       <td mat-cell *matCellDef="let row" class="input-update" >
-        <div class="form">
-          <input type="text" id="{{row.numSociete}}" autocomplete="off" required="required" [(ngModel)]="row.nomSociete">
-          <label for="{{row.numSociete}}" class="label-name">
-            <span class="content-name">Nom Societe</span>
-          </label>
-        </div>
+          <input type="text" id="{{row.numSociete}}" class="form-control" autocomplete="off" required="required" [(ngModel)]="row.nomSociete">
+
       </td>
     </ng-container>
 
     <ng-container matColumnDef="adresse">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse </th>
       <td mat-cell *matCellDef="let row">
-        <div class="form">
-          <input type="text" id="adresse" autocomplete="off" [(ngModel)]="row.adresse" required="required">
-          <label for="adresse" class="label-name">
-            <span class="content-name">Mail</span>
-          </label>
-        </div>
+          <input type="text" id="adresse" autocomplete="off" class="form-control" [(ngModel)]="row.adresse" required="required">
       </td>
     </ng-container>
     <ng-container matColumnDef="mail">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Mail </th>
       <td mat-cell *matCellDef="let row">
-        <div class="form">
-          <input type="text" id="mail" autocomplete="off" [(ngModel)]="row.mail"required="required">
-          <label for="mail" class="label-name">
-            <span class="content-name">Mail</span>
-          </label>
-        </div>
+
+          <input type="text" id="mail" autocomplete="off" class="form-control" [(ngModel)]="row.mail"required="required">
+
       </td>
     </ng-container>
     <ng-container matColumnDef="siret">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Siret </th>
       <td mat-cell *matCellDef="let row">
-        <div class="form">
-          <input type="text" id="siret" autocomplete="off" [(ngModel)]="row.siret"required="required">
-          <label for="siret" class="label-name">
-            <span class="content-name">Mail</span>
-          </label>
-        </div>
+          <input type="text" id="siret" autocomplete="off" class="form-control"[(ngModel)]="row.siret"required="required">
+
       </td>
     </ng-container>
     <ng-container matColumnDef="valider">

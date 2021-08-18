@@ -41,6 +41,14 @@ export class CommandeService {
   emitAddCommandeSubject(bool:boolean): void {
     this.addCommandeSubject.next(bool);
   }
+  getProjetId(idCom:string){
+    for (const com of this.listeCommandes){
+      if (com.id === idCom){
+        return com.id_projet;
+      }
+    }
+    return '';
+  }
   /**
    * ajoute une commande à un projet. On créé la commande grâce aux champs du formulaire
    */

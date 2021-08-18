@@ -47,6 +47,9 @@ export class UserService {
       }
     });
   }
+  refreshRealisationsUser(){
+    this.getCommandeFromServer(`${sessionStorage.getItem('id')}`);
+  }
   getCommandeFromServer(idUser: string): void {
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
     const response = commandeHttp.getAllCommandsUser(idUser);

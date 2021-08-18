@@ -14,6 +14,7 @@ import {resetForm, shortMessage} from '../../../../../environments/environment';
 import {Realisation} from '../../../models/realisation/Realisation';
 import {CommandeService} from '../../../../services/commande.service';
 import {Message} from '../../../models/message';
+import {CraService} from '../../../../services/cra.service';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class AddCommandeComponent implements OnInit {
   commandeProjet!: FormGroup;
   commandeUtilisateur!: FormGroup;
 
-  constructor(private projetService: ProjetService, private httpClient: HttpClient, private userService: UserService, private commandeService: CommandeService) {
+  constructor(private craService: CraService,private projetService: ProjetService, private httpClient: HttpClient, private userService: UserService, private commandeService: CommandeService) {
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
 
     // this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => this.listeCommandes = commandes );
@@ -144,11 +145,14 @@ export class AddCommandeComponent implements OnInit {
           setTimeout(() => {
             this.isAddRealisation = false;
           }, 3000);
+          this.userService.refreshRealisationsUser();
+          // this.craService.ini
         }
         else{
           console.log("Erreur de requete de base de données");
           this.isAddRealisation = false;
         }
+
 
       });
       resetForm(this.commandeUtilisateur);

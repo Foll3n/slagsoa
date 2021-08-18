@@ -26,10 +26,10 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   pdf!:Pdf;
   pdfInfoListe = new Array<Pdf>();
   listepdf= new Array<ListPdf[]>();
-  pdfList!:ListPdf[];
+  pdfList:ListPdf[] = [];
   load = false;
-  listeUtilisateurs!: UtilisateurSimple[];
-  listeAllUsers!: UtilisateurSimple[];
+  listeUtilisateurs: UtilisateurSimple[] = [];
+  listeAllUsers: UtilisateurSimple[] = [];
   generate = false;
 
   projet!: Projet;
@@ -119,7 +119,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     this.pdfList = [];
     console.log("--------------------",this.projet);
     let first = new Date(this.firstDay);
-      while(first < this.lastDay){
+      while(first <= this.lastDay){
         let dateString = formatDate(first,'yyyy-MM-dd','fr');
         let res = new ListPdf(dateString, this.projet.code_projet+'', '0');
           this.listepdf[user].push(res);
@@ -159,7 +159,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
 
   chargerProjet(idUser:string, index:number){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
-
+    console.log("dernier jour du mois*************************************************************** ",this.lastDayString);
     const response = projetHttp.getPdF(this.firstDayString,this.lastDayString,this.projet.code_projet,idUser);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
