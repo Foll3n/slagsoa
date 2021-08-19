@@ -45,7 +45,11 @@ export function shortMessage(variable: Message, message: string){
     variable.contenu = '';
   }, 3000);
 }
+export function checkValidity(property: string, form: FormGroup){
+  if(form.get(property)?.invalid)
+    form.get(property)?.setValue('');
 
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

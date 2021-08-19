@@ -50,7 +50,15 @@ export function shortMessage(variable: Message, message: string){
     variable.contenu = '';
   }, 3000);
 }
+export function checkValidity(property: string, form: FormGroup){
+  if(form.get(property)?.invalid)
+    form.get(property)?.setValue('');
 
+}
+export function validateEmail(email: string) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

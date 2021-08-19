@@ -4,6 +4,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Responsable} from '../../models/responsable/responsable';
 import {ResponsableService} from '../../../services/responsable.service';
 import {Client} from '../../models/client/Client';
+import {checkValidity} from '../../../../environments/environment';
 
 
 @Component({
@@ -47,6 +48,9 @@ export class Slide2Component implements OnInit, OnChanges {
     this.responsableService.emitResponsablesSubject();
     console.log("updateResponsable ");
   }
+  check(property: string){
+    checkValidity(property, this.responsableForm);
+  }
   applyResponsable(){
     // tslint:disable-next-line:no-non-null-assertion
     this.updateResponsable(this.tempResponsable!);
@@ -54,7 +58,7 @@ export class Slide2Component implements OnInit, OnChanges {
   }
   sendResponsable(){
     console.log("je passe meme pas laaa");
-    const responsable = new Responsable(this.selectedResponsable ? this.selectedResponsable.idResponsable : '', this.responsableForm.get('nom')?.value, this.responsableForm.get('prenom')?.value, this.responsableForm.get('mail')?.value,'');
+    const responsable = new Responsable(this.selectedResponsable ? this.selectedResponsable.idResponsable : '', this.responsableForm.get('nom')?.value.trim(), this.responsableForm.get('prenom')?.value.trim(), this.responsableForm.get('mail')?.value.trim(),'');
 
 
 
@@ -71,5 +75,16 @@ export class Slide2Component implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.responsableService.emitResponsablesSubject();
+  }
+  checkRespNotIdentic(){
+    let c =  this.listeResponsables.find(c => (c.nom == this.responsableForm.get('nom')?.value.trim()) && (c.prenom == this.responsableForm.get('prenom')?.value.trim()) &&
+      (c.mail == this.responsableForm.get('mail')?.value.trim()));
+    if (!c){
+      return true;
+    }
+    if (c && this.selectedResponsable != undefined){
+      return true
+    }
+    return false;
   }
 }

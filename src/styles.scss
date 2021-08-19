@@ -33,6 +33,7 @@ body {
   height: 100%;
   border:none;
   outline:none;
+  background: transparent;
 }
 
 .form label{
@@ -66,6 +67,12 @@ body {
   font-size: 14px;
   color:#5fa8d3
 }
+.form input:focus:invalid + .label-name .content-name{
+  transform: translateY(-100%);
+  font-size: 14px;
+  color: #ec98b9
+}
+
 .form input:focus + .label-name::after,
 .form input:valid + .label-name::after
 {

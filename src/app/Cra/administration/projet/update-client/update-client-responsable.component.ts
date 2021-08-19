@@ -7,7 +7,8 @@ import {Projet} from '../../../models/projet/Projet';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {resetForm} from '../../../../../environments/environment';
+import {checkValidity, resetForm, validateEmail} from '../../../../../environments/environment';
+import {Responsable} from '../../../models/responsable/responsable';
 
 @Component({
   selector: 'app-update-client-responsable',
@@ -41,6 +42,13 @@ export class UpdateClientResponsableComponent implements OnInit {
     this.clientService.updateClient(client);
   }
   ngOnInit(): void {
+  }
+  validateMail(client: Client){
+    return validateEmail(client.mail);
+  }
+  check(property: string){
+    checkValidity(property, this.clientForm)
+
   }
 addClient(formDirective: FormGroupDirective){
     this.clientService.addClient(new Client('', this.clientForm.get('nomSociete')?.value,

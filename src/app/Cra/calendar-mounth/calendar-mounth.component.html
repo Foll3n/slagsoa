@@ -4,17 +4,18 @@
     <!--------------------------------------------------------------------------------------------------------------
  Template mois precedent / suivant
 --------------------------------------------------------------------------------------------------------------->
-    <div class="row text-center">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale:dayToStart }}</h3>
+    <div class="d-flex flex-row-reverse">
       <div class="col-md-4">
         <div class="btn-group">
-          <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          <div class="btn btn-outline-dark" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
                (viewDateChange)="closeOpenMonthViewDay()">
             Precedent
           </div>
-          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+          <div class="btn btn-outline-dark" mwlCalendarToday [(viewDate)]="viewDate">
             Actuel
           </div>
-          <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          <div class="btn btn-outline-dark" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
                (viewDateChange)="closeOpenMonthViewDay()">
             Suivant
           </div>
@@ -22,7 +23,7 @@
       </div>
     </div>
     <br />
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale:dayToStart }}</h3>
+
     <!------------------------------------------------------------------------------------------------------------
      Calendrier
     --------------------------------------------------------------------------------------------------------------->

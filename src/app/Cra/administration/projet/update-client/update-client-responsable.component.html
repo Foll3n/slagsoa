@@ -15,8 +15,8 @@
     </div>
 
   <div class="form">
-    <input type="text" id="mail" formControlName="mail" autocomplete="off" required="required">
-    <label for="mail" class="label-name">
+    <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail-client" formControlName="mail" autocomplete="off" required="required">
+    <label for="mail-client" class="label-name">
       <span class="content-name">Mail</span>
     </label>
   </div>
@@ -72,7 +72,7 @@
     <ng-container matColumnDef="valider">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> valider</th>
       <td mat-cell *matCellDef="let row">
-        <a (click)="this.updateClient(row)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+        <a *ngIf="validateMail(row)" (click)="this.updateClient(row)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
           <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
         </svg>
         </a>

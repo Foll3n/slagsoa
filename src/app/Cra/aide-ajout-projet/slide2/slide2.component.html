@@ -19,12 +19,12 @@
         </label>
       </div>
       <div class="form">
-        <input type="text" id="mail" formControlName="mail" required="required" autocomplete=false [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
+        <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail" formControlName="mail" required="required" autocomplete=nope [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
         <label for="mail" class="label-name">
           <span class="content-name">Mail</span>
         </label>
       </div>
-      <div *ngIf="this.responsableForm.valid" class="valider">
+      <div *ngIf="this.responsableForm.valid && checkRespNotIdentic()" class="valider">
         <label class="label-valider">
           <input type="submit" class="bouton-valider" value=""  >
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square" viewBox="0 0 16 16">

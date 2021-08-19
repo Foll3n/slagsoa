@@ -1,62 +1,62 @@
 
-//////////// INPUT /////
-.form{
-  margin-right: 20px;
-  width: 150px;
-  position: relative;
-  height: 50px;
-  top:0px;
-  overflow: hidden;
-  margin-top: 20px;
-  display: inline-block;
-}
-
-.form input{
-  width: 100%;
-  height: 100%;
-  border:none;
-  outline:none;
-  background: transparent;
-}
-
-.form label{
-  position:absolute;
-  bottom:0px;
-  left:0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  border-bottom: 1px solid black;
-}
-.form label::after{
-  content:"";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border-bottom: 2px solid #c9d5ff;
-  left:0;
-  bottom:-1px;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-.content-name{
-  position: absolute;
-  bottom: 5px;
-  left:0;
-  transition:all 0.3s ease;
-}
-.form input:valid + .label-name .content-name, .fom input:focus + .label-name .content-name{
-  transform: translateY(-100%);
-  font-size: 14px;
-  color: #cae2c7
-}
-.form input:focus + .label-name::after,
-.form input:valid + .label-name::after
-{
-  transform: translateX(0%);
-}
-
-//////////////////
+////////////// INPUT /////
+//.form{
+//  margin-right: 20px;
+//  width: 150px;
+//  position: relative;
+//  height: 50px;
+//  top:0px;
+//  overflow: hidden;
+//  margin-top: 20px;
+//  display: inline-block;
+//}
+//
+//.form input{
+//  width: 100%;
+//  height: 100%;
+//  border:none;
+//  outline:none;
+//  background: transparent;
+//}
+//
+//.form label{
+//  position:absolute;
+//  bottom:0px;
+//  left:0;
+//  width: 100%;
+//  height: 100%;
+//  pointer-events: none;
+//  border-bottom: 1px solid black;
+//}
+//.form label::after{
+//  content:"";
+//  position: absolute;
+//  height: 100%;
+//  width: 100%;
+//  border-bottom: 2px solid #c9d5ff;
+//  left:0;
+//  bottom:-1px;
+//  transform: translateX(-100%);
+//  transition: transform 0.3s ease;
+//}
+//.content-name{
+//  position: absolute;
+//  bottom: 5px;
+//  left:0;
+//  transition:all 0.3s ease;
+//}
+//.fom input:focus + .label-name .content-name{
+//  transform: translateY(-100%);
+//  font-size: 14px;
+//  color: #cae2c7
+//}
+//.form input:focus + .label-name::after,
+//.form input:invalid + .label-name::after
+//{
+//  transform: translateX(0%);
+//}
+//
+////////////////////
 .proposition{
   border-radius: 15px;
   background-color: #5b5c68;

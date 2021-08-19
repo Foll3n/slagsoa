@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import {Responsable} from '../../../models/responsable/responsable';
 import {ResponsableService} from '../../../../services/responsable.service';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {resetForm} from '../../../../../environments/environment';
+import {checkValidity, resetForm, validateEmail} from '../../../../../environments/environment';
 import {ClientService} from '../../../../services/client.service';
 import {Client} from '../../../models/client/Client';
 
@@ -57,11 +57,19 @@ export class UpdateReponsableComponent implements OnInit {
       return client.nomSociete;
     return '';
   }
+
+  validateMail(responsable: Responsable){
+    return validateEmail(responsable.mail);
+  }
+  check(property: string){
+    checkValidity(property, this.responsableForm)
+
+  }
   addResponsable(formDirective: FormGroupDirective){
-    this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value,
-      this.responsableForm.get('prenom')?.value,
-      this.responsableForm.get('mail')?.value,
-      this.responsableForm.get('idClient')?.value));
+    this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value.trim(),
+      this.responsableForm.get('prenom')?.value.trim(),
+      this.responsableForm.get('mail')?.value.trim(),
+      this.responsableForm.get('idClient')?.value.trim()));
 
     resetForm(this.responsableForm);
     formDirective.resetForm();

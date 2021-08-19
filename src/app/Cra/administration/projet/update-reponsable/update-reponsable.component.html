@@ -9,19 +9,19 @@
 
   <form class="form-group " [formGroup]="responsableForm"  #formDirective="ngForm"(submit)="addResponsable(formDirective)">
     <div class="form">
-      <input type="text" id="nom" formControlName="nom" autocomplete="off" required="required">
+      <input type="text" id="nom" formControlName="nom" autocomplete="nope" required="required">
       <label for="nom" class="label-name">
         <span class="content-name">Nom</span>
       </label>
     </div>
     <div class="form">
-      <input type="text" id="prenom" formControlName="prenom" autocomplete="off" required="required">
+      <input type="text" id="prenom" formControlName="prenom" autocomplete="nope" required="required">
       <label for="prenom" class="label-name">
         <span class="content-name">Prenom</span>
       </label>
     </div>
     <div class="form">
-      <input type="text" id="mail" formControlName="mail" autocomplete="off" required="required">
+      <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail" formControlName="mail" autocomplete="off" required="required">
       <label for="mail" class="label-name">
         <span class="content-name">Mail</span>
       </label>
@@ -84,7 +84,7 @@
     </ng-container>
     <ng-container matColumnDef="mail">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Mail </th>
-      <td mat-cell *matCellDef="let row">  <input type="text" class="form-control" [(ngModel)]="row.mail">
+      <td mat-cell *matCellDef="let row">  <input title="Respecter le format mail" required="required" #mail="ngModel" id="mail-1" name="mail-1" type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" [(ngModel)]="row.mail">
       </td>
     </ng-container>
     <ng-container matColumnDef="idClient">
@@ -95,7 +95,7 @@
     <ng-container matColumnDef="valider">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> valider</th>
       <td mat-cell *matCellDef="let row">
-        <a (click)="this.updateResponsable(row)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+        <a *ngIf="validateMail(row)" (click)="this.updateResponsable(row)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
           <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
         </svg>
         </a>
