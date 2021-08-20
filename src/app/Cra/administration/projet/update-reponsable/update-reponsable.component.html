@@ -84,7 +84,7 @@
     </ng-container>
     <ng-container matColumnDef="mail">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Mail </th>
-      <td mat-cell *matCellDef="let row">  <input title="Respecter le format mail" required="required" #mail="ngModel" id="mail-1" name="mail-1" type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" [(ngModel)]="row.mail">
+      <td mat-cell *matCellDef="let row">  <input title="Respecter le format mail" required="required" type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" [(ngModel)]="row.mail">
       </td>
     </ng-container>
     <ng-container matColumnDef="idClient">

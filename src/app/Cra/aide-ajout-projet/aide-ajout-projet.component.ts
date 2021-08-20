@@ -6,6 +6,7 @@ import {Responsable} from '../models/responsable/responsable';
 import {Projet} from '../models/projet/Projet';
 import {environment} from '../../../environments/environment';
 import {CommandeInsert} from '../models/commande/CommandeInsert';
+import {Utilisateur} from '../../Modeles/utilisateur';
 
 @Component({
   selector: 'app-aide-ajout-projet',
@@ -28,6 +29,7 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
   responsable!: Responsable;
   projet!: Projet;
   listeCommandes: CommandeInsert[] = [];
+  mapUserCom: Map<string, Utilisateur[]> = new Map();
   minWidth = environment.minWidth;
 
   constructor(config: NgbCarouselConfig) {
@@ -51,7 +53,20 @@ export class AideAjoutProjetComponent implements OnInit, OnChanges{
   }
   setListeCom(commandes: CommandeInsert[]){
     this.listeCommandes = commandes;
-    console.log("je suis dans le pere je recois les commandes :", this.listeCommandes);
+    console.log("je suis dans le pere je recois les commandes :", this.listeCommandes.length);
+    // this.myCarousel?.next();
+
+    if(commandes.length==0){
+      console.log("je ravance");
+      this.myCarousel!.select('ngb-slide-5')
+    }
+    else{
+      this.myCarousel?.next();
+    }
+  }
+  setComUser(map: Map<string, Utilisateur[]>){
+    console.log("map -> ", map);
+    this.mapUserCom = map;
     this.myCarousel?.next();
   }
   setResponsable(event: Responsable){

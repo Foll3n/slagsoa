@@ -74,7 +74,7 @@ export class CommandeHttpDatabase{
   deleteCommandeUser(realisation: RealisationPost){
     const href = environment.urlRealisation;
     const requestUrl = href + '/?id_usr=' + realisation.id_usr + '&id_com=' + realisation.id_com;
-    return this._httpClient.delete(requestUrl, this.httpOptions);
+    return this._httpClient.delete<Result>(requestUrl, this.httpOptions);
   }
   getDistinctCommandsWeek(craWeek:CraWeekInsert, id_usr:string) {
     const requestUrl = environment.urlCommande + '/' + craWeek.dateStart + '/' + craWeek.dateEnd + '/' + id_usr;

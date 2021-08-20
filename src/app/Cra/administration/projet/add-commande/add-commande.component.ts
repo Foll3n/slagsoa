@@ -29,13 +29,13 @@ export class AddCommandeComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders()
   };
-  listeCommandeProjet!: CommandeInsert[];
+  listeCommandeProjet: CommandeInsert[] = [];
   listeProjets: Projet[]= [];
 
   listeUsers!:Utilisateur[];
   listeProjetSubscription!: Subscription;
   listeUsersSubscription!:Subscription;
-
+  selectedProjet!:Projet;
   commandeAdd:Message = new Message('');
 
   isAddCom = false;
@@ -57,9 +57,9 @@ export class AddCommandeComponent implements OnInit {
       projet: new FormControl(),
     });
     this.commandeUtilisateur = new FormGroup({
-      commande: new FormControl(),
+      // commande: new FormControl(),
       projet: new FormControl(),
-      utilisateur: new FormControl()
+      // utilisateur: new FormControl()
     });
   }
 
@@ -129,78 +129,61 @@ export class AddCommandeComponent implements OnInit {
     }
 
   }
+  setComUser(map: Map<string, Utilisateur[]>){
+    console.log("map -> ", map);
 
+  }
 
   /**
    * Ajoute une commande à un utilisateur à l'aide du formulaire
    */
-  addRealisation(formDirective: FormGroupDirective){
-    if(this.commandeUtilisateur){
-      let realisation = new RealisationPost(this.commandeUtilisateur.get('utilisateur')?.value, this.commandeUtilisateur.get('commande')?.value,  `${sessionStorage.getItem('id')}`);
-      const commandeHttp = new CommandeHttpDatabase(this.httpClient);
-      const response = commandeHttp.addCommandeUser(realisation);
-      response.subscribe(reponse => {
-        if(reponse.status == 'OK'){
-          this.isAddRealisation = true;
-          setTimeout(() => {
-            this.isAddRealisation = false;
-          }, 3000);
-          this.userService.refreshRealisationsUser();
-          // this.craService.ini
-        }
-        else{
-          console.log("Erreur de requete de base de données");
-          this.isAddRealisation = false;
-        }
-
-
-      });
-      resetForm(this.commandeUtilisateur);
-      formDirective.resetForm();
-      // this.commandeUtilisateur.reset();
-    }
-}
+//   addRealisation(formDirective: FormGroupDirective){
+//     if(this.commandeUtilisateur){
+//       let realisation = new RealisationPost(this.commandeUtilisateur.get('utilisateur')?.value, this.commandeUtilisateur.get('commande')?.value,  `${sessionStorage.getItem('id')}`);
+//       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
+//       const response = commandeHttp.addCommandeUser(realisation);
+//       response.subscribe(reponse => {
+//         if(reponse.status == 'OK'){
+//           this.isAddRealisation = true;
+//           setTimeout(() => {
+//             this.isAddRealisation = false;
+//           }, 3000);
+//           this.userService.refreshRealisationsUser();
+//           // this.craService.ini
+//         }
+//         else{
+//           console.log("Erreur de requete de base de données");
+//           this.isAddRealisation = false;
+//         }
+//
+//
+//       });
+//       resetForm(this.commandeUtilisateur);
+//       formDirective.resetForm();
+//       // this.commandeUtilisateur.reset();
+//     }
+// }
 
   /**
    * Récupère la liste des commandes d'un projet
    * @param projet
    */
   getCommandeProjetUser(projet: Projet){
-    if(this.commandeUtilisateur.get('utilisateur')?.value){
-      let realisations: Realisation[] = [];
+    this.selectedProjet = projet;
       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
-      const response = commandeHttp.getAllCommandsUser(this.commandeUtilisateur.get('utilisateur')?.value);
-      response.subscribe(reponse => {
-        if (reponse.status == 'OK'){
-          if (reponse.realisations)
-          realisations = reponse.realisations;
-          else realisations = [];
           const rep = commandeHttp.getAllCommandsProjet(projet.id);
           rep.subscribe(reponse => {
             if (reponse.status =='OK'){
               this.listeCommandeProjet = [];
               if(reponse.listeCommande)
-              for (const com of reponse.listeCommande){
-                if (!realisations.find(elem => elem.id === com.id)){
-                  this.listeCommandeProjet.push(com);
-                }
+                this.listeCommandeProjet = reponse.listeCommande;
               }
-            }
             else{
               console.log("Erreur: getAllCommandesProjet");
             }
 
           });
         }
-        else{
-          console.log("Erreur : getAllCommandsUser");
-        }
-
-      });
-    }
-
-
-  }
 
   /**
    * Récupère la liste de tous les projets et la met dans listeProjets (pas utilisé car on est abonné au projetService qui contient toujours la liste des projets à jour

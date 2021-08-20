@@ -29,10 +29,14 @@ export class Slide4Component implements OnInit {
    * Ajoute une commande a un projet
    */
   addCommandesList(formDirective: FormGroupDirective){
-    const commande = new CommandeInsert(this.commandes.get('num_com')?.value, '','', 'true',''); //mis en brut
-    this.listeCommandes.push(commande);
-    formDirective.resetForm();
-    resetForm(this.commandes);
+    let isPresent = this.listeCommandes.find(c => c.num_com == this.commandes.get('num_com')?.value);
+    if (!isPresent){
+      const commande = new CommandeInsert(this.commandes.get('num_com')?.value, '','', 'true',''); //mis en brut
+      this.listeCommandes.push(commande);
+      formDirective.resetForm();
+      resetForm(this.commandes);
+    }
+
   }
   retirerCom(commande:CommandeInsert){
     const c = this.listeCommandes.find(

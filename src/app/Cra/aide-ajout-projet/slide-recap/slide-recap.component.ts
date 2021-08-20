@@ -12,6 +12,11 @@ import {ResponsableService} from '../../../services/responsable.service';
 import {Subscription} from 'rxjs';
 import {Message} from '../../models/message';
 import {Router} from '@angular/router';
+import {Utilisateur} from '../../../Modeles/utilisateur';
+import {RealisationPost} from '../../models/realisation/RealisationPost';
+import {CommandeHttpDatabase} from '../../../configuration-http/CommandeHttpDatabase';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-slide-recap',
@@ -27,12 +32,21 @@ export class SlideRecapComponent implements OnInit {
   reponsable!: Responsable;
   @Input()
   listeCommandes!: CommandeInsert[];
+  @Input()
+  mapUserCom!: Map<string, Utilisateur[]>;
   @Output() eventBack = new EventEmitter();
   clientSubscription!:Subscription;
+  httpOptions = {
+    headers: new HttpHeaders()
+  };
   responsableSubscription!:Subscription;
   projetSscription!:Subscription;
+  commandeSubscription!:Subscription;
   valueAdd: Message = new Message('');
-  constructor(private router: Router, private projetService: ProjetService, private commmandeService: CommandeService, private clientService: ClientService, private responsableService: ResponsableService) {
+  constructor(private userService: UserService, private httpClient: HttpClient, private router: Router, private projetService: ProjetService, private commmandeService: CommandeService, private clientService: ClientService, private responsableService: ResponsableService) {
+    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
+
+
     this.projetSscription = this.projetService.projetSubject.subscribe( (projets:Projet[]) => {
       console.log("je recup le bon projet");
       for( const p of projets){
@@ -40,6 +54,7 @@ export class SlideRecapComponent implements OnInit {
           this.projet.id = p.id;
         }
       }
+
       this.addCommandes();
     });
     this.projetService.ajout.subscribe(
@@ -47,17 +62,14 @@ export class SlideRecapComponent implements OnInit {
         if(isAdd)
           this.shortMessageWithRouting(this.valueAdd,'Super le projet a bien été ajouté');
         else this.shortMessageWithRouting(this.valueAdd,'Le projet n\'a pas pu être ajouté');
-
-
-
       });
+
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
     {
       // this.addResponsable();
       console.log("je recupere au bon endroit les clients", clients);
       for( const c of clients){
         if (c.nomSociete == this.client.nomSociete){
-
           this.client.idClient = c.idClient;
         }
       }
@@ -65,6 +77,18 @@ export class SlideRecapComponent implements OnInit {
       this.client = c ? c : this.client;
       this.addResponsable();
 
+    });
+    this.commandeSubscription = this.commmandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) =>
+    {
+      console.log("///////////////////////////////////////////////////////// realisations ///////////////////////", commandes,"-----", this.mapUserCom);
+      for( const c of commandes){
+        let com = this.mapUserCom.get(c.num_com);
+        if (c.id_projet == this.projet.id && com){
+          for( let u of com){
+            this.addRealisation(u.id, c.id);
+          }
+        }
+      }
     });
     this.responsableSubscription = this.responsableService.responsablesSubject.subscribe( (responsables:Responsable[]) => {
       console.log("je recup le bon responsable");
@@ -76,6 +100,23 @@ export class SlideRecapComponent implements OnInit {
       this.addProjet();
     });
   }
+  /**
+   * Ajoute une commande à un utilisateur à l'aide du formulaire
+   */
+  addRealisation(idUser: string, idCom: string){
+      let realisation = new RealisationPost(idUser, idCom,  `${sessionStorage.getItem('id')}`);
+      const commandeHttp = new CommandeHttpDatabase(this.httpClient);
+      const response = commandeHttp.addCommandeUser(realisation);
+      response.subscribe(reponse => {
+        if(reponse.status == 'OK'){
+          this.userService.refreshRealisationsUser();
+        }
+        else{
+          console.log("Erreur de requete de base de données");
+        }
+      });
+      // this.commandeUtilisateur.reset();
+    }
 
   shortMessageWithRouting(variable: Message, message: string){
     variable.contenu = message;
@@ -100,11 +141,13 @@ export class SlideRecapComponent implements OnInit {
    */
   addCommandes(){
     console.log("addCommandes-->", this.listeCommandes);
-
+    let index = 1;
     for (let com of this.listeCommandes){
       let res = new CommandeInsert(com.num_com,this.projet.id,'','true');
-      this.commmandeService.addCommande(res);
+      this.commmandeService.addCommande(res, index==this.listeCommandes.length? true: false);
+      index ++;
     }
+
   }
 
   addClient(){

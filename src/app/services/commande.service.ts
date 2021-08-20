@@ -52,13 +52,14 @@ export class CommandeService {
   /**
    * ajoute une commande à un projet. On créé la commande grâce aux champs du formulaire
    */
-  addCommande(commande: CommandeInsert) {
+  addCommande(commande: CommandeInsert, index = false) {
         const commandeHttp = new CommandeHttpDatabase(this.httpClient);
         const response = commandeHttp.addCommande(commande);
         response.subscribe(reponse => {
           if (reponse.status === 'OK') {
             console.log("commande bien ajoutée");
-            this.getAllCommandes();
+            if(index)
+              this.getAllCommandes();
           } else {
             console.log("commande non ajoutée");
           }

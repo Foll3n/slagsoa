@@ -30,6 +30,9 @@ export class UserService {
   emitUsersSubject(): void {
     this.usersSubject.next(this.listeUsers.slice());
   }
+  findUserById(id: string){
+    return this.listeUsers.find(user => user.id == id);
+  }
   emitRealisationSubject(): void {
     this.realisationsSubject.next(this.listeRealisations.slice());
   }

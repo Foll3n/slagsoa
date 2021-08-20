@@ -6,7 +6,14 @@
     Son gérant est {{reponsable.nom}} {{reponsable.prenom}}.
 
     Voici la liste des commandes associées: <br>
-    <div *ngFor="let com of this.listeCommandes"> - {{com.num_com}} <br></div>
+<!--    <div *ngFor="let com of this.listeCommandes"> - {{com.num_com}} <br></div>-->
+
+    <div *ngFor="let com of this.mapUserCom.keys()">
+      - {{com}} réalisée par
+      <div class="d-block" *ngFor="let user of this.mapUserCom.get(com)">
+        {{user.prenom}}
+      </div><br>
+    </div>
   </div>
 
   <button (click)="addAll()" class="valider-all">
