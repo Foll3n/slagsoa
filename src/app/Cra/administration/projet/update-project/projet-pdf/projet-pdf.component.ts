@@ -31,7 +31,6 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   listeUtilisateurs: UtilisateurSimple[] = [];
   listeAllUsers: UtilisateurSimple[] = [];
   generate = false;
-
   projet!: Projet;
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private utilisateurService: UserService) {
     this.route.queryParams.subscribe(params => {
@@ -41,7 +40,8 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     });
   }
   initUsersProjet(){
-    this.generate = true;
+    // this.generate = true;
+    this.listeUtilisateurs = [];
     this.initAllPdf();
   }
   loadUserPdf(usr:UtilisateurSimple){
@@ -59,7 +59,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
       if(reponse.status == 'OK'){
         if(reponse.users)
           this.listeUtilisateurs = reponse.users;
-          this.listeAllUsers = reponse.users;
+        this.listeAllUsers = reponse.users;
         for (let user in this.listeUtilisateurs){
           this.initCurrentMonth(+user);
         }
@@ -84,7 +84,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     let index = 0;
     for (let usr of this.listeAllUsers){
       if(usr.id == user.id){
-        console.log("je retroune l'index de ",user.nom,"-------",this.pdfInfoListe[index],"  index : ",index,' pdf info liste ', this.pdfInfoListe);
+        // console.log("je retroune l'index de ",user.nom,"-------",this.pdfInfoListe[index],"  index : ",index,' pdf info liste ', this.pdfInfoListe);
         return index;
       }
       index ++;
@@ -147,7 +147,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   }
 
   isInpdfList(liste: ListPdf[], pdf:ListPdf){
-    console.log(liste,"uuuuuuuuuuuuukkkkkkkkkkkkkkkuuuuuuuuuuuu",pdf);
+    // console.log(liste,"uuuuuuuuuuuuukkkkkkkkkkkkkkkuuuuuuuuuuuu",pdf);
     for (let elem of liste){
       if (elem.date == pdf.date) {
         console.log("__" , elem,pdf);
@@ -170,6 +170,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
           console.log("this.pdf list", this.pdfInfoListe);
           console.log("this.listepdf ", this.listepdf);
         }
+
         // this.pdf = reponse.result;
         // this.getDaysInMonth();
 

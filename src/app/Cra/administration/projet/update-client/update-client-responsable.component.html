@@ -27,7 +27,7 @@
     </label>
   </div>
   <div class="form">
-    <input type="text" id="siret" formControlName="siret" autocomplete="off" required="required">
+    <input type="text" (blur)="check('siret')" pattern="^[0-9]{14}$" id="siret" formControlName="siret" autocomplete="off" required="required">
     <label for="siret" class="label-name">
       <span class="content-name">Numero siret</span>
     </label>

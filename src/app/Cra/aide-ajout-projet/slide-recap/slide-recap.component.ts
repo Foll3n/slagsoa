@@ -122,7 +122,8 @@ export class SlideRecapComponent implements OnInit {
     variable.contenu = message;
     setTimeout(() => {
       variable.contenu = '';
-      this.router.navigate(['/accueil']);
+      // this.router.navigate(['/accueil']);
+      location.reload();
     }, 3000);
   }
   ngOnInit( ): void {

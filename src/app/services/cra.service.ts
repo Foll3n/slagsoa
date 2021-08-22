@@ -318,7 +318,7 @@ export class CraService {
    */
   getCraToServer(index: number): void {
     const craHttp = new CraHttpDatabase(this.httpClient);
-    const response = craHttp.getCra(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, `${sessionStorage.getItem('id')}`, 'true');
+    const response = craHttp.getCra(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, `${sessionStorage.getItem('id')}`);
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.liste_cra != null) {

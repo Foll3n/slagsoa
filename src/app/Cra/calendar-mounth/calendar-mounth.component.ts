@@ -63,7 +63,7 @@ export class CalendarMounthComponent implements OnInit {
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
 
-
+  listeJoursFeries: Date[] = [new Date('08-23-2021')];
   view: CalendarView = CalendarView.Month;
   listeCra: InsertCra[] = [];
   CalendarView = CalendarView;
@@ -92,17 +92,14 @@ export class CalendarMounthComponent implements OnInit {
   }
 
 
-
+  isFerie(date: Date){
+    return this.listeJoursFeries.find(d => isSameDay(d, date));
+  }
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
     console.log('ok');
     renderEvent.body.forEach((day) => {
-
       const dayOfMonth = day.date.getDate();
-
       for (const c of this.listeCra){
-
-
-
         if (new Date(c.date).getDate() == dayOfMonth && isSameMonth(new Date(c.date), this.viewDate) && (isSameDay(day.date, new Date(c.date)))){
           if (c.status! == '1'){
             day.backgroundColor = '#d4e4fc'; }
@@ -116,8 +113,8 @@ export class CalendarMounthComponent implements OnInit {
             day.backgroundColor = 'yellow';
           }
         }
-        else{
-          day.backgroundColor == 'red';
+        if (this.isFerie(day.date)){
+          day.backgroundColor = '#ffffff';
         }
       }
 
@@ -128,10 +125,8 @@ export class CalendarMounthComponent implements OnInit {
   }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
 
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true)
-      ) {
+    if (isSameMonth(date, this.viewDate) && !this.isFerie(date)) {
+      if (isSameDay(this.viewDate, date) && this.activeDayIsOpen  ){
         console.log('test clic jour');
         this.activeDayIsOpen = false;
       } else {
@@ -157,7 +152,7 @@ export class CalendarMounthComponent implements OnInit {
 
   addEvent(titre: string, start: string , color: any, duree: string): void {
     console.log('event');
-    let display =  '<div class="d-flex justify-content-between"> <p> Titre : '+titre+'</p><p> Duree : '+duree+'</p><div>';
+    let display =  '<div class="d-flex justify-content-between"> <p>'+titre+'</p><p> Duree : '+duree+'</p><div>';
 
       let t = `<div class="duree-calendar">`+"Durée: "+duree+`</div>`;
     this.events = [

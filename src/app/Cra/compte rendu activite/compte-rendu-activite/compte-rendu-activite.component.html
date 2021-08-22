@@ -17,13 +17,23 @@
         <p class="wait-notification" *ngIf="seeMessage()==1 && !seeButton()"> En attente de validation </p>
         <p class="valid-notification" *ngIf="seeMessage()==2 && !seeButton()"> Validé par l'administration </p>
       </div>
+<!--      <select *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">-->
+<!--        <optgroup *ngFor="let projetName of this.listeAddCommande.keys()" label={{projetName}}>-->
+<!--          <option  *ngFor="let com of listeAddCommande.get(projetName)" > <p (click)="this.addSousProjet(com)" >{{com.color}}</p></option>-->
+<!--        </optgroup>-->
+<!--      </select>-->
 
-      <mat-form-field appearance="fill" *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">
+
+<!--      , 'add-commande-responsive': width < minWidth-->
+      <mat-form-field appearance="fill" *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth }">
         <mat-label>Ajouter commande</mat-label>
-        <mat-select class="yy">
-          <mat-option *ngFor="let com of this.listeAddCommande" [value]="com.id" (click)="addSousProjet(com)">
-            {{com.num_com}} {{this.getProjetName(com.id_projet)}}
-          </mat-option>
+        <mat-select *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">
+          <mat-optgroup style="background-color: {{this.hexToRGB(getColor(projetName), '0.2')}}; display: block" *ngFor="let projetName of this.listeAddCommande.keys()" label={{projetName}}>
+            <mat-option *ngFor="let com of listeAddCommande.get(projetName)" [value]="com.id" (click)="addSousProjet(com)">
+              {{com.num_com}}
+            </mat-option>
+          </mat-optgroup>
+
         </mat-select>
       </mat-form-field>
     </div>

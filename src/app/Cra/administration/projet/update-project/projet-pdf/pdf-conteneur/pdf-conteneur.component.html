@@ -2,21 +2,25 @@
 <html >
 
 
-<div #content class="container" id="display">
+<div #content class="container" id="display{{this.user.id}}">
   <div class="logo">
     <img class="logo-pdf" src="assets/images/logoSlag.png" alt="logo">
   </div>
+
   <div class="d-flex justify-content-center">
     <p class="nom-client-top">Client: {{pdf.nomSociete}}</p>
   </div>
-  <div class="d-flex justify-content-left">
+
+  <div class="d-flex justify-content-end">
     <p>Commande: {{pdf.codeProjet}}</p>
   </div>
 
   <!--  <p>-->
   <!--    {{pdf.responsableNom}}{{pdf.responsableNom}}-->
   <!--  </p>-->
+  <div class="d-flex justify-content-end">
   <h4>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h4>
+  </div>
   <table class="table w-12">
     <thead>
     <tr >

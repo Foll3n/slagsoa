@@ -70,14 +70,35 @@ export class AddUserComComponent implements OnInit, OnChanges {
     });
   }
 
+  // clearAllValidators(){
+  //   this.utilisateurs.reset();
+  //   this.
+  // }
+  clearUser(formDirective: FormGroupDirective){
+    this.utilisateurs.get('idUser')?.reset();
+    // formDirective.form.get('idUser')?.reset();
+    this.utilisateurs.get('idUser')?.setValue('');
+    this.utilisateurs.get('idUser')?.setErrors(null);
 
+
+    // this.utilisateurs.get('commande')?.reset();
+
+    // resetForm(this.utilisateurs);
+    // if (com){
+    //   this.utilisateurs.get('idUser')?.setErrors(null);
+    //   formDirective.resetForm();
+    // }
+    // formDirective.resetForm();
+    // this.utilisateurs.setControl('commande', com!);
+
+  }
   ngOnInit(): void {
 
   }
   /**
    * Ajoute une commande a un projet
    */
-  addUsersList(){
+  addUsersList(formDirective: FormGroupDirective){
     const user = this.userService.findUserById(this.utilisateurs.get('idUser')?.value); //mis en brut
     if (user){
 
@@ -95,6 +116,7 @@ export class AddUserComComponent implements OnInit, OnChanges {
       console.log("user add ->> :",this.listeUsersAdd);
     }
     }
+    this.clearUser(formDirective);
   }
   /**
    * Ajoute une commande à un utilisateur à l'aide du formulaire

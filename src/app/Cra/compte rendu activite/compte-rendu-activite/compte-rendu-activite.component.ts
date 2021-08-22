@@ -9,7 +9,7 @@ import {CommandeInsert} from '../../models/commande/CommandeInsert';
 import {UserService} from '../../../services/user.service';
 import {Realisation} from '../../models/realisation/Realisation';
 import {CraWaitingService} from "../../../services/craWaiting.service";
-import {environment} from '../../../../environments/environment';
+import {environment, hexToRGB} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {CommandeService} from '../../../services/commande.service';
 import {ProjetService} from '../../../services/projet.service';
@@ -79,7 +79,8 @@ export class CompteRenduActiviteComponent implements OnInit {
   listeCommande: CommandeInsert[] = [];
   listeRealisations: Realisation[] = [];
   realisationSubscription!: Subscription;
-  listeAddCommande: CommandeInsert[] = [];
+  commandeSubscription!: Subscription;
+  listeAddCommande: Map<string, CommandeInsert[]> = new Map();
   minWidth = environment.minWidth;
   givenDate!: Date;
 
@@ -93,7 +94,10 @@ export class CompteRenduActiviteComponent implements OnInit {
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
     config.showNavigationIndicators = true;
-
+    this.realisationSubscription = this.userService.realisationsSubject.subscribe(
+      (realisations: Realisation[]) => {this.listeRealisations = realisations;
+        this.update();
+      });
     this.route.params.subscribe(params => {
       console.log("je rentre dans les params");
       this.currentSlide = '';
@@ -103,7 +107,6 @@ export class CompteRenduActiviteComponent implements OnInit {
       } else {
         this.craService.initialisation(new Date());
       }
-
       this.listeCraSubscription = this.craService.craSubject.subscribe(
         (craWeek: CraWeek[]) => {this.craWeek = craWeek;
           if (this.selectedWeek==-1)
@@ -112,25 +115,26 @@ export class CompteRenduActiviteComponent implements OnInit {
           // this.myCarousel!.select(this.currentSlide);
           // this.activeIndex = this.selectedWeek;
           // this.update();
-          this.userService.emitRealisationSubject();
-        });
-      this.realisationSubscription = this.userService.realisationsSubject.subscribe(
-
-
-        (realisations: Realisation[]) => {this.listeRealisations = realisations;
-          this.update();
+          // this.userService.emitRealisationSubject();
         });
 
+
+      console.log("coucou!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       this.craService.emitCraSubject();
-
     });
     // craService.initialisation(new Date());
   }
   ngOnInit(){
     // if(this.givenDate)this.craService.initialisation(this.givenDate);
-
+    this.userService.refreshRealisationsUser();
   }
+  hexToRGB(hex: string, alpha: string) {
 
+    return hexToRGB(hex, alpha);
+  }
+  getColor(projetName: string){
+    return this.projetService.getColor(projetName);
+  }
   keyDown($event: Event){
 
     const event = ($event) as KeyboardEvent;
@@ -175,15 +179,21 @@ export class CompteRenduActiviteComponent implements OnInit {
    * Permet de renvoyer la liste des commandes possible à ajouter pour un utilisateur dans sa semaine ( c'est à dire qu'il n'est pas déja en train de la réaliser )
    */
   getAvailableCommande(){
-    this.listeAddCommande = [];
+    this.listeAddCommande = new Map();
     for (const real of this.listeRealisations ){
-      let com = this.checkRelInListeCommande(real);
+      const com = this.checkRelInListeCommande(real);
       if (!com) // listeCommande est la liste des commandes d'un cra
       {
-        let projetId = this.commandeService.getProjetId(real.id);
+        const projetId = this.commandeService.getProjetId(real.id);
+        const projetName = this.getProjetName(projetId);
         const commande = new CommandeInsert(real.num_commande, projetId , real.id, 'true', real.color); //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-        this.listeAddCommande.push(commande);
-
+        let check = this.listeAddCommande.get(projetName);
+        if (check) {
+          check.push(commande);
+        }
+        else{
+          this.listeAddCommande.set(projetName, [commande]);
+        }
       }
     }
   }
@@ -212,6 +222,7 @@ export class CompteRenduActiviteComponent implements OnInit {
    * @param com
    */
   addSousProjet(com: CommandeInsert): void { ///////////////////////////////////////////////
+    console.log("ajout projet ", com);
     // @ts-ignore
     // this.craService.getCraToServer();
     // this.craService.addCraServer();
@@ -320,7 +331,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   canUpdateStatus(){
     for (const cra of this.craWeek[this.selectedWeek].listeCra){
       console.log(cra.duree_totale);
-      if ( cra.duree_totale < (1-cra.statusConge) || cra.duree_totale > (1-cra.statusConge)){
+      if ( cra.duree_totale < (1 - cra.statusConge) || cra.duree_totale > (1-cra.statusConge)){
         return false;
       }
     }

@@ -40,7 +40,15 @@ export class ProjetService {
     this.ajout.next(value);
   }
 
+ getColor(projetName: string){
+    for (const projet of this.listeProjet){
+      if (projet.code_projet == projetName){
 
+        return projet.color;
+      }
+    }
+    return '';
+ }
   addProjet(projet: Projet) {
     console.log(projet);
     const projetHttp = new ProjetHttpDatabase(this.httpClient);

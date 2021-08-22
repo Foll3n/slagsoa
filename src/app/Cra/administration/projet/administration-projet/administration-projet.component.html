@@ -1,6 +1,6 @@
 <app-nav>
   <section class="section-administration-projet">
-    <p id="titre-administration">Page d'administration</p>
+    <p id="titre-administration">Pannel administrateur concernant la gestion des projets</p>
 
 
     <!------------------------------------------------------------------------------------------>
@@ -25,8 +25,12 @@
 
         <mat-tab label="Gestion Client / responsable">
           <!--        <app-visualisation-projet-com></app-visualisation-projet-com>-->
+          <div class="update-client">
           <app-update-client-responsable></app-update-client-responsable>
+          </div>
+          <div class="update-responsable">
           <app-update-reponsable></app-update-reponsable>
+          </div>
         </mat-tab>
 
       </mat-tab-group>

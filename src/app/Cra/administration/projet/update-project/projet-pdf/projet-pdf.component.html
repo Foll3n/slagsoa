@@ -1,7 +1,7 @@
 <app-nav>
 
 
-<a class="btn-light" href="administration-projet">back</a>
+<a class="btn-light" href="administration-projet"> Retour arrière </a>
 <!--<button class="mat-button" (click)="">-->
 <!--</button>-->
 <mat-form-field appearance="outline">
@@ -12,11 +12,11 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<button class="btn btn-light" *ngIf="listeUtilisateurs.length>0" (click)="this.generateTrue()">Générer le pdf</button>
-<button class="btn btn-light" (click)="this.initUsersProjet()">Generer un pdf pour tous les utilsiateurs</button>
+<button class="btn btn-light" (click)="this.initUsersProjet()">Charger tous les utilisateurs</button>
+  <button class="btn btn-light" *ngIf="listeUtilisateurs.length>0" (click)="this.generateTrue()">Générer le pdf</button>
 
-<div>
-  <div *ngFor="let u of this.listeUtilisateurs; let i = index">
+<div >
+  <div  *ngFor="let u of this.listeUtilisateurs; let i = index">
     <app-pdf-conteneur *ngIf="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [ligne]="this.listepdf[indexOflisteUtilisateurs(u)]" [pdf]="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [user]="u" [generate]="this.generate" ></app-pdf-conteneur>
   </div>
 </div>

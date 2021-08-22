@@ -47,7 +47,7 @@ export class UpdateClientResponsableComponent implements OnInit {
     return validateEmail(client.mail);
   }
   check(property: string){
-    checkValidity(property, this.clientForm)
+    checkValidity(property, this.clientForm);
 
   }
 addClient(formDirective: FormGroupDirective){

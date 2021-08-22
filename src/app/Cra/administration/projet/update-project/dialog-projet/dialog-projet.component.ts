@@ -11,6 +11,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Responsable} from '../../../../models/responsable/responsable';
 import {ResponsableService} from '../../../../../services/responsable.service';
+import {UserService} from '../../../../../services/user.service';
 
 
 export interface DialogData {
@@ -38,6 +39,7 @@ export class DialogProjetComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
+    private userService: UserService,
     public commandeService: CommandeService, private projetService: ProjetService,
     private responsableService: ResponsableService,
     public dialogRef: MatDialogRef<DialogProjetComponent>,
@@ -94,6 +96,7 @@ export class DialogProjetComponent implements AfterViewInit{
   }
   updateProjet(commandes: CommandeInsert[]){
     this.commandeService.updateCommandes(commandes);
+    this.userService.refreshRealisationsUser();
     this.projetService.updateProjet(this.projet);
 
     console.log(commandes);

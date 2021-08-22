@@ -58,7 +58,7 @@ export class CommandeHttpDatabase{
     return this._httpClient.get<BigCommande>(requestUrl, this.httpOptions);
   }
   addCommande(commande: CommandeInsert){
-    const send = new InserCommande( `${sessionStorage.getItem('id')}`,commande)
+    const send = new InserCommande( `${sessionStorage.getItem('id')}`, commande);
     const json =  JSON.stringify(send);
     console.log("commande : ",commande);
     const href = environment.urlCommande;

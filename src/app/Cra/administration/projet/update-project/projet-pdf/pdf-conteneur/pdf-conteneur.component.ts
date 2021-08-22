@@ -61,7 +61,7 @@ export class PdfConteneurComponent implements OnChanges {
 
   }
   public openPDF():void {
-    let DATA = document.getElementById('display');
+    let DATA = document.getElementById('display' + this.user.id);
 
     if (DATA) {
       html2canvas(DATA).then(canvas => {

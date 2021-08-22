@@ -22,17 +22,16 @@ tr {
   height: 100px;
   background: transparent no-repeat center;
   background-size: cover;
-  position: relative;
-  top:0;
-  right: 60px;
   padding: 10px;
+  position: relative;
+
+  right: 0px;
 
 
 }
 .logo{
   position: absolute;
-  right:0;
-
+  width: 100%;
 }
 .fin-tableau-signatures{
   height: 100px;
