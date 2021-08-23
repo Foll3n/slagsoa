@@ -426,7 +426,13 @@
 
 ///////////////////////////////////////////////////////////////////
 
-
+.etat-projet{
+  width: 120px;
+  position: relative;
+  display: block;
+  left:380px;
+  top:-120px;
+}
 .onoffswitch {
   position: relative; width: 79px;
   left:400px;

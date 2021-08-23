@@ -344,7 +344,7 @@ export class CraService {
     const requestUrl = environment.urlCommande + '/' + this.listeCraWeek[index].firstDateWeekFormat + '/' + this.listeCraWeek[index].lastDateWeekFormat + '/' + id_usr;
     this.httpClient.get<BigCommande>(requestUrl, this.httpOptions).subscribe(
       response => {
-        this.listeCraWeek[index].listeCommandesWeek = this.findAllAvailableCommandes(response.listeCommande); ///////////////////////////////////////// a ckeck
+        this.listeCraWeek[index].listeCommandesWeek = (response.listeCommande); ///////////////////////////////////////// a ckeck je peux aussi faire: this.findAllAvailableCommandes pour récupérer que cellles qui sont available
         // this.getCraToServer(index); // patch car je reload tout le serveur
         this.emitCraSubject();
       },

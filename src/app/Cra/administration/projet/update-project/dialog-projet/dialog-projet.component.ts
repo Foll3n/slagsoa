@@ -95,8 +95,11 @@ export class DialogProjetComponent implements AfterViewInit{
     return res;
   }
   updateProjet(commandes: CommandeInsert[]){
+    for(let com of commandes){
+      console.log("/////////////////////////////////////////////////////////////////////////", com);
+    }
     this.commandeService.updateCommandes(commandes);
-    this.userService.refreshRealisationsUser();
+    // this.userService.refreshRealisationsUser();
     this.projetService.updateProjet(this.projet);
 
     console.log(commandes);

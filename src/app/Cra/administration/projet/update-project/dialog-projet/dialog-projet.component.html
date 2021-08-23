@@ -28,8 +28,10 @@
     <span class="onoffswitch-inner"></span>
     <span class="onoffswitch-switch"></span>
   </label>
-</div>
 
+</div>
+  <p class="etat-projet" *ngIf="projet.available=='true'" >Projet actif</p>
+  <p class="etat-projet" *ngIf="projet.available=='false'">Projet non actif</p>
 
 
 <mat-form-field class="mode" appearance="outline" class="selection-mode-projet">

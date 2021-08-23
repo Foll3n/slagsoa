@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
 import {CommandeHttpDatabase} from "../../../../configuration-http/CommandeHttpDatabase";
+import {MailHttpDatabase} from '../../../../configuration-http/MailHttpDatabase';
+import {UserService} from '../../../../services/user.service';
 
 
 @Component({
@@ -35,7 +37,7 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   dataSource: TableCraAdministration;
   listeCraWaiting: CraWeekInsert[] = [];
   listeCraValidate: CraWeekInsert[] = [];
-  actualWeek!: CraWeek ;
+  actualWeek!: CraWeek;
   listeCraSubscription!: Subscription;
   commentaire = '';
   headTableElements = ['dateStart', 'dateEnd', 'Nom', 'Prenom', 'actions'];
@@ -47,20 +49,27 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     this.table.dataSource = this.dataSource;
 
   }
-  constructor(private httpClient: HttpClient, public craWaitingService: CraWaitingService, public dialog: MatDialog) {
+
+  constructor(private userService: UserService, private httpClient: HttpClient, public craWaitingService: CraWaitingService, public dialog: MatDialog) {
     this.dataSource = new TableCraAdministration(this.httpClient);
   }
-  envoieParent(cra:CraWeekInsert) {
+
+  envoieParent(cra: CraWeekInsert) {
     this.craWeekEmitter.emit(cra);
   }
-  ngOnInit(): void {
-      this.listeCraSubscription = this.craWaitingService.waitingSubject.subscribe(
-        (craWeek: CraWeekInsert[]) => {this.listeCraWaiting = craWeek; this.update();
 
-        });
-      this.listeCraSubscription = this.craWaitingService.validateSubject.subscribe(
-        (craWeek: CraWeekInsert[]) => {this.listeCraValidate = craWeek; this.update();
-        });
+  ngOnInit(): void {
+    this.listeCraSubscription = this.craWaitingService.waitingSubject.subscribe(
+      (craWeek: CraWeekInsert[]) => {
+        this.listeCraWaiting = craWeek;
+        this.update();
+
+      });
+    this.listeCraSubscription = this.craWaitingService.validateSubject.subscribe(
+      (craWeek: CraWeekInsert[]) => {
+        this.listeCraValidate = craWeek;
+        this.update();
+      });
   }
 
   openDialog(cra: CraWeekInsert): void {
@@ -75,26 +84,34 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
 
   }
 
-  update(){
+  update() {
 
     if (this.index == '1') {
       this.dataSource.setListe(this.listeCraWaiting);
-    }
-    else if (this.index == '2') {
+    } else if (this.index == '2') {
       this.dataSource.setListe(this.listeCraValidate);
- }
+    }
   }
 
-  validerCra(cra: CraWeekInsert){
+  validerCra(cra: CraWeekInsert) {
     this.craWaitingService.validerCra(cra, 'OK');
   }
-  refuserCra(cra: CraWeekInsert){
+
+  refuserCra(cra: CraWeekInsert) {
     this.craWaitingService.refuserCra(cra, this.commentaire);
     this.paginator!._changePageSize(this.paginator!.pageSize);
-
+    const sendMail = new MailHttpDatabase(this.httpClient);
+    const response = sendMail.sendMail('mailCra_rejet', cra.prenomUsername!, this.userService.getMail(cra.idUsr)!);
+    response.subscribe(reponse => {
+      console.log(reponse);
+      if (reponse.status == 'OK') {
+        console.log("mail envoyé");
+      } else {
+        console.log("mail non envoyé");
+      }
+    });
 
   }
-
 }
 
 export interface DialogData {

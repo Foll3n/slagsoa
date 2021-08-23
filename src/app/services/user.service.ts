@@ -27,6 +27,9 @@ export class UserService {
   httpOptions = {
     headers: new HttpHeaders()
   };
+  getMail(idUsr: string){
+    return this.listeUsers.find(u => u.id == idUsr)?.mail;
+  }
   emitUsersSubject(): void {
     this.usersSubject.next(this.listeUsers.slice());
   }

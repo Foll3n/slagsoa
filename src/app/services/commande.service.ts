@@ -68,11 +68,12 @@ export class CommandeService {
   }
 
   updateCommandes(commandes: CommandeInsert[]){
+    console.log("commandes a mettre a jour:", commandes);
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
     const response = commandeHttp.updateCommands(commandes);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse);
+        console.log(commandes,"jai mis a jours les commandes !:",reponse);
         this.updateCommands(commandes);
         // this.getAllCommandes();
       }

@@ -102,20 +102,22 @@ export class CompteRenduActiviteComponent implements OnInit {
       console.log("je rentre dans les params");
       this.currentSlide = '';
       this.givenDate = params.date;
+      this.selectedWeek=-1;
       if (this.givenDate) {
         this.craService.initialisation(new Date(this.givenDate));
       } else {
         this.craService.initialisation(new Date());
       }
       this.listeCraSubscription = this.craService.craSubject.subscribe(
-        (craWeek: CraWeek[]) => {this.craWeek = craWeek;
+        (craWeek: CraWeek[]) => {
+          this.craWeek = craWeek; ///////////////////////////////////////////////////////////////////////////////// a check ici je comprends pas
           if (this.selectedWeek==-1)
-          this.selectedWeek = this.craService.currentSlide;
+              this.selectedWeek = this.craService.currentSlide;
           this.currentSlide = 'ngb-slide-' + this.selectedWeek.toString();
           // this.myCarousel!.select(this.currentSlide);
           // this.activeIndex = this.selectedWeek;
           // this.update();
-          // this.userService.emitRealisationSubject();
+          this.userService.emitRealisationSubject();
         });
 
 
@@ -126,6 +128,7 @@ export class CompteRenduActiviteComponent implements OnInit {
   }
   ngOnInit(){
     // if(this.givenDate)this.craService.initialisation(this.givenDate);
+    // this.craService.emitCraSubject();
     this.userService.refreshRealisationsUser();
   }
   hexToRGB(hex: string, alpha: string) {

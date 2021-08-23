@@ -31,7 +31,9 @@ export class PdfConteneurComponent implements OnChanges {
   }
   getDayElem(elem: ListPdf){
     return formatDate(elem.date,'EE','fr');
-
+  }
+  getMonth(){
+    return formatDate(new Date(),'MMMM_yyyy','fr');
   }
   getDateElem(elem:ListPdf){
     return formatDate(elem.date,'dd / MM / yyyy','fr');
@@ -74,7 +76,7 @@ export class PdfConteneurComponent implements OnChanges {
         let position = 0;
         PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
 
-        PDF.save('test.pdf');
+        PDF.save('CRA_' + this.getMonth()+"_"+this.pdf.nomSociete+"_"+this.user.prenom+'.pdf');
       });
     }
   }
