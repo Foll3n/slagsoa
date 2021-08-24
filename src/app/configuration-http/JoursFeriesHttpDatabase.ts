@@ -19,7 +19,6 @@ export class JoursFeriesHttpDatabase{
   }
   // tslint:disable-next-line:variable-name
   getJoursFeries(dateDebut: string, dateFin: string){
-    console.log("getAllProjects : id = " +  `${sessionStorage.getItem('id')}`);
     const href = environment.urlJoursFeries + "/joursFeries" + "/?dateDebut=" + dateDebut + "&dateFin=" + dateFin;
     // tslint:disable-next-line:max-line-length
     return this._httpClient.get<JoursFeries>(href, this.httpOptions);

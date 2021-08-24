@@ -15,6 +15,9 @@ import {Client} from '../../../models/client/Client';
   templateUrl: './update-reponsable.component.html',
   styleUrls: ['./update-reponsable.component.scss']
 })
+/**
+ * Composant qui permet de gérer le responsable
+ */
 export class UpdateReponsableComponent implements OnInit {
   displayedColumns: string[] = ['nom', 'prenom', 'mail','idClient','valider'];
   dataSource!: MatTableDataSource<Responsable>;
@@ -25,6 +28,7 @@ export class UpdateReponsableComponent implements OnInit {
   listeClients: Client[] = [];
   clientSubscription!: Subscription;
   responsableForm!: FormGroup;
+
   constructor(private responsableService: ResponsableService, private clientService: ClientService) {
     this.responsableForm = new FormGroup({
       nom: new FormControl(),
@@ -44,6 +48,11 @@ export class UpdateReponsableComponent implements OnInit {
       this.listeClients = clients;
     });
   }
+
+  /**
+   * met à jour le responsable
+   * @param responsable
+   */
   updateResponsable(responsable: Responsable){
     this.responsableService.updateResponsable(responsable);
   }
@@ -51,6 +60,11 @@ export class UpdateReponsableComponent implements OnInit {
     this.clientService.emitClientSubject();
     this.responsableService.emitResponsablesSubject();
   }
+
+  /**
+   * récupère le nom de la société associé au responsable
+    * @param responsable
+   */
   getClientName(responsable: Responsable){
     const client = this.clientService.getClientById(responsable.idClient);
     if (client)
@@ -58,13 +72,27 @@ export class UpdateReponsableComponent implements OnInit {
     return '';
   }
 
+  /**
+   * check si le mail est valide
+   * @param responsable
+   */
   validateMail(responsable: Responsable){
     return validateEmail(responsable.mail);
   }
+
+  /**
+   * check si l'attribu est valide ou non avec son pattern
+    * @param property
+   */
   check(property: string){
     checkValidity(property, this.responsableForm)
 
   }
+
+  /**
+   * ajoute un responsable
+   * @param formDirective
+   */
   addResponsable(formDirective: FormGroupDirective){
     this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value.trim(),
       this.responsableForm.get('prenom')?.value.trim(),

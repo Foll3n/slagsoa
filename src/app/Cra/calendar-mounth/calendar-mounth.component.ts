@@ -21,6 +21,8 @@ import {CraWeekInsert} from '../models/logCra/craWeekInsert';
 import {InsertCra} from '../models/cra/InsertCra';
 import {Router} from '@angular/router';
 import {formatDate} from '@angular/common';
+import {JoursferiesService} from '../../services/joursferies.service';
+import {JoursFeries} from '../models/joursFeries/JoursFeries';
 
 
 
@@ -43,8 +45,9 @@ import {formatDate} from '@angular/common';
 })
 export class CalendarMounthComponent implements OnInit {
 
-  constructor(private craService: CraService, private calendarService: CalendarService, private router: Router) {
-    this.calendarCra = this.calendarService.calendarSubject.subscribe(
+  constructor(private jourFerie: JoursferiesService, private craService: CraService, private calendarService: CalendarService, private router: Router) {
+    this.jourFerieSubscription = this.jourFerie.joursSubject.subscribe((jours: Date[]) => this.listeJoursFeries = jours );
+    this.calendarCraSubscription = this.calendarService.calendarSubject.subscribe(
       (listeCra: InsertCra[]) => {
         let i = 0;
         this.listeCra = listeCra;
@@ -63,11 +66,12 @@ export class CalendarMounthComponent implements OnInit {
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
 
-  listeJoursFeries: Date[] = [new Date('08-23-2021')];
+  listeJoursFeries: Date[] = [];
   view: CalendarView = CalendarView.Month;
   listeCra: InsertCra[] = [];
   CalendarView = CalendarView;
-  calendarCra!: Subscription;
+  calendarCraSubscription!: Subscription;
+  jourFerieSubscription!: Subscription;
   locale = 'fr';
   events: CustomEvent[] = [];
   viewDate: Date = new Date();
@@ -93,14 +97,20 @@ export class CalendarMounthComponent implements OnInit {
 
 
   isFerie(date: Date){
-    return this.listeJoursFeries.find(d => isSameDay(d, date));
+    // console.log(date.getTime(),"liste jours:", this.listeJoursFeries[0].getTime());
+    console.log(date.valueOf());
+    if (this.listeJoursFeries)
+      return this.listeJoursFeries.find(d => isSameDay(date,d));
+    return false;
   }
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
     console.log('ok');
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
+
       for (const c of this.listeCra){
         if (new Date(c.date).getDate() == dayOfMonth && isSameMonth(new Date(c.date), this.viewDate) && (isSameDay(day.date, new Date(c.date)))){
+
           if (c.status! == '1'){
             day.backgroundColor = '#d4e4fc'; }
           else if (c.status == '2'){
@@ -113,9 +123,10 @@ export class CalendarMounthComponent implements OnInit {
             day.backgroundColor = 'yellow';
           }
         }
-        if (this.isFerie(day.date)){
-          day.backgroundColor = '#ffffff';
-        }
+
+      }
+      if (this.isFerie(day.date)){
+        day.backgroundColor = '#bdbdbd';
       }
 
 

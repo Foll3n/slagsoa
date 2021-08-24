@@ -7,6 +7,7 @@ import {CraWeek} from '../../models/cra/craWeek';
 import {CommandeInsert} from '../../models/commande/CommandeInsert';
 import {environment} from '../../../../environments/environment';
 import {ProjetService} from '../../../services/projet.service';
+import {JoursferiesService} from '../../../services/joursferies.service';
 
 @Component({
     selector: 'app-compte-rendu-vue',
@@ -21,8 +22,11 @@ export class CompteRenduVueComponent implements OnInit {
   minWidth = environment.minWidth;
   listeCraSubscription!: Subscription;
   listeCommande: CommandeInsert[] = [];
-    constructor(public craService: CraService, private projetService: ProjetService) {
-
+  jourFerieSubscription!: Subscription;
+  listeJoursFeries: Date[] = [];
+    constructor(private jourFerie: JoursferiesService, public craService: CraService, private projetService: ProjetService) {
+      this.jourFerieSubscription = this.jourFerie.joursSubject.subscribe((jours: Date[]) => this.listeJoursFeries = jours );
+      this.jourFerie.emitJoursFeriesSubject();
     }
 
   /**
@@ -39,16 +43,15 @@ export class CompteRenduVueComponent implements OnInit {
      return this.craWeek.status === '0';
   }
     ngOnInit(){
-      console.log("---------------------------oooo-----------------------", this.index, this.craWeek);
-      //this.craWeek.listeCommandesWeek;
-      // this.listeCraSubscription = this.craService.craSubject.subscribe(
-      //   (craWeek: CraWeek[]) => {this.listeCra = craWeek[this.index].listeCra;
-      //                            this.listeCommande = craWeek[this.index].listeCommandesWeek;
-      //   }
-      // );
-      // this.craService.emitCraSubject();
     }
-
+  isFerie(date: Date){
+    return this.listeJoursFeries.find(d => this.isDatesEqual(d, date));
+  }
+  isDatesEqual(date1:Date, date2:Date) {
+    return date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate();
+  }
   /**
    * renvoie le status d'une semaine de cra
     */

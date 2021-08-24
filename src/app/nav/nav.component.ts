@@ -63,7 +63,6 @@ export class NavComponent implements OnInit{
 
   constructor(private router: Router, public c: ConnexionService,public cgeService: CongesHttpService, private breakpointObserver: BreakpointObserver, private craWaitService: CraWaitingService, private craService:CraService) {
     if(this.c.isLogged()){
-      console.log('ici constructor');
       this.c.chargerUtilisateur();
       craWaitService.initialisation();
       this.notificationCraSubscription = this.craWaitService.waitingSubject.subscribe((res: CraWeekInsert[] )=> {
@@ -80,7 +79,6 @@ export class NavComponent implements OnInit{
       this.userSubscription = this.c.usersSubject.subscribe(
         (users: Utilisateur[]) => {
           if(users){
-            console.log('ici');
             this.users = users;
             this.user = this.users[0];
             if(this.user.role == "MANAGER"){
@@ -104,7 +102,6 @@ export class NavComponent implements OnInit{
 
         }
         this.notificationsConges = s;
-        console.log(s);
       },
       error => {
         console.log(error);

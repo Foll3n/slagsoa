@@ -5,7 +5,9 @@
 <!--<input type="text" class="form-control" [(ngModel)]="newClient.siret">-->
 <!--<input type="text" class="form-control" [(ngModel)]="newClient.mail">-->
 <h4>Ajout d'un client</h4>
-
+  <!--****************************************************************************************
+                    Ajout d'un client
+  --****************************************************************************************-->
 <form class="form-group " [formGroup]="clientForm"  #formDirective="ngForm"(submit)="addClient(formDirective)">
     <div class="form">
       <input type="text" id="name" formControlName="nomSociete" autocomplete="off" required="required">
@@ -35,7 +37,9 @@
 
   <input *ngIf="this.clientForm.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
 </form>
-
+  <!--****************************************************************************************
+                    table des clients permettant d'en rajouter ou supprimer
+  --****************************************************************************************-->
 
 <div class="mat-elevation-z8 table-client">
   <table class="formClient" mat-table [dataSource]="dataSource" matSort>

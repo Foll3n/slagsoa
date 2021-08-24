@@ -7,7 +7,6 @@ import {MatSort} from '@angular/material/sort';
 import {HttpClient} from '@angular/common/http';
 import {CommandeHttpDatabase} from '../../../../configuration-http/CommandeHttpDatabase';
 import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
-import {ComProjet} from '../../administration-cra/visualisation-projet-com/visualisation-projet-com.component';
 import {ProjetService} from '../../../../services/projet.service';
 import {CraWeekInsert} from '../../../models/logCra/craWeekInsert';
 import {DialogContent} from '../../administration-cra/table-cra-en-attente/table-cra-en-attente.component';
@@ -25,37 +24,36 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./update-project.component.scss']
 })
 export class UpdateProjectComponent implements OnInit {
-  minWidth = environment.minWidth;
-  projetSubscription!: Subscription;
-  indexGraph = 0;
-  selectedProjet!:string;
-  public get width() {
-    return window.innerWidth;
-  }
-  constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog, private router: Router) {
-
-    this.projetSubscription = this.projetService.projetSubject.subscribe((projets: Projet[]) => {
-      this.listeProjets = projets;
-
-      this.dataSource = new MatTableDataSource(this.listeProjets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
-
-
-  }
-
   listeProjets!: Projet[];
   listeCommandes: CommandeInsert[] = [];
   displayedColumns: string[] = ['id', 'code_projet', 'mode_realisation','pdf', 'graph-com', 'graph-user'];
   dataSource!: MatTableDataSource<Projet>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  minWidth = environment.minWidth;
+  projetSubscription!: Subscription;
+  indexGraph = 0;
+  selectedProjet!:string;
 
-  ngOnInit(): void {
-
+  public get width() {
+    return window.innerWidth;
+  }
+  constructor(private httpClient: HttpClient, private projetService: ProjetService, public dialog: MatDialog, private router: Router) {
+    this.projetSubscription = this.projetService.projetSubject.subscribe((projets: Projet[]) => {
+      this.listeProjets = projets;
+      this.dataSource = new MatTableDataSource(this.listeProjets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
+  ngOnInit(): void {
+  }
+
+  /**
+   * ouvrir le dialog qui permettra de modifier le projet
+   * @param projet
+   */
   openDialog(projet: Projet): void {
     const dialogRef = this.dialog.open(DialogProjetComponent, {
       width: '550px',
@@ -66,11 +64,21 @@ export class UpdateProjectComponent implements OnInit {
     });
 
   }
+
+  /**
+   * affiche le graphique donné
+   * @param projet
+   * @param index
+   */
   displayGraph(projet: Projet, index: number){
-    console.log("displayGraph -> ", projet);
     this.indexGraph = index;
     this.selectedProjet = projet.code_projet;
   }
+
+  /**
+   * lance la partie génération de pdf
+   * @param projet
+   */
   makePdf(projet:Projet){
     console.log(projet,"projet");
     this.router.navigate(['/generate-pdf'], { queryParams: projet ,  skipLocationChange: true });
@@ -79,21 +87,17 @@ export class UpdateProjectComponent implements OnInit {
   getTarget(id: string){
     return '#target-' + id;
   }
-  getLink(id: string){
-    return 'target-' + id;
-  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  reload(){
-    this.projetService.emitProjetSubject();
-  }
+  // reload(){
+  //   this.projetService.emitProjetSubject();
+  // }
 
 
   ngAfterViewInit() {

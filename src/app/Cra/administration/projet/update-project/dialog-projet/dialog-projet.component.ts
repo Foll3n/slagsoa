@@ -23,6 +23,9 @@ export interface DialogData {
   templateUrl: './dialog-projet.component.html',
   styleUrls: ['./dialog-projet.component.scss']
 })
+/**
+ * composant dialog qui permet de modifier un projet et ses commandes associées
+ */
 export class DialogProjetComponent implements AfterViewInit{
   projet!: Projet;
   isAddCom = false;
@@ -51,7 +54,7 @@ export class DialogProjetComponent implements AfterViewInit{
     this.dataSource.sort = this.sort;
     this.projet = this.copyProjet(data.projet);
 
-    this.responsableSubsciption = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables; console.log("je recois le responsable",this.listeResponsables)});
+    this.responsableSubsciption = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables});
 
     this.ajoutSubscription = this.projetService.ajout.subscribe((bool: boolean) => {
       this.isAddProjet = bool;
@@ -61,28 +64,42 @@ export class DialogProjetComponent implements AfterViewInit{
     });
 
     this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
-      console.log("je recois la commande");
       this.listeCommandes = commandes;
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      // console.log("test",this.projet.id, this.listeCommandes);
     } );
 // récupérer si la commande a bien été ajouté
   }
+
+  /**
+   * copie un projet
+   * @param projet
+   * @private
+   */
   private copyProjet(projet: Projet): Projet{
     return new Projet(projet.code_projet, projet.color, projet.id, projet.modeRealisation, projet.available,projet.responsable); ////////////////////////////////////////////////////////////////////////////////////////
   }
+
+  /**
+   * retourne la taille de l'écran
+   */
   public width(){
     return window.innerWidth;
   }
 
+  /**
+   * annule les changement sur un projet
+   */
   revert(){
     this.projet = this.copyProjet(this.data.projet);
     // this.projetService.updateProjet(this.projet);
     this.commandeService.emitCommandeSubject();
   }
 
+  /**
+   * récupère la commande avec son id
+    */
   getCommandeById(){
     let res = [];
     if(!this.projet)return [];
@@ -94,20 +111,30 @@ export class DialogProjetComponent implements AfterViewInit{
     }
     return res;
   }
+
+  /**
+   * met un projet à jour avec ses commandes
+    * @param commandes
+   */
   updateProjet(commandes: CommandeInsert[]){
     for(let com of commandes){
-      console.log("/////////////////////////////////////////////////////////////////////////", com);
     }
     this.commandeService.updateCommandes(commandes);
-    // this.userService.refreshRealisationsUser();
     this.projetService.updateProjet(this.projet);
 
-    console.log(commandes);
   }
+
+  /**
+   * check s'il y a une commande associées au projet sélectionné
+   */
   displayListNotEmpty(){
     if (this.getCommandeById().length> 0) return true;
     return false;
   }
+
+  /**
+   * met toutes les commandes à false
+   */
   putAllCommandsFalse(){
     for(const com of this.dataSource.data){
       this.projet.available=='true'?com.available='false':com.available='true';

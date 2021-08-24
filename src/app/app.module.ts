@@ -59,7 +59,7 @@ import {UserService} from './services/user.service';
 import { AdministrationCraComponent } from './Cra/administration/administration-cra/administration-cra.component';
 import { AdministrationProjetComponent } from './Cra/administration/projet/administration-projet/administration-projet.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { AddProjetComponent} from './Cra/administration/projet/add-projet/add-projet.component';
+import { AddProjetComponent} from './Cra/pas_utilise/add-projet/add-projet.component';
 import { AddCommandeComponent } from './Cra/administration/projet/add-commande/add-commande.component';
 import {ProjetService} from './services/projet.service';
 import {CommandeService} from './services/commande.service';
@@ -82,11 +82,10 @@ import {MonCompteComponent} from './Parametres/mon-compte/mon-compte.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {FicheUtilisateurComponent} from './fiche-utilisateur/fiche-utilisateur.component';
 import {FicheCongeComponent} from './fiche-conge/fiche-conge.component';
-import { VisualisationProjetComComponent } from './Cra/administration/administration-cra/visualisation-projet-com/visualisation-projet-com.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {UpdateProjectComponent} from './Cra/administration/projet/update-project/update-project.component';
-import { UpdateCommandeComponent } from './Cra/administration/projet/update-commande/update-commande.component';
+import { UpdateCommandeComponent } from './Cra/pas_utilise/update-commande/update-commande.component';
 import { DialogProjetComponent} from './Cra/administration/projet/update-project/dialog-projet/dialog-projet.component';
 import { VisualisationProjetComponent } from './Cra/administration/projet/update-project/visualisation-projet/visualisation-projet.component';
 import { ProjetPdfComponent } from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
@@ -102,6 +101,7 @@ import { Slide3Component } from './Cra/aide-ajout-projet/slide3/slide3.component
 import { SlideRecapComponent } from './Cra/aide-ajout-projet/slide-recap/slide-recap.component';
 import { Slide4Component } from './Cra/aide-ajout-projet/slide4/slide4.component';
 import { AddUserComComponent } from './Cra/aide-ajout-projet/add-user-com/add-user-com.component';
+import {JoursferiesService} from './services/joursferies.service';
 
 registerLocaleData(localeFr);
 
@@ -141,7 +141,6 @@ registerLocaleData(localeFr);
     StatCongesComponent,
     FicheUtilisateurComponent,
     FicheCongeComponent,
-    VisualisationProjetComComponent,
     UpdateProjectComponent,
     UpdateCommandeComponent,
     DialogProjetComponent,
@@ -197,7 +196,7 @@ registerLocaleData(localeFr);
   ],
   // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   // tslint:disable-next-line:max-line-length
-  providers: [ClientService, ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
+  providers: [JoursferiesService, ClientService, ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 

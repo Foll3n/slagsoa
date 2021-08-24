@@ -61,7 +61,6 @@ export class CraWaitingService {
     const response = craHttp.updateStatusCraWeek(cra);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(reponse);
         this.deleteCraWait(cra);
         this.listeCraValidate.push(cra);
         this.emitCraWaintingSubject();

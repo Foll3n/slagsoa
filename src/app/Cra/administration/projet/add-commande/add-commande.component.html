@@ -30,20 +30,9 @@
 
   <form class="form-group" [formGroup]="commandeUtilisateur" >
 
-    <!----------------------------------------------------------------------------------------------------------------->
-    <!------------------------- SELECTION DU L'UTILISATEUR------------------------------->
-    <!----------------------------------------------------------------------------------------------------------------->
-    <!--  <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">-->
-    <!--    <mat-label>Selectionner un utilisateur</mat-label>-->
-    <!--    <mat-select formControlName="utilisateur" required>-->
-    <!--      <mat-option *ngFor="let usr of this.listeUsers" [value]="usr.id">-->
-    <!--        {{usr.prenom}} {{usr.nom}}-->
-    <!--      </mat-option>-->
-    <!--    </mat-select>-->
-    <!--  </mat-form-field>-->
-    <!----------------------------------------------------------------------------------------------------------------->
-    <!------------------------- SELECTION DU PROJET------------------------------->
-    <!----------------------------------------------------------------------------------------------------------------->
+    <!--****************************************************************************************
+                      choisir un projet
+    --****************************************************************************************-->
     <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
       <mat-label>Selectionner un projet</mat-label>
       <mat-select formControlName="projet" required>
@@ -54,20 +43,11 @@
     </mat-form-field>
 
     <!----------------------------------------------------------------------------------------------------------------->
-    <!------------------------- SELECTION DE LA COMMANDE------------------------------->
+    <!------------------------- SELECTION DE LA COMMANDE et de l'utilisateur------------------------------->
     <!----------------------------------------------------------------------------------------------------------------->
     <app-add-user-com *ngIf="this.listeCommandeProjet.length>0" [listeCommandes]="this.listeCommandeProjet" [isUpdate]="true" (listeUsersCom)="setComUser($event)" ></app-add-user-com>
 
 
-    <!--  <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">-->
-    <!--    <mat-label>Selectionner une commande</mat-label>-->
-    <!--    <mat-select formControlName="commande" required>-->
-    <!--      <mat-option *ngFor="let commande of this.listeCommandeProjet" [value]="commande.id">-->
-    <!--        {{commande.num_com}}-->
-    <!--      </mat-option>-->
-    <!--    </mat-select>-->
-    <!--  </mat-form-field>-->
-    <!--  <input *ngIf="this.commandeUtilisateur.valid" type="submit" value="Ajouter" class="btn btn-info" >-->
     <p class="notification-add" *ngIf="this.isAddRealisation">Commande ajoutée à l'utilisateur</p>
 
 

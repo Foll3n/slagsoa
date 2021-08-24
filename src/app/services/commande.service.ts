@@ -57,7 +57,6 @@ export class CommandeService {
         const response = commandeHttp.addCommande(commande);
         response.subscribe(reponse => {
           if (reponse.status === 'OK') {
-            console.log("commande bien ajoutée");
             if(index)
               this.getAllCommandes();
           } else {
@@ -68,12 +67,10 @@ export class CommandeService {
   }
 
   updateCommandes(commandes: CommandeInsert[]){
-    console.log("commandes a mettre a jour:", commandes);
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
     const response = commandeHttp.updateCommands(commandes);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-        console.log(commandes,"jai mis a jours les commandes !:",reponse);
         this.updateCommands(commandes);
         // this.getAllCommandes();
       }
@@ -94,7 +91,6 @@ export class CommandeService {
       let res = this.getComById(com.id);
       this.copyCommande(com, res);
     }
-    console.log(this.listeCommandes);
     this.emitAddCommandeSubject(true);
     this.emitCommandeSubject();
   }
@@ -130,8 +126,6 @@ export class CommandeService {
     const response = commandeHttp.getAllCommands();
     response.subscribe(reponse => {
       if (reponse.status == 'OK'){
-
-        console.log(reponse);
         if (reponse.listeCommande)
         this.listeCommandes = reponse.listeCommande;
         this.emitCommandeSubject();

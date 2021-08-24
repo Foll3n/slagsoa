@@ -50,7 +50,6 @@ export class ProjetService {
     return '';
  }
   addProjet(projet: Projet) {
-    console.log(projet);
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
     const response = projetHttp.addProjet(projet);
     response.subscribe(reponse => {

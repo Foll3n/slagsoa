@@ -32,10 +32,11 @@
         </div>
 
         <div class="div-span">
-          <span *ngIf="cra.duree_totale <  (1- cra.statusConge) && cra.statusConge<1" class="badge badge-info">Non complet</span>
-          <span *ngIf="cra.duree_totale == (1 - cra.statusConge) && cra.statusConge<1" class="badge badge-success">Complet</span>
-          <span *ngIf="cra.duree_totale> (1 - cra.statusConge) && cra.statusConge<1" class="badge badge-danger">Invalide</span>
-          <span *ngIf="cra.statusConge>=0.5" class="badge badge-info badge-conge">Congé</span>
+          <span *ngIf="cra.duree_totale <  (1- cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)" class="badge badge-info">Non complet</span>
+          <span *ngIf="cra.duree_totale == (1 - cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)" class="badge badge-success">Complet</span>
+          <span *ngIf="cra.duree_totale> (1 - cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)" class="badge badge-danger">Invalide</span>
+          <span *ngIf="isFerie(cra.date)" class="badge badge-info">Jours férié</span>
+          <span *ngIf="cra.statusConge>=0.5 && !this.isFerie(cra.date)" class="badge badge-info badge-conge">Congé</span>
 
                 </div>
 
@@ -43,7 +44,7 @@
 <!--        affiche chaque compte rendu (case) -->
 <!--        <div *ngIf="cra.statusConge==0.5">-->
 
-        <div *ngIf="cra.statusConge<1">
+        <div *ngIf="cra.statusConge<1 && !this.isFerie(cra.date)">
           <app-compte-rendu  *ngFor="let sp of cra.listeCr ; let i = index"
                              [cra] = cra
                              [color]=sp.color

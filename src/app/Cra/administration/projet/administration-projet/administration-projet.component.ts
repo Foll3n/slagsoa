@@ -13,8 +13,10 @@ import {MatTabGroup} from '@angular/material/tabs';
   templateUrl: './administration-projet.component.html',
   styleUrls: ['./administration-projet.component.scss']
 })
+/**
+ * composant comprotant un tab group permettant de vaviguer de droite à gauche
+ */
 export class AdministrationProjetComponent implements OnInit {
-  // @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
   listeProjets!: Projet[];
   listeProjetSubscription!: Subscription;
   color = '';
@@ -22,6 +24,9 @@ export class AdministrationProjetComponent implements OnInit {
     // this.tabGroup.selectedIndex = 3;
   }
 
+  /**
+   * initalisation
+   */
   ngOnInit(): void {
     this.listeProjetSubscription = this.projetService.projetSubject.subscribe(
       (projets: Projet[]) => {this.listeProjets = projets;

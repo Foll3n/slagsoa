@@ -467,7 +467,6 @@ export class CraService {
       listeCraWeek.push(cra);
     }
     const json = JSON.stringify(listeCraWeek);
-    console.log(json);
     this.httpClient.post<Result>(environment.urlCra, json, this.httpOptions).subscribe(
       response => {
         if (response.status == 'OK') {

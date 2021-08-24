@@ -45,6 +45,11 @@ export function resetForm(form: FormGroup) {
   });
   form.clearValidators();
 }
+export function isDatesEqual(date1:Date, date2:Date) {
+  return date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate();
+}
 // tslint:disable-next-line:typedef
 export function shortMessage(variable: Message, message: string){
   variable.contenu = message;

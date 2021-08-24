@@ -36,7 +36,6 @@ export class CalendarService {
     const response = craHttp.getAllCra();
     response.subscribe(reponse => {
       if (reponse.status == 'OK'){
-        console.log(reponse);
         if (reponse.liste_cra)
            this.listeCra = reponse.liste_cra;
         this.emitCalendarSubject();

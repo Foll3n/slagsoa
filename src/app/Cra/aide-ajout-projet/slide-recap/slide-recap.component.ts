@@ -23,6 +23,9 @@ import {UserService} from '../../../services/user.service';
   templateUrl: './slide-recap.component.html',
   styleUrls: ['./slide-recap.component.scss']
 })
+/**
+ * slide récapitulatif qui créer un projet avec son client, son responsable etc
+ */
 export class SlideRecapComponent implements OnInit {
   @Input()
   projet!: Projet;
@@ -138,7 +141,7 @@ export class SlideRecapComponent implements OnInit {
       this.projetService.addProjet(projet);
   }
   /**
-   * Ajoute un projet grâce au service projetService ce qui permet d'avoir à tous moment la liste des projets
+   * Ajoute les commandes
    */
   addCommandes(){
     console.log("addCommandes-->", this.listeCommandes);
@@ -151,6 +154,9 @@ export class SlideRecapComponent implements OnInit {
 
   }
 
+  /**
+   * ajoute le client
+   */
   addClient(){
     console.log("addClient--->", this.client);
 
@@ -161,6 +167,10 @@ export class SlideRecapComponent implements OnInit {
       this.clientService.updateClient(this.client);
     }
   }
+
+  /**
+   * ajoute le responsable
+    */
   addResponsable(){
     console.log("addResponsable--->", this.reponsable);
     this.reponsable.idClient = this.client.idClient;
@@ -173,6 +183,9 @@ export class SlideRecapComponent implements OnInit {
     }
   }
 
+  /**
+   * ajoute tout en commencant par le client, une fois que le client a été ajouté je peux enchainer avec les autres
+   */
   addAll(){
     console.log("add ALL");
   this.addClient();

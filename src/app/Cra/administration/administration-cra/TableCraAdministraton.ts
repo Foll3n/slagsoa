@@ -33,7 +33,10 @@ export class TableCraAdministration extends DataSource<CraWeekInsert> {
 
   }
 
-
+  /**
+   * set la liste en fonction de si cest la liste des cra validés ou en attente
+   * @param liste
+   */
   setListe(liste: CraWeekInsert[] ){
     this.data = liste;
     this.paginator!._changePageSize(this.paginator!.pageSize);

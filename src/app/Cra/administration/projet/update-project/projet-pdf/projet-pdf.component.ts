@@ -39,23 +39,39 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
       this.initAllPdf();
     });
   }
+
+  /**
+   * charge tous les utilisateurs en meme temps pour télécharger tous les pdf à la fois
+   */
   initUsersProjet(){
-    // this.generate = true;
+    this.generate = false;
     this.listeUtilisateurs = [];
     this.initAllPdf();
   }
+
+  /**
+   * charge un utilisateur particulier
+   * @param usr
+   */
   loadUserPdf(usr:UtilisateurSimple){
     this.listeUtilisateurs = [usr];
     this.generate = false;
   }
+
+  /**
+   * active la génération de pdf
+   */
   generateTrue(){
     this.generate = true;
   }
+
+  /**
+   * initialisation des pdf
+   */
   initAllPdf(): void {
     const userHttp = new UtilisateursHttpService(this.httpClient);
     const response = userHttp.getUtilisateursProjet(this.projet.code_projet);
     response.subscribe(reponse => {
-      console.log("reponse ---> ", reponse);
       if(reponse.status == 'OK'){
         if(reponse.users)
           this.listeUtilisateurs = reponse.users;
@@ -63,7 +79,6 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
         for (let user in this.listeUtilisateurs){
           this.initCurrentMonth(+user);
         }
-        console.log("iciiii ",this.listepdf);
         this.makePdf();
       }
       else{
@@ -73,38 +88,41 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-
     this.utilisateurService.emitUsersSubject();
 
-
-    // this.getDaysInMonth();
-
   }
+
+  /**
+   * retourne l'index de l'utilisateur
+   * @param user
+   */
   indexOflisteUtilisateurs(user: UtilisateurSimple){
     let index = 0;
     for (let usr of this.listeAllUsers){
       if(usr.id == user.id){
-        // console.log("je retroune l'index de ",user.nom,"-------",this.pdfInfoListe[index],"  index : ",index,' pdf info liste ', this.pdfInfoListe);
         return index;
       }
       index ++;
     }
     return 0;
   }
-  fill(index:number) {
 
+  /**
+   * rempli le pdf
+   * @param index
+   */
+  fill(index:number) {
       for (let elem of this.listepdf[index]) {
         let e = this.isInpdfList(this.pdfInfoListe[index].listeFill, elem);
         elem.duree = e.duree;
         elem.date = e.date;
       }
-      console.log('je suis dans fill pdf',this.pdf);
-
-
-
   }
 
-
+  /**
+   * initialise le pdf avec tous les jours du mois mais une durée à 0 en appelant getDaysInMonth
+   * @param user
+   */
   initCurrentMonth(user: number){
     this.pdfList=[];
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
@@ -114,10 +132,14 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
     this.lastDay = new Date(y, m + 1, 0);
     this.getDaysInMonth(user);
   }
+
+  /**
+   * met la durée de tous les jours à 0
+    * @param user
+   */
   getDaysInMonth(user: number) {
     this.listepdf[user] = [];
     this.pdfList = [];
-    console.log("--------------------",this.projet);
     let first = new Date(this.firstDay);
       while(first <= this.lastDay){
         let dateString = formatDate(first,'yyyy-MM-dd','fr');
@@ -125,57 +147,43 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
           this.listepdf[user].push(res);
           first.setDate(first.getDate()+1);
       }
-
-
   }
+
+  /**
+   * appel le chargement d'un pdf associé au projet pour chaque utilisateurs
+    */
   makePdf(){
     let index = 0;
     for (let usr of this.listeUtilisateurs){
       this.chargerProjet(usr.id, index);
-      console.log("ooo");
       index ++;
     }
 
-
-    // console.log("projet ---> ",this.projet);
-    // let pdf = new jsPDF('p','pt','a4');
-    // pdf.html(this.el.nativeElement,{
-    //   callback:(pdf) => {
-    //     pdf.save("projet.pdf");
-    //   }
-    // });
   }
 
   isInpdfList(liste: ListPdf[], pdf:ListPdf){
-    // console.log(liste,"uuuuuuuuuuuuukkkkkkkkkkkkkkkuuuuuuuuuuuu",pdf);
     for (let elem of liste){
       if (elem.date == pdf.date) {
-        console.log("__" , elem,pdf);
         return new ListPdf(elem.date, this.projet.code_projet,elem.duree);
       }
     }
     return pdf;
   }
 
+  /**
+   * récupère les valeurs en bdd pour charger le pdf associé au projet
+    * @param idUser
+   * @param index
+   */
   chargerProjet(idUser:string, index:number){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
-    console.log("dernier jour du mois*************************************************************** ",this.lastDayString);
     const response = projetHttp.getPdF(this.firstDayString,this.lastDayString,this.projet.code_projet,idUser);
     response.subscribe(reponse => {
       if(reponse.status == 'OK'){
-
         this.pdfInfoListe[index] = reponse.result;
         if(reponse.result.listeFill){
           this.fill(index);
-          console.log("this.pdf list", this.pdfInfoListe);
-          console.log("this.listepdf ", this.listepdf);
         }
-
-        // this.pdf = reponse.result;
-        // this.getDaysInMonth();
-
-        // console.log('ici-> pdf bien formé' , this.pdfList);
-
       }
       else{
         console.log("Erreur de requete de base de données");

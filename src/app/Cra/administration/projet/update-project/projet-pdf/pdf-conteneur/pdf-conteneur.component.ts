@@ -25,6 +25,10 @@ export class PdfConteneurComponent implements OnChanges {
     this.currentDate = formatDate(new Date(),'dd-MM-yyyy','fr');
   }
 
+  /**
+   * lorsque les paramètres d'entrée changent j'essaye de générer le pdf
+   * @param changes
+   */
   ngOnChanges(changes: SimpleChanges): void {
     console.log("je change dans pdf", this.user, this.ligne);
     this.makePdf();
@@ -38,6 +42,10 @@ export class PdfConteneurComponent implements OnChanges {
   getDateElem(elem:ListPdf){
     return formatDate(elem.date,'dd / MM / yyyy','fr');
   }
+
+  /**
+   * renvoie la durée totale des activités de l'utilisateur pour l'entreprise au cours du mois
+   */
   sommeDuree(){
     let res = 0;
     for(const e of this.ligne){
@@ -45,32 +53,34 @@ export class PdfConteneurComponent implements OnChanges {
     }
     return res.toPrecision(3);
   }
+
+  /**
+   * remplace .0 d'un jour par vide ce qui donne 0.0 jours -> 0 jours
+   * @param elem
+   */
   getDuree(elem:ListPdf){
     let duree = elem.duree;
-
     duree = duree.replace('.0','');
     return duree + ' jours';
   }
+
+  /**
+   * créé un pdf si le booleen generate est a true
+   */
   makePdf(){
     if(this.generate)
       this.openPDF();
-    // let pdf = new jsPDF('p','pt','a4');
-    // pdf.html(this.el.nativeElement,{
-    //   callback:(pdf) => {
-    //     pdf.save("projet.pdf");
-    //   }
-    // })
-
   }
+
+  /**
+   * télécharge un pdf
+   */
   public openPDF():void {
     let DATA = document.getElementById('display' + this.user.id);
-
     if (DATA) {
       html2canvas(DATA).then(canvas => {
-
         let fileWidth = 210.2;
         let fileHeight = 297.3;
-
         const FILEURI = canvas.toDataURL('image/png', 1.0);
         let PDF = new jsPDF('p', 'mm', 'a4');
         let position = 0;

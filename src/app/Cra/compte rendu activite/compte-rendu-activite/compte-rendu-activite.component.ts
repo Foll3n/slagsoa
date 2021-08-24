@@ -9,10 +9,11 @@ import {CommandeInsert} from '../../models/commande/CommandeInsert';
 import {UserService} from '../../../services/user.service';
 import {Realisation} from '../../models/realisation/Realisation';
 import {CraWaitingService} from "../../../services/craWaiting.service";
-import {environment, hexToRGB} from '../../../../environments/environment';
+import {environment, hexToRGB, isDatesEqual} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {CommandeService} from '../../../services/commande.service';
 import {ProjetService} from '../../../services/projet.service';
+import {JoursferiesService} from '../../../services/joursferies.service';
 
 @Component({
   selector: 'app-compte-rendu-activite',
@@ -83,23 +84,27 @@ export class CompteRenduActiviteComponent implements OnInit {
   listeAddCommande: Map<string, CommandeInsert[]> = new Map();
   minWidth = environment.minWidth;
   givenDate!: Date;
-
+  jourFerieSubscription!: Subscription;
+  listeJoursFeries: Date[] = [];
   public get width() {
     return window.innerWidth;
   }
-  constructor(private projetService : ProjetService, private commandeService: CommandeService, public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig, private route: ActivatedRoute) {
+  constructor(private jourFerie: JoursferiesService, private projetService : ProjetService, private commandeService: CommandeService, public craService: CraService, private craWaintingService: CraWaitingService, private userService: UserService, config: NgbCarouselConfig, private route: ActivatedRoute) {
     config.interval = 0;
     config.wrap = true;
     config.keyboard = false;
     config.pauseOnHover = false;
     config.showNavigationArrows = false;
     config.showNavigationIndicators = true;
+    // récupération des jours de congés
+    this.jourFerieSubscription = this.jourFerie.joursSubject.subscribe((jours: Date[]) => this.listeJoursFeries = jours );
+    this.jourFerie.emitJoursFeriesSubject();
+
     this.realisationSubscription = this.userService.realisationsSubject.subscribe(
       (realisations: Realisation[]) => {this.listeRealisations = realisations;
         this.update();
       });
     this.route.params.subscribe(params => {
-      console.log("je rentre dans les params");
       this.currentSlide = '';
       this.givenDate = params.date;
       this.selectedWeek=-1;
@@ -120,8 +125,6 @@ export class CompteRenduActiviteComponent implements OnInit {
           this.userService.emitRealisationSubject();
         });
 
-
-      console.log("coucou!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       this.craService.emitCraSubject();
     });
     // craService.initialisation(new Date());
@@ -141,7 +144,6 @@ export class CompteRenduActiviteComponent implements OnInit {
   keyDown($event: Event){
 
     const event = ($event) as KeyboardEvent;
-    console.log(event.key);
     if ( event.key === 'ArrowLeft' || event.key === 'q') {
       // tslint:disable-next-line:no-non-null-assertion
       this.myCarousel!.prev();
@@ -225,14 +227,12 @@ export class CompteRenduActiviteComponent implements OnInit {
    * @param com
    */
   addSousProjet(com: CommandeInsert): void { ///////////////////////////////////////////////
-    console.log("ajout projet ", com);
     // @ts-ignore
     // this.craService.getCraToServer();
     // this.craService.addCraServer();
     if (!com.color){
       com.color = '';
     }
-    console.log("ajout d'un projet semaine :", this.selectedWeek);
     const commande = new CommandeInsert(com.num_com, com.id_projet, com.id, 'true', com.color);    // id -> 1 ou id 2 pour le projet pour le moment et 2/5 pour id commande
     this.craService.addCr(new CompteRendu(0, com.id, 0.0, com.color), this.selectedWeek, commande);
 
@@ -287,9 +287,7 @@ export class CompteRenduActiviteComponent implements OnInit {
     return ['Dimanche','Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][day];
   }
 
-  test1(){
-    console.log('pppppppppppppppppppp');
-  }
+
 
 
   /**
@@ -333,19 +331,19 @@ export class CompteRenduActiviteComponent implements OnInit {
    */
   canUpdateStatus(){
     for (const cra of this.craWeek[this.selectedWeek].listeCra){
-      console.log(cra.duree_totale);
-      if ( cra.duree_totale < (1 - cra.statusConge) || cra.duree_totale > (1-cra.statusConge)){
+      if (( cra.duree_totale < (1 - cra.statusConge) && !this.isFerie(cra.date)) || (cra.duree_totale > (1-cra.statusConge) && !this.isFerie(cra.date)) ){
         return false;
       }
     }
     return true;
   }
-
+  isFerie(date: Date){
+    return this.listeJoursFeries.find(d => isDatesEqual(d, date));
+  }
   /**
    * Permet de ne pas afficher le bouton si le status est validé
    */
   seeButton(){
-    console.log("selected week", this.selectedWeek,this.craWeek[this.selectedWeek].status);
     return this.craWeek[this.selectedWeek].status === '0';
 
   }

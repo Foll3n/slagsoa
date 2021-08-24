@@ -1,9 +1,8 @@
 
 
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.nomSociete" placeholder="nom Societe">-->
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.adresse">-->
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.siret">-->
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.mail">-->
+<!--****************************************************************************************
+                  Ajouter un responsable
+--****************************************************************************************-->
 <section>
 <h4>Ajout d'un responsable</h4>
 
@@ -39,32 +38,9 @@
     <input *ngIf="this.responsableForm.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
   </form>
 
-
-<!--  -->
-<!--<form class="form-group " [formGroup]="responsableForm"  #formDirective="ngForm"(submit)="addResponsable(formDirective)">-->
-<!--  <div class="d-inline-block">-->
-<!--    <input type="text" class="form-control" required formControlName="nom" placeholder="Nom">-->
-<!--  </div>-->
-<!--  <div class="d-inline-block">-->
-<!--    <input type="text" class="form-control" required formControlName="prenom" placeholder="Prenom">-->
-<!--  </div>-->
-<!--  <div class="d-inline-block" >-->
-<!--    <input type="text" class="form-control" required formControlName="mail" placeholder="Mail">-->
-<!--  </div>-->
-<!--  <div class="d-inline-block" >-->
-<!--    <mat-form-field appearance="outline">-->
-<!--      <mat-label>Selectionner un client</mat-label>-->
-<!--      <mat-select formControlName="idClient" required>-->
-<!--        <mat-option *ngFor="let client of this.listeClients" [value]="client.idClient">-->
-<!--          {{client.nomSociete}}-->
-<!--        </mat-option>-->
-<!--      </mat-select>-->
-<!--    </mat-form-field>-->
-<!--  </div>-->
-
-<!--  <input *ngIf="this.responsableForm.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >-->
-<!--</form>-->
-
+  <!--****************************************************************************************
+                    Table des responsables permettant de les modifier etc
+  --****************************************************************************************-->
 
 <div class="mat-elevation-z8 table-responsable">
   <table class="formResponsable" mat-table [dataSource]="dataSource" matSort>

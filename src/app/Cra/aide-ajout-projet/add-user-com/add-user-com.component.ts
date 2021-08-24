@@ -38,11 +38,9 @@ export class AddUserComComponent implements OnInit, OnChanges {
           const response = commandeHttp.getAllCommandsUser(u.id);
           response.subscribe(reponse => {
             if(reponse.status == 'OK'){
-
               if (reponse.realisations)
                 for(let real of reponse.realisations){
                   let commande = this.listeCommandes.find(c => c.id == real.id)
-                  console.log("commande :", commande);
                   if (commande){
                     if(this.listeUsersAdd.get(commande.num_com)) {
                       this.listeUsersAdd.get(commande.num_com)!.push(u);
@@ -52,13 +50,10 @@ export class AddUserComComponent implements OnInit, OnChanges {
                     }
                   }
                 }
-              console.log("listeUserAdd ->", this.listeUsersAdd);
-
             }
             else{
               console.log("Erreur : getAllCommandsUser");
             }
-
           });
         }
 
@@ -70,39 +65,25 @@ export class AddUserComComponent implements OnInit, OnChanges {
     });
   }
 
-  // clearAllValidators(){
-  //   this.utilisateurs.reset();
-  //   this.
-  // }
+  /**
+   * clear un utilisateur du formulaire
+   * @param formDirective
+   */
   clearUser(formDirective: FormGroupDirective){
     this.utilisateurs.get('idUser')?.reset();
     // formDirective.form.get('idUser')?.reset();
     this.utilisateurs.get('idUser')?.setValue('');
     this.utilisateurs.get('idUser')?.setErrors(null);
-
-
-    // this.utilisateurs.get('commande')?.reset();
-
-    // resetForm(this.utilisateurs);
-    // if (com){
-    //   this.utilisateurs.get('idUser')?.setErrors(null);
-    //   formDirective.resetForm();
-    // }
-    // formDirective.resetForm();
-    // this.utilisateurs.setControl('commande', com!);
-
   }
   ngOnInit(): void {
 
   }
   /**
-   * Ajoute une commande a un projet
+   * Ajoute une commande a un utilisateur et gère l'affichage
    */
   addUsersList(formDirective: FormGroupDirective){
     const user = this.userService.findUserById(this.utilisateurs.get('idUser')?.value); //mis en brut
     if (user){
-
-
     if (this.isUpdate){
       this.addRealisation(user,this.selectedCom );
     }
@@ -113,7 +94,6 @@ export class AddUserComComponent implements OnInit, OnChanges {
       else{
         this.listeUsersAdd.set(this.utilisateurs.get('commande')?.value, [user]);
       }
-      console.log("user add ->> :",this.listeUsersAdd);
     }
     }
     this.clearUser(formDirective);
@@ -135,11 +115,14 @@ export class AddUserComComponent implements OnInit, OnChanges {
           }
           }
           this.userService.refreshRealisationsUser();
-
       });
-
-      // this.commandeUtilisateur.reset();
     }
+
+  /**
+   * supprime une réalisation d'un utilisateur
+   * @param user
+   * @param commande
+   */
   deleteRealisation(user: Utilisateur, commande: CommandeInsert){
     let realisation = new RealisationPost(user.id, commande.id,  `${sessionStorage.getItem('id')}`);
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
@@ -149,8 +132,6 @@ export class AddUserComComponent implements OnInit, OnChanges {
         const index = this.listeUsersAdd.get(this.selectedCom.num_com)?.indexOf(user, 0);
         this.listeUsersAdd.get(this.selectedCom.num_com)?.splice(index!, 1);
       }
-      // this.userService.refreshRealisationsUser();
-
     });
 
     // this.commandeUtilisateur.reset();
@@ -173,7 +154,6 @@ export class AddUserComComponent implements OnInit, OnChanges {
     return res;
   }
   addUtilisateurs(){
-    console.log("user add ->> :",this.listeUsersAdd);
   this.listeUsersCom.emit(this.listeUsersAdd);
   }
   retirerUser(user:Utilisateur){

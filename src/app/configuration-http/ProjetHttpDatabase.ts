@@ -30,7 +30,6 @@ export class ProjetHttpDatabase{
   }
   // tslint:disable-next-line:variable-name
   getAllProjects(){
-    console.log("getAllProjects : id = " +  `${sessionStorage.getItem('id')}`);
     const href = environment.urlProjet + "/?idUserDoRequest=" + `${sessionStorage.getItem('id')}`;
     // tslint:disable-next-line:max-line-length
     return this._httpClient.get<BigProjet>(href, this.httpOptions);

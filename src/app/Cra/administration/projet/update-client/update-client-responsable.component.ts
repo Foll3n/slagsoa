@@ -15,6 +15,9 @@ import {Responsable} from '../../../models/responsable/responsable';
   templateUrl: './update-client-responsable.component.html',
   styleUrls: ['./update-client-responsable.component.scss']
 })
+/**
+ * Gestion des clients
+ */
 export class UpdateClientResponsableComponent implements OnInit {
   displayedColumns: string[] = ['nomSociete', 'adresse', 'mail','siret','valider'];
   dataSource!: MatTableDataSource<Client>;
@@ -38,19 +41,39 @@ export class UpdateClientResponsableComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
   }
+
+  /**
+   * mise à jour d'un client
+   * @param client
+   */
   updateClient(client: Client){
     this.clientService.updateClient(client);
   }
   ngOnInit(): void {
   }
+
+  /**
+   * check que le mail soit valide
+   * @param client
+   */
   validateMail(client: Client){
     return validateEmail(client.mail);
   }
+
+  /**
+   * check si la propriété du formulaire est valide ou non
+   * @param property
+   */
   check(property: string){
     checkValidity(property, this.clientForm);
 
   }
-addClient(formDirective: FormGroupDirective){
+
+  /**
+   * ajoute un client
+   * @param formDirective
+   */
+  addClient(formDirective: FormGroupDirective){
     this.clientService.addClient(new Client('', this.clientForm.get('nomSociete')?.value,
       this.clientForm.get('adresse')?.value,
       this.clientForm.get('mail')?.value,

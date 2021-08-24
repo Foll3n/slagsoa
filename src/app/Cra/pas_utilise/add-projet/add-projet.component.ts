@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Projet} from '../../../models/projet/Projet';
-import {ProjetService} from '../../../../services/projet.service';
+import {Projet} from '../../models/projet/Projet';
+import {ProjetService} from '../../../services/projet.service';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {resetForm, shortMessage} from '../../../../../environments/environment';
+import {resetForm, shortMessage} from '../../../../environments/environment';
 import {Subscription} from "rxjs";
-import {Message} from '../../../models/message';
-import {ResponsableService} from '../../../../services/responsable.service';
-import {Responsable} from '../../../models/responsable/responsable';
+import {Message} from '../../models/message';
+import {ResponsableService} from '../../../services/responsable.service';
+import {Responsable} from '../../models/responsable/responsable';
 
 @Component({
   selector: 'app-add-projet',
@@ -15,7 +15,7 @@ import {Responsable} from '../../../models/responsable/responsable';
 })
 
 /**
- * Ajout d'un nouveau projet avec une couleur
+ * Ajout d'un nouveau projet avec une couleur JAMAIS UTILISE
  */
 export class AddProjetComponent implements OnInit {
   projet!: FormGroup;

@@ -38,12 +38,9 @@ export class CraHttpDatabase{
     // tslint:disable-next-line:max-line-length
     let requestUrl='';
     if(checkAvailable == ''){
-      console.log("############################ 11111111 #######################################################################");
-
       requestUrl = href + '/?date_start=' + date_start + '&date_end=' + date_end + '&id_usr=' + idUsr ;// + `${href}/?date_start=${href}&date_end=${date_end}&id_usr=${id_usr}`;
     }
     else{
-      console.log("###################################################################################################");
       requestUrl = href + '/?date_start=' + date_start + '&date_end=' + date_end + '&id_usr=' + idUsr + "&checkValidity=" + checkAvailable;// + `${href}/?date_start=${href}&date_end=${date_end}&id_usr=${id_usr}`;
     }
     return this._httpClient.get<Big>(requestUrl, this.httpOptions);
@@ -72,7 +69,6 @@ export class CraHttpDatabase{
   getCraWeekWaiting(statusCra: string){
     const href = environment.urlCraWeek + '/status';
     // tslint:disable-next-line:max-line-length
-    console.log("icii je regarde l'id :" +  `${sessionStorage.getItem('id')}`);
     const requestUrl = href + '/?statusCra=' + statusCra + "&idUsrDoRequest="+ `${sessionStorage.getItem('id')}`;
     return this._httpClient.get<BigCraWeekWaiting>(requestUrl, this.httpOptions);
   }

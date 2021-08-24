@@ -28,6 +28,9 @@ import {UserService} from '../../../../services/user.service';
   styleUrls: ['./table-cra-en-attente.component.scss']
 })
 
+/**
+ * Table des cra en attentes ou des cra validés
+ */
 export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   @Input() index!: string;
   // @Input() index!: string;
@@ -43,6 +46,9 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   headTableElements = ['dateStart', 'dateEnd', 'Nom', 'Prenom', 'actions'];
   @Output() craWeekEmitter: EventEmitter<CraWeekInsert> = new EventEmitter();
 
+  /**
+   * After view init
+    */
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -54,10 +60,17 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     this.dataSource = new TableCraAdministration(this.httpClient);
   }
 
+  /**
+   * envoie au parent le CRA afin de l'afficher
+    * @param cra
+   */
   envoieParent(cra: CraWeekInsert) {
     this.craWeekEmitter.emit(cra);
   }
 
+  /**
+   * initialisation du cra semaine validé ou non validé
+   */
   ngOnInit(): void {
     this.listeCraSubscription = this.craWaitingService.waitingSubject.subscribe(
       (craWeek: CraWeekInsert[]) => {
@@ -72,6 +85,10 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /**
+   * ouvrir le dialogue pour laisser un message de refus au cra
+    * @param cra
+   */
   openDialog(cra: CraWeekInsert): void {
     const dialogRef = this.dialog.open(DialogContent, {
       width: '550px',
@@ -84,6 +101,9 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * mise à jour du tableau datasource
+    */
   update() {
 
     if (this.index == '1') {
@@ -93,10 +113,18 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * valider un compte rendu d'activité
+   * @param cra
+   */
   validerCra(cra: CraWeekInsert) {
     this.craWaitingService.validerCra(cra, 'OK');
   }
 
+  /**
+   * refuser un compte rendu d'activité
+   * @param cra
+   */
   refuserCra(cra: CraWeekInsert) {
     this.craWaitingService.refuserCra(cra, this.commentaire);
     this.paginator!._changePageSize(this.paginator!.pageSize);

@@ -13,6 +13,9 @@ import {Projet} from '../../../../models/projet/Projet';
   templateUrl: './visualisation-projet.component.html',
   styleUrls: ['./visualisation-projet.component.scss']
 })
+/**
+ * chart permettant de visualiser différentes informations sur un projet
+ */
 export class VisualisationProjetComponent implements OnInit, OnChanges {
   @Input()
   index!:number;
@@ -32,7 +35,6 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
   public doughnutChartLegend = true;
   public doughnutChartPlugins = [];
   minWidth = environment.minWidth;
-
   public get width() {
     return window.innerWidth;
   }
@@ -48,15 +50,18 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
     console.log("init affichage graph");
 
   }
+
+  /**
+   * rempli le graphique
+   * @param stats
+   */
   fillChart(stats: Stat[]){
-    console.log("je rempli le chart");
     this.doughnutChartLabels = [];
     this.doughnutChartData = [];
     for(const stat of stats){
       this.doughnutChartLabels.push(stat.key);
       this.doughnutChartData.push(+stat.duree);
     }
-    console.log(this.doughnutChartLabels);
   }
   public doughnutChartOptions = {
     tooltips: {
@@ -75,56 +80,55 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
       },
     },
   };
+  /**
+   * statistiques sur les utilsiateurs qui réalisent un projet donné
+   */
   statsUsers(codeProjet: string){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
     const response = projetHttp.getAllStatsUsers('2000-01-01','2040-01-01',codeProjet);
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
-        console.log("ici : ",reponse);
         if (reponse.stats != null) {
-          console.log("stats users : ",reponse.stats);
           this.fillChart(reponse.stats);
         } else {
           console.log("pas de stats");
-
-          //this.getCraToServer(index);
         }
       } else {
         console.log("Erreur de requete de base de données");
       }
     });
   }
+  /**
+   * statistiques sur les commandes associées à un projet
+   */
   statsCommandes(codeProjet: string){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
     const response = projetHttp.getAllStatsCommandes('2000-01-01','2040-01-01',codeProjet);
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.stats != null) {
-          console.log("stats commandes: ",reponse.stats);
           this.fillChart(reponse.stats);
         } else {
           console.log("pas de stats");
-
-          //this.getCraToServer(index);
         }
       } else {
         console.log("Erreur de requete de base de données");
       }
     });
   }
+
+  /**
+   * statistiques sur le projet qui a pris le plus de temps à l'entreprise
+   */
   statsDurees(){
     const projetHttp = new ProjetHttpDatabase(this.httpClient);
     const response = projetHttp.getAllStatsDurees('2000-01-01','2040-01-01');
     response.subscribe(reponse => {
-      console.log(reponse);
       if (reponse.status == 'OK') {
         if (reponse.stats != null) {
-          console.log("stats durees: ",reponse.stats);
           this.fillChart(reponse.stats);
         } else {
           console.log("pas de stats");
-
-          //this.getCraToServer(index);
         }
       } else {
         console.log("Erreur de requete de base de données");
@@ -143,7 +147,6 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("on changes affichage graph");
     this.modify();
   }
 }

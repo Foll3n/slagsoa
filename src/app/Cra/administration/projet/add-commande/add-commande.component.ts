@@ -38,16 +38,13 @@ export class AddCommandeComponent implements OnInit {
   selectedProjet!:Projet;
   commandeAdd:Message = new Message('');
 
-  isAddCom = false;
   isAddRealisation = false;
   commandeProjet!: FormGroup;
   commandeUtilisateur!: FormGroup;
 
+
   constructor(private craService: CraService,private projetService: ProjetService, private httpClient: HttpClient, private userService: UserService, private commandeService: CommandeService) {
     this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
-
-    // this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => this.listeCommandes = commandes );
-    //Création des différents formulaires nécessaires
     this.commandeProjet = new FormGroup({
       codeCommande: new FormControl(),
       projet: new FormControl(),
@@ -57,9 +54,7 @@ export class AddCommandeComponent implements OnInit {
       projet: new FormControl(),
     });
     this.commandeUtilisateur = new FormGroup({
-      // commande: new FormControl(),
       projet: new FormControl(),
-      // utilisateur: new FormControl()
     });
   }
 
@@ -82,6 +77,9 @@ export class AddCommandeComponent implements OnInit {
     return window.innerWidth;
   }
 
+  /**
+   * récupère les commandes d'un projet
+   */
   getCommandesProjet(){
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
     const rep = commandeHttp.getAllCommandsProjet(this.commandeProjet.get('projet')?.value);
@@ -107,10 +105,7 @@ export class AddCommandeComponent implements OnInit {
 
       if (this.listeCommandeProjet && this.listeCommandeProjet.find(c => c.num_com === commande.num_com)) {
         shortMessage(this.commandeAdd,'Commande déja présente');
-
       } else {
-
-
         const commandeHttp = new CommandeHttpDatabase(this.httpClient);
         const response = commandeHttp.addCommande(commande);
         response.subscribe(reponse => {
@@ -121,48 +116,18 @@ export class AddCommandeComponent implements OnInit {
             shortMessage(this.commandeAdd,'Erreur de base de données');
           }
         });
-
       }
       // this.commandeProjet.clearValidators();
       resetForm(this.commandeProjet);
       formDirective.resetForm();
     }
-
   }
+
   setComUser(map: Map<string, Utilisateur[]>){
     console.log("map -> ", map);
 
   }
 
-  /**
-   * Ajoute une commande à un utilisateur à l'aide du formulaire
-   */
-//   addRealisation(formDirective: FormGroupDirective){
-//     if(this.commandeUtilisateur){
-//       let realisation = new RealisationPost(this.commandeUtilisateur.get('utilisateur')?.value, this.commandeUtilisateur.get('commande')?.value,  `${sessionStorage.getItem('id')}`);
-//       const commandeHttp = new CommandeHttpDatabase(this.httpClient);
-//       const response = commandeHttp.addCommandeUser(realisation);
-//       response.subscribe(reponse => {
-//         if(reponse.status == 'OK'){
-//           this.isAddRealisation = true;
-//           setTimeout(() => {
-//             this.isAddRealisation = false;
-//           }, 3000);
-//           this.userService.refreshRealisationsUser();
-//           // this.craService.ini
-//         }
-//         else{
-//           console.log("Erreur de requete de base de données");
-//           this.isAddRealisation = false;
-//         }
-//
-//
-//       });
-//       resetForm(this.commandeUtilisateur);
-//       formDirective.resetForm();
-//       // this.commandeUtilisateur.reset();
-//     }
-// }
 
   /**
    * Récupère la liste des commandes d'un projet
@@ -198,9 +163,6 @@ export class AddCommandeComponent implements OnInit {
       else{
         console.log("Erreur de requete de base de données");
       }
-
-
     });
   }
-
 }

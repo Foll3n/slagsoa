@@ -1,6 +1,8 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>-->
 <html >
-
+<!--****************************************************************************************
+                  PDF généré pour l'entreprise concernant l'activité d'un utilisateur dans un mois donné
+--****************************************************************************************-->
 
 <div #content class="container" id="display{{this.user.id}}">
   <div class="logo">
@@ -15,9 +17,7 @@
     <p>Commande: {{pdf.codeProjet}}</p>
   </div>
 
-  <!--  <p>-->
-  <!--    {{pdf.responsableNom}}{{pdf.responsableNom}}-->
-  <!--  </p>-->
+
   <div class="d-flex justify-content-end">
   <h4>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h4>
   </div>
@@ -26,18 +26,13 @@
     <tr >
       <th class="bandeau" colspan="4">Semaine du {{getDateElem(this.ligne[0])}} au {{getDateElem(this.ligne[this.ligne.length-1])}}</th>
     </tr>
-
     </thead>
     <tbody>
     <tr *ngFor="let elem of this.ligne" class="ligne-pdf" >
-<!--      <div class="ligne-pdf" >-->
-<!--        <td ><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{getDayElem(elem)}}</div></td>-->
         <td ><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{getDayElem(elem)}} {{getDateElem(elem)}}</div></td>
         <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{elem.codeProjet}}</div></td>
         <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">Imputation Jours Hommes_{{pdf.nomSociete}}</div></td>
         <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne"> {{getDuree(elem)}} </div></td>
-<!--      </div>-->
-
     </tr>
     <tr class="bandeau">
       <th colspan="2">OTP </th>
@@ -47,9 +42,7 @@
     <tr>
       <td>{{this.pdf.codeProjet}} </td>
       <td></td>
-<!--      <td></td>-->
       <td>Imputation Jours Homme_{{pdf.nomSociete}} </td>
-
       <td>{{sommeDuree()}} jours </td>
     </tr>
     <tr class="bandeau">
@@ -58,22 +51,16 @@
     <tr class="fin-tableau-signatures">
       <td>Collaborateur </td>
       <td></td>
-<!--      <td></td>-->
       <td>Client {{this.pdf.responsableNom}} {{this.pdf.responsablePrenom}}</td>
       <td></td>
     </tr>
     <tr>
       <td>Date: {{currentDate}}  </td>
       <td></td>
-<!--      <td></td>-->
       <td>Date: {{currentDate}}  </td>
       <td></td>
-
     </tr>
-
-
     </tbody>
   </table>
 </div>
-
 </html>

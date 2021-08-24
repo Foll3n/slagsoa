@@ -31,7 +31,6 @@ export class Slide1Component implements OnInit {
     });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
     {
-      console.log("je recupere", clients);
       this.listeClients = clients;
     });
   }
@@ -39,6 +38,11 @@ export class Slide1Component implements OnInit {
     checkValidity(property, this.clientForm)
 
   }
+
+  /**
+   * met à jour le formulaire
+    * @param client
+   */
   updateClient(client: Client){
     this.clientForm.patchValue({
       mail: client.mail,
@@ -50,7 +54,6 @@ export class Slide1Component implements OnInit {
   }
   ngOnInit(): void {
     this.clientService.emitClientSubject();
-    console.log("updateClient ");
   }
   applyClient(){
     // tslint:disable-next-line:no-non-null-assertion
@@ -58,14 +61,12 @@ export class Slide1Component implements OnInit {
     // this.tempClient = undefined;
   }
   sendClient(){
-    console.log("je passe meme pas laaa");
     const client = new Client(this.selectedClient ? this.selectedClient.idClient : '', this.clientForm.get('nomSociete')?.value.trim(),
       this.clientForm.get('adresse')?.value.trim(),
       this.clientForm.get('mail')?.value.trim(),
       this.clientForm.get('siret')?.value.trim());
 
     // resetForm(this.clientForm);
-    console.log("je suis dans le fils j'envoie ",client,"au pere");
     this.eventItem.emit(client);
   }
   searchTerm(){

@@ -1,5 +1,7 @@
 <section [ngClass]="{ 'section-update-projet': width >= minWidth, 'section-update-projet-responsive': width < minWidth }">
-
+  <!--****************************************************************************************
+                    table des projets
+  --****************************************************************************************-->
   <mat-form-field appearance="standard">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex:Gifi" #input>
