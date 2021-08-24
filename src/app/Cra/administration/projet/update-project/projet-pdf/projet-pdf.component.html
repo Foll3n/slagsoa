@@ -15,7 +15,7 @@
   </mat-select>
 </mat-form-field>
 <button class="btn btn-light" (click)="this.initUsersProjet()">Charger tous les utilisateurs</button>
-  <button class="btn btn-light" *ngIf="listeUtilisateurs.length>0" (click)="this.generateTrue()">Générer le pdf</button>
+  <button class="btn btn-light" *ngIf="listeUtilisateurs.length>0" (click)="this.createPDF()">Générer le pdf</button>
 
 <div >
   <div  *ngFor="let u of this.listeUtilisateurs; let i = index">

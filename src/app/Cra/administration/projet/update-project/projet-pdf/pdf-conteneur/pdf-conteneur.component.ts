@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {EventEmitter, Component, ElementRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ListPdf} from '../../../../../models/projet/ListPdf';
 import {Pdf} from '../../../../../models/projet/Pdf';
 import jsPDF, {Html2CanvasOptions} from 'jspdf';
@@ -10,7 +10,8 @@ import {UtilisateurSimple} from '../../../../../../Modeles/utilisateurSimple';
   templateUrl: './pdf-conteneur.component.html',
   styleUrls: ['./pdf-conteneur.component.scss']
 })
-export class PdfConteneurComponent implements OnChanges {
+export class PdfConteneurComponent {
+  @Output() eventItem = new EventEmitter();
   @ViewChild('content', {static: false}) el!: ElementRef;
   @Input()
   ligne!: ListPdf[];
@@ -29,10 +30,7 @@ export class PdfConteneurComponent implements OnChanges {
    * lorsque les paramètres d'entrée changent j'essaye de générer le pdf
    * @param changes
    */
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("je change dans pdf", this.user, this.ligne);
-    this.makePdf();
-  }
+
   getDayElem(elem: ListPdf){
     return formatDate(elem.date,'EE','fr');
   }
@@ -64,32 +62,9 @@ export class PdfConteneurComponent implements OnChanges {
     return duree + ' jours';
   }
 
-  /**
-   * créé un pdf si le booleen generate est a true
-   */
-  makePdf(){
-    if(this.generate)
-      this.openPDF();
-  }
 
-  /**
-   * télécharge un pdf
-   */
-  public openPDF():void {
-    let DATA = document.getElementById('display' + this.user.id);
-    if (DATA) {
-      html2canvas(DATA).then(canvas => {
-        let fileWidth = 210.2;
-        let fileHeight = 297.3;
-        const FILEURI = canvas.toDataURL('image/png', 1.0);
-        let PDF = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
 
-        PDF.save('CRA_' + this.getMonth()+"_"+this.pdf.nomSociete+"_"+this.user.prenom+'.pdf');
-      });
-    }
-  }
+
 
   ngOnInit(): void {
   }

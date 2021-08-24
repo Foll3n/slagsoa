@@ -12,6 +12,7 @@ import {UserService} from '../../../../../services/user.service';
 import {Utilisateur} from '../../../../../Modeles/utilisateur';
 import {UtilisateursHttpService} from '../../../../../configuration-http/utilisateurs-http.service';
 import {UtilisateurSimple} from '../../../../../Modeles/utilisateurSimple';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-projet-pdf',
   templateUrl: './projet-pdf.component.html',
@@ -59,12 +60,32 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   }
 
   /**
-   * active la génération de pdf
+   * retourne le mois actuel bien formé MMMM_yyyy
    */
-  generateTrue(){
-    this.generate = true;
+  getMonth(){
+    return formatDate(new Date(),'MMMM_yyyy','fr');
   }
+  /**
+   * télécharge un pdf
+   */
 
+  public createPDF():void {
+    for (const user of this.listeUtilisateurs) {
+      const DATA = document.getElementById('display' + user.id);
+      if (DATA) {
+        html2canvas(DATA).then(canvas => {
+          const fileWidth = 210.2;
+          const fileHeight = 297.3;
+          const FILEURI = canvas.toDataURL('image/png', 1.0);
+          const PDF = new jsPDF('p', 'mm', 'a4');
+          const position = 0;
+          PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+
+          PDF.save('CRA_' + this.getMonth() + "_" + this.pdfInfoListe[this.indexOflisteUtilisateurs(user)] + "_" + user.nom + '.pdf');
+        });
+      }
+    }
+  }
   /**
    * initialisation des pdf
    */
@@ -112,11 +133,11 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
    * @param index
    */
   fill(index:number) {
-      for (let elem of this.listepdf[index]) {
-        let e = this.isInpdfList(this.pdfInfoListe[index].listeFill, elem);
-        elem.duree = e.duree;
-        elem.date = e.date;
-      }
+    for (let elem of this.listepdf[index]) {
+      let e = this.isInpdfList(this.pdfInfoListe[index].listeFill, elem);
+      elem.duree = e.duree;
+      elem.date = e.date;
+    }
   }
 
   /**
@@ -135,23 +156,23 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
 
   /**
    * met la durée de tous les jours à 0
-    * @param user
+   * @param user
    */
   getDaysInMonth(user: number) {
     this.listepdf[user] = [];
     this.pdfList = [];
     let first = new Date(this.firstDay);
-      while(first <= this.lastDay){
-        let dateString = formatDate(first,'yyyy-MM-dd','fr');
-        let res = new ListPdf(dateString, this.projet.code_projet+'', '0');
-          this.listepdf[user].push(res);
-          first.setDate(first.getDate()+1);
-      }
+    while(first <= this.lastDay){
+      let dateString = formatDate(first,'yyyy-MM-dd','fr');
+      let res = new ListPdf(dateString, this.projet.code_projet+'', '0');
+      this.listepdf[user].push(res);
+      first.setDate(first.getDate()+1);
+    }
   }
 
   /**
    * appel le chargement d'un pdf associé au projet pour chaque utilisateurs
-    */
+   */
   makePdf(){
     let index = 0;
     for (let usr of this.listeUtilisateurs){
@@ -172,7 +193,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
 
   /**
    * récupère les valeurs en bdd pour charger le pdf associé au projet
-    * @param idUser
+   * @param idUser
    * @param index
    */
   chargerProjet(idUser:string, index:number){
@@ -193,6 +214,6 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-      this.utilisateurService.emitUsersSubject();
+    this.utilisateurService.emitUsersSubject();
   }
 }
