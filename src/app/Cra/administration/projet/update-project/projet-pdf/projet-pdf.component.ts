@@ -13,13 +13,48 @@ import {Utilisateur} from '../../../../../Modeles/utilisateur';
 import {UtilisateursHttpService} from '../../../../../configuration-http/utilisateurs-http.service';
 import {UtilisateurSimple} from '../../../../../Modeles/utilisateurSimple';
 import html2canvas from 'html2canvas';
+import {FormControl} from '@angular/forms';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
+
+// Depending on whether rollup is used, moment needs to be imported differently.
+// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
+// syntax. However, rollup creates a synthetic default module and we thus need to import it using
+// the `default as` syntax.
+import * as _moment from 'moment';
+// tslint:disable-next-line:no-duplicate-imports
+// @ts-ignore
+import {default as _rollupMoment, Moment} from 'moment';
+
+const moment = _rollupMoment || _moment;
+// tslint:disable-next-line:no-duplicate-imports
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'app-projet-pdf',
   templateUrl: './projet-pdf.component.html',
-  styleUrls: ['./projet-pdf.component.scss']
+  styleUrls: ['./projet-pdf.component.scss'],
+  providers:[{
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+  },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+  ]
 })
 export class ProjetPdfComponent implements OnInit, OnChanges {
   @ViewChild('content', {static:false}) el!: ElementRef
+  date = new FormControl(moment());
   firstDayString!:string;
   lastDayString!:string;
   firstDay!:Date;
@@ -64,6 +99,20 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
    */
   getMonth(){
     return formatDate(new Date(),'MMMM_yyyy','fr');
+  }
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+    console.log("date :", this.date);
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value;
+    ctrlValue.month(normalizedMonth.month());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+    console.log("date :", this.date.value._d as Date);
   }
   /**
    * télécharge un pdf
@@ -146,7 +195,7 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
    */
   initCurrentMonth(user: number){
     this.pdfList=[];
-    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var date = this.date.value._d as Date, y = date.getFullYear(), m = date.getMonth();
     this.firstDayString = formatDate(new Date(y, m, 1),'yyyy-MM-dd','fr');
     this.lastDayString = formatDate(new Date(y, m + 1, 0),'yyyy-MM-dd','fr');
     this.firstDay = new Date(y, m, 1);

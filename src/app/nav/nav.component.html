@@ -104,7 +104,9 @@
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <a *ngIf="this.c.isSuperAdmin() && this.c.isLogged()" class="dropdown-item" href="administration-cra">Compte rendu d'activité</a>
+
+              <a *ngIf="this.c.isSuperAdmin() && this.c.isLogged()" class="dropdown-item" href="administration-cra">Compte rendu d'activité
+              </a>
               <a *ngIf="this.c.isSuperAdmin() && this.c.isLogged()" class="dropdown-item" href="administration-projet">Gestion des projets</a>
             </mat-expansion-panel>
           </mat-accordion>

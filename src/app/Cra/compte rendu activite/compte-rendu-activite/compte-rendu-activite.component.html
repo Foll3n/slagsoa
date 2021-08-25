@@ -26,7 +26,7 @@
 
 <!--      , 'add-commande-responsive': width < minWidth-->
       <mat-form-field appearance="fill" *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth }">
-        <mat-label>Ajouter commande</mat-label>
+        <mat-label>Ajouter une tâche</mat-label>
         <mat-select *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">
           <mat-optgroup style="background-color: {{this.hexToRGB(getColor(projetName), '0.2')}}; display: block" *ngFor="let projetName of this.listeAddCommande.keys()" label={{projetName}}>
             <mat-option *ngFor="let com of listeAddCommande.get(projetName)" [value]="com.id" (click)="addSousProjet(com)">

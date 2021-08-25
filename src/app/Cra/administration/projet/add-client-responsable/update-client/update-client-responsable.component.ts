@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Client} from '../../../models/client/Client';
+import {Client} from '../../../../models/client/Client';
 import {Subscription} from 'rxjs';
-import {ClientService} from '../../../../services/client.service';
+import {ClientService} from '../../../../../services/client.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {Projet} from '../../../models/projet/Projet';
+import {Projet} from '../../../../models/projet/Projet';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {checkValidity, resetForm, validateEmail} from '../../../../../environments/environment';
-import {Responsable} from '../../../models/responsable/responsable';
+import {checkValidity, resetForm, validateEmail} from '../../../../../../environments/environment';
+import {Responsable} from '../../../../models/responsable/responsable';
 
 @Component({
   selector: 'app-update-client-responsable',
@@ -26,6 +26,8 @@ export class UpdateClientResponsableComponent implements OnInit {
   listeClients!: Client[];
   clientSubscription!: Subscription;
   clientForm!: FormGroup;
+  isAdd = false;
+  cpt = 0;
   constructor(private clientService: ClientService) {
     this.clientForm = new FormGroup({
       mail: new FormControl(),
@@ -35,6 +37,14 @@ export class UpdateClientResponsableComponent implements OnInit {
     });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients:Client[]) =>
     {
+      if(this.cpt > 0){
+        this.isAdd = true;
+        setTimeout(() => {
+          this.isAdd = false;
+        }, 2000);
+      }
+      this.cpt++;
+
       this.listeClients = clients;
       this.dataSource = new MatTableDataSource(this.listeClients);
       this.dataSource.paginator = this.paginator;

@@ -6,7 +6,7 @@
   <form class="form-group " [formGroup]="clientForm"  (submit)="this.sendClient()">
     <div class="search-div">
     <div class="form">
-      <input type="text" id="name" (input)="searchTerm()" [(ngModel)]="societeNom" formControlName="nomSociete" autocomplete="off" required="required">
+      <input type="text" id="name" (input)="searchTerm()" [(ngModel)]="societeNom" minlength="3" formControlName="nomSociete" autocomplete="off" required="required">
       <label for="name" class="label-name" >
         <span class="content-name">Nom de la société</span>
       </label>
@@ -22,7 +22,7 @@
       </label>
     </div>
     <div class="form">
-      <input type="text" id="adresse" formControlName="adresse" autocomplete="off" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
+      <input type="text" id="adresse" formControlName="adresse" minlength="10" autocomplete="off" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
       <label for="adresse" class="label-name">
         <span class="content-name">Adresse</span>
       </label>

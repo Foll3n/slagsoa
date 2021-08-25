@@ -60,6 +60,8 @@
   text-align: center;
   margin:auto;
 
+  position: relative;
+
 }
 .bouton-valider{
   text-align: center;
@@ -68,375 +70,21 @@
 
 
 
-//
-//
-//* {
-//  box-sizing: border-box;
-//  &:before, &:after {
-//    content: '';
-//    position: absolute;
-//  }
-//}
-//
-//.toggle-wrapper input {
-//  height: 40px;
-//  left: 0px;
-//  //opacity: 0;
-//  position: absolute;
-//  width: 40px;
-//}
-//
-//.toggle-wrapper {
-//  background-color: green;
-//
-//  flex: 1 1 calc(100% / 3);
-//  min-height: 50vh;
-//  width: 500px;
-//  display: flex;
-//  align-items: center;
-//  justify-content: center;
-//  position: absolute;
-//  top:0px;
-//
-//  overflow: hidden;
-//  //position: relative;
-//  @media (max-width: 960px) {
-//    flex: 1 1 calc(100% / 2);
-//  }
-//  @media (max-width: 700px) {
-//    flex: 1 1 100%;
-//  }
-//}
-//
-
-//
-//.toggle {
-//  position: relative;
-//  display: inline-block;
-//}
-//
-//label.toggle-item {
-//  width: 7em;
-//  background: #2e394d;
-//  height: 3em;
-//  display: inline-block;
-//  border-radius: 50px;
-//  margin: 40px;
-//  position: relative;
-//  transition: all .3s ease;
-//  transform-origin: 20% center;
-//  cursor: pointer;
-//  &:before {
-//    display: block;
-//    transition: all .2s ease;
-//    width: 2.3em;
-//    height: 2.3em;
-//    top: .25em;
-//    left: .25em;
-//    border-radius: 2em;
-//    border: 2px solid #88cf8f;
-//    transition: .3s ease;
-//  }
-//}
-//
-//
-//
-//.basketball-hoop {
-//  label {
-//    background: #fdb827;
-//  }
-//  label:before {
-//    content: none;
-//  }
-//  .ball {
-//    border-radius: 50%;
-//    width: 2.5em;
-//    height: 2.5em;
-//    position: absolute;
-//    background: #FF9800;
-//    border: 2px solid black;
-//    transition: .4s ease;
-//    top: 4px;
-//    left: 4px;
-//    background-image: radial-gradient(circle at -5px 10px, transparent 15px, black 15px, black 17px, transparent 17px), radial-gradient(circle at 41px 25px, transparent 15px, black 15px, black 17px, transparent 17px), linear-gradient(110deg, transparent 22px, black 22px, black 24px, transparent 24px), linear-gradient(18deg, transparent 22px, black 22px, black 24px, transparent 24px);
-//    &__wrapper {
-//      transition: .4s ease;
-//      width: 195%;
-//      height: 200%;
-//      transform-origin: 50% -2%;
-//    }
-//  }
-//  .hoop {
-//
-//    top: -50px;
-//    right: -84px;
-//    width: 50px;
-//    background: #f44336;
-//    height: 8px;
-//    position: absolute;
-//    &:before {
-//      position: absolute;
-//      right: -4px;
-//      width: 7px;
-//      height: 60px;
-//      background: #cd2e22;
-//      top: -40px;
-//    }
-//    &:after {
-//      width: 40px;
-//      height: 35px;
-//      background: repeating-linear-gradient(45deg, transparent, transparent 13px, red 13px, red 15px), repeating-linear-gradient(-45deg, transparent, transparent 13px, red 13px, red 15px);
-//      top: 8px;
-//      border-radius: 0 0 20% 20%/40% 40% 60% 60%;
-//      border: 2px solid red;
-//      border-width: 0 2px;
-//      left: 2px;
-//      z-index: 20;
-//    }
-//  }
-//}
-//
-//#hoop:checked  {
-//  + label {
-//    background: #542583;
-//    transition-delay: 1.35s;
-//    .ball__wrapper {
-//      animation: 1.5s linear ball-wrapper forwards;
-//    }
-//    .ball {
-//      animation: 1.5s linear ball forwards;
-//    }
-//  }
-//}
-//
-//@keyframes ball {
-//  0% { transform: none; }
-//  40% { transform: rotate(-150deg) }
-//  48% { transform: rotate(-150deg) translateY(92px) }
-//  52% { transform: rotate(-150deg) translate(-10px, 80px) }
-//  56% { transform: rotate(-150deg) translate(-25px, 91px) }
-//  60% { transform: rotate(-150deg) translate(-35px, 86px) }
-//  65% { transform: rotate(-150deg) translate(-45px, 91px) }
-//  70% { transform: rotate(-150deg) translate(-50px, 87px) }
-//  75% { transform: rotate(-150deg) translate(-60px, 91px) }
-//  80% { transform: rotate(-150deg) translate(-65px, 88px) }
-//  85% { transform: rotate(-150deg) translate(-70px, 91px) }
-//  90% { transform: rotate(-150deg) translate(-75px, 90px) }
-//  95% { transform: rotate(-150deg) translate(-80px, 90px) }
-//  100% { transform: rotate(-150deg) translate(-82px,91px) }
-//}
-//
-//@keyframes ball-wrapper {
-//  0% { transform: none; }
-//  40%, 100% { transform: rotate(150deg); }
-//}
-
-//HTML SCSS JSResult Skip Results Iframe
-//EDIT ON
-
-
-
-///////////////////// ok ////////////////////
-//
-//*, :after, :before {
-//  box-sizing: border-box;
-//}
-//
-//body {
-//  margin: 60px auto;
-//  text-align: center;
-//  background-color: #ff9295;
-//  transition: background-color 0.2s     cubic-bezier(0, -1.85, .27, 1.75);
-//}
-//.conteneur-switch{
-//  position: relative;
-//}
-//.toggle {
-//  position: absolute;
-//  top: -40px;
-//  right: 0px;
-//  // padding: 0 200px;
-//  transform: translate3d(-50%, -50%, 0);
-//
-//
-//
-//
-//  label {
-//    position: relative;
-//    display: inline-block;
-//    width: 50px;
-//    height: 50px;
-//    background-color: #FD1015;
-//    border-radius: 50px;
-//    cursor: pointer;
-//    box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1), 0px 9px 15px 0px #ef4247;
-//    -webkit-tap-highlight-color: transparent;
-//
-//    &:before {
-//      content: "";
-//      position: absolute;
-//      top: 50%;
-//      left: 50%;
-//      transform: translate(-50%, -50%);
-//      transition:width 0.2s cubic-bezier(0, -1.85, .27, 1.75);
-//      height: 42px;
-//      width: 42px;
-//      background-color: #fd0f14;
-//      border-radius: 46px;
-//      box-shadow: inset 0px 0px 0px 5px #fff;
-//    }
-//  }
-//
-//  input {
-//    display: none;
-//
-//    &:checked + label {
-//      background-color: #57de72;
-//      box-shadow:  inset 0 0 2px 1px rgba(0, 0, 0, 0.1), 0px 9px 15px 0px rgba(3, 132, 28, 0.5411764705882353);
-//
-//      &:before {
-//        width: 10px;
-//        background-color: #fff;
-//      }
-//    }
-//  }
-//}
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////
-//
-//
-//*,
-//*::before,
-//*::after {
-//  transition: 400ms all ease-in-out 50ms;
-//  box-sizing: border-box;
-//  backface-visibility: hidden;
-//}
-//
-//.container-toogle{
-//  position: relative;
-//}
-//
-////html,body{ text-align: center; font-family: 'Sanchez', serif;}
-//
-//input[type="checkbox"] {
-//  display: none;
-//  background-color: yellow;
-//}
-//
-//
-//
-//
-///*Button is :CHECKED*/
-//
-//.dialog-projet{
-//  width:300px;
-//  position:absolute;
-//}
-//
-//
-//.container-toogle > input[type="checkbox"]:checked ~ div {
-//  background: rgba(73,168,68,1);
-//  box-shadow: 0 0 2px rgba(73,168,68,1);
-//}
-//
-//.container-toogle > input[type="checkbox"]:checked ~ div label {
-//  left: 110px;
-//  transform: rotate(360deg);
-//}
-//
-//
-///*shared*/
-//
-//.divtoggle,
-//label {
-//  border-radius: 50px;
-//}
-//
-//
-///*'un':checked state*/
-//
-//.divtoggle {
-//  height: 100px;
-//  width: 200px;
-//  background: red;
-//  position: relative;
-//  top: -50px;
-//  left:250px;
-//
-//  box-shadow: 0 0 2px rgba(43,43,43,1);
-//
-//}
-//
-//.divtoggle > label {
-//  height: 80px;
-//  width: 80px;
-//  background: rgba(255, 255, 255, 1);
-//  position: absolute;
-//  top: 10px;
-//  left: 10px;
-//  cursor: pointer;
-//}
-//
-//.divtoggle > label::before {
-//  content: '';
-//  height: 60px;
-//  width: 5px;
-//  position: absolute;
-//  top: calc(50% - 30px);
-//  left: calc(50% - 2.5px);
-//  transform: rotate(45deg);
-//}
-//
-//.divtoggle > label::after {
-//  content: '';
-//  height: 5px;
-//  width: 60px;
-//  position: absolute;
-//  top: calc(50% - 2.5px);
-//  left: calc(50% - 30px);
-//  transform: rotate(45deg);
-//}
-//
-//.divtoggle > label::before,
-//.divtoggle > label::after{
-//  background: rgba(43,43,43,1);
-//  border-radius: 5px;
-//}
-//
-///* pesduo class on toggle */
-//
-//input[type="checkbox"]:checked ~ div label::before{
-//  height: 50px;
-//  top: calc(55% - 25px);
-//  left: calc(60% - 2.5px);
-//  background: rgba(73,168,68,1);
-//}
-//input[type="checkbox"]:checked ~ div label::after{
-//  width: 20px;
-//  top: calc(95% - 25px);
-//  left: calc(22.5% - 2.5px);
-//  background: rgba(73,168,68,1);
-//}
-
-///////////////////////////////////////////////////////////////////
-
+.top{
+  position:relative;
+  width: 100%;
+}
 .etat-projet{
-  width: 120px;
-  position: relative;
+  width: 170px;
+  position: absolute;
   display: block;
-  left:380px;
-  top:-120px;
+  top:-40px;
+  right:0;
 }
 .onoffswitch {
-  position: relative; width: 79px;
-  left:400px;
+  position: absolute; width: 79px;
   top:-50px;
+  right: 0;
   -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 .onoffswitch-checkbox {
@@ -469,8 +117,14 @@
   background-color: #EDABAB; color: #D12C2C;
   text-align: right;
 }
+.active{
+  color: green;
+}
+.desactive{
+  color:red;
+}
 .onoffswitch-switch {
-  display: block; width: 18px; margin: 5.5px;
+  display: block; width: 18px; margin: 5.5px; height: 22px;
   background: #9E9B9B;
   position: absolute; top: 0; bottom: 0;
   right: 46px;

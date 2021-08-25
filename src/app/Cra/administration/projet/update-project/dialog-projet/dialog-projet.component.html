@@ -4,18 +4,19 @@
 --****************************************************************************************-->
 
 <div class="dialog-projet">
-<div class="position-absolute">
-  <input class="picker colorPicker" placeholder="couleur" tabindex="-1" [style.background]="projet.color" [(colorPicker)]="projet.color">
-</div>
+    <div class="position-absolute">
+      <input class="picker colorPicker" placeholder="couleur" tabindex="-1" [style.background]="projet.color" [(colorPicker)]="projet.color">
+    </div>
   <!--****************************************************************************************
                     nom du projet
   --****************************************************************************************-->
-<p class="projet-name">
-  <input class="form-control input-update-projet d-inline-block" type="text" [(ngModel)]="projet.code_projet">
-</p>
+    <p class="projet-name">
+      <input class="form-control input-update-projet d-inline-block" type="text" [(ngModel)]="projet.code_projet">
+    </p>
   <!--****************************************************************************************
                     switch actif / inactif
   --****************************************************************************************-->
+<div class="top" >
 <div class="onoffswitch">
   <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0" (click)="putAllCommandsFalse()" [ngModel]="projet.available=='true'?true:false" (ngModelChange)="projet.available=$event?'true':'false'" >
   <label class="onoffswitch-label" for="myonoffswitch">
@@ -23,9 +24,12 @@
     <span class="onoffswitch-switch"></span>
   </label>
 
-</div>
-  <p class="etat-projet" *ngIf="projet.available=='true'" >Projet actif</p>
-  <p class="etat-projet" *ngIf="projet.available=='false'">Projet non actif</p>
+
+
+
+  <p class="etat-projet active" *ngIf="projet.available=='true'" >Commande active</p>
+  <p class="etat-projet desactive" *ngIf="projet.available=='false'">Commande désactivée</p>
+  </div>
 
   <!--****************************************************************************************
                     selection du mode
@@ -50,7 +54,7 @@
   </mat-select>
 </mat-form-field>
 
-</div>
+
 <!--****************************************************************************************
                   table des commandes liées au projet
 --****************************************************************************************-->
@@ -58,7 +62,7 @@
 <table class="table-visualisation-commande" *ngIf=" displayListNotEmpty()" mat-table [dataSource]="dataSource" matSort>
   <!-- Commande Column -->
   <ng-container matColumnDef="num_com">
-    <th mat-header-cell *matHeaderCellDef>Commandes</th>
+    <th mat-header-cell *matHeaderCellDef>Tâches</th>
     <td mat-cell *matCellDef="let row">
 
         <input class="commande-input" type="text" id="name" [(ngModel)]="row.num_com" autocomplete="off" required="required">
@@ -100,5 +104,5 @@
   </svg></button>
   <p class="message-add"  *ngIf="this.isAddProjet">Projet mis à jour</p>
 </div>
-
+</div>
 

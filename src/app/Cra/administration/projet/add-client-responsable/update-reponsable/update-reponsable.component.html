@@ -8,13 +8,13 @@
 
   <form class="form-group " [formGroup]="responsableForm"  #formDirective="ngForm"(submit)="addResponsable(formDirective)">
     <div class="form">
-      <input type="text" id="nom" formControlName="nom" autocomplete="nope" required="required">
+      <input type="text" id="nom" formControlName="nom" autocomplete="nope" minlength="5" required="required">
       <label for="nom" class="label-name">
         <span class="content-name">Nom</span>
       </label>
     </div>
     <div class="form">
-      <input type="text" id="prenom" formControlName="prenom" autocomplete="nope" required="required">
+      <input type="text" id="prenom" formControlName="prenom" minlength="3" autocomplete="nope" required="required">
       <label for="prenom" class="label-name">
         <span class="content-name">Prenom</span>
       </label>
@@ -36,6 +36,7 @@
       </mat-form-field>
     </div>
     <input *ngIf="this.responsableForm.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
+    <p *ngIf="this.isAdd" class="update-responsable">Responsable mis à jour</p>
   </form>
 
   <!--****************************************************************************************

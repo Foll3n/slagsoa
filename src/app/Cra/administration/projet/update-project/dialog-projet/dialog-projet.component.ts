@@ -54,7 +54,9 @@ export class DialogProjetComponent implements AfterViewInit{
     this.dataSource.sort = this.sort;
     this.projet = this.copyProjet(data.projet);
 
-    this.responsableSubsciption = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {this.listeResponsables = responsables});
+    this.responsableSubsciption = this.responsableService.responsablesSubject.subscribe((responsables: Responsable[]) => {
+      this.listeResponsables = responsables.filter(resp => resp.idClient == this.responsableService.getresponsable(this.projet.responsable)?.idClient);
+    });
 
     this.ajoutSubscription = this.projetService.ajout.subscribe((bool: boolean) => {
       this.isAddProjet = bool;

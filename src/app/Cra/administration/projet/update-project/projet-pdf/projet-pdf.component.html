@@ -14,9 +14,22 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Month and Year</mat-label>
+    <input matInput [matDatepicker]="dp" [formControl]="date">
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp
+                    startView="multi-year"
+                    (yearSelected)="chosenYearHandler($event)"
+                    (monthSelected)="chosenMonthHandler($event, dp)"
+                    panelClass="example-month-picker">
+    </mat-datepicker>
+  </mat-form-field>
 <button class="btn btn-light" (click)="this.initUsersProjet()">Charger tous les utilisateurs</button>
   <button class="btn btn-light" *ngIf="listeUtilisateurs.length>0" (click)="this.createPDF()">Générer le pdf</button>
+<!--  date picker-->
 
+<!--  date picker-->
 <div >
   <div  *ngFor="let u of this.listeUtilisateurs; let i = index">
     <app-pdf-conteneur *ngIf="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [ligne]="this.listepdf[indexOflisteUtilisateurs(u)]" [pdf]="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [user]="u" [generate]="this.generate" ></app-pdf-conteneur>

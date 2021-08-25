@@ -1,13 +1,13 @@
 <!------------------------------------------------------------------------------------------>
-<!--------Ajouter des commandes au projet---------------------->
+<!--------Ajouter des tâches au projet---------------------->
 <!------------------------------------------------------------------------------------------>
 <div class="question-card">
   <div class="questionnaire">
     <form class="form-group" [formGroup]="commandes"  #formDirective="ngForm"(submit)="addCommandesList(formDirective)">
       <div class="form">
-        <input type="text" id="name" formControlName="num_com" autocomplete="nope" required="required">
+        <input type="text" id="name" formControlName="num_com" autocomplete="nope" minlength="3" required="required">
         <label for="name" class="label-name">
-          <span class="content-name">Commande</span>
+          <span class="content-name">Tâche</span>
         </label>
       </div>
 

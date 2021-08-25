@@ -14,7 +14,7 @@
     <ng-template class="template" ngbSlide>
       <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
-          <p class="first-p">Félicitation pour ce nouveau projet acquis ! </p><br>
+          <p class="first-p">Félicitation l'acquisition de ce projet ! </p><br>
           <p class="second-p">Tout d'abord, pour quelle société est-ce ?</p>
         </div>
         <app-slide1 (eventItem)="setClient($event)"></app-slide1>
@@ -38,7 +38,7 @@
     <ng-template class="template" ngbSlide>
       <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
-          <p class="first-p">A présent paramétrez le projet ? </p><br>
+          <p class="first-p">A présent paramétrez la commande ? </p><br>
           <p class="second-p">Donnez nous ces informations?</p>
         </div>
         <app-slide3 (eventBack)="this.myCarousel!.prev()" (eventItem)="setProjet($event)"></app-slide3>
@@ -50,7 +50,7 @@
     <ng-template class="template" ngbSlide>
       <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
-          <p class="first-p">Désirez vous ajouter des commandes ? </p><br>
+          <p class="first-p">Désirez vous ajouter des tâches ? </p><br>
           <p class="second-p">Donnez nous ces informations?</p>
         </div>
         <app-slide4 (eventBack)="this.myCarousel!.prev()" (listeCom)="setListeCom($event)" ></app-slide4>
@@ -62,8 +62,7 @@
     <ng-template class="template" ngbSlide>
       <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
         <div class="phrase-slide">
-          <p class="first-p">Désirez ajouter des utilisateurs à ces commandes ? </p><br>
-          <p class="second-p">Blabla</p>
+          <p class="first-p">Désirez ajouter des utilisateurs à ces tâches ? </p><br>
         </div>
         <app-add-user-com [listeCommandes]="this.listeCommandes" (eventBack)="this.myCarousel!.prev()" (listeUsersCom)="setComUser($event)" ></app-add-user-com>
       </div>

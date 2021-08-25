@@ -32,7 +32,9 @@ export class ResponsableService {
   emitResponsablesSubject(): void {
     this.responsablesSubject.next(this.listeResponsables.slice());
   }
-
+  getresponsable(idResp: string){
+    return this.listeResponsables.find(r => r.idResponsable == idResp);
+  }
   getAllResponsablesFromServer(): void {
     const responsableHttp = new ResponsableHttpService(this.httpClient);
     const response = responsableHttp.getAllResponsables();

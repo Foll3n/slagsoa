@@ -4,10 +4,11 @@
 <div class="question-card">
   <div class="questionnaire">
   <form class="form-group" [formGroup]="projet"  #formDirective="ngForm"(submit)="addProjet(formDirective)">
+
     <div class="form">
-      <input type="text" id="name" formControlName="code_projet" autocomplete="nope" required="required">
+      <input type="text" id="name" formControlName="code_projet" autocomplete="nope" minlength="7" required="required">
       <label for="name" class="label-name">
-        <span class="content-name">Code projet</span>
+        <span class="content-name">Code commande</span>
       </label>
     </div>
     <div class="test">
