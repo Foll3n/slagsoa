@@ -129,9 +129,8 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     this.craWaitingService.refuserCra(cra, this.commentaire);
     this.paginator!._changePageSize(this.paginator!.pageSize);
     const sendMail = new MailHttpDatabase(this.httpClient);
-    const response = sendMail.sendMail('mailCra_rejet', cra.prenomUsername!, this.userService.getMail(cra.idUsr)!);
+    const response = sendMail.sendMail('mailCra_rejet', cra.prenomUsername!,false, this.userService.getMail(cra.idUsr)!);
     response.subscribe(reponse => {
-      console.log(reponse);
       if (reponse.status == 'OK') {
         console.log("mail envoyé");
       } else {

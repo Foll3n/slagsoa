@@ -17,9 +17,9 @@ export class MailHttpDatabase{
 
   }
   // tslint:disable-next-line:variable-name
-  sendMail(group_id: string, nomDestinataire: string, adresseDestinataire: string, saveBoiteEnvoie = false){
-    console.log("getAllProjects : id = " +  `${sessionStorage.getItem('id')}`);
-    const href = environment.urlMail + "/?group_id=" + group_id + "&nomDestinataire=" + nomDestinataire + "&saveBoiteEnvoie=false" +"&adresseDestinataire=" + adresseDestinataire;
+  sendMail(group_id: string, nomDestinataire: string, saveBoiteEnvoie = false, adresseDestinataire: string = ''){
+    const adresse = adresseDestinataire.length > 0 ? "&adresseDestinataire=" + adresseDestinataire : '';
+    const href = environment.urlMail + "/?group_id=" + group_id + "&nomDestinataire=" + nomDestinataire + "&saveBoiteEnvoie=false" + adresse;
     // tslint:disable-next-line:max-line-length
     return this._httpClient.get<Result>(href, this.httpOptions);
   }

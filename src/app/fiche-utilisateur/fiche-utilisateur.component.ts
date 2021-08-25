@@ -10,7 +10,6 @@ import {Conge} from "../Modeles/conge";
 export class FicheUtilisateurComponent implements OnInit {
 
   @Input() user!: Utilisateur;
-  @Input() conge!: Conge;
   constructor() { }
 
   ngOnInit(): void {

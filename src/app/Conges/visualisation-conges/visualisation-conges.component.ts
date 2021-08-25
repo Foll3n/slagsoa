@@ -21,6 +21,7 @@ import { Utilisateur} from "../../partage/Modeles/utilisateur";
 import {Subscription} from "rxjs";
 import {TableCongesComponent} from './table-conges/table-conges.component';
 import {NavComponent} from '../../nav/nav.component';
+import {MailHttpDatabase} from '../../configuration-http/MailHttpDatabase';
 const moment = _moment;
 
 export class date {
@@ -71,7 +72,7 @@ export class VisualisationCongesComponent implements OnInit {
 
 
 
-  constructor(private nav: NavComponent, private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService, httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private nav: NavComponent, private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService) {
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
@@ -155,6 +156,16 @@ export class VisualisationCongesComponent implements OnInit {
     if(this.formulaire.valid){
       this.congesServices.addConges(congeTemp).subscribe(
         reponse => {
+          const sendMail = new MailHttpDatabase(this.httpClient);
+          const response = sendMail.sendMail('mailConge_demande', 'chef');
+          response.subscribe(reponse => {
+            console.log(reponse);
+            if (reponse.status == 'OK') {
+              console.log("mail envoyé");
+            } else {
+              console.log("mail non envoyé");
+            }
+          });
           this.formulaire.reset();
           this.messageSucces = "La demande de congé a bien été prise en compte";
 

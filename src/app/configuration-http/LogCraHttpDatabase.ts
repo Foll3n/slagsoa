@@ -35,7 +35,6 @@ export class LogCraHttpDatabase{
   addLog(log: Log){
     const json =  JSON.stringify(log);
     const href = environment.urlLogCra;
-    console.log(log);
     // tslint:disable-next-line:max-line-length
     return this._httpClient.post(href, json, this.httpOptions);
   }
