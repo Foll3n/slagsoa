@@ -1,16 +1,13 @@
 
 <section class="gestion-client-section">
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.nomSociete" placeholder="nom Societe">-->
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.adresse">-->
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.siret">-->
-<!--<input type="text" class="form-control" [(ngModel)]="newClient.mail">-->
+
 <h4>Ajout d'un client</h4>
   <!--****************************************************************************************
                     Ajout d'un client
   --****************************************************************************************-->
 <form class="form-group " [formGroup]="clientForm"  #formDirective="ngForm"(submit)="addClient(formDirective)">
     <div class="form">
-      <input type="text" id="name" formControlName="nomSociete" autocomplete="off" required="required">
+      <input type="text" id="name" formControlName="nomSociete" minlength="3" autocomplete="off" required="required">
       <label for="name" class="label-name">
         <span class="content-name">Nom de la societe</span>
       </label>
@@ -23,7 +20,7 @@
     </label>
   </div>
   <div class="form">
-    <input type="text" id="adresse" formControlName="adresse" autocomplete="off" required="required">
+    <input type="text" id="adresse" minlength="8" formControlName="adresse" autocomplete="off" required="required">
     <label for="adresse" class="label-name">
       <span class="content-name">Adresse</span>
     </label>

@@ -7,6 +7,8 @@ import {ProjetHttpDatabase} from '../../../../../configuration-http/ProjetHttpDa
 import {HttpClient} from '@angular/common/http';
 import {Stat} from '../../../../models/projet/Stat';
 import {Projet} from '../../../../models/projet/Projet';
+import {ProjetService} from '../../../../../services/projet.service';
+import {CommandeService} from '../../../../../services/commande.service';
 
 @Component({
   selector: 'app-visualisation-projet',
@@ -24,9 +26,10 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
-  public doughnutChartColors = [
+
+  doughnutChartColors = [
     {
-      backgroundColor: ['rgba(123,206,80,0.8)', 'rgba(255,206,80,0.8)', 'rgba(255,25,80,0.8)', 'rgba(255,250,80,0.8)', 'rgba(255,101,152,0.8)', 'rgba(0,0,50,0.8)','rgba(160,40,100,0.8)', 'rgba(0,255,0,0.8)', 'rgba(0,40,255,0.8)', 'rgba(123,206,80,0.8)', 'rgba(255,206,80,0.8)', 'rgba(255,25,80,0.8)', 'rgba(255,250,80,1)', 'rgba(255,101,152,1)', 'rgba(0,0,50,1)','rgba(160,40,100,1)', 'rgba(0,255,0,1)', 'rgba(0,40,255,1)']
+      backgroundColor: ['red'],
     },
   ];
   public doughnutChartLabels: Label[] = [];
@@ -38,7 +41,7 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
   public get width() {
     return window.innerWidth;
   }
-  constructor(private httpClient: HttpClient) {
+  constructor(private commandeService: CommandeService, private proejtService: ProjetService, private httpClient: HttpClient) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
     this.statsUsers(this.projet);
@@ -55,13 +58,25 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
    * rempli le graphique
    * @param stats
    */
-  fillChart(stats: Stat[]){
+  fillChart(stats: Stat[], isGlobal = false){
     this.doughnutChartLabels = [];
     this.doughnutChartData = [];
+    let colors = [];
     for(const stat of stats){
+
+      if (isGlobal){
+        const color = this.proejtService.getColorProject(stat.key)!;
+        colors.push(color);
+      }
+
       this.doughnutChartLabels.push(stat.key);
       this.doughnutChartData.push(+stat.duree);
     }
+    if(!isGlobal){
+      colors = ['rgba(123,206,80,0.8)', 'rgba(255,206,80,0.8)', 'rgba(255,25,80,0.8)', 'rgba(255,250,80,0.8)', 'rgba(255,101,152,0.8)', 'rgba(0,0,50,0.8)','rgba(160,40,100,0.8)', 'rgba(0,255,0,0.8)', 'rgba(0,40,255,0.8)', 'rgba(123,206,80,0.8)', 'rgba(255,206,80,0.8)', 'rgba(255,25,80,0.8)', 'rgba(255,250,80,1)', 'rgba(255,101,152,1)', 'rgba(0,0,50,1)','rgba(160,40,100,1)', 'rgba(0,255,0,1)', 'rgba(0,40,255,1)']
+    }
+    this.doughnutChartColors.fill({backgroundColor : colors});
+
   }
   public doughnutChartOptions = {
     tooltips: {
@@ -126,7 +141,7 @@ export class VisualisationProjetComponent implements OnInit, OnChanges {
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         if (reponse.stats != null) {
-          this.fillChart(reponse.stats);
+          this.fillChart(reponse.stats, true);
         } else {
           console.log("pas de stats");
         }

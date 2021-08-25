@@ -29,7 +29,7 @@ export class UpdateReponsableComponent implements OnInit {
   clientSubscription!: Subscription;
   responsableForm!: FormGroup;
   isAdd = false;
-  cpt = 0;
+  checkUpdate= false;
   constructor(private responsableService: ResponsableService, private clientService: ClientService) {
     this.responsableForm = new FormGroup({
       nom: new FormControl(),
@@ -39,13 +39,12 @@ export class UpdateReponsableComponent implements OnInit {
     });
     this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsable: Responsable[]) =>
     {
-      if (this.cpt > 0){
+      if(this.checkUpdate){
         this.isAdd = true;
         setTimeout(() => {
           this.isAdd = false;
         }, 2000);
       }
-      this.cpt++;
 
       this.listeresponsables = responsable;
       this.dataSource = new MatTableDataSource(this.listeresponsables);
@@ -63,6 +62,7 @@ export class UpdateReponsableComponent implements OnInit {
    * @param responsable
    */
   updateResponsable(responsable: Responsable){
+    this.checkUpdate = true;
     this.responsableService.updateResponsable(responsable);
   }
   ngOnInit(): void {
@@ -103,6 +103,7 @@ export class UpdateReponsableComponent implements OnInit {
    * @param formDirective
    */
   addResponsable(formDirective: FormGroupDirective){
+    this.checkUpdate = true;
     this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value.trim(),
       this.responsableForm.get('prenom')?.value.trim(),
       this.responsableForm.get('mail')?.value.trim(),

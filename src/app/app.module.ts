@@ -90,9 +90,9 @@ import { DialogProjetComponent} from './Cra/administration/projet/update-project
 import { VisualisationProjetComponent } from './Cra/administration/projet/update-project/visualisation-projet/visualisation-projet.component';
 import { ProjetPdfComponent } from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
 import {ResponsableService} from './services/responsable.service';
-import { UpdateClientResponsableComponent } from './Cra/administration/projet/add-client-responsable/update-client/update-client-responsable.component';
+import { UpdateClientResponsableComponent } from './Cra/administration/projet/gestion-client-responsable/update-client/update-client-responsable.component';
 import {ClientService} from './services/client.service';
-import { UpdateReponsableComponent } from './Cra/administration/projet/add-client-responsable/update-reponsable/update-reponsable.component';
+import { UpdateReponsableComponent } from './Cra/administration/projet/gestion-client-responsable/update-reponsable/update-reponsable.component';
 import { PdfConteneurComponent } from './Cra/administration/projet/update-project/projet-pdf/pdf-conteneur/pdf-conteneur.component';
 import { AideAjoutProjetComponent } from './Cra/aide-ajout-projet/aide-ajout-projet.component';
 import { Slide1Component } from './Cra/aide-ajout-projet/slide1/slide1.component';

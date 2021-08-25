@@ -27,7 +27,7 @@ export class UpdateClientResponsableComponent implements OnInit {
   clientSubscription!: Subscription;
   clientForm!: FormGroup;
   isAdd = false;
-  cpt = 0;
+  checkUpdate = false;
   constructor(private clientService: ClientService) {
     this.clientForm = new FormGroup({
       mail: new FormControl(),
@@ -37,13 +37,12 @@ export class UpdateClientResponsableComponent implements OnInit {
     });
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients:Client[]) =>
     {
-      if(this.cpt > 0){
+      if(this.checkUpdate){
         this.isAdd = true;
         setTimeout(() => {
           this.isAdd = false;
         }, 2000);
       }
-      this.cpt++;
 
       this.listeClients = clients;
       this.dataSource = new MatTableDataSource(this.listeClients);
@@ -57,6 +56,7 @@ export class UpdateClientResponsableComponent implements OnInit {
    * @param client
    */
   updateClient(client: Client){
+    this.checkUpdate = true;
     this.clientService.updateClient(client);
   }
   ngOnInit(): void {
@@ -84,6 +84,7 @@ export class UpdateClientResponsableComponent implements OnInit {
    * @param formDirective
    */
   addClient(formDirective: FormGroupDirective){
+    this.checkUpdate = true;
     this.clientService.addClient(new Client('', this.clientForm.get('nomSociete')?.value,
       this.clientForm.get('adresse')?.value,
       this.clientForm.get('mail')?.value,

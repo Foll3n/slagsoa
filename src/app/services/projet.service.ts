@@ -29,7 +29,9 @@ export class ProjetService {
   httpOptions = {
     headers: new HttpHeaders()
   };
-
+  getColorProject(codeProjet: string){
+    return this.listeProjet.find( p => p.code_projet == codeProjet)?.color
+  }
   emitProjetSubject(): void {
     this.projetSubject.next(this.listeProjet.slice());
   }
