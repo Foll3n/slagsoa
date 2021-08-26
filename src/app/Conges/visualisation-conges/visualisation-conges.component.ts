@@ -140,7 +140,6 @@ export class VisualisationCongesComponent implements OnInit {
     return (diffTime / (1000 * 3600)) / 24;
   }
   canAddconge(){
-    let congeTemp = new Conge();
     let dateDebut = this.formulaire.get('start')?.value._i;
     let dateFin = this.formulaire.get('end')?.value._i;
     let debut = `${dateDebut.year}-${dateDebut.month}-${dateDebut.date} ${this.formulaire.get('dateDebutChoix')?.value}`;

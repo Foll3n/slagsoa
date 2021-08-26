@@ -9,17 +9,14 @@ import {ClientHttpService} from '../configuration-http/clientHttp.service';
 @Injectable()
 export class ClientService {
   listeClients: Client[] = [];
-
   clientSubject = new Subject<Client[]>();
 
   constructor(private httpClient: HttpClient) {
-
     this.httpOptions.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
     });
     this.getAllClientsFromServer();
-
   }
 
   httpOptions = {
