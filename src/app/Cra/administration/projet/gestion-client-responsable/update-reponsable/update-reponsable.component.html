@@ -1,12 +1,11 @@
-
-
 <!--****************************************************************************************
                   Ajouter un responsable
 --****************************************************************************************-->
 <section>
-<h4>Ajout d'un responsable</h4>
+  <h4>Ajout d'un responsable</h4>
 
-  <form class="form-group " [formGroup]="responsableForm"  #formDirective="ngForm"(submit)="addResponsable(formDirective)">
+  <form class="form-group " [formGroup]="responsableForm" #formDirective="ngForm"
+        (submit)="addResponsable(formDirective)">
     <div class="form">
       <input type="text" id="nom" formControlName="nom" autocomplete="nope" minlength="5" required="required">
       <label for="nom" class="label-name">
@@ -20,12 +19,13 @@
       </label>
     </div>
     <div class="form">
-      <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail" formControlName="mail" autocomplete="off" required="required">
+      <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail"
+             formControlName="mail" autocomplete="off" required="required">
       <label for="mail" class="label-name">
         <span class="content-name">Mail</span>
       </label>
     </div>
-    <div class="d-inline-block" >
+    <div class="d-inline-block">
       <mat-form-field appearance="outline">
         <mat-label>Selectionner un client</mat-label>
         <mat-select formControlName="idClient" required>
@@ -35,7 +35,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <input *ngIf="this.responsableForm.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button" >
+    <input *ngIf="this.responsableForm.valid" type="submit" value="Ajouter" class="btn btn-info add-projet-button">
     <p *ngIf="this.isAdd" class="update-responsable">Responsable mis à jour</p>
   </form>
 
@@ -43,49 +43,54 @@
                     Table des responsables permettant de les modifier etc
   --****************************************************************************************-->
 
-<div class="mat-elevation-z8 table-responsable">
-  <table class="formResponsable" mat-table [dataSource]="dataSource" matSort>
-    <!-- Commande Column -->
-    <ng-container matColumnDef="nom">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-      <td mat-cell *matCellDef="let row" class="input-update" >
+  <div class="mat-elevation-z8 table-responsable">
+    <table class="formResponsable" mat-table [dataSource]="dataSource" matSort>
+      <!-- Commande Column -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom</th>
+        <td mat-cell *matCellDef="let row" class="input-update">
 
-        <input type="text" class="form-control" [(ngModel)]="row.nom">
-      </td>
-    </ng-container>
+          <input type="text" class="form-control" [(ngModel)]="row.nom">
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="prenom">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prenom </th>
-      <td mat-cell *matCellDef="let row">  <input type="text" class="form-control" [(ngModel)]="row.prenom">
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="mail">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mail </th>
-      <td mat-cell *matCellDef="let row">  <input title="Respecter le format mail" required="required" type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" [(ngModel)]="row.mail">
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="idClient">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Client </th>
-      <td mat-cell *matCellDef="let row">  {{this.getClientName(row)}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="valider">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> valider</th>
-      <td mat-cell *matCellDef="let row">
-        <a *ngIf="validateMail(row)" (click)="this.updateResponsable(row)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
-          <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-        </svg>
-        </a>
-      </td>
+      <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Prenom</th>
+        <td mat-cell *matCellDef="let row"><input type="text" class="form-control" [(ngModel)]="row.prenom">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="mail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mail</th>
+        <td mat-cell *matCellDef="let row"><input title="Respecter le format mail" required="required" type="email"
+                                                  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                                  class="form-control" [(ngModel)]="row.mail">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="idClient">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+        <td mat-cell *matCellDef="let row">  {{this.getClientName(row)}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="valider">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> valider</th>
+        <td mat-cell *matCellDef="let row">
+          <a *ngIf="validateMail(row)" (click)="this.updateResponsable(row)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2"
+                 viewBox="0 0 16 16">
+              <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg>
+          </a>
+        </td>
 
-    </ng-container>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-  </table>
+    </table>
 
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
-</div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selectionner la page"></mat-paginator>
+  </div>
 </section>

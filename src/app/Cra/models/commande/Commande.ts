@@ -1,4 +1,4 @@
-export class CommandeInsert {
+export class Commande {
   constructor(
     public num_com: string,
     public id_projet: string,

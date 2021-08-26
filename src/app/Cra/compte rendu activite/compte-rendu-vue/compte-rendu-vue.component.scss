@@ -2,38 +2,13 @@
   margin-right: 3%;
   margin-top: 3%;
   margin-bottom: 3%;
-
 }
-
-.mat-grid-tile {
-  background-color: #5b5c68;
-
-}
-
-#jour {
-  text-align: center;
-}
-
-.mat-grid-list {
-
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-.mat-grid-list > * {
-  flex: 1 1 60px;
-}
-
 
 .colonneJour {
   border-radius: 10px;
   background-color: #5b5c68;
   padding: 10px;
   width: 100%;
-
-
 }
 
 .persoTest {
@@ -52,7 +27,6 @@
   margin-top: 10px;
   text-align: center;
   border-radius: 10px;
-  //background-color: red;
 }
 
 .decalageNomProjetHaut {
@@ -63,9 +37,6 @@
 .jourSemaine {
   text-align: center;
   height: 50px;
-
-
-
 }
 
 .textJour {
@@ -73,41 +44,12 @@
   color: white;
 }
 
-@media (400px <= width <= 700px) {
-  #designDays {
-    display: inline-block;
-    height: 60px;
-    width: 30px;
-  }
 
-
-}
-
-.mobile-view1 {
-  display: inline-block;
-  height: 100px;
-  width: 100px;
-  background-color: red;
-}
-
-
-.nomCommandeResponsive {
-  display: inline-block;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 20px;
-  border: 1px;
-
-
-}
 
 .viewCommande {
   display: none;
 }
 
-.tesst {
-
-}
 
 .jour-actuel {
   border-bottom: 2px white solid;
@@ -118,58 +60,46 @@
   margin: 10px;
 }
 
-
-.add-commande {
-  display: inline-block;
-  padding: 10px;
-  margin: 10px;
-  position: absolute;
-  right: 5%;
-
-}
-
-add-commande-responsive {
-
-  padding: 10px;
-  margin: 1000px;
-}
-
-.button-delete{
+.button-delete {
   border: none;
   background: transparent;
 }
 
-.width{
+.width {
   width: 16%;
 }
 
-.badge-conge{
+.badge-conge {
   right: 0px;
   margin-top: 5px;
   position: absolute;
 }
 
-.div-span{
+.div-span {
   position: relative;
 }
-.nom-projet-commande{
+
+.nom-projet-commande {
   width: 100%;
   position: absolute;
   bottom: -17px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-.delete-line{
+
+.delete-line {
   background-color: transparent;
-  border:none;
+  border: none;
   position: absolute;
-  bottom:0;
-  left:0;
+  bottom: 0;
+  left: 0;
 }
-.case-commande{
+
+.case-commande {
   position: relative;
 
 }
-.nom-commande-liste{
+
+.nom-commande-liste {
   padding: 20px;
 }

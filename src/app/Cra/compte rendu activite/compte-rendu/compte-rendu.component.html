@@ -1,32 +1,33 @@
-
-
-
-
 <!------------------------------------------------------------------------------------------------------------------------->
 <!--------------Affichage d'une case----------------------------------->
 <!------------------------------------------------------------------------------------------------------------------------->
 
-<div class="p-2" class="case" [ngClass]="{'list-group-item' : true}" style="background-color:{{color}}" >
+<div class="p-2" class="case" [ngClass]="{'list-group-item' : true}" style="background-color:{{color}}">
 
-<!--  -------------------------------------------------------------------------------------------------------------------------------------->
-<!--  badge permettant de mettre la durée a 1 quand on clique dessus et de nous avertir que la case na pas été remplie-->
+  <!--  -------------------------------------------------------------------------------------------------------------------------------------->
+  <!--  badge permettant de mettre la durée a 1 quand on clique dessus et de nous avertir que la case na pas été remplie-->
   <!--  -------------------------------------------------------------------------------------------------------------------------------------->
 
-  <span (click)="setDureeToOne()" class="badgeAttention" *ngIf="this.duree == 0 && checkDureeTotale() && this.status < 1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
-  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+  <span (click)="setDureeToOne()" class="badgeAttention"
+        *ngIf="this.duree == 0 && checkDureeTotale() && this.status < 1"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                              width="16" height="16" fill="currentColor"
+                                                                              class="bi bi-pen-fill"
+                                                                              viewBox="0 0 16 16">
+  <path
+    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
 </svg></span>
 
 
-
   <!--  -------------------------------------------------------------------------------------------------------------------------------------->
-<!--Formulaire permettant de saisir la durée associée au projet -->
+  <!--Formulaire permettant de saisir la durée associée au projet -->
   <!--  -------------------------------------------------------------------------------------------------------------------------------------->
 
-      <mat-form-field class="w-75" color="warn" > <!-- le vert intérieur !-->
-        <mat-label>Duree</mat-label>
-        <input [disabled]="this.status > 0" pattern="^d{0,1}$" type="number" min="0" max="1" step="0.1" matInput size="2" maxlength="3" placeholder="0.0" [(ngModel)]="this.dureeString" (ngModelChange)="onModifyCase()">
+  <mat-form-field class="w-75" color="warn"> <!-- le vert intérieur !-->
+    <mat-label>Duree</mat-label>
+    <input [disabled]="this.status > 0" pattern="^d{0,1}$" type="number" min="0" max="1" step="0.1" matInput size="2"
+           maxlength="3" placeholder="0.0" [(ngModel)]="this.dureeString" (ngModelChange)="onModifyCase()">
 
-      </mat-form-field>
+  </mat-form-field>
 
 
 </div>

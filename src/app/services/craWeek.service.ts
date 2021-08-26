@@ -1,17 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Cra} from '../Cra/models/cra/Cra';
 import {Subject} from 'rxjs';
-import {CompteRendu} from '../Cra/models/compteRendu/CompteRendu';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {formatDate} from '@angular/common';
 import {environment} from '../../environments/environment';
-import {InsertCra} from '../Cra/models/cra/InsertCra';
-import {CraHttpDatabase} from '../configuration-http/CraHttpDatabase';
 import {CraWeek} from '../Cra/models/cra/craWeek';
-import {CompteRenduInsert} from '../Cra/models/compteRendu/CompteRenduInsert';
-import {CommandeInsert} from '../Cra/models/commande/CommandeInsert';
+import {Commande} from '../Cra/models/commande/Commande';
 import {BigCommande} from '../Cra/models/commande/BigCommande';
 
+// Classe permettant d'abonner les composants au cra week représentant une vue à la semaine
 @Injectable()
 export class CraWeekService {
   constructor(private httpClient: HttpClient) {
@@ -21,6 +17,7 @@ export class CraWeekService {
       Authorization: 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
     });
   }
+
   httpOptions = {
     headers: new HttpHeaders()
   };
@@ -33,11 +30,9 @@ export class CraWeekService {
   craWeekNext: CraWeek = new CraWeek(2, new Date(this.dateDay.setDate(this.dateDay.getDate() - this.dateDay.getDay() + 7)));
 
 
-  public listeCommandes: CommandeInsert[] = [];
+  public listeCommandes: Commande[] = [];
   craSubject = new Subject<CraWeek[]>();
   private listeCra: Cra[] = [];
-
-
 
 
   emitCraSubject(): void {
@@ -46,7 +41,7 @@ export class CraWeekService {
   }
 
   getCraWeekToServerStatus(index: number): void {
-    const requestUrl = environment.urlCraWeek + '/' + this.listeCraWeek[index].firstDateWeekFormat + '/' + this.listeCraWeek[index].lastDateWeekFormat + '/' + '10' ;
+    const requestUrl = environment.urlCraWeek + '/' + this.listeCraWeek[index].firstDateWeekFormat + '/' + this.listeCraWeek[index].lastDateWeekFormat + '/' + '10';
     this.httpClient.get<BigCommande>(requestUrl, this.httpOptions).subscribe(
       response => {
         this.listeCraWeek[index].listeCommandesWeek = response.listeCommande;

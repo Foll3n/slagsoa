@@ -19,11 +19,8 @@
             {{this.listeCraWaiting.length}} comptes rendus en attente
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-table-cra-en-attente  (craWeekEmitter)="consulter($event)" [index]="''+1"></app-table-cra-en-attente>
+        <app-table-cra-en-attente (craWeekEmitter)="consulter($event)" [index]="''+1"></app-table-cra-en-attente>
       </mat-expansion-panel>
-
-
-
 
 
       <!------------------------------------------------------------------------------------------>
@@ -40,7 +37,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <app-table-cra-en-attente  (craWeekEmitter)="consulter($event)" [index]="'' + 2"></app-table-cra-en-attente>
+        <app-table-cra-en-attente (craWeekEmitter)="consulter($event)" [index]="'' + 2"></app-table-cra-en-attente>
 
       </mat-expansion-panel>
 
@@ -50,7 +47,7 @@
     <!---------Permet d'afficher le CRA à la semaine ----------------------->
     <!------------------------------------------------------------------------------------------>
 
-    <app-compte-rendu-vue  [craWeek]="this.actualWeek" *ngIf="this.actualWeek"></app-compte-rendu-vue>
+    <app-compte-rendu-vue [craWeek]="this.actualWeek" *ngIf="this.actualWeek"></app-compte-rendu-vue>
 
   </section>
 

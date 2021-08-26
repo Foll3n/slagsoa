@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Inject, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CommandeInsert} from '../../../../models/commande/CommandeInsert';
+import {Commande} from '../../../../models/commande/Commande';
 import {Projet} from '../../../../models/projet/Projet';
 import {MatTableDataSource} from '@angular/material/table';
 import {CommandeService} from '../../../../../services/commande.service';
@@ -31,11 +30,11 @@ export class DialogProjetComponent implements AfterViewInit{
   isAddCom = false;
   isAddProjet = false;
   choice = ['forfait','regie'];
-  listeCommandes!: CommandeInsert[];
+  listeCommandes!: Commande[];
   commandesSubject!: Subscription;
   listeResponsables: Responsable[] = [];
   displayedColumns: string[] = ['num_com', 'checked'];
-  dataSource!: MatTableDataSource<CommandeInsert>;
+  dataSource!: MatTableDataSource<Commande>;
   responsableSubsciption!: Subscription;
   ajoutSubscription!: Subscription;
   commandeSubscription!: Subscription;
@@ -48,7 +47,7 @@ export class DialogProjetComponent implements AfterViewInit{
     public dialogRef: MatDialogRef<DialogProjetComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
-    const test:CommandeInsert[] = [];
+    const test:Commande[] = [];
     this.dataSource =  new MatTableDataSource(test);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -65,7 +64,7 @@ export class DialogProjetComponent implements AfterViewInit{
       }, 3000);
     });
 
-    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
+    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: Commande[]) => {
       this.listeCommandes = commandes;
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
@@ -107,7 +106,7 @@ export class DialogProjetComponent implements AfterViewInit{
     if(!this.projet)return [];
     for (let com of this.listeCommandes){
       if(com.id_projet == this.projet.id){
-        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.available,com.color);
+        let c = new Commande(com.num_com,com.id_projet,com.id,com.available,com.color);
         res.push(c);
       }
     }
@@ -118,7 +117,7 @@ export class DialogProjetComponent implements AfterViewInit{
    * met un projet à jour avec ses commandes
     * @param commandes
    */
-  updateProjet(commandes: CommandeInsert[]){
+  updateProjet(commandes: Commande[]){
     for(let com of commandes){
     }
     this.commandeService.updateCommandes(commandes);
@@ -140,7 +139,6 @@ export class DialogProjetComponent implements AfterViewInit{
   putAllCommandsFalse(){
     for(const com of this.dataSource.data){
       this.projet.available=='true'?com.available='false':com.available='true';
-      // com.available = this.projet.available;
     }
 
   }

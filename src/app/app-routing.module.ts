@@ -12,7 +12,6 @@ import {AdministrationProjetComponent} from "./Cra/administration/projet/adminis
 import {CalendarMounthComponent} from "./Cra/calendar-mounth/calendar-mounth.component";
 import {CompteRenduActiviteComponent} from "./Cra/compte rendu activite/compte-rendu-activite/compte-rendu-activite.component";
 import {AdministrationCraComponent} from "./Cra/administration/administration-cra/administration-cra.component";
-import {UpdateProjectComponent} from "./Cra/administration/projet/update-project/update-project.component";
 import {ProjetPdfComponent} from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
 import {AideAjoutProjetComponent} from './Cra/aide-ajout-projet/aide-ajout-projet.component';
 

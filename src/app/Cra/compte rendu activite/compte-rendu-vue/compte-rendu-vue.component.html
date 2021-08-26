@@ -1,68 +1,71 @@
-
-
-
 <!--affichage du calendrier à la semaine sans les comptes rendus (les cases à remplir avec la durée) seront remplies dans <app-compte-rendu> -->
 
 <!--affichage des commandes dans un premier temps-->
-  <div [ngClass]="{ 'd-flex flex-row flex-wrap': width >= minWidth, 'mobile-view': width < minWidth}">
-    <div class="p-2" id="nomSousProjet">
-      <div class="d-flex flex-column ">
-        <div [ngClass]="{ 'decalageNomProjetHaut': width >= minWidth, 'viewCommande': width < minWidth }" class="p-2">
-        </div>
-        <div class="case-commande" *ngFor="let com of this.craWeek.listeCommandesWeek" [ngClass]="{'list-group-item' : true}"
-             [ngClass]="{ 'nomCommande': width >= minWidth, 'viewCommande': width < minWidth }"
-             style="background-color:{{com.color}}">
+<div [ngClass]="{ 'd-flex flex-row flex-wrap': width >= minWidth, 'mobile-view': width < minWidth}">
+  <div class="p-2" id="nomSousProjet">
+    <div class="d-flex flex-column ">
+      <div [ngClass]="{ 'decalageNomProjetHaut': width >= minWidth, 'viewCommande': width < minWidth }" class="p-2">
+      </div>
+      <div class="case-commande" *ngFor="let com of this.craWeek.listeCommandesWeek"
+           [ngClass]="{'list-group-item' : true}"
+           [ngClass]="{ 'nomCommande': width >= minWidth, 'viewCommande': width < minWidth }"
+           style="background-color:{{com.color}}">
 
-          <p class="nom-commande-liste">{{ com.num_com }} </p>
-          <p class="nom-projet-commande" [ngStyle]="{'background-color': this.LightenDarkenColor(com.color!.substring(1),-40)}">{{this.getProjetName(com.id_projet)}}</p>
+        <p class="nom-commande-liste">{{ com.num_com }} </p>
+        <p class="nom-projet-commande"
+           [ngStyle]="{'background-color': this.LightenDarkenColor(com.color!.substring(1),-40)}">{{this.getProjetName(com.id_projet)}}</p>
 
-          <button *ngIf="canDelete()" (click)="deleteLine(com)" color="primary" class="delete-line">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
-              <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
-            </svg>
-          </button>
-        </div>
+        <button *ngIf="canDelete()" (click)="deleteLine(com)" color="primary" class="delete-line">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+            <path
+              d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+          </svg>
+        </button>
       </div>
     </div>
-    <div *ngFor="let cra of craWeek.listeCra" class="p-2 " [ngClass]="{ 'width': width >= minWidth}">
-      <div  class="colonneJour">
-<!--        class="d-flex flex-column"-->
-        <div class="p-2 " class="jourSemaine"><p [ngClass]="{ 'jour-actuel': cra.date.getDate() == getDay().getDate() && cra.date.getMonth() == getDay().getMonth()}"
-                                                class="textJour">{{ afficherjour(cra.date.getDay())}} {{cra.date.getDate()}}</p>
-        </div>
-
-        <div class="div-span">
-          <span *ngIf="cra.duree_totale <  (1- cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)" class="badge badge-info">Non complet</span>
-          <span *ngIf="cra.duree_totale == (1 - cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)" class="badge badge-success">Complet</span>
-          <span *ngIf="cra.duree_totale> (1 - cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)" class="badge badge-danger">Invalide</span>
-          <span *ngIf="isFerie(cra.date)" class="badge badge-info">Jours férié</span>
-          <span *ngIf="cra.statusConge>=0.5 && !this.isFerie(cra.date)" class="badge badge-info badge-conge">Congé</span>
-
-                </div>
-
-
-<!--        affiche chaque compte rendu (case) -->
-<!--        <div *ngIf="cra.statusConge==0.5">-->
-
-        <div *ngIf="cra.statusConge<1 && !this.isFerie(cra.date)">
-          <app-compte-rendu  *ngFor="let sp of cra.listeCr ; let i = index"
-                             [cra] = cra
-                             [color]=sp.color
-                             [duree]=sp.duree
-                             [idCra]="sp.idCra"
-                             [index]="i"
-                             [indexWeek]="this.index"
-                             [nomSp]="sp.numCommande"
-                             [status]="this.getStatus()">
-          </app-compte-rendu>
-        </div>
-
-<!--        </div>-->
-
-      </div>
-    </div>
-
   </div>
+  <div *ngFor="let cra of craWeek.listeCra" class="p-2 " [ngClass]="{ 'width': width >= minWidth}">
+    <div class="colonneJour">
+      <!--        class="d-flex flex-column"-->
+      <div class="p-2 " class="jourSemaine"><p
+        [ngClass]="{ 'jour-actuel': cra.date.getDate() == getDay().getDate() && cra.date.getMonth() == getDay().getMonth()}"
+        class="textJour">{{ afficherjour(cra.date.getDay())}} {{cra.date.getDate()}}</p>
+      </div>
+
+      <div class="div-span">
+        <span *ngIf="cra.duree_totale <  (1- cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)"
+              class="badge badge-info">Non complet</span>
+        <span *ngIf="cra.duree_totale == (1 - cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)"
+              class="badge badge-success">Complet</span>
+        <span *ngIf="cra.duree_totale> (1 - cra.statusConge) && cra.statusConge<1 && !this.isFerie(cra.date)"
+              class="badge badge-danger">Invalide</span>
+        <span *ngIf="isFerie(cra.date)" class="badge badge-info">Jours férié</span>
+        <span *ngIf="cra.statusConge>=0.5 && !this.isFerie(cra.date)" class="badge badge-info badge-conge">Congé</span>
+
+      </div>
+
+
+      <!--        affiche chaque compte rendu (case) -->
+
+
+      <div *ngIf="cra.statusConge<1 && !this.isFerie(cra.date)">
+        <app-compte-rendu *ngFor="let sp of cra.listeCr ; let i = index"
+                          [cra]=cra
+                          [color]=sp.color
+                          [duree]=sp.duree
+                          [idCra]="sp.idCra"
+                          [index]="i"
+                          [indexWeek]="this.index"
+                          [nomSp]="sp.numCommande"
+                          [status]="this.getStatus()">
+        </app-compte-rendu>
+      </div>
+
+    </div>
+  </div>
+
+</div>
 
 
 

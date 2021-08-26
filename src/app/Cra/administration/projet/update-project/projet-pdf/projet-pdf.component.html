@@ -3,17 +3,16 @@
   <!--****************************************************************************************
                     HEADER des PDF avec un bouton de selection de l'utilisateur et de génération
   --****************************************************************************************-->
-<a class="btn-light" href="administration-projet"> Retour arrière </a>
-<!--<button class="mat-button" (click)="">-->
-<!--</button>-->
-<mat-form-field appearance="outline">
-  <mat-label>Choisir utilisateur</mat-label>
-  <mat-select class="yy">
-    <mat-option *ngFor="let usr of this.listeAllUsers" [value]="usr.id" (click)="loadUserPdf(usr)">
-      {{usr.nom}} {{usr.prenom}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <a class="btn-light" href="administration-projet"> Retour arrière </a>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Choisir utilisateur</mat-label>
+    <mat-select class="yy">
+      <mat-option *ngFor="let usr of this.listeAllUsers" [value]="usr.id" (click)="loadUserPdf(usr)">
+        {{usr.nom}} {{usr.prenom}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Month and Year</mat-label>
     <input matInput [matDatepicker]="dp" [formControl]="date">
@@ -25,15 +24,17 @@
                     panelClass="example-month-picker">
     </mat-datepicker>
   </mat-form-field>
-<button class="btn btn-light" (click)="this.initUsersProjet()">Charger tous les utilisateurs</button>
+  <button class="btn btn-light" (click)="this.initUsersProjet()">Charger tous les utilisateurs</button>
   <button class="btn btn-light" *ngIf="listeUtilisateurs.length>0" (click)="this.createPDF()">Générer le pdf</button>
-<!--  date picker-->
 
-<!--  date picker-->
-<div >
-  <div  *ngFor="let u of this.listeUtilisateurs; let i = index">
-    <app-pdf-conteneur *ngIf="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [ligne]="this.listepdf[indexOflisteUtilisateurs(u)]" [pdf]="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [user]="u" [generate]="this.generate" ></app-pdf-conteneur>
+  <div>
+    <div *ngFor="let u of this.listeUtilisateurs; let i = index">
+      <app-pdf-conteneur *ngIf="this.pdfInfoListe[indexOflisteUtilisateurs(u)]"
+                         [ligne]="this.listepdf[indexOflisteUtilisateurs(u)]"
+                         [pdf]="this.pdfInfoListe[indexOflisteUtilisateurs(u)]" [user]="u">
+
+      </app-pdf-conteneur>
+    </div>
   </div>
-</div>
 </app-nav>
 

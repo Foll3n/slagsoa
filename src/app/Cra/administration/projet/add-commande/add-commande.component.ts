@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Projet} from '../../../models/projet/Projet';
 import {Subscription} from 'rxjs';
 import {ProjetService} from '../../../../services/projet.service';
-import {CommandeInsert} from '../../../models/commande/CommandeInsert';
-import {RealisationPost} from '../../../models/realisation/RealisationPost';
+import {Commande} from '../../../models/commande/Commande';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {CommandeHttpDatabase} from '../../../../configuration-http/CommandeHttpDatabase';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -11,7 +10,6 @@ import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatab
 import {Utilisateur} from "../../../../Modeles/utilisateur";
 import {UserService} from "../../../../services/user.service";
 import {resetForm, shortMessage} from '../../../../../environments/environment';
-import {Realisation} from '../../../models/realisation/Realisation';
 import {CommandeService} from '../../../../services/commande.service';
 import {Message} from '../../../models/message';
 import {CraService} from '../../../../services/cra.service';
@@ -29,7 +27,7 @@ export class AddCommandeComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders()
   };
-  listeCommandeProjet: CommandeInsert[] = [];
+  listeCommandeProjet: Commande[] = [];
   listeProjets: Projet[]= [];
 
   listeUsers!:Utilisateur[];
@@ -101,7 +99,7 @@ export class AddCommandeComponent implements OnInit {
    */
   addCommande(formDirective: FormGroupDirective) {
     if (this.commandeProjet) {
-      const commande = new CommandeInsert(this.commandeProjet.get('codeCommande')?.value, this.commandeProjet.get('projet')?.value, '', 'true','');
+      const commande = new Commande(this.commandeProjet.get('codeCommande')?.value, this.commandeProjet.get('projet')?.value, '', 'true','');
 
       if (this.listeCommandeProjet && this.listeCommandeProjet.find(c => c.num_com === commande.num_com)) {
         shortMessage(this.commandeAdd,'Commande déja présente');
@@ -117,7 +115,6 @@ export class AddCommandeComponent implements OnInit {
           }
         });
       }
-      // this.commandeProjet.clearValidators();
       resetForm(this.commandeProjet);
       formDirective.resetForm();
     }

@@ -1,17 +1,11 @@
 import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CommandeHttpDatabase} from '../configuration-http/CommandeHttpDatabase';
 import {Subject} from 'rxjs';
-import {Realisation} from '../Cra/models/realisation/Realisation';
-import {Utilisateur} from "../Modeles/utilisateur";
-import {UtilisateursHttpService} from "../configuration-http/utilisateurs-http.service";
 import {Responsable} from '../Cra/models/responsable/responsable';
 import {ResponsableHttpService} from '../configuration-http/responsableHttp.service';
-import {Client} from '../Cra/models/client/Client';
-import {ClientHttpService} from '../configuration-http/clientHttp.service';
 
-
+//Service Responsable permettant aux composant abonnés de connaitre les reponsable
 @Injectable()
 export class ResponsableService {
   listeResponsables: Responsable[] = [];

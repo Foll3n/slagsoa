@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {CraWeekInsert} from '../../models/logCra/craWeekInsert';
-import {PDFNet} from "@pdftron/webviewer";
 
 // TODO: Replace this with your own data model type
 export interface TableCraItem {
@@ -25,7 +24,7 @@ export class TableCraAdministration extends DataSource<CraWeekInsert> {
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   index!: string;
-  constructor(private httpClient: HttpClient) {
+  constructor() {
     super();
     this.data = [];
 

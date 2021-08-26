@@ -1,11 +1,9 @@
-import {InsertCra} from '../cra/InsertCra';
-import {Cra} from '../cra/Cra';
-import {CommandeInsert} from './CommandeInsert';
+import {Commande} from './Commande';
 
 export class BigCommande {
   constructor(
     public status: string,
-    public listeCommande: CommandeInsert[]
+    public listeCommande: Commande[]
   ) {}
 
 

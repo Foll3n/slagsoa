@@ -4,9 +4,6 @@ import {Subject} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CraHttpDatabase} from '../configuration-http/CraHttpDatabase';
 
-
-
-
 @Injectable()
 export class CalendarService {
   userId = '10';
@@ -31,16 +28,16 @@ export class CalendarService {
   }
 
 
-  chargerCalendar(){
+  chargerCalendar() {
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.getAllCra();
     response.subscribe(reponse => {
-      if (reponse.status == 'OK'){
-        if (reponse.liste_cra)
-           this.listeCra = reponse.liste_cra;
+      if (reponse.status == 'OK') {
+        if (reponse.liste_cra) {
+          this.listeCra = reponse.liste_cra;
+        }
         this.emitCalendarSubject();
-      }
-      else{
+      } else {
         console.log('Erreur de requete de base de données');
       }
 

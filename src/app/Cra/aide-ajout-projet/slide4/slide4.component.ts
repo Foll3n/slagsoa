@@ -1,8 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {Projet} from '../../models/projet/Projet';
-import {CommandeInsert} from '../../models/commande/CommandeInsert';
-import {CraWeekInsert} from '../../models/logCra/craWeekInsert';
+import {Commande} from '../../models/commande/Commande';
 import {resetForm} from '../../../../environments/environment';
 
 @Component({
@@ -11,11 +9,11 @@ import {resetForm} from '../../../../environments/environment';
   styleUrls: ['./slide4.component.scss']
 })
 export class Slide4Component implements OnInit {
-  @Output() listeCom = new EventEmitter<CommandeInsert[]>();
+  @Output() listeCom = new EventEmitter<Commande[]>();
   @Output() eventBack = new EventEmitter();
 
   commandes!: FormGroup;
-  listeCommandes: CommandeInsert[] = [];
+  listeCommandes: Commande[] = [];
 
   constructor() {
     this.commandes = new FormGroup({
@@ -31,14 +29,14 @@ export class Slide4Component implements OnInit {
   addCommandesList(formDirective: FormGroupDirective){
     let isPresent = this.listeCommandes.find(c => c.num_com == this.commandes.get('num_com')?.value);
     if (!isPresent){
-      const commande = new CommandeInsert(this.commandes.get('num_com')?.value, '','', 'true',''); //mis en brut
+      const commande = new Commande(this.commandes.get('num_com')?.value, '','', 'true',''); //mis en brut
       this.listeCommandes.push(commande);
       formDirective.resetForm();
       resetForm(this.commandes);
     }
 
   }
-  retirerCom(commande:CommandeInsert){
+  retirerCom(commande:Commande){
     const c = this.listeCommandes.find(
       (c) => c.num_com === commande.num_com);
     if (c){

@@ -19,7 +19,7 @@ import {Client} from '../../../../models/client/Client';
  * Composant qui permet de gérer le responsable
  */
 export class UpdateReponsableComponent implements OnInit {
-  displayedColumns: string[] = ['nom', 'prenom', 'mail','idClient','valider'];
+  displayedColumns: string[] = ['nom', 'prenom', 'mail', 'idClient', 'valider'];
   dataSource!: MatTableDataSource<Responsable>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,17 +29,17 @@ export class UpdateReponsableComponent implements OnInit {
   clientSubscription!: Subscription;
   responsableForm!: FormGroup;
   isAdd = false;
-  checkUpdate= false;
+  checkUpdate = false;
+
   constructor(private responsableService: ResponsableService, private clientService: ClientService) {
     this.responsableForm = new FormGroup({
       nom: new FormControl(),
       prenom: new FormControl(),
       mail: new FormControl(),
-      idClient : new FormControl()
+      idClient: new FormControl()
     });
-    this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsable: Responsable[]) =>
-    {
-      if(this.checkUpdate){
+    this.responsableSubscription = this.responsableService.responsablesSubject.subscribe((responsable: Responsable[]) => {
+      if (this.checkUpdate) {
         this.isAdd = true;
         setTimeout(() => {
           this.isAdd = false;
@@ -51,8 +51,7 @@ export class UpdateReponsableComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
-    {
+    this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) => {
       this.listeClients = clients;
     });
   }
@@ -61,10 +60,11 @@ export class UpdateReponsableComponent implements OnInit {
    * met à jour le responsable
    * @param responsable
    */
-  updateResponsable(responsable: Responsable){
+  updateResponsable(responsable: Responsable) {
     this.checkUpdate = true;
     this.responsableService.updateResponsable(responsable);
   }
+
   ngOnInit(): void {
     this.clientService.emitClientSubject();
     this.responsableService.emitResponsablesSubject();
@@ -72,12 +72,13 @@ export class UpdateReponsableComponent implements OnInit {
 
   /**
    * récupère le nom de la société associé au responsable
-    * @param responsable
+   * @param responsable
    */
-  getClientName(responsable: Responsable){
+  getClientName(responsable: Responsable) {
     const client = this.clientService.getClientById(responsable.idClient);
-    if (client)
+    if (client) {
       return client.nomSociete;
+    }
     return '';
   }
 
@@ -85,16 +86,16 @@ export class UpdateReponsableComponent implements OnInit {
    * check si le mail est valide
    * @param responsable
    */
-  validateMail(responsable: Responsable){
+  validateMail(responsable: Responsable) {
     return validateEmail(responsable.mail);
   }
 
   /**
    * check si l'attribu est valide ou non avec son pattern
-    * @param property
+   * @param property
    */
-  check(property: string){
-    checkValidity(property, this.responsableForm)
+  check(property: string) {
+    checkValidity(property, this.responsableForm);
 
   }
 
@@ -102,7 +103,7 @@ export class UpdateReponsableComponent implements OnInit {
    * ajoute un responsable
    * @param formDirective
    */
-  addResponsable(formDirective: FormGroupDirective){
+  addResponsable(formDirective: FormGroupDirective) {
     this.checkUpdate = true;
     this.responsableService.addResponsable(new Responsable('', this.responsableForm.get('nom')?.value.trim(),
       this.responsableForm.get('prenom')?.value.trim(),

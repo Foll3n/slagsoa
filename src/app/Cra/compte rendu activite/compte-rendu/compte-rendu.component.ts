@@ -32,10 +32,10 @@ export class CompteRenduComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.dureeString = this.duree.toString();
-      if (this.dureeString == '0'){
-        this.dureeString = '' ;
-      }
+    this.dureeString = this.duree.toString();
+    if (this.dureeString == '0') {
+      this.dureeString = '';
+    }
   }
 
   /**
@@ -65,9 +65,9 @@ export class CompteRenduComponent implements OnInit {
    * Permet de mettre la durée d'une case à 1
    */
   setDureeToOne() {
-    console.log("indeeeeeeeeexxxxxxxxxxx", this.indexWeek);
+    console.log('indeeeeeeeeexxxxxxxxxxx', this.indexWeek);
     const duree = this.craService.getDureeTotaleCra(this.idCra, this.indexWeek);
-    this.dureeString = ((1-this.cra.statusConge) - duree).toPrecision(1).toString();
+    this.dureeString = ((1 - this.cra.statusConge) - duree).toPrecision(1).toString();
     this.onModifyCase();
   }
 }

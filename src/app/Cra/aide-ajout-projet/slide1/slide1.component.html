@@ -3,47 +3,56 @@
 --****************************************************************************************-->
 <div class="question-card">
   <div class="questionnaire">
-  <form class="form-group " [formGroup]="clientForm"  (submit)="this.sendClient()">
-    <div class="search-div">
-    <div class="form">
-      <input type="text" id="name" (input)="searchTerm()" [(ngModel)]="societeNom" minlength="3" formControlName="nomSociete" autocomplete="off" required="required">
-      <label for="name" class="label-name" >
-        <span class="content-name">Nom de la société</span>
-      </label>
-    </div>
-      <div class="proposition" *ngIf="tempClient && !selectedClient">
-        <p (click)="applyClient()"> Appliquer le client {{tempClient.nomSociete}} </p>
+    <form class="form-group " [formGroup]="clientForm" (submit)="this.sendClient()">
+      <div class="search-div">
+        <div class="form">
+          <input type="text" id="name" (input)="searchTerm()" [(ngModel)]="societeNom" minlength="3"
+                 formControlName="nomSociete" autocomplete="off" required="required">
+          <label for="name" class="label-name">
+            <span class="content-name">Nom de la société</span>
+          </label>
+        </div>
+        <div class="proposition" *ngIf="tempClient && !selectedClient">
+          <p (click)="applyClient()"> Appliquer le client {{tempClient.nomSociete}} </p>
+        </div>
       </div>
-    </div>
-    <div class="form">
-      <input  (blur)="check('mail')" type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="mail" formControlName="mail" required="required" autocomplete="off" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
-      <label for="mail" class="label-name">
-        <span class="content-name">Mail</span>
-      </label>
-    </div>
-    <div class="form">
-      <input type="text" id="adresse" formControlName="adresse" minlength="10" autocomplete="off" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
-      <label for="adresse" class="label-name">
-        <span class="content-name">Adresse</span>
-      </label>
-    </div>
-    <div class="form">
-      <input  (blur)="check('siret')" pattern="^[0-9]{14}$" type="text" id="siret" formControlName="siret" autocomplete="off" required="required" [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
-      <label for="siret" class="label-name">
-        <span class="content-name">Numero siret</span>
-      </label>
-    </div>
-    <div *ngIf="this.clientForm.valid && checkClientNotIdentic()" class="valider">
-      <label class="label-valider">
-      <input type="submit" class="bouton-valider" value=""  >
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square" viewBox="0 0 16 16">
-          <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
-          <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
-        </svg>
-      </label>
+      <div class="form">
+        <input (blur)="check('mail')" type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="mail"
+               formControlName="mail" required="required" autocomplete="off"
+               [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
+        <label for="mail" class="label-name">
+          <span class="content-name">Mail</span>
+        </label>
+      </div>
+      <div class="form">
+        <input type="text" id="adresse" formControlName="adresse" minlength="10" autocomplete="off" required="required"
+               [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
+        <label for="adresse" class="label-name">
+          <span class="content-name">Adresse</span>
+        </label>
+      </div>
+      <div class="form">
+        <input (blur)="check('siret')" pattern="^[0-9]{14}$" type="text" id="siret" formControlName="siret"
+               autocomplete="off" required="required"
+               [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
+        <label for="siret" class="label-name">
+          <span class="content-name">Numero siret</span>
+        </label>
+      </div>
+      <div *ngIf="this.clientForm.valid && checkClientNotIdentic()" class="valider">
+        <label class="label-valider">
+          <input type="submit" class="bouton-valider" value="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square"
+               viewBox="0 0 16 16">
+            <path
+              d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+            <path
+              d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+          </svg>
+        </label>
 
-    </div>
+      </div>
 
-  </form>
-</div>
+    </form>
+  </div>
 </div>

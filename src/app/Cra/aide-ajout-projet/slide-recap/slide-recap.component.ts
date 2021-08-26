@@ -2,9 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Projet} from '../../models/projet/Projet';
 import {Client} from '../../models/client/Client';
 import {Responsable} from '../../models/responsable/responsable';
-import {CommandeInsert} from '../../models/commande/CommandeInsert';
-import {FormGroupDirective} from '@angular/forms';
-import {resetForm, shortMessage} from '../../../../environments/environment';
+import {Commande} from '../../models/commande/Commande';
 import {ProjetService} from '../../../services/projet.service';
 import {CommandeService} from '../../../services/commande.service';
 import {ClientService} from '../../../services/client.service';
@@ -34,7 +32,7 @@ export class SlideRecapComponent implements OnInit {
   @Input()
   reponsable!: Responsable;
   @Input()
-  listeCommandes!: CommandeInsert[];
+  listeCommandes!: Commande[];
   @Input()
   mapUserCom!: Map<string, Utilisateur[]>;
   @Output() eventBack = new EventEmitter();
@@ -69,8 +67,6 @@ export class SlideRecapComponent implements OnInit {
 
     this.clientSubscription = this.clientService.clientSubject.subscribe((clients: Client[]) =>
     {
-      // this.addResponsable();
-      console.log("je recupere au bon endroit les clients", clients);
       for( const c of clients){
         if (c.nomSociete == this.client.nomSociete){
           this.client.idClient = c.idClient;
@@ -81,9 +77,8 @@ export class SlideRecapComponent implements OnInit {
       this.addResponsable();
 
     });
-    this.commandeSubscription = this.commmandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) =>
+    this.commandeSubscription = this.commmandeService.commandeSubject.subscribe((commandes: Commande[]) =>
     {
-      console.log("///////////////////////////////////////////////////////// realisations ///////////////////////", commandes,"-----", this.mapUserCom);
       for( const c of commandes){
         let com = this.mapUserCom.get(c.num_com);
         if (c.id_projet == this.projet.id && com){
@@ -94,7 +89,6 @@ export class SlideRecapComponent implements OnInit {
       }
     });
     this.responsableSubscription = this.responsableService.responsablesSubject.subscribe( (responsables:Responsable[]) => {
-      console.log("je recup le bon responsable");
       for( const r of responsables){
         if (r.idClient == this.reponsable.idClient){
           this.reponsable.idResponsable = r.idResponsable;
@@ -118,14 +112,12 @@ export class SlideRecapComponent implements OnInit {
           console.log("Erreur de requete de base de données");
         }
       });
-      // this.commandeUtilisateur.reset();
     }
 
   shortMessageWithRouting(variable: Message, message: string){
     variable.contenu = message;
     setTimeout(() => {
       variable.contenu = '';
-      // this.router.navigate(['/accueil']);
       location.reload();
     }, 3000);
   }
@@ -137,7 +129,6 @@ export class SlideRecapComponent implements OnInit {
   addProjet(){
 
     let projet = new Projet(this.projet.code_projet,this.projet.color,'',this.projet.modeRealisation,'true',this.reponsable.idResponsable);
-    console.log("addProjet--->", this.projet);
       this.projetService.addProjet(projet);
   }
   /**
@@ -147,7 +138,7 @@ export class SlideRecapComponent implements OnInit {
     console.log("addCommandes-->", this.listeCommandes);
     let index = 1;
     for (let com of this.listeCommandes){
-      let res = new CommandeInsert(com.num_com,this.projet.id,'','true');
+      let res = new Commande(com.num_com,this.projet.id,'','true');
       this.commmandeService.addCommande(res, index==this.listeCommandes.length? true: false);
       index ++;
     }
@@ -158,8 +149,6 @@ export class SlideRecapComponent implements OnInit {
    * ajoute le client
    */
   addClient(){
-    console.log("addClient--->", this.client);
-
     if (this.client.idClient == ''){
       this.clientService.addClient(this.client)
     }
@@ -172,7 +161,6 @@ export class SlideRecapComponent implements OnInit {
    * ajoute le responsable
     */
   addResponsable(){
-    console.log("addResponsable--->", this.reponsable);
     this.reponsable.idClient = this.client.idClient;
 
     if (this.reponsable.idResponsable == ''){
@@ -187,7 +175,6 @@ export class SlideRecapComponent implements OnInit {
    * ajoute tout en commencant par le client, une fois que le client a été ajouté je peux enchainer avec les autres
    */
   addAll(){
-    console.log("add ALL");
   this.addClient();
 
   }

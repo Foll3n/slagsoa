@@ -39,7 +39,7 @@ export class Slide3Component implements OnInit {
     });
     this.projetService.ajout.subscribe(
       (isAdd: boolean) => {
-        shortMessage(this.valueAdd,'projet ajouté');
+        shortMessage(this.valueAdd, 'projet ajouté');
 
       });
 
@@ -52,23 +52,18 @@ export class Slide3Component implements OnInit {
   /**
    * Ajoute un projet grâce au service projetService ce qui permet d'avoir à tous moment la liste des projets
    */
-  addProjet(formDirective: FormGroupDirective){
+  addProjet(formDirective: FormGroupDirective) {
 
-      const projet = new Projet(this.projet.get('code_projet')?.value,this.color,'', this.projet.get('modeRealisation')?.value, 'true',''); //mis en brut
-      this.eventItem.emit(projet);
-
-
-
+    const projet = new Projet(this.projet.get('code_projet')?.value, this.color, '', this.projet.get('modeRealisation')?.value, 'true', ''); //mis en brut
+    this.eventItem.emit(projet);
   }
 
-
-  projetNotPresent(){
-    if (this.listeProjets.find(p => p.code_projet === this.projet.get('code_projet')?.value)){
+  projetNotPresent() {
+    if (this.listeProjets.find(p => p.code_projet === this.projet.get('code_projet')?.value)) {
       return true;
     }
     return false;
   }
-
 
 
 }

@@ -1,18 +1,19 @@
-  <div class="header">
+<div class="header">
 
-  </div>
+</div>
 <div class='col-12 all'>
 
-<div class="numero-page">
-  <p *ngIf="numeroPage<=4">Etape {{numeroPage+1}} / 5</p>
-  <p *ngIf="numeroPage>4">Recapitulatif</p>
-</div>
-  <ngb-carousel #caroussel2 [ngClass]="{ 'caroussel1': width >= minWidth, 'caroussel1-responsive': width < minWidth }" [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
+  <div class="numero-page">
+    <p *ngIf="numeroPage<=4">Etape {{numeroPage + 1}} / 5</p>
+    <p *ngIf="numeroPage>4">Recapitulatif</p>
+  </div>
+  <ngb-carousel #caroussel2 [ngClass]="{ 'caroussel1': width >= minWidth, 'caroussel1-responsive': width < minWidth }"
+                [activeId]="'ngb-slide-'+this.numeroPage.toString()" (slide)="onSlide($event)">
     <!--****************************************************************************************
                       slide 1 societe
     --****************************************************************************************-->
     <ng-template class="template" ngbSlide>
-      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
+      <div [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }">
         <div class="phrase-slide">
           <p class="first-p">Félicitation l'acquisition de ce projet ! </p><br>
           <p class="second-p">Tout d'abord, pour quelle société est-ce ?</p>
@@ -24,19 +25,20 @@
                  slide 2 responsable
 --****************************************************************************************-->
     <ng-template class="template" class="template" ngbSlide>
-      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
-      <div class="phrase-slide">
-        <p class="first-p">Quel en sera le responsable ? </p><br>
-        <p class="second-p">dites nous tout ?</p>
-      </div>
-      <app-slide2 *ngIf="this.client" [client]="this.client" (eventBack)="this.myCarousel!.prev()" (eventItem)="setResponsable($event)"></app-slide2>
+      <div [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }">
+        <div class="phrase-slide">
+          <p class="first-p">Quel en sera le responsable ? </p><br>
+          <p class="second-p">dites nous tout ?</p>
+        </div>
+        <app-slide2 *ngIf="this.client" [client]="this.client" (eventBack)="this.myCarousel!.prev()"
+                    (eventItem)="setResponsable($event)"></app-slide2>
       </div>
     </ng-template>
     <!--****************************************************************************************
                  slide 3 informations sur le projet
 --****************************************************************************************-->
     <ng-template class="template" ngbSlide>
-      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
+      <div [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }">
         <div class="phrase-slide">
           <p class="first-p">A présent paramétrez la commande ? </p><br>
           <p class="second-p">Donnez nous ces informations?</p>
@@ -48,23 +50,24 @@
                   slide 4 ajouter des commandes au projet
 --****************************************************************************************-->
     <ng-template class="template" ngbSlide>
-      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
+      <div [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }">
         <div class="phrase-slide">
           <p class="first-p">Désirez vous ajouter des tâches ? </p><br>
           <p class="second-p">Donnez nous ces informations?</p>
         </div>
-        <app-slide4 (eventBack)="this.myCarousel!.prev()" (listeCom)="setListeCom($event)" ></app-slide4>
+        <app-slide4 (eventBack)="this.myCarousel!.prev()" (listeCom)="setListeCom($event)"></app-slide4>
       </div>
     </ng-template>
     <!--****************************************************************************************
                       slide 5 Ajouter des utilisateurs aux commandes
     --****************************************************************************************-->
     <ng-template class="template" ngbSlide>
-      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
+      <div [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }">
         <div class="phrase-slide">
           <p class="first-p">Désirez ajouter des utilisateurs à ces tâches ? </p><br>
         </div>
-        <app-add-user-com [listeCommandes]="this.listeCommandes" (eventBack)="this.myCarousel!.prev()" (listeUsersCom)="setComUser($event)" ></app-add-user-com>
+        <app-add-user-com [listeCommandes]="this.listeCommandes" (eventBack)="this.myCarousel!.prev()"
+                          (listeUsersCom)="setComUser($event)"></app-add-user-com>
       </div>
     </ng-template>
 
@@ -73,20 +76,16 @@
                       slide 6 récapitulatif
     --****************************************************************************************-->
     <ng-template class="template" ngbSlide>
-      <div  [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }" >
+      <div [ngClass]="{ 'template1': width >= minWidth, 'template1-responsive': width < minWidth }">
         <div class="phrase-slide">
           <p class="first-p">Recapitulatif </p><br>
         </div>
-        <app-slide-recap *ngIf="this.projet && this.client && this.listeCommandes && this.responsable" (eventBack)="this.myCarousel!.prev()" [client]="this.client" [reponsable]="responsable" [projet]="this.projet" [listeCommandes]="this.listeCommandes" [mapUserCom]="this.mapUserCom"></app-slide-recap>
+        <app-slide-recap *ngIf="this.projet && this.client && this.listeCommandes && this.responsable"
+                         (eventBack)="this.myCarousel!.prev()" [client]="this.client" [reponsable]="responsable"
+                         [projet]="this.projet" [listeCommandes]="this.listeCommandes"
+                         [mapUserCom]="this.mapUserCom"></app-slide-recap>
       </div>
     </ng-template>
-
-
-
-
-
   </ngb-carousel>
-
-
 
 </div>

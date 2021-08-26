@@ -1,12 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CraHttpDatabase} from '../../../../configuration-http/CraHttpDatabase';
-import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
-import {HttpClient} from '@angular/common/http';
 import {Projet} from '../../../models/projet/Projet';
 import {ProjetService} from '../../../../services/projet.service';
-import {CraWeek} from '../../../models/cra/craWeek';
 import {Subscription} from 'rxjs';
-import {MatTabGroup} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-administration-projet',
@@ -20,8 +15,9 @@ export class AdministrationProjetComponent implements OnInit {
   listeProjets!: Projet[];
   listeProjetSubscription!: Subscription;
   color = '';
+
   constructor(private projetService: ProjetService) {
-    // this.tabGroup.selectedIndex = 3;
+    // this.tabGroup.selectedIndex = 3; // si' l'on souhaite sélectionner de base un autre onglet que le premier
   }
 
   /**
@@ -29,7 +25,8 @@ export class AdministrationProjetComponent implements OnInit {
    */
   ngOnInit(): void {
     this.listeProjetSubscription = this.projetService.projetSubject.subscribe(
-      (projets: Projet[]) => {this.listeProjets = projets;
+      (projets: Projet[]) => {
+        this.listeProjets = projets;
       });
   }
 
@@ -39,7 +36,5 @@ export class AdministrationProjetComponent implements OnInit {
   public get width() {
     return window.innerWidth;
   }
-
-
 
 }

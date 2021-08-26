@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
-
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CommandeHttpDatabase} from '../configuration-http/CommandeHttpDatabase';
 import {Subject} from 'rxjs';
-import {Realisation} from '../Cra/models/realisation/Realisation';
 import {CraWeekInsert} from '../Cra/models/logCra/craWeekInsert';
 import {CraHttpDatabase} from '../configuration-http/CraHttpDatabase';
 import {LogCraHttpDatabase} from '../configuration-http/LogCraHttpDatabase';
@@ -17,14 +14,15 @@ export class CraWaitingService {
   validateSubject = new Subject<CraWeekInsert[]>();
   public listeCraWaiting: CraWeekInsert[] = [];
   public listeCraValidate: CraWeekInsert[] = [];
+
   constructor(private httpClient: HttpClient) {
-
-
   }
+
   httpOptions = {
     headers: new HttpHeaders()
   };
-  initialisation(){
+
+  initialisation() {
     this.fillListeCraWaiting('1');
     this.fillListeCraWaiting('2');
   }
@@ -34,79 +32,79 @@ export class CraWaitingService {
     this.validateSubject.next(this.listeCraValidate.slice());
   }
 
-  fillListeCraWaiting(index:string){
+  fillListeCraWaiting(index: string) {
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.getCraWeekWaiting(index);
     response.subscribe(reponse => {
-      if(reponse.status == 'OK'){
-        // this.listeCraWaiting = this.sortList(reponse.listeCraWeek);
-        if (index == '1' && reponse.listeCraWeek){
+      if (reponse.status == 'OK') {
+        if (index == '1' && reponse.listeCraWeek) {
           this.listeCraWaiting = reponse.listeCraWeek;
-        }
-        else if(index == '2' && reponse.listeCraWeek){
+        } else if (index == '2' && reponse.listeCraWeek) {
           this.listeCraValidate = reponse.listeCraWeek;
         }
-        if(reponse.listeCraWeek != null)
+        if (reponse.listeCraWeek != null) {
           this.emitCraWaintingSubject();
-
-      }
-      else{
-        console.log("Erreur de requete de base de données");
+        }
+      } else {
+        console.log('Erreur de requete de base de données');
       }
     });
   }
-  validerCra(cra: CraWeekInsert, commentaire:string){
+
+  validerCra(cra: CraWeekInsert, commentaire: string) {
     cra.status = '2';
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.updateStatusCraWeek(cra);
     response.subscribe(reponse => {
-      if(reponse.status == 'OK'){
+      if (reponse.status == 'OK') {
         this.deleteCraWait(cra);
         this.listeCraValidate.push(cra);
         this.emitCraWaintingSubject();
         // met à jour automatiquement
-        this.makeLog(cra,commentaire);
-      }
-      else{
-        console.log("Erreur de requete de base de données");
+        this.makeLog(cra, commentaire);
+      } else {
+        console.log('Erreur de requete de base de données');
       }
     });
   }
-  deleteCraWait(cra: CraWeekInsert){
+
+  deleteCraWait(cra: CraWeekInsert) {
     const c = this.getCraWeek(cra);
-    if (c){
+    if (c) {
       const index = this.listeCraWaiting.indexOf(c, 0);
       this.listeCraWaiting.splice(index, 1);
     }
 
   }
+
   public getCraWeek(cra: CraWeekInsert): CraWeekInsert | null {
-    if (cra.idCra){
+    if (cra.idCra) {
       const res = this.listeCraWaiting.find(
         (c) => c.idCra === cra.idCra);
       return res as CraWeekInsert;
     }
     return null;
   }
-  refuserCra(cra: CraWeekInsert, commentaire: string){
+
+  refuserCra(cra: CraWeekInsert, commentaire: string) {
     cra.status = '0';
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.updateStatusCraWeek(cra);
     response.subscribe(reponse => {
       this.deleteCraWait(cra);
       this.emitCraWaintingSubject();
-      this.makeLog(cra,commentaire);
+      this.makeLog(cra, commentaire);
     });
 
 
-
   }
-  makeLog(cra:CraWeekInsert, commentaire:string){
-    if (!commentaire){
+
+  makeLog(cra: CraWeekInsert, commentaire: string) {
+    if (!commentaire) {
       commentaire = 'Compte rendu invalide';
     }
-    commentaire.substr(0,254);
-    let log = new Log('',`${sessionStorage.getItem('id')}`,cra.idUsr,cra.status,commentaire,cra.idCra!.toString());
+    commentaire.substr(0, 254);
+    let log = new Log('', `${sessionStorage.getItem('id')}`, cra.idUsr, cra.status, commentaire, cra.idCra!.toString());
     const logHttp = new LogCraHttpDatabase(this.httpClient);
     const res = logHttp.addLog(log);
     res.subscribe(reponse => {
