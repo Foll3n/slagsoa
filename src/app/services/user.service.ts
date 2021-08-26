@@ -29,7 +29,11 @@ export class UserService {
   httpOptions = {
     headers: new HttpHeaders()
   };
-
+  getNbDaysConge(idUsr: string = `${sessionStorage.getItem('id')}`){
+    const res = this.listeUsers.find(u => u.id == idUsr)?.nbCongesRestant;
+    if (res) return +res;
+    return 0;
+  }
   getMail(idUsr: string) {
     return this.listeUsers.find(u => u.id == idUsr)?.mail;
   }
