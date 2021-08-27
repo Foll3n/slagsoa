@@ -1,16 +1,13 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatSort, MatSortable} from '@angular/material/sort';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {MatTable} from '@angular/material/table';
 import {TableCongesDataSource, TableCongesItem} from './table-conges-datasource';
-import {MatDialog} from "@angular/material/dialog";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Conge } from "../../../partage/Modeles/conge";
-import {environment} from "../../../../environments/environment";
 import {dateFormatter} from "../../../../environments/environment";
 import {CongesHttpService} from "../../../configuration-http/conges-http.service";
-import {any} from "codelyzer/util/function";
 import {NavComponent} from '../../../nav/nav.component';
 
 
@@ -77,7 +74,6 @@ export class TableCongesComponent implements AfterViewInit {
           if(sessionStorage.getItem('role') == 'MANAGER'){
             for(var i=0; i<resultat.listConges.length; i++){
               if(resultat.listConges[i].idUtilisateur == sessionStorage.getItem('id')){
-
                 this.data.push(resultat.listConges[i]);
               }
             }

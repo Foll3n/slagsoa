@@ -13,10 +13,8 @@ export class StatCongesComponent implements OnInit {
   congesCumules = '';
   congesPoses = '';
   congesRestant = '';
-
   users!: Utilisateur[];
   user!: Utilisateur;
-
   userSubscription!: Subscription;
 
   constructor(private connexionService: ConnexionService) { }
@@ -34,5 +32,4 @@ export class StatCongesComponent implements OnInit {
       }
     );
   }
-
 }

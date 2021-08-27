@@ -55,7 +55,10 @@ export class CraService {
     this.fillWeeks();
   }
 
-
+  /**
+   * Initialise le mois en cours
+   * @param date
+   */
   initialisationMois(date: Date) {
     let save = new Date(date);
     date.setDate(date.getDate());
@@ -82,8 +85,6 @@ export class CraService {
       id++;
       firstDate.setDate(firstDate.getDate() + 7);
     }
-
-
   }
 
   /**

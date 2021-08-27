@@ -21,7 +21,6 @@ export class RoleHttpService {
     const href = environment.urlRole;
     const requestUrl =
       `${href}/${sessionStorage.getItem('id')}`;
-
     return this._httpClient.get<any>(requestUrl, this.httpOptions);
 
   }

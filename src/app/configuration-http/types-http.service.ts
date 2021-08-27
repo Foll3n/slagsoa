@@ -22,7 +22,6 @@ export class TypesHttpService {
     console.log(sessionStorage.getItem('id'));
     const requestUrl =
       `${href}/${sessionStorage.getItem('id')}`;
-
     return this._httpClient.get<any>(requestUrl, this.httpOptions);
 
   }

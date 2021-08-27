@@ -27,7 +27,6 @@ export class UtilisateursHttpService {
     const href = environment.urlUtilisateurs;
     const requestUrl =
       `${href}/${sessionStorage.getItem('id')}`;
-
     return this._httpClient.get<any>(requestUrl, this.httpOptions);
   }
 
@@ -38,7 +37,6 @@ export class UtilisateursHttpService {
     });
     const href = environment.urlUtilisateurs;
     const requestUrl = href + '/projet/?codeProjet=' + projetCode.toString() + '&idUtilisateur=' + `${sessionStorage.getItem('id')}`;
-
     return this._httpClient.get<any>(requestUrl, this.httpOptions);
   }
 
@@ -51,7 +49,6 @@ export class UtilisateursHttpService {
     const href = environment.urlUtilisateurs;
     const requestUrl =
       `${href}`;
-
     return this._httpClient.post<any>(requestUrl, body, this.httpOptions);
   }
 
@@ -63,7 +60,6 @@ export class UtilisateursHttpService {
     const href = environment.urlUtilisateurs;
     const requestUrl =
       `${href}/${id}`;
-
     return this._httpClient.delete<any>(requestUrl, this.httpOptions);
   }
 
@@ -79,7 +75,6 @@ export class UtilisateursHttpService {
     const href = environment.urlUtilisateurs;
     const requestUrl =
       `${href}`;
-
     return this._httpClient.put<any>(requestUrl, updatedUtilisateur, this.httpOptions);
   }
 }

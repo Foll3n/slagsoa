@@ -37,7 +37,6 @@ export class ClientHttpService {
     const send = new BigInsertClient(`${sessionStorage.getItem('id')}`, client);
     const json = JSON.stringify(send);
     const href = environment.urlClient;
-    console.log('json envoyé ___', json);
     // tslint:disable-next-line:max-line-length
     return this._httpClient.post<Result>(href, json, this.httpOptions);
   }
@@ -46,7 +45,6 @@ export class ClientHttpService {
     const send = new BigInsertClient(`${sessionStorage.getItem('id')}`, client);
     console.log('send --->', send);
     const json = JSON.stringify(send);
-    console.log('json ->>>>>>>>>>>>>>>>>', json);
     const href = environment.urlClient;
     // tslint:disable-next-line:max-line-length
     return this._httpClient.put<Result>(href, json, this.httpOptions);
