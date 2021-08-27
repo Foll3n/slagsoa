@@ -1,5 +1,5 @@
 
-.proposition{
+.proposition {
   border-radius: 15px;
   background-color: #5b5c68;
   color: white;
@@ -7,10 +7,11 @@
   width: 150px;
   display: inline-block;
   position: absolute;
-  top:70px;
-  left:0px;;
+  top: 70px;
+  left: 0px;;
 }
-.proposition p{
+
+.proposition p {
   font-size: 12px;
   text-align: center;
   margin: auto;
@@ -18,48 +19,57 @@
 
 
 }
-.search-div{
+
+.search-div {
   display: inline-block;
   position: relative;
 }
-.questionnaire{
+
+.questionnaire {
   text-align: center;
   margin: auto;
   vertical-align: middle;
 
 }
-.question-card{
-  padding: 10px;/////////// fais rien
+
+.question-card {
+  padding: 10px; /////////// fais rien
 }
-::placeholder{
+
+::placeholder {
   color: #151414;
 }
-.valider{
-  position:absolute;
+
+.valider {
+  position: absolute;
   bottom: 50px;
   right: 50px;
   text-align: center;
   margin: auto;
   cursor: pointer;
 }
-.bouton-valider{
+
+.bouton-valider {
   display: none;
 }
-.label-valider{
+
+.label-valider {
   cursor: pointer;
 }
-.input-invalid{
-  pointer-events:none;
+
+.input-invalid {
+  pointer-events: none;
 }
-.input-valid{
+
+.input-valid {
   pointer-events: all;
 }
 
-.retour-arriere{
+.retour-arriere {
   z-index: 10000;
   position: absolute;
-  top:50px;
-  left:20px;
+  top: 50px;
+  left: 20px;
   background: transparent;
-  border:none;
+  border: none;
 }

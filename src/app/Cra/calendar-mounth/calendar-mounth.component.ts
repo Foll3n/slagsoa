@@ -1,31 +1,21 @@
-import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component,  OnInit} from '@angular/core';
 import {
-  ChangeDetectionStrategy,
   ViewChild,
   TemplateRef
 } from '@angular/core';
-import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
+import {isSameDay, isSameMonth} from 'date-fns';
 import {Subject, Subscription} from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent, CalendarMonthViewBeforeRenderEvent,
+  CalendarMonthViewBeforeRenderEvent,
   CalendarView
 } from 'angular-calendar';
-import {Cra} from '../models/cra/Cra';
-import {CompteRenduInsert} from '../models/compteRendu/CompteRenduInsert';
 import {CraService} from '../../services/cra.service';
 import {CalendarService} from '../../services/calendar.service';
-import {CraWeekInsert} from '../models/logCra/craWeekInsert';
 import {InsertCra} from '../models/cra/InsertCra';
 import {Router} from '@angular/router';
 import {formatDate} from '@angular/common';
 import {JoursferiesService} from '../../services/joursferies.service';
-import {JoursFeries} from '../models/joursFeries/JoursFeries';
-
-
-
 
 
 @Component({
@@ -44,7 +34,23 @@ import {JoursFeries} from '../models/joursFeries/JoursFeries';
   ],
 })
 export class CalendarMounthComponent implements OnInit {
-
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
+  listeJoursFeries: Date[] = [];
+  view: CalendarView = CalendarView.Month;
+  listeCra: InsertCra[] = [];
+  CalendarView = CalendarView;
+  calendarCraSubscription!: Subscription;
+  jourFerieSubscription!: Subscription;
+  locale = 'fr';
+  events: CustomEvent[] = [];
+  viewDate: Date = new Date();
+  dayToStart = 1;
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  } | undefined;
+  refresh: Subject<any> = new Subject();
+  activeDayIsOpen = true;
   constructor(private jourFerie: JoursferiesService, private craService: CraService, private calendarService: CalendarService, private router: Router) {
     this.jourFerieSubscription = this.jourFerie.joursSubject.subscribe((jours: Date[]) => this.listeJoursFeries = jours );
     this.calendarCraSubscription = this.calendarService.calendarSubject.subscribe(
@@ -64,29 +70,6 @@ export class CalendarMounthComponent implements OnInit {
       });
   }
 
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
-
-  listeJoursFeries: Date[] = [];
-  view: CalendarView = CalendarView.Month;
-  listeCra: InsertCra[] = [];
-  CalendarView = CalendarView;
-  calendarCraSubscription!: Subscription;
-  jourFerieSubscription!: Subscription;
-  locale = 'fr';
-  events: CustomEvent[] = [];
-  viewDate: Date = new Date();
-  dayToStart = 1;
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  } | undefined;
-
-  refresh: Subject<any> = new Subject();
-
-
-  activeDayIsOpen = true;
-
-
 
   ngOnInit(
   ) {
@@ -97,20 +80,16 @@ export class CalendarMounthComponent implements OnInit {
 
 
   isFerie(date: Date){
-    // console.log(date.getTime(),"liste jours:", this.listeJoursFeries[0].getTime());
-    console.log(date.valueOf());
     if (this.listeJoursFeries)
       return this.listeJoursFeries.find(d => isSameDay(date,d));
     return false;
   }
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
-    console.log('ok');
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
 
       for (const c of this.listeCra){
         if (new Date(c.date).getDate() == dayOfMonth && isSameMonth(new Date(c.date), this.viewDate) && (isSameDay(day.date, new Date(c.date)))){
-
           if (c.status! == '1'){
             day.backgroundColor = '#d4e4fc'; }
           else if (c.status == '2'){
@@ -123,7 +102,6 @@ export class CalendarMounthComponent implements OnInit {
             day.backgroundColor = 'yellow';
           }
         }
-
       }
       if (this.isFerie(day.date)){
         day.backgroundColor = '#bdbdbd';
@@ -144,10 +122,7 @@ export class CalendarMounthComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
       if ( events.length === 0){
-        // this.craService.initialisation(date, true);
         this.router.navigate(['/compte-rendu-activite',formatDate(date,'MM-dd-yyyy','en')]);
-
-
       }
       this.viewDate = date;
     }
@@ -155,9 +130,6 @@ export class CalendarMounthComponent implements OnInit {
 
 
   handleEvent(action: string, event: CalendarEvent): void {
-    // console.log("iciii");
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
     this.router.navigate(['/compte-rendu-activite',formatDate(event.start,'MM-dd-yyyy','en')]);
   }
 
@@ -189,9 +161,6 @@ export class CalendarMounthComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-
-
-
 
 }
 

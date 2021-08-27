@@ -16,25 +16,15 @@ export interface TableCongesEnAttenteItem {
   prenomUtilisateur: string;
 }
 
-// // TODO: replace this with real data from your application
-// const EXAMPLE_DATA: TableCongesEnAttenteItem[] = [
-//   { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'A' , prenom: 'str'},
-//   { dateDebut: 'Oxygene', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'H' , prenom: 'str'},
-//   { dateDebut: 'Azote', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'B' , prenom: 'str'},
-//   { dateDebut: 'Hydrogen', dateFin: 'test' , commentaire: '10dqfvqfzqdzqd', type:'ARM', etat:'en cours' , nom:'D' , prenom: 'str'}
-// ];
-
 /**
  * Data source for the TableCongesEnAttente view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
 export class TableCongesEnAttenteDataSource extends DataSource<TableCongesEnAttenteItem> {
-  // data: TableCongesEnAttenteItem[] = EXAMPLE_DATA;
   data: TableCongesEnAttenteItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-
   constructor(httpClient: HttpClient) {
     super();
   }

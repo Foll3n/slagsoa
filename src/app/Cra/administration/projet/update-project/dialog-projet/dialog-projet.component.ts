@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Inject, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CommandeInsert} from '../../../../models/commande/CommandeInsert';
+import {Commande} from '../../../../models/commande/Commande';
 import {Projet} from '../../../../models/projet/Projet';
 import {MatTableDataSource} from '@angular/material/table';
 import {CommandeService} from '../../../../../services/commande.service';
@@ -12,6 +11,7 @@ import {MatSort} from '@angular/material/sort';
 import {Responsable} from '../../../../models/responsable/responsable';
 import {ResponsableService} from '../../../../../services/responsable.service';
 import {UserService} from '../../../../../services/user.service';
+import {environment} from '../../../../../../environments/environment';
 
 
 export interface DialogData {
@@ -29,16 +29,16 @@ export interface DialogData {
 export class DialogProjetComponent implements AfterViewInit{
   projet!: Projet;
   isAddCom = false;
-  isAddProjet = false;
   choice = ['forfait','regie'];
-  listeCommandes!: CommandeInsert[];
+  listeCommandes!: Commande[];
   commandesSubject!: Subscription;
   listeResponsables: Responsable[] = [];
   displayedColumns: string[] = ['num_com', 'checked'];
-  dataSource!: MatTableDataSource<CommandeInsert>;
+  dataSource!: MatTableDataSource<Commande>;
   responsableSubsciption!: Subscription;
   ajoutSubscription!: Subscription;
   commandeSubscription!: Subscription;
+  message='';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -48,7 +48,7 @@ export class DialogProjetComponent implements AfterViewInit{
     public dialogRef: MatDialogRef<DialogProjetComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
-    const test:CommandeInsert[] = [];
+    const test:Commande[] = [];
     this.dataSource =  new MatTableDataSource(test);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -59,13 +59,13 @@ export class DialogProjetComponent implements AfterViewInit{
     });
 
     this.ajoutSubscription = this.projetService.ajout.subscribe((bool: boolean) => {
-      this.isAddProjet = bool;
-      setTimeout(() => {
-        this.isAddProjet = false;
-      }, 3000);
+      if(bool) this.displayMessage('projet mis à jour');
+      else this.displayMessage('projet non ajouté');
+
+
     });
 
-    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: CommandeInsert[]) => {
+    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: Commande[]) => {
       this.listeCommandes = commandes;
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
@@ -73,7 +73,13 @@ export class DialogProjetComponent implements AfterViewInit{
     } );
 // récupérer si la commande a bien été ajouté
   }
+  private displayMessage(message: string){
+    this.message = message;
+    setTimeout(() => {
+      this.message ='';
+    }, 3000);
 
+  }
   /**
    * copie un projet
    * @param projet
@@ -107,7 +113,7 @@ export class DialogProjetComponent implements AfterViewInit{
     if(!this.projet)return [];
     for (let com of this.listeCommandes){
       if(com.id_projet == this.projet.id){
-        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.available,com.color);
+        let c = new Commande(com.num_com,com.id_projet,com.id,com.available,com.color);
         res.push(c);
       }
     }
@@ -118,11 +124,26 @@ export class DialogProjetComponent implements AfterViewInit{
    * met un projet à jour avec ses commandes
     * @param commandes
    */
-  updateProjet(commandes: CommandeInsert[]){
-    for(let com of commandes){
+  updateProjet(commandes: Commande[]){
+    if(this.projet.code_projet.length >= environment.lengthProjetCode){
+      let checkCom = true;
+      for(let com of commandes){
+        if(com.num_com.length < environment.lengthComNum){
+          checkCom = false;
+        }
+      }
+      if(checkCom){
+        this.commandeService.updateCommandes(commandes);
+        this.projetService.updateProjet(this.projet);
+      }
+      else{
+        this.displayMessage('Le non de la commande doit comporter au moins '+environment.lengthComNum + " caractères");
+      }
+
     }
-    this.commandeService.updateCommandes(commandes);
-    this.projetService.updateProjet(this.projet);
+    else{
+      this.displayMessage('Le non du projet doit au moins faire '+environment.lengthProjetCode + " caractères");
+    }
 
   }
 
@@ -140,7 +161,6 @@ export class DialogProjetComponent implements AfterViewInit{
   putAllCommandsFalse(){
     for(const com of this.dataSource.data){
       this.projet.available=='true'?com.available='false':com.available='true';
-      // com.available = this.projet.available;
     }
 
   }

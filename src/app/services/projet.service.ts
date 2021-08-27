@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
-
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CommandeHttpDatabase} from '../configuration-http/CommandeHttpDatabase';
 import {Subject} from 'rxjs';
-import {Realisation} from '../Cra/models/realisation/Realisation';
 import {Projet} from '../Cra/models/projet/Projet';
 import {ProjetHttpDatabase} from '../configuration-http/ProjetHttpDatabase';
 
-
+// service projet Permettant à toutes les classes abonnées au projet de recevoir les informations de ce dernier
 @Injectable()
 export class ProjetService {
   userId = '10';

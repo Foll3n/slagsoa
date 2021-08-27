@@ -1,4 +1,3 @@
-
 <p class="titre">Ajouter une tâche a un projet</p>
 
 <!----------------------------------------------------------------------------------------------------------------->
@@ -7,17 +6,18 @@
 
 <form class="form-group" [formGroup]="commandeProjet" #formDirective="ngForm" (submit)="addCommande(formDirective)">
   <div class="inputNomCommande">
-    <input type="text" class="form-control" required formControlName="codeCommande" minlength="3" placeholder="Code tâche">
+    <input type="text" class="form-control" required formControlName="codeCommande" minlength="{{lengthComNum}}"
+           placeholder="Code tâche">
   </div>
   <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
-    <mat-label>Selectionner un projet</mat-label>
+    <mat-label>Selectionner une commande</mat-label>
     <mat-select formControlName="projet" required>
       <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id" (click)="getCommandesProjet()">
         {{projet.code_projet}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <input *ngIf="this.commandeProjet.valid" type="submit" value="Ajouter" class="btn btn-info" >
+  <input *ngIf="this.commandeProjet.valid" type="submit" value="Ajouter" class="btn btn-info">
   <p class="notification-add" *ngIf="this.commandeAdd.contenu.length> 0">{{commandeAdd.contenu}}</p>
 </form>
 <!----------------------------------------------------------------------------------------------------------------->
@@ -28,15 +28,17 @@
   <p class="titre">Ajouter une tâche a un utilisateur</p>
 
 
-  <form class="form-group" [formGroup]="commandeUtilisateur" >
+  <form class="form-group" [formGroup]="commandeUtilisateur">
 
     <!--****************************************************************************************
                       choisir un projet
     --****************************************************************************************-->
-    <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
-      <mat-label>Selectionner un projet</mat-label>
+    <mat-form-field appearance="outline"
+                    [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
+      <mat-label>Selectionner une commande</mat-label>
       <mat-select formControlName="projet" required>
-        <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id" (click)="getCommandeProjetUser(projet)">
+        <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id"
+                    (click)="getCommandeProjetUser(projet)">
           {{projet.code_projet}}
         </mat-option>
       </mat-select>
@@ -45,7 +47,8 @@
     <!----------------------------------------------------------------------------------------------------------------->
     <!------------------------- SELECTION DE LA tache et de l'utilisateur------------------------------->
     <!----------------------------------------------------------------------------------------------------------------->
-    <app-add-user-com *ngIf="this.listeCommandeProjet.length>0" [listeCommandes]="this.listeCommandeProjet" [isUpdate]="true" (listeUsersCom)="setComUser($event)" ></app-add-user-com>
+    <app-add-user-com *ngIf="this.listeCommandeProjet.length>0" [listeCommandes]="this.listeCommandeProjet"
+                      [isUpdate]="true" (listeUsersCom)="setComUser($event)"></app-add-user-com>
 
 
     <p class="notification-add" *ngIf="this.isAddRealisation">Tâche ajoutée à l'utilisateur</p>

@@ -1,7 +1,7 @@
 import {CompteRendu} from '../compteRendu/CompteRendu';
 import {Cra} from './Cra';
 import {formatDate} from '@angular/common';
-import {CommandeInsert} from '../commande/CommandeInsert';
+import {Commande} from '../commande/Commande';
 import {environment} from '../../../../environments/environment';
 import {BigCommande} from '../commande/BigCommande';
 
@@ -17,7 +17,7 @@ export class CraWeek {
   public lastDate: string;
   public firstDate: string;
   public id: number;
-  public listeCommandesWeek: CommandeInsert[] = [];
+  public listeCommandesWeek: Commande[] = [];
   public status = '0';
 
   constructor(id: number, dateDay: Date) {
@@ -37,10 +37,10 @@ export class CraWeek {
   setListeCra(listeCra: Cra[]): void{
     this.listeCra = listeCra;
   }
-  setListeCom(listeCommande: CommandeInsert[]): void{
+  setListeCom(listeCommande: Commande[]): void{
     this.listeCommandesWeek = listeCommande;
   }
-  addCom(commande: CommandeInsert): void{
+  addCom(commande: Commande): void{
     this.listeCommandesWeek.push(commande);
   }
   setStatus(status: string){

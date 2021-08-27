@@ -1,5 +1,5 @@
-<div  [ngClass]="{ 'chart1': width >= minWidth, 'chart1-responsive': width < minWidth }">
-  <div style="display: block;"  *ngIf="doughnutChartLabels && doughnutChartData">
+<div [ngClass]="{ 'chart1': width >= minWidth, 'chart1-responsive': width < minWidth }">
+  <div style="display: block;" *ngIf="doughnutChartLabels && doughnutChartData">
     <canvas baseChart
             [data]="doughnutChartData"
             [labels]="doughnutChartLabels"
@@ -10,9 +10,4 @@
             [legend]="doughnutChartLegend">
     </canvas>
   </div>
-
-
-
-
-
 </div>

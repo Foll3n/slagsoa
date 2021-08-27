@@ -1,8 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {Observable, Subject} from 'rxjs';
+import { Router } from '@angular/router';
 import {environment} from "../../environments/environment";
 import { UtilisateursHttpService } from "../configuration-http/utilisateurs-http.service";
 import {Utilisateur} from "../partage/Modeles/utilisateur";
@@ -20,9 +19,7 @@ import {ConnexionHttpService} from "../configuration-http/connexion-http.service
   }
 )
 export class ConnexionComponent implements OnInit {
-
   logForm!: FormGroup;
-
   message!: string;
   user!: Utilisateur;
   urlConnexion!: string;
@@ -46,7 +43,6 @@ export class ConnexionComponent implements OnInit {
     if (this.logForm.hasError('required')) {
       return 'Champs incorrecte';
     }
-
     return this.logForm.hasError('ndc') ? 'Email incorrecte' : '';
   }
 
@@ -54,9 +50,7 @@ export class ConnexionComponent implements OnInit {
     if(this.connexionService.isLogged()){
       this.router.navigate(['/accueil']);
     }
-
   }
-
 
   onSubmit() {
     this.connexionHttp.connexion(this.logForm.get('ndc')?.value,

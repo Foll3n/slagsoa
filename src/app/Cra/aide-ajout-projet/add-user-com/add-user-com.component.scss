@@ -1,35 +1,38 @@
 
-.questionnaire{
+.questionnaire {
   text-align: center;
   margin: auto;
   vertical-align: middle;
-
 }
-.question-card{
+
+.question-card {
   display: inline-block;
-
 }
-.valider-commandes{
-  border:none;
+
+.valider-commandes {
+  border: none;
   background-color: transparent;
-  position:absolute;
+  position: absolute;
   bottom: 50px;
   right: 50px;
   text-align: center;
   margin: auto;
   cursor: pointer;
 }
-.retour-arriere{
+
+.retour-arriere {
   z-index: 10000;
   position: absolute;
-  top:50px;
-  left:20px;
+  top: 50px;
+  left: 20px;
   background: transparent;
-  border:none;
+  border: none;
 }
-.margin-bot{
+
+.margin-bot {
   padding: 50px;
 }
-.commandes-add{
+
+.commandes-add {
   padding-bottom: 50px;
 }

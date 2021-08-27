@@ -8,12 +8,12 @@
     <!------------------------------------------------------------------------------------------>
     <div class="container">
 
-      <mat-tab-group  [selectedIndex]="0">
+      <mat-tab-group [selectedIndex]="0">
         <mat-tab label="Gestion des projets">
-          <!--        <app-visualisation-projet-com></app-visualisation-projet-com>-->
+          <!--          modification d'un projet-->
           <app-update-project></app-update-project>
         </mat-tab>
-        <mat-tab label="Ajouter une commande" >
+        <mat-tab label="Ajouter une commande">
           <!--    Composant pouvant ajouter un projet-->
 
           <app-aide-ajout-projet></app-aide-ajout-projet>
@@ -26,15 +26,13 @@
         <mat-tab label="Gestion Client / responsable">
           <!--        <app-visualisation-projet-com></app-visualisation-projet-com>-->
           <div class="update-client">
-          <app-update-client-responsable></app-update-client-responsable>
+            <app-update-client-responsable></app-update-client-responsable>
           </div>
           <div class="update-responsable">
-          <app-update-reponsable></app-update-reponsable>
+            <app-update-reponsable></app-update-reponsable>
           </div>
         </mat-tab>
       </mat-tab-group>
     </div>
-
   </section>
-
 </app-nav>

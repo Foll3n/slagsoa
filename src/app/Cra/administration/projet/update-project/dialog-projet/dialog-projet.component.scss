@@ -1,139 +1,155 @@
-.input-update-projet{
-  border:none;
+.input-update-projet {
+  border: none;
   width: 50%;
   font-size: 30px;
-}.input-update-commande{
-   border:none;
-   width: 100%;
-   font-size: 20px;
- }
+}
 
-
-
-//
-//.message-add{
-//  display: inline-block;
-//  color:green;
-//
-//  margin-left: 10%;
-//}
-//.picker, responsable, mode{
-//  width: 150px;
-//  padding:10px;
-//  display: block;
-//  align-content: center;
-//  //display: inline-block;
-//}
-
-.picker, .picker:hover, .picker:valid{
+.input-update-commande {
+  border: none;
+  width: 100%;
+  font-size: 20px;
+}
+.message-add{
+  color:green;
+  padding-left: 30px;
+}
+.picker, .picker:hover, .picker:valid {
   position: relative;
-  top:20px;
-  left:10px;
+  top: 20px;
+  left: 10px;
   width: 70px;
   border-radius: 15px;
-  padding:5px;
-  border:none;
+  padding: 5px;
+  border: none;
   outline: none;
 }
-.commande-input{
-  border:none;
+
+.commande-input {
+  border: none;
   outline: none;
 }
-.table-visualisation-commande{
+
+.table-visualisation-commande {
   width: 100%;
 }
 
-.position-absolute{
+.position-absolute {
   position: absolute;
 }
-//.selection-mode-projet, .selection-responsable-projet{
-//  width: 150px;
-//  height:50px;
-//  padding: 10px;
-//}
-//.bouton-valider{
-//  margin: 20px;
-//
-//}
 
-.dialog-projet{
+.dialog-projet {
   text-align: center;
-  margin:auto;
+  margin: auto;
 
   position: relative;
 
 }
-.bouton-valider{
+
+.bouton-valider {
   text-align: center;
 }
 
-
-
-
-.top{
-  position:relative;
+.top {
+  position: relative;
   width: 100%;
 }
-.etat-projet{
+
+.etat-projet {
   width: 170px;
   position: absolute;
   display: block;
-  top:-40px;
-  right:0;
-}
-.onoffswitch {
-  position: absolute; width: 79px;
-  top:-50px;
+  top: -40px;
   right: 0;
-  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
+
+.onoffswitch {
+  position: absolute;
+  width: 79px;
+  top: -50px;
+  right: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 .onoffswitch-checkbox {
   position: absolute;
   opacity: 0;
   display: none;
   pointer-events: none;
 }
+
 .onoffswitch-label {
-  display: block; overflow: hidden; cursor: pointer;
-  border: 2px solid #999999; border-radius: 24px;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #999999;
+  border-radius: 24px;
 }
+
 .onoffswitch-inner {
-  display: block; width: 200%; margin-left: -100%;
+  display: block;
+  width: 200%;
+  margin-left: -100%;
   transition: margin 0.2s ease-in 0s;
 }
+
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-  display: block; float: left; width: 50%; height: 29px; padding: 0; line-height: 29px;
-  font-size: 13px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  display: block;
+  float: left;
+  width: 50%;
+  height: 29px;
+  padding: 0;
+  line-height: 29px;
+  font-size: 13px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
   box-sizing: border-box;
 }
+
 .onoffswitch-inner:before {
   content: "ON";
   padding-left: 10px;
-  background-color: #9EF7BC; color: #24990F;
+  background-color: #9EF7BC;
+  color: #24990F;
 }
+
 .onoffswitch-inner:after {
   content: "OFF";
   padding-right: 10px;
-  background-color: #EDABAB; color: #D12C2C;
+  background-color: #EDABAB;
+  color: #D12C2C;
   text-align: right;
 }
-.active{
+
+.active {
   color: green;
 }
-.desactive{
-  color:red;
+
+.desactive {
+  color: red;
 }
+
 .onoffswitch-switch {
-  display: block; width: 18px; margin: 5.5px; height: 22px;
+  display: block;
+  width: 18px;
+  margin: 5.5px;
+  height: 22px;
   background: #9E9B9B;
-  position: absolute; top: 0; bottom: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   right: 46px;
-  border: 2px solid #999999; border-radius: 24px;
+  border: 2px solid #999999;
+  border-radius: 24px;
   transition: all 0.2s ease-in 0s;
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
   margin-left: 0;
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
   right: 0px;
 }

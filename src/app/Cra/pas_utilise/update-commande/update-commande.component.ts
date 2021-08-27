@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {CommandeInsert} from "../../models/commande/CommandeInsert";
+import {Commande} from "../../models/commande/Commande";
 import {Projet} from "../../models/projet/Projet";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
@@ -21,11 +21,11 @@ export class UpdateCommandeComponent implements OnChanges {
   isAddCom = false;
   isAddProjet = false;
   choice = ['forfait','regie'];
-  listeCommandes!:CommandeInsert[];
+  listeCommandes!:Commande[];
   commandesSubject!:Subscription;
   displayedColumns: string[] = ['num_com'];
   commandeSubscription!: Subscription;
-  dataSource!: MatTableDataSource<CommandeInsert>;
+  dataSource!: MatTableDataSource<Commande>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() emitter: EventEmitter<string> = new EventEmitter();
@@ -38,7 +38,7 @@ export class UpdateCommandeComponent implements OnChanges {
         this.isAddProjet = false;
       }, 3000);
     });
-    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes:CommandeInsert[]) =>{
+    this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes:Commande[]) =>{
       this.listeCommandes = commandes;
       this.dataSource =  new MatTableDataSource(this.getCommandeById());
       this.dataSource.paginator = this.paginator;
@@ -68,13 +68,13 @@ export class UpdateCommandeComponent implements OnChanges {
     if(!this.projet)return [];
     for (let com of this.listeCommandes){
       if(com.id_projet == this.projet.id){
-        let c = new CommandeInsert(com.num_com,com.id_projet,com.id,com.available,com.color);
+        let c = new Commande(com.num_com,com.id_projet,com.id,com.available,com.color);
         res.push(c);
       }
     }
     return res;
   }
-  updateProjet(commandes: CommandeInsert[]){
+  updateProjet(commandes: Commande[]){
     this.commandeService.updateCommandes(commandes);
     this.projetService.updateProjet(this.projet);
 

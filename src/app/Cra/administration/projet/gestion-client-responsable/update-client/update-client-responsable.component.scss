@@ -1,32 +1,36 @@
-.formClient{
+.formClient {
   width: 100%;
 }
+
 //input{
 //  width: 150px;
 //  margin:10px;
 //}
-.table-client{
+.table-client {
   margin: 5%;
 }
 
-input{
+input {
   //width: 150px;
   //margin:10px;
-  border:none;
-}
-a{
-  cursor: pointer;
-}
-.gestion-client-section{
-  padding-top:50px;
+  border: none;
 }
 
-.update-client{
-  position: absolute;
-  top:0;
-  right: 0;
-  color:green;
+a {
+  cursor: pointer;
 }
-.form-group{
+
+.gestion-client-section {
+  padding-top: 50px;
+}
+
+.update-client {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: green;
+}
+
+.form-group {
   position: relative;
 }

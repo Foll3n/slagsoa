@@ -3,15 +3,12 @@ import {CraWeekInsert} from '../../models/logCra/craWeekInsert';
 import {CraHttpDatabase} from '../../../configuration-http/CraHttpDatabase';
 import {HttpClient} from '@angular/common/http';
 import {Cra} from '../../models/cra/Cra';
-import {CraService} from '../../../services/cra.service';
 import {CraWeek} from '../../models/cra/craWeek';
 import {InsertCra} from '../../models/cra/InsertCra';
 import {CompteRendu} from '../../models/compteRendu/CompteRendu';
 import {CraWaitingService} from '../../../services/craWaiting.service';
 import {Subscription} from 'rxjs';
-import {MatDialog} from '@angular/material/dialog';
-import {CommandeHttpDatabase} from "../../../configuration-http/CommandeHttpDatabase";
-
+import {CommandeHttpDatabase} from '../../../configuration-http/CommandeHttpDatabase';
 
 
 @Component({
@@ -22,7 +19,7 @@ import {CommandeHttpDatabase} from "../../../configuration-http/CommandeHttpData
 /**
  * Administration des comptes rendus d'activité page sur laquelle on peut voir les comptes rendus en attente de validations et ceux validés
  */
-export class AdministrationCraComponent implements OnInit{
+export class AdministrationCraComponent implements OnInit {
 
   listeCraWaiting: CraWeekInsert[] = [];
   listeCraValidate: CraWeekInsert[] = [];
@@ -36,11 +33,13 @@ export class AdministrationCraComponent implements OnInit{
 
   ngOnInit(): void {
     this.listeCraSubscription = this.craWaitingService.waitingSubject.subscribe(
-      (craWeek: CraWeekInsert[]) => {this.listeCraWaiting = craWeek;
+      (craWeek: CraWeekInsert[]) => {
+        this.listeCraWaiting = craWeek;
 
       });
     this.listeCraSubscription = this.craWaitingService.validateSubject.subscribe(
-      (craWeek: CraWeekInsert[]) => {this.listeCraValidate = craWeek;
+      (craWeek: CraWeekInsert[]) => {
+        this.listeCraValidate = craWeek;
       });
   }
 
@@ -48,23 +47,22 @@ export class AdministrationCraComponent implements OnInit{
    * consulter un compte rendu d'activité qui nous a été envoyé par le fils
    * @param cra
    */
-  consulter(cra: CraWeekInsert ){
+  consulter(cra: CraWeekInsert) {
     // this.craService.initialisation(new Date(cra.dateStart), true);
     this.actualWeek = new CraWeek(0, new Date(cra.dateStart));
     this.actualWeek.status = cra.status;
     const commandeHttp = new CommandeHttpDatabase(this.httpClient);
-    const res = commandeHttp.getDistinctCommandsWeek(cra,cra.idUsr);
+    const res = commandeHttp.getDistinctCommandsWeek(cra, cra.idUsr);
     res.subscribe(listeCom => {
-      this.actualWeek!.listeCommandesWeek= listeCom.listeCommande;
+      this.actualWeek!.listeCommandesWeek = listeCom.listeCommande;
     });
 
     const craHttp = new CraHttpDatabase(this.httpClient);
     const response = craHttp.getCra(cra.dateStart, cra.dateEnd, cra.idUsr);
     response.subscribe(reponse => {
-      if (reponse.status == 'OK'){
+      if (reponse.status == 'OK') {
         this.transform(reponse.liste_cra);
-      }
-      else{
+      } else {
         console.log('Erreur de requete de base de données');
       }
     });
@@ -72,7 +70,7 @@ export class AdministrationCraComponent implements OnInit{
 
   /**
    * transformation du cra
-    * @param liste_cra
+   * @param liste_cra
    */
   public transform(liste_cra: InsertCra[]): void {
     // tslint:disable-next-line:no-non-null-assertion
@@ -84,8 +82,8 @@ export class AdministrationCraComponent implements OnInit{
       const duree = +cra.duree_totale;
       const status = +cra.statusConge;
       const listCr = [];
-      if (cra.listeCr != null){
-        for (const sp of cra.listeCr){
+      if (cra.listeCr != null) {
+        for (const sp of cra.listeCr) {
           listCr.push(new CompteRendu(id, sp.id_commande, +sp.duree, sp.color));
         }
       }
@@ -96,25 +94,22 @@ export class AdministrationCraComponent implements OnInit{
 
   /**
    * Fonction qui a vocation d'être supprimé qui permet de trier les cra par date du plus récent au plus ancien
-    * @param liste
+   * @param liste
    */
-  sortList(liste: CraWeekInsert[]){
+  sortList(liste: CraWeekInsert[]) {
 
-    if (!liste) { return []; }
+    if (!liste) {
+      return [];
+    }
 
-      const sortedArray: CraWeekInsert[] = liste.sort((obj1, obj2) => {
-        if (obj1.dateStart < obj2.dateStart) {
-          return 1;
-        }
-        else{
-          return -1;
-        }
-        return 0;
-      });
-      return sortedArray;
+    const sortedArray: CraWeekInsert[] = liste.sort((obj1, obj2) => {
+      if (obj1.dateStart < obj2.dateStart) {
+        return 1;
+      } else {
+        return -1;
+      }
+      return 0;
+    });
+    return sortedArray;
   }
-
-
-
-
 }

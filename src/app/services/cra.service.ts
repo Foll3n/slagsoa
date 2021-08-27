@@ -9,21 +9,24 @@ import {InsertCra} from '../Cra/models/cra/InsertCra';
 import {CraHttpDatabase} from '../configuration-http/CraHttpDatabase';
 import {CraWeek} from '../Cra/models/cra/craWeek';
 import {CompteRenduInsert} from '../Cra/models/compteRendu/CompteRenduInsert';
-import {CommandeInsert} from '../Cra/models/commande/CommandeInsert';
+import {Commande} from '../Cra/models/commande/Commande';
 import {BigCommande} from '../Cra/models/commande/BigCommande';
 import {CraWeekInsert} from '../Cra/models/logCra/craWeekInsert';
 import {Result} from '../Cra/models/Result';
-import {CraWaitingService} from "./craWaiting.service";
+import {CraWaitingService} from './craWaiting.service';
 
 @Injectable()
 /**
- * Service uniquement utilisable dans la vue du compte rendu à la semaine
+ * Service uniquement utilisable dans la vue du compte rendu à la semaine permettant de récupérer l'ensemble des informations nécessaires
  */
 export class CraService {
   public back!: boolean;
 
-  constructor(private httpClient: HttpClient,private craWaintingService: CraWaitingService) {
-    this.httpOptions.headers = new HttpHeaders({      'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}`});
+  constructor(private httpClient: HttpClient, private craWaintingService: CraWaitingService) {
+    this.httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    });
 
   }
 
@@ -36,7 +39,7 @@ export class CraService {
   craWeekLast!: CraWeek;
   craWeek!: CraWeek;
   craWeekNext!: CraWeek;
-  public listeCommandes: CommandeInsert[] = [];
+  public listeCommandes: Commande[] = [];
   craSubject = new Subject<CraWeek[]>();
   private listeCra: Cra[] = [];
 
@@ -52,7 +55,10 @@ export class CraService {
     this.fillWeeks();
   }
 
-
+  /**
+   * Initialise le mois en cours
+   * @param date
+   */
   initialisationMois(date: Date) {
     let save = new Date(date);
     date.setDate(date.getDate());
@@ -72,15 +78,13 @@ export class CraService {
     while (firstDate.getTime() < lastDate.getTime()) {
       var diff = (save.getTime() - firstDate.getTime());
       var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-      if ((diffDays) <= 7 && diffDays >0 ) {
+      if ((diffDays) <= 7 && diffDays > 0) {
         this.currentSlide = id;
       }
       this.listeCraWeek.push(new CraWeek(id, firstDate));
       id++;
       firstDate.setDate(firstDate.getDate() + 7);
     }
-
-
   }
 
   /**
@@ -104,7 +108,7 @@ export class CraService {
    * @param index
    * @param commande
    */
-  addCr(cr: CompteRendu, index: number, commande: CommandeInsert): void {
+  addCr(cr: CompteRendu, index: number, commande: Commande): void {
     const listeCr = [];
     for (const cra of this.listeCraWeek[index].listeCra) {
       const compteRendu = new CompteRendu(cra.id_cra, cr.numCommande, cr.duree, cr.color);
@@ -188,7 +192,6 @@ export class CraService {
       this.listeCraWeek[index].listeCra[ind] = cra;
       this.emitCraSubject();
     }
-
   }
 
   /**
@@ -265,9 +268,9 @@ export class CraService {
     this.httpClient.delete<Result>(environment.urlCra, this.httpOptions).subscribe(
       response => {
         if (response.status == 'OK') {
-          console.log("récupération datas");
+          console.log('récupération datas');
         } else {
-          console.log("Erreur de requete de base de données");
+          console.log('Erreur de requete de base de données');
         }
         console.log('suppression -> ' + response);
       },
@@ -283,7 +286,7 @@ export class CraService {
    * @param listeCompteRendu
    * @param commande
    */
-  addCraLine(index: number, listeCompteRendu: CompteRendu[], commande: CommandeInsert) {
+  addCraLine(index: number, listeCompteRendu: CompteRendu[], commande: Commande) {
     // tslint:disable-next-line:ban-types
     const listeCompte: CompteRenduInsert [] = [];
 
@@ -302,7 +305,7 @@ export class CraService {
           }
           this.emitCraSubject();
         } else {
-          console.log("Erreur de requete de base de données");
+          console.log('Erreur de requete de base de données');
         }
 
       },
@@ -331,7 +334,7 @@ export class CraService {
         }
 
       } else {
-        console.log("Erreur de requete de base de données");
+        console.log('Erreur de requete de base de données');
       }
     });
   }
@@ -340,7 +343,7 @@ export class CraService {
    * Récupère la liste des commandes d'une semaine pour un utilisateur
    * @param index
    */
-  getDistinctCommandsWeek(index: number, id_usr:string): void {
+  getDistinctCommandsWeek(index: number, id_usr: string): void {
     const requestUrl = environment.urlCommande + '/' + this.listeCraWeek[index].firstDateWeekFormat + '/' + this.listeCraWeek[index].lastDateWeekFormat + '/' + id_usr;
     this.httpClient.get<BigCommande>(requestUrl, this.httpOptions).subscribe(
       response => {
@@ -353,16 +356,19 @@ export class CraService {
       }
     );
   }
-  findAllAvailableCommandes(commandes: CommandeInsert[]){
+
+  findAllAvailableCommandes(commandes: Commande[]) {
     let res = [];
-    if(commandes)
-    for(const com of commandes){
-      if(com.available=='true'){
-        res.push(com);
+    if (commandes) {
+      for (const com of commandes) {
+        if (com.available == 'true') {
+          res.push(com);
+        }
       }
     }
     return res;
   }
+
   /**
    * Ajoute + 1 à la date actuelle et renvoie le résultat sous forme de string bien formé
    * @param date
@@ -390,7 +396,7 @@ export class CraService {
       response => {
         if (response.status == 'OK') {
         } else {
-          console.log("Erreur de requete de base de données");
+          console.log('Erreur de requete de base de données');
         }
       },
       error => {
@@ -413,7 +419,7 @@ export class CraService {
         this.getDistinctCommandsWeek(index, `${sessionStorage.getItem('id')}`);
 
       } else {
-        console.log("Erreur de requete de base de données");
+        console.log('Erreur de requete de base de données');
       }
     });
   }
@@ -424,12 +430,12 @@ export class CraService {
    */
   addCraWeek(index: number) {
     const craHttp = new CraHttpDatabase(this.httpClient);
-    const response = craHttp.addCraWeek(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, '0',  `${sessionStorage.getItem('id')}`));
+    const response = craHttp.addCraWeek(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, '0', `${sessionStorage.getItem('id')}`));
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         this.addCraServer(index);
       } else {
-        console.log("Erreur de requete de base de données");
+        console.log('Erreur de requete de base de données');
       }
       //this.emitCraSubject();
     });
@@ -442,15 +448,15 @@ export class CraService {
    */
   updateStatusCraUtilisateur(index: number, status: string) {
     const craHttp = new CraHttpDatabase(this.httpClient);
-    const response = craHttp.updateStatusCraWeek(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, status,  `${sessionStorage.getItem('id')}`));
+    const response = craHttp.updateStatusCraWeek(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, status, `${sessionStorage.getItem('id')}`));
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
         this.listeCraWeek[index].status = status;
         this.emitCraSubject();
-        this.craWaintingService.listeCraWaiting.push(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, status,  `${sessionStorage.getItem('id')}`));
+        this.craWaintingService.listeCraWaiting.push(new CraWeekInsert(this.listeCraWeek[index].firstDateWeekFormat, this.listeCraWeek[index].lastDateWeekFormat, status, `${sessionStorage.getItem('id')}`));
         this.craWaintingService.emitCraWaintingSubject();
       } else {
-        console.log("Erreur de requete de base de données");
+        console.log('Erreur de requete de base de données');
       }
     });
   }
@@ -463,7 +469,7 @@ export class CraService {
     // tslint:disable-next-line:ban-types
     const listeCraWeek: InsertCra [] = [];
     for (let i = 0; i < 5; i++) {
-      const cra = new InsertCra('',  `${sessionStorage.getItem('id')}`, this.addJour(this.listeCraWeek[index].firstDateWeek, i), '0', '0', []);
+      const cra = new InsertCra('', `${sessionStorage.getItem('id')}`, this.addJour(this.listeCraWeek[index].firstDateWeek, i), '0', '0', []);
       listeCraWeek.push(cra);
     }
     const json = JSON.stringify(listeCraWeek);
@@ -472,7 +478,7 @@ export class CraService {
         if (response.status == 'OK') {
           this.getCraToServer(index);
         } else {
-          console.log("Erreur de requete de base de données");
+          console.log('Erreur de requete de base de données');
         }
       },
       error => {
@@ -488,15 +494,6 @@ export class CraService {
     for (let i = 0; i < this.listeCraWeek.length; i++) {
       this.getCraToServer(i);
     }
-    //
-    // this.getCraToServer( 1);
-    // this.getCraToServer(2);
-
-    // this.selectedWeek = this.craWeekNext;
-    // this.listeCra = this.selectedWeek.listeCra;
-    // this.getCraToServer();
-    // this.selectedWeek = this.craWeek;
-    // this.listeCra = this.selectedWeek.listeCra;
   }
 
   /**
@@ -504,8 +501,8 @@ export class CraService {
    * @param commande
    * @param index
    */
-  deleteLineToServer(commande: CommandeInsert, index: number) {
-    const requestUrl = environment.urlCr + '?commande=' + commande.id + '&date_start=' + this.listeCraWeek[index].firstDateWeekFormat + '&date_end=' + this.listeCraWeek[index].lastDateWeekFormat + '&id_usr=' +  `${sessionStorage.getItem('id')}`;
+  deleteLineToServer(commande: Commande, index: number) {
+    const requestUrl = environment.urlCr + '?commande=' + commande.id + '&date_start=' + this.listeCraWeek[index].firstDateWeekFormat + '&date_end=' + this.listeCraWeek[index].lastDateWeekFormat + '&id_usr=' + `${sessionStorage.getItem('id')}`;
     this.httpClient.delete(requestUrl, this.httpOptions).subscribe(
       response => {
         this.deleteLine(commande, index);
@@ -527,7 +524,6 @@ export class CraService {
       response => {
       },
       error => {
-        // this.setStatusUser(index, 0); // s'il y a une erreur je remet le status a 0
         console.log(error + 'le serveur ne répond pas ');
       }
     );
@@ -548,7 +544,7 @@ export class CraService {
    * @param commande
    * @param index
    */
-  deleteLine(commande: CommandeInsert, index: number) {
+  deleteLine(commande: Commande, index: number) {
     for (const cra of this.listeCraWeek[index].listeCra) {
       for (const cr of cra.listeCr) {
         // tslint:disable-next-line:triple-equals

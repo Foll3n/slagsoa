@@ -1,4 +1,4 @@
-import {CommandeInsert} from '../commande/CommandeInsert';
+import {Commande} from '../commande/Commande';
 import {Realisation} from './Realisation';
 
 export class BigRealisation {

@@ -1,12 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CommandeHttpDatabase} from '../configuration-http/CommandeHttpDatabase';
 import {Subject} from 'rxjs';
-import {Realisation} from '../Cra/models/realisation/Realisation';
-import {Utilisateur} from "../Modeles/utilisateur";
-import {UtilisateursHttpService} from "../configuration-http/utilisateurs-http.service";
-import {JoursFeries} from '../Cra/models/joursFeries/JoursFeries';
 import {JoursFeriesHttpDatabase} from '../configuration-http/JoursFeriesHttpDatabase';
 
 
@@ -21,7 +16,6 @@ export class JoursferiesService {
       Authorization: 'Basic ' + btoa(sessionStorage.getItem('ndc') + ':' + sessionStorage.getItem('mdp'))
     });
     this.getJoursFeriesFromServer();
-
   }
   httpOptions = {
     headers: new HttpHeaders()
@@ -38,7 +32,6 @@ export class JoursferiesService {
       let a: string[] = reponse.joursFeries;
       for (const elem of a){
         this.listeJoursFeries.push(new Date(elem));
-
       }
       this.emitJoursFeriesSubject();
     } );

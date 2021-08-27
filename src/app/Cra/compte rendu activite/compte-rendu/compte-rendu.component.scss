@@ -1,15 +1,14 @@
 
-
-.case{
+.case {
   height: 100px;
   margin: 10px;
   border-radius: 10px;
 
 }
 
-.badgeAttention{
-  top:-18px;
-  right : 5%;
+.badgeAttention {
+  top: -18px;
+  right: 5%;
   position: absolute;
   background: transparent;
   padding: 6px;
@@ -18,7 +17,8 @@
   //border-color: black;
   cursor: pointer;
 }
-.badgeAttention:hover{
+
+.badgeAttention:hover {
   //background-color: #8bc19a;
 }
 

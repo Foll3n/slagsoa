@@ -1,50 +1,46 @@
-.ligne-pdf{
+.ligne-pdf {
   font-size: 15px;
   width: 100%;
 }
+
 tr {
   line-height: 15px;
   min-height: 15px;
   height: 15px;
 }
 
-//.table-ligne{
-//  line-height: 10px;
-//  height: 10px;
-//  padding: 0;
-//}
-.bandeau{
+.bandeau {
   background-color: #95d0ec;
   width: 100%;
 }
 
-.logo-pdf{
+.logo-pdf {
   height: 100px;
   background: transparent no-repeat center;
   background-size: cover;
   padding: 10px;
   position: relative;
-
   right: 0px;
 
-
 }
-.logo{
+
+.logo {
   position: absolute;
   width: 100%;
 }
-.fin-tableau-signatures{
+
+.fin-tableau-signatures {
   height: 100px;
 }
-.nom-client-top{
+
+.nom-client-top {
   font-size: 25px;
   padding: 10px;
   height: 20px;
   font-weight: bold;
 }
-.container{
+
+.container {
   padding-left: 50px;
   padding-right: 50px;
-
-  //margin-right: 30px;
 }

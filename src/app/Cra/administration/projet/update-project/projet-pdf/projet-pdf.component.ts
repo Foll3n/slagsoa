@@ -7,9 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {formatDate} from '@angular/common';
 import {Pdf} from '../../../../models/projet/Pdf';
 import {ListPdf} from '../../../../models/projet/ListPdf';
-import {Subscription} from 'rxjs';
 import {UserService} from '../../../../../services/user.service';
-import {Utilisateur} from '../../../../../Modeles/utilisateur';
 import {UtilisateursHttpService} from '../../../../../configuration-http/utilisateurs-http.service';
 import {UtilisateurSimple} from '../../../../../Modeles/utilisateurSimple';
 import html2canvas from 'html2canvas';
@@ -18,10 +16,6 @@ import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/mater
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
 
-// Depending on whether rollup is used, moment needs to be imported differently.
-// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
-// syntax. However, rollup creates a synthetic default module and we thus need to import it using
-// the `default as` syntax.
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
@@ -66,12 +60,10 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
   load = false;
   listeUtilisateurs: UtilisateurSimple[] = [];
   listeAllUsers: UtilisateurSimple[] = [];
-  generate = false;
   projet!: Projet;
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private utilisateurService: UserService) {
     this.route.queryParams.subscribe(params => {
       this.projet = this.route.snapshot.queryParams as Projet;
-      console.log("--------", this.projet);
       this.initAllPdf();
     });
   }
@@ -80,7 +72,6 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
    * charge tous les utilisateurs en meme temps pour télécharger tous les pdf à la fois
    */
   initUsersProjet(){
-    this.generate = false;
     this.listeUtilisateurs = [];
     this.initAllPdf();
   }
@@ -91,7 +82,6 @@ export class ProjetPdfComponent implements OnInit, OnChanges {
    */
   loadUserPdf(usr:UtilisateurSimple){
     this.listeUtilisateurs = [usr];
-    this.generate = false;
   }
 
   /**

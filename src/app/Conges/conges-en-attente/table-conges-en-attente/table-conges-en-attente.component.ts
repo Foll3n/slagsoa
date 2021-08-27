@@ -8,11 +8,7 @@ import { Conge } from "../../../partage/Modeles/conge";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {NavComponent} from "../../../nav/nav.component";
 import {CongesHttpService} from "../../../configuration-http/conges-http.service";
-import {TableCongesDataSource} from "../../visualisation-conges/table-conges/table-conges-datasource";
-import {MatCalendar} from "@angular/material/datepicker";
 import {dateFormatter} from '../../../../environments/environment';
-import {MomentDateAdapter} from "@angular/material-moment-adapter";
-import {Moment} from "moment";
 import {ConnexionService} from "../../../connexion/connexion.service";
 import { Utilisateur } from "../../../partage/Modeles/utilisateur";
 import {UtilisateursHttpService} from "../../../configuration-http/utilisateurs-http.service";
@@ -148,7 +144,6 @@ export class TableCongesEnAttenteComponent implements AfterViewInit {
           this.dataSource.paginator = this.paginator;
           this.table.dataSource = this.dataSource;
           // @ts-ignore
-          //this.table.dataSource.data.splice(0, 1);
           if (this.data) {
             // @ts-ignore
             this.table.dataSource.data = [...this.data];

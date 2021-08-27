@@ -5,21 +5,13 @@ import {MatTable} from '@angular/material/table';
 import {CraWeekInsert} from '../../../models/logCra/craWeekInsert';
 import {TableCraAdministration} from '../TableCraAdministraton';
 import {HttpClient} from '@angular/common/http';
-import {CraService} from '../../../../services/cra.service';
-import {CraHttpDatabase} from '../../../../configuration-http/CraHttpDatabase';
 import {CraWeek} from '../../../models/cra/craWeek';
-import {InsertCra} from '../../../models/cra/InsertCra';
-import {CompteRendu} from '../../../models/compteRendu/CompteRendu';
-import {Cra} from '../../../models/cra/Cra';
 import {Subscription} from 'rxjs';
 import {CraWaitingService} from '../../../../services/craWaiting.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
-import {CommandeHttpDatabase} from "../../../../configuration-http/CommandeHttpDatabase";
 import {MailHttpDatabase} from '../../../../configuration-http/MailHttpDatabase';
 import {UserService} from '../../../../services/user.service';
+import {formatDate} from '@angular/common';
 
 
 @Component({
@@ -33,7 +25,6 @@ import {UserService} from '../../../../services/user.service';
  */
 export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   @Input() index!: string;
-  // @Input() index!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<CraWeekInsert>;
@@ -48,7 +39,7 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
 
   /**
    * After view init
-    */
+   */
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -57,17 +48,26 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private userService: UserService, private httpClient: HttpClient, public craWaitingService: CraWaitingService, public dialog: MatDialog) {
-    this.dataSource = new TableCraAdministration(this.httpClient);
+    this.dataSource = new TableCraAdministration();
   }
 
   /**
    * envoie au parent le CRA afin de l'afficher
-    * @param cra
+   * @param cra
    */
   envoieParent(cra: CraWeekInsert) {
     this.craWeekEmitter.emit(cra);
   }
+  getDateFormat(date: string){
+    try {
+      let tempDate = new Date(date);
+      return formatDate(tempDate,'dd / MM / yyyy','fr');
+    }
+    catch (error){
+      return '';
+    }
 
+  }
   /**
    * initialisation du cra semaine validé ou non validé
    */
@@ -87,7 +87,7 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
 
   /**
    * ouvrir le dialogue pour laisser un message de refus au cra
-    * @param cra
+   * @param cra
    */
   openDialog(cra: CraWeekInsert): void {
     const dialogRef = this.dialog.open(DialogContent, {
@@ -103,7 +103,7 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
 
   /**
    * mise à jour du tableau datasource
-    */
+   */
   update() {
 
     if (this.index == '1') {
@@ -129,12 +129,12 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     this.craWaitingService.refuserCra(cra, this.commentaire);
     this.paginator!._changePageSize(this.paginator!.pageSize);
     const sendMail = new MailHttpDatabase(this.httpClient);
-    const response = sendMail.sendMail('mailCra_rejet', cra.prenomUsername!,false, this.userService.getMail(cra.idUsr)!);
+    const response = sendMail.sendMail('mailCra_rejet', cra.prenomUsername!, false, this.userService.getMail(cra.idUsr)!);
     response.subscribe(reponse => {
       if (reponse.status == 'OK') {
-        console.log("mail envoyé");
+        console.log('mail envoyé');
       } else {
-        console.log("mail non envoyé");
+        console.log('mail non envoyé');
       }
     });
 
@@ -152,10 +152,7 @@ export interface DialogData {
 export class DialogContent {
   constructor(
     public dialogRef: MatDialogRef<DialogContent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  // onClickSend(): void {
-  //   this.dialogRef.close();
-  // }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
 
 }

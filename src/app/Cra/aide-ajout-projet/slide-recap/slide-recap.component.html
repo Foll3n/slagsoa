@@ -1,32 +1,36 @@
 <div class="question-card">
   <div class="questionnaire">
-  <div *ngIf="projet && client && reponsable">
-    Projet {{projet.code_projet}} en mode {{projet.modeRealisation}} vas être réalisé pour la
-    société {{this.client.nomSociete}} de siret {{client.siret}}<br>
-    Son gérant est {{reponsable.nom}} {{reponsable.prenom}}.
+    <div *ngIf="projet && client && reponsable">
+      Projet {{projet.code_projet}} en mode {{projet.modeRealisation}} vas être réalisé pour la
+      société {{this.client.nomSociete}} de siret {{client.siret}}<br>
+      Son gérant est {{reponsable.nom}} {{reponsable.prenom}}.
 
-    Voici la liste des commandes associées: <br>
-<!--    <div *ngFor="let com of this.listeCommandes"> - {{com.num_com}} <br></div>-->
-
-    <div *ngFor="let com of this.mapUserCom.keys()">
-      - {{com}} réalisée par
-      <div class="d-block" *ngFor="let user of this.mapUserCom.get(com)">
-        {{user.prenom}}
-      </div><br>
+      Voici la liste des commandes associées: <br>
+      <div *ngFor="let com of this.mapUserCom.keys()">
+        - {{com}} réalisée par
+        <div class="d-block" *ngFor="let user of this.mapUserCom.get(com)">
+          {{user.prenom}}
+        </div>
+        <br>
+      </div>
     </div>
-  </div>
 
-  <button (click)="addAll()" class="valider-all">
-    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square" viewBox="0 0 16 16">
-      <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
-      <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
-    </svg>
-  </button>
+    <button (click)="addAll()" class="valider-all">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square"
+           viewBox="0 0 16 16">
+        <path
+          d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+        <path
+          d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+      </svg>
+    </button>
     <p class="notification-add-projet" *ngIf="this.valueAdd.contenu.length>0">{{valueAdd.contenu}}</p>
   </div>
-  <button (click)="this.eventBack.emit()" class="retour-arriere"  >
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-      <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+  <button (click)="this.eventBack.emit()" class="retour-arriere">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-left-fill"
+         viewBox="0 0 16 16">
+      <path
+        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
     </svg>
   </button>
 </div>

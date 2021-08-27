@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {FormControl, FormGroup} from '@angular/forms';
 import { Type } from "../../partage/Modeles/type";
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -12,16 +12,14 @@ import 'moment/locale/ja';
 import 'moment/locale/fr';
 import {TypesHttpService} from "../../configuration-http/types-http.service";
 import { Conge } from "../../partage/Modeles/conge";
-import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {CongesHttpService} from "../../configuration-http/conges-http.service";
 import * as _moment from 'moment';
 import {ConnexionService} from "../../connexion/connexion.service";
-import { Utilisateur} from "../../partage/Modeles/utilisateur";
-import {Subscription} from "rxjs";
 import {TableCongesComponent} from './table-conges/table-conges.component';
 import {NavComponent} from '../../nav/nav.component';
 import {MailHttpDatabase} from '../../configuration-http/MailHttpDatabase';
+import {UserService} from '../../services/user.service';
 const moment = _moment;
 
 export class date {
@@ -72,7 +70,7 @@ export class VisualisationCongesComponent implements OnInit {
 
 
 
-  constructor(private httpClient: HttpClient, private nav: NavComponent, private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService) {
+  constructor(private userService: UserService, private httpClient: HttpClient, private nav: NavComponent, private connexionService: ConnexionService,private _adapter: DateAdapter<any>,private modalService: NgbModal ,private congesServices:CongesHttpService, private typeServices: TypesHttpService) {
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
@@ -132,11 +130,24 @@ export class VisualisationCongesComponent implements OnInit {
     this.typePreccedent = value;
   }
 
-
+  getDureeConge(dateDebut: string, dateFin: string){
+    const dateF = new Date(dateFin);
+    const dateD = new Date(dateDebut);
+    var diffTime = dateF.getTime() - dateD.getTime();
+    return (diffTime / (1000 * 3600)) / 24;
+  }
+  canAddconge(){
+    let dateDebut = this.formulaire.get('start')?.value._i;
+    let dateFin = this.formulaire.get('end')?.value._i;
+    let debut = `${dateDebut.year}-${dateDebut.month}-${dateDebut.date} ${this.formulaire.get('dateDebutChoix')?.value}`;
+    let fin = `${dateFin.year}-${dateFin.month}-${dateFin.date} ${this.formulaire.get('dateFinChoix')?.value}`;
+    return this.getDureeConge(debut,fin) < this.userService.getNbDaysConge(sessionStorage.getItem('id')!);
+  }
   addConges() {
     let congeTemp = new Conge();
     let dateDebut = this.formulaire.get('start')?.value._i;
     let dateFin = this.formulaire.get('end')?.value._i;
+
     // congeTemp.dateDebut = '2040-04-10 12:00:00';
     congeTemp.dateDebut = `${dateDebut.year}-${dateDebut.month}-${dateDebut.date} ${this.formulaire.get('dateDebutChoix')?.value}`;
     congeTemp.dateFin = `${dateFin.year}-${dateFin.month}-${dateFin.date} ${this.formulaire.get('dateFinChoix')?.value}`;

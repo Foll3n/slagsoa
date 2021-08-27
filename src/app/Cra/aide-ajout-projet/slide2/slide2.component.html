@@ -3,11 +3,12 @@
 --****************************************************************************************-->
 <div class="question-card">
   <div class="questionnaire">
-    <form class="form-group " [formGroup]="responsableForm"  (submit)="this.sendResponsable()">
+    <form class="form-group " [formGroup]="responsableForm" (submit)="this.sendResponsable()">
       <div class="search-div">
         <div class="form">
-          <input type="text" id="name1" (input)="searchTerm()" [(ngModel)]="responsableNom" formControlName="nom" minlength="5" autocomplete="nope"  required="required">
-          <label for="name1" class="label-name" >
+          <input type="text" id="name1" (input)="searchTerm()" [(ngModel)]="responsableNom" formControlName="nom"
+                 minlength="{{lengthRespName}}" autocomplete="nope" required="required">
+          <label for="name1" class="label-name">
             <span class="content-name">Nom du responsable</span>
           </label>
         </div>
@@ -16,23 +17,29 @@
         </div>
       </div>
       <div class="form">
-        <input type="text" id="prenom" formControlName="prenom"minlength="3" required="required" autocomplete=false [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
+        <input type="text" id="prenom" formControlName="prenom" minlength="{{lengthRespSurname}}" required="required" autocomplete=false
+               [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
         <label for="prenom" class="label-name">
           <span class="content-name">Prenom</span>
         </label>
       </div>
       <div class="form">
-        <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail" formControlName="mail" required="required" autocomplete=nope [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
+        <input (blur)="check('mail')" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" id="mail"
+               formControlName="mail" required="required" autocomplete=nope
+               [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
         <label for="mail" class="label-name">
           <span class="content-name">Mail</span>
         </label>
       </div>
       <div *ngIf="this.responsableForm.valid && checkRespNotIdentic()" class="valider">
         <label class="label-valider">
-          <input type="submit" class="bouton-valider" value=""  >
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square" viewBox="0 0 16 16">
-            <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
-            <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+          <input type="submit" class="bouton-valider" value="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-check2-square"
+               viewBox="0 0 16 16">
+            <path
+              d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+            <path
+              d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
           </svg>
         </label>
 
@@ -40,9 +47,11 @@
 
     </form>
   </div>
-  <button (click)="this.eventBack.emit()" class="retour-arriere"  >
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-      <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+  <button (click)="this.eventBack.emit()" class="retour-arriere">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-left-fill"
+         viewBox="0 0 16 16">
+      <path
+        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
     </svg>
   </button>
 </div>

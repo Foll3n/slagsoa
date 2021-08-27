@@ -1,4 +1,4 @@
-<app-nav  >
+<app-nav>
   <!--<div (keydown)="this.keyDown($event)"  class="test">-->
   <section class="decalage pbot ">
     <a *ngIf="this.craService.back" href="calendar"> Retour au calendrier</a>
@@ -6,7 +6,7 @@
     <!--div qui afiche le jour actuel la date et le bouton permettant d'ajouter une commande-->
     <!--  -------------------------------------------------------------------------------------------------------------------------------------->
 
-    <div class="topCra" >
+    <div class="topCra">
       <p class="date-jour-afichage">{{this.getDateToday()}}</p>
       <p class="info-semaine">Semaine du {{this.firstDate}}  au {{this.lastDate}} </p>
 
@@ -17,19 +17,15 @@
         <p class="wait-notification" *ngIf="seeMessage()==1 && !seeButton()"> En attente de validation </p>
         <p class="valid-notification" *ngIf="seeMessage()==2 && !seeButton()"> Validé par l'administration </p>
       </div>
-<!--      <select *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">-->
-<!--        <optgroup *ngFor="let projetName of this.listeAddCommande.keys()" label={{projetName}}>-->
-<!--          <option  *ngFor="let com of listeAddCommande.get(projetName)" > <p (click)="this.addSousProjet(com)" >{{com.color}}</p></option>-->
-<!--        </optgroup>-->
-<!--      </select>-->
 
-
-<!--      , 'add-commande-responsive': width < minWidth-->
       <mat-form-field appearance="fill" *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth }">
         <mat-label>Ajouter une tâche</mat-label>
-        <mat-select *ngIf="seeButton()" [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">
-          <mat-optgroup style="background-color: {{this.hexToRGB(getColor(projetName), '0.2')}}; display: block" *ngFor="let projetName of this.listeAddCommande.keys()" label={{projetName}}>
-            <mat-option *ngFor="let com of listeAddCommande.get(projetName)" [value]="com.id" (click)="addSousProjet(com)">
+        <mat-select *ngIf="seeButton()"
+                    [ngClass]="{ 'add-commande': width >= minWidth, 'add-commande-responsive': width < minWidth }">
+          <mat-optgroup style="background-color:{{this.hexToRGB(getColor(projetName), '0.2')}}; display: block"
+                        *ngFor="let projetName of this.listeAddCommande.keys()" label={{projetName}}>
+            <mat-option *ngFor="let com of listeAddCommande.get(projetName)" [value]="com.id"
+                        (click)="addSousProjet(com)">
               {{com.num_com}}
             </mat-option>
           </mat-optgroup>
@@ -42,8 +38,9 @@
     <!--affiche chaque commande de facon responsive en haut de la page-->
     <!--  -------------------------------------------------------------------------------------------------------------------------------------->
 
-    <div  [ngClass]="{ 'commande-responsive': width < minWidth }">
-      <div *ngFor="let com of this.craWeek[this.selectedWeek].listeCommandesWeek" [ngClass]="{ 'viewCommande': width >= minWidth, 'nomCommandeResponsive': width < minWidth }"
+    <div [ngClass]="{ 'commande-responsive': width < minWidth }">
+      <div *ngFor="let com of this.craWeek[this.selectedWeek].listeCommandesWeek"
+           [ngClass]="{ 'viewCommande': width >= minWidth, 'nomCommandeResponsive': width < minWidth }"
            style="background-color: {{com.color}}">
         <p>{{ com.num_com }} </p>
 
@@ -53,24 +50,14 @@
     <!--  -------------------------------------------------------------------------------------------------------------------------------------->
     <!--  affiche chaque compte rendu pour chaque cra en passant la main à la vue compte-rendu-->
     <!--  -------------------------------------------------------------------------------------------------------------------------------------->
-    <!--  <a class="carousel-control-prev"  role="button" data-slide="prev">-->
-    <!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-    <!--    <span class="sr-only">Previous</span>-->
-    <!--  </a>-->
-    <!--  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">-->
-    <!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-    <!--    <span class="sr-only">Next</span>-->
-    <!--  </a>-->
 
-    <!--  </div>-->
-    <div >
+    <div>
       <div class='col-12'>
-<!--        &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;{{this.currentSlide}}-->
-        <ngb-carousel #carousel *ngIf="this.craWeek.length>0 && this.currentSlide"  [activeId]="this.currentSlide" (slide)="onSlide($event)">
+        <ngb-carousel #carousel *ngIf="this.craWeek.length>0 && this.currentSlide" [activeId]="this.currentSlide"
+                      (slide)="onSlide($event)">
 
           <!-- On a trois slides dans notre cas on parcours notre table de comptes rendus à la semaine et on créé trois composants qui comporteront le calendrier à la semaine-->
           <ng-template ngbSlide *ngFor="let week of this.craWeek; index as i" [id]="'ngb-slide-'+i">
-<!--            let i = index"-->
             <app-compte-rendu-vue [index]="i" [craWeek]="week" *ngIf="week.listeCra.length != 0"></app-compte-rendu-vue>
           </ng-template>
 
@@ -81,11 +68,13 @@
     </div>
 
 
-    <button *ngIf=" seeButton()" (click)="push()" [ngClass]="{ 'enregistrer': width >= minWidth, 'add-commande-responsive': width < minWidth }"
+    <button *ngIf=" seeButton()" (click)="push()"
+            [ngClass]="{ 'enregistrer': width >= minWidth, 'add-commande-responsive': width < minWidth }"
             color="primary" mat-raised-button>Enregistrer
     </button>
-    <button *ngIf="canUpdateStatus() && seeButton()" class="set-status" (click)="save()" color="primary" mat-raised-button>Sauvegarder</button>
-
+    <button *ngIf="canUpdateStatus() && seeButton()" class="set-status" (click)="save()" color="primary"
+            mat-raised-button>Sauvegarder
+    </button>
 
 
   </section>

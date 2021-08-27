@@ -1,11 +1,11 @@
 import {InsertCra} from '../cra/InsertCra';
 import {Cra} from '../cra/Cra';
-import {CommandeInsert} from './CommandeInsert';
+import {Commande} from './Commande';
 
 export class InserCommande {
   constructor(
     public idUserDoRequest: string,
-    public commande: CommandeInsert
+    public commande: Commande
   ) {}
 
 

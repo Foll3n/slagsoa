@@ -1,5 +1,5 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>-->
-<html >
+<html>
 <!--****************************************************************************************
                   PDF généré pour l'entreprise concernant l'activité d'un utilisateur dans un mois donné
 --****************************************************************************************-->
@@ -16,40 +16,51 @@
   <div class="d-flex justify-content-end">
     <p>Commande: {{pdf.codeProjet}}</p>
   </div>
-
-
   <div class="d-flex justify-content-end">
-  <h4>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h4>
+    <h4>CRA pour M. {{user.nom.toUpperCase()}} {{user.prenom}}</h4>
   </div>
   <table class="table w-12">
     <thead>
-    <tr >
-      <th class="bandeau" colspan="4">Semaine du {{getDateElem(this.ligne[0])}} au {{getDateElem(this.ligne[this.ligne.length-1])}}</th>
+    <tr>
+      <th class="bandeau" colspan="4">Semaine du {{getDateElem(this.ligne[0])}}
+        au {{getDateElem(this.ligne[this.ligne.length - 1])}}</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let elem of this.ligne" class="ligne-pdf" >
-        <td ><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{getDayElem(elem)}} {{getDateElem(elem)}}</div></td>
-        <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">{{elem.codeProjet}}</div></td>
-        <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">Imputation Jours Hommes_{{pdf.nomSociete}}</div></td>
-        <td><div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne"> {{getDuree(elem)}} </div></td>
+    <tr *ngFor="let elem of this.ligne" class="ligne-pdf">
+      <td>
+        <div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'"
+             class="table-ligne">{{getDayElem(elem)}} {{getDateElem(elem)}}</div>
+      </td>
+      <td>
+        <div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'"
+             class="table-ligne">{{elem.codeProjet}}</div>
+      </td>
+      <td>
+        <div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'" class="table-ligne">Imputation Jours
+          Hommes_{{pdf.nomSociete}}</div>
+      </td>
+      <td>
+        <div *ngIf="getDayElem(elem) !== 'sam.' && getDayElem(elem) !== 'dim.'"
+             class="table-ligne"> {{getDuree(elem)}} </div>
+      </td>
     </tr>
     <tr class="bandeau">
-      <th colspan="2">OTP </th>
-      <th colspan="1">DESCRIPTION </th>
-      <th colspan="1">TEMPS </th>
+      <th colspan="2">OTP</th>
+      <th colspan="1">DESCRIPTION</th>
+      <th colspan="1">TEMPS</th>
     </tr>
     <tr>
       <td>{{this.pdf.codeProjet}} </td>
       <td></td>
       <td>Imputation Jours Homme_{{pdf.nomSociete}} </td>
-      <td>{{sommeDuree()}} jours </td>
+      <td>{{sommeDuree()}} jours</td>
     </tr>
     <tr class="bandeau">
-      <th  colspan="4">Signatures </th>
+      <th colspan="4">Signatures</th>
     </tr>
     <tr class="fin-tableau-signatures">
-      <td>Collaborateur </td>
+      <td>Collaborateur</td>
       <td></td>
       <td>Client {{this.pdf.responsableNom}} {{this.pdf.responsablePrenom}}</td>
       <td></td>

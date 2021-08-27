@@ -3,11 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import {HttpClient, HttpClientModule, HttpHeaders} from "@angular/common/http";
-import { Conge } from "../../../partage/Modeles/conge";
-import { environment } from "../../../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
-// TODO: Replace this with your own data model type
 export interface TableCongesItem {
   dateDebut: string;
   dateFin: string;
