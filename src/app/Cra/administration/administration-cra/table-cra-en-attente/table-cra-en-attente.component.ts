@@ -59,7 +59,6 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
     this.craWeekEmitter.emit(cra);
   }
   getDateFormat(date: string){
-    console.log("date:",date);
     try {
       let tempDate = new Date(date);
       return formatDate(tempDate,'dd / MM / yyyy','fr');
