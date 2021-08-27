@@ -11,6 +11,7 @@ import {CraWaitingService} from '../../../../services/craWaiting.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MailHttpDatabase} from '../../../../configuration-http/MailHttpDatabase';
 import {UserService} from '../../../../services/user.service';
+import {formatDate} from '@angular/common';
 
 
 @Component({
@@ -57,7 +58,17 @@ export class TableCraEnAttenteComponent implements OnInit, AfterViewInit {
   envoieParent(cra: CraWeekInsert) {
     this.craWeekEmitter.emit(cra);
   }
+  getDateFormat(date: string){
+    console.log("date:",date);
+    try {
+      let tempDate = new Date(date);
+      return formatDate(tempDate,'dd / MM / yyyy','fr');
+    }
+    catch (error){
+      return '';
+    }
 
+  }
   /**
    * initialisation du cra semaine validé ou non validé
    */
