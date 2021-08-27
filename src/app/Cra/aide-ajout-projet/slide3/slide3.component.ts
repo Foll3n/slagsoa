@@ -3,7 +3,7 @@ import {Message} from '../../models/message';
 import {Responsable} from '../../models/responsable/responsable';
 import {Projet} from '../../models/projet/Projet';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {resetForm, shortMessage} from '../../../../environments/environment';
+import {environment, resetForm, shortMessage} from '../../../../environments/environment';
 import {Subscription} from 'rxjs';
 import {ResponsableService} from '../../../services/responsable.service';
 import {ProjetService} from '../../../services/projet.service';
@@ -17,7 +17,7 @@ import {ProjetService} from '../../../services/projet.service';
 export class Slide3Component implements OnInit {
   @Output() eventItem = new EventEmitter<Projet>();
   @Output() eventBack = new EventEmitter();
-
+  lengthProjetCode = environment.lengthProjetCode;
   projet!: FormGroup;
   color = '#B6E0F7';
   isAdd = false;

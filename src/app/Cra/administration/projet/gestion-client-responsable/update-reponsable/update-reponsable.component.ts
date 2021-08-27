@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import {Responsable} from '../../../../models/responsable/responsable';
 import {ResponsableService} from '../../../../../services/responsable.service';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {checkValidity, resetForm, validateEmail} from '../../../../../../environments/environment';
+import {checkValidity, environment, resetForm, validateEmail} from '../../../../../../environments/environment';
 import {ClientService} from '../../../../../services/client.service';
 import {Client} from '../../../../models/client/Client';
 
@@ -86,8 +86,9 @@ export class UpdateReponsableComponent implements OnInit {
    * check si le mail est valide
    * @param responsable
    */
-  validateMail(responsable: Responsable) {
-    return validateEmail(responsable.mail);
+  isValid(responsable: Responsable) {
+    return validateEmail(responsable.mail) &&  responsable.nom.length >= environment.lengthRespName && responsable.prenom.length >= environment.lengthRespName;
+
   }
 
   /**

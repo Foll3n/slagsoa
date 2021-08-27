@@ -4,7 +4,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Responsable} from '../../models/responsable/responsable';
 import {ResponsableService} from '../../../services/responsable.service';
 import {Client} from '../../models/client/Client';
-import {checkValidity} from '../../../../environments/environment';
+import {checkValidity, environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -22,6 +22,8 @@ export class Slide2Component implements OnInit, OnChanges {
   responsableNom: string = '';
   tempResponsable: Responsable | undefined = undefined;
   selectedResponsable: Responsable | undefined = undefined;
+  lengthRespName = environment.lengthRespName;
+  lengthRespSurname = environment.lengthRespSurname
 
   constructor(private responsableService: ResponsableService) {
 

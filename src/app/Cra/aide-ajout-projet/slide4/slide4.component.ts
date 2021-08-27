@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
 import {Commande} from '../../models/commande/Commande';
-import {resetForm} from '../../../../environments/environment';
+import {environment, resetForm} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-slide4',
@@ -11,7 +11,7 @@ import {resetForm} from '../../../../environments/environment';
 export class Slide4Component implements OnInit {
   @Output() listeCom = new EventEmitter<Commande[]>();
   @Output() eventBack = new EventEmitter();
-
+  lengthComNum = environment.lengthComNum;
   commandes!: FormGroup;
   listeCommandes: Commande[] = [];
 

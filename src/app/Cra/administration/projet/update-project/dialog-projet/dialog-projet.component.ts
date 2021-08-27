@@ -11,6 +11,7 @@ import {MatSort} from '@angular/material/sort';
 import {Responsable} from '../../../../models/responsable/responsable';
 import {ResponsableService} from '../../../../../services/responsable.service';
 import {UserService} from '../../../../../services/user.service';
+import {environment} from '../../../../../../environments/environment';
 
 
 export interface DialogData {
@@ -28,7 +29,6 @@ export interface DialogData {
 export class DialogProjetComponent implements AfterViewInit{
   projet!: Projet;
   isAddCom = false;
-  isAddProjet = false;
   choice = ['forfait','regie'];
   listeCommandes!: Commande[];
   commandesSubject!: Subscription;
@@ -38,6 +38,7 @@ export class DialogProjetComponent implements AfterViewInit{
   responsableSubsciption!: Subscription;
   ajoutSubscription!: Subscription;
   commandeSubscription!: Subscription;
+  message='';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -58,10 +59,10 @@ export class DialogProjetComponent implements AfterViewInit{
     });
 
     this.ajoutSubscription = this.projetService.ajout.subscribe((bool: boolean) => {
-      this.isAddProjet = bool;
-      setTimeout(() => {
-        this.isAddProjet = false;
-      }, 3000);
+      if(bool) this.displayMessage('projet mis à jour');
+      else this.displayMessage('projet non ajouté');
+
+
     });
 
     this.commandeSubscription = this.commandeService.commandeSubject.subscribe((commandes: Commande[]) => {
@@ -72,7 +73,13 @@ export class DialogProjetComponent implements AfterViewInit{
     } );
 // récupérer si la commande a bien été ajouté
   }
+  private displayMessage(message: string){
+    this.message = message;
+    setTimeout(() => {
+      this.message ='';
+    }, 3000);
 
+  }
   /**
    * copie un projet
    * @param projet
@@ -118,10 +125,25 @@ export class DialogProjetComponent implements AfterViewInit{
     * @param commandes
    */
   updateProjet(commandes: Commande[]){
-    for(let com of commandes){
+    if(this.projet.code_projet.length >= environment.lengthProjetCode){
+      let checkCom = true;
+      for(let com of commandes){
+        if(com.num_com.length < environment.lengthComNum){
+          checkCom = false;
+        }
+      }
+      if(checkCom){
+        this.commandeService.updateCommandes(commandes);
+        this.projetService.updateProjet(this.projet);
+      }
+      else{
+        this.displayMessage('Le non de la commande doit comporter au moins '+environment.lengthComNum + " caractères");
+      }
+
     }
-    this.commandeService.updateCommandes(commandes);
-    this.projetService.updateProjet(this.projet);
+    else{
+      this.displayMessage('Le non du projet doit au moins faire '+environment.lengthProjetCode + " caractères");
+    }
 
   }
 

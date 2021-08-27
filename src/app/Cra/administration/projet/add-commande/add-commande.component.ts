@@ -9,7 +9,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ProjetHttpDatabase} from '../../../../configuration-http/ProjetHttpDatabase';
 import {Utilisateur} from "../../../../Modeles/utilisateur";
 import {UserService} from "../../../../services/user.service";
-import {resetForm, shortMessage} from '../../../../../environments/environment';
+import {environment, resetForm, shortMessage} from '../../../../../environments/environment';
 import {CommandeService} from '../../../../services/commande.service';
 import {Message} from '../../../models/message';
 import {CraService} from '../../../../services/cra.service';
@@ -35,7 +35,7 @@ export class AddCommandeComponent implements OnInit {
   listeUsersSubscription!:Subscription;
   selectedProjet!:Projet;
   commandeAdd:Message = new Message('');
-
+  lengthComNum = environment.lengthComNum
   isAddRealisation = false;
   commandeProjet!: FormGroup;
   commandeUtilisateur!: FormGroup;

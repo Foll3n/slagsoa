@@ -6,7 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {FormControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {checkValidity, resetForm, validateEmail} from '../../../../../../environments/environment';
+import {checkValidity, environment, resetForm, validateEmail} from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-update-client-responsable',
@@ -65,8 +65,10 @@ export class UpdateClientResponsableComponent implements OnInit {
    * check que le mail soit valide
    * @param client
    */
-  validateMail(client: Client) {
-    return validateEmail(client.mail);
+  isValid(client: Client) {
+    return validateEmail(client.mail  ) &&  client.nomSociete.length >= environment.lengthClientName
+      && client.adresse.length >= environment.lengthClientAdresse
+      && client.siret.length == environment.lengthClientSiret;
   }
 
   /**

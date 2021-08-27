@@ -28,7 +28,15 @@ export const environment = {
   urlCraWeek : 'http://5.196.8.160:4000/gateway/APICraWeek/1.0/craWeek',
   urlLogCra : 'http://5.196.8.160:4000/gateway/APICraLog/1.0/log',
   urlMail : 'http://5.196.8.160:4000/gateway/APIMail/1.0/mail/send',
-  urlJoursFeries : 'http://5.196.8.160:4000/gateway/APIJoursReels/1.0/joursReels'
+  urlJoursFeries : 'http://5.196.8.160:4000/gateway/APIJoursReels/1.0/joursReels',
+  lengthClientName : 3,
+  lengthClientSurname : 3,
+  lengthClientSiret : 14,
+  lengthClientAdresse : 3,
+  lengthRespName : 3,
+  lengthRespSurname : 3,
+  lengthProjetCode: 5,
+  lengthComNum: 5,
 };
 
 export function dateFormatter(date: string){

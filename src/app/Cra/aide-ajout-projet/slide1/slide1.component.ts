@@ -3,7 +3,7 @@ import {Client} from '../../models/client/Client';
 import {Subscription} from 'rxjs';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ClientService} from '../../../services/client.service';
-import {checkValidity} from '../../../../environments/environment';
+import {checkValidity, environment} from '../../../../environments/environment';
 import {EventEmitter} from '@angular/core';
 
 @Component({
@@ -20,6 +20,7 @@ export class Slide1Component implements OnInit {
   societeNom: string = '';
   tempClient: Client | undefined = undefined;
   selectedClient: Client | undefined = undefined;
+  lengthClientAdresse = environment.lengthClientAdresse
 
   constructor(private clientService: ClientService) {
 

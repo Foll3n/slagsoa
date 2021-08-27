@@ -7,7 +7,7 @@
       <div class="search-div">
         <div class="form">
           <input type="text" id="name1" (input)="searchTerm()" [(ngModel)]="responsableNom" formControlName="nom"
-                 minlength="5" autocomplete="nope" required="required">
+                 minlength="{{lengthRespName}}" autocomplete="nope" required="required">
           <label for="name1" class="label-name">
             <span class="content-name">Nom du responsable</span>
           </label>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="form">
-        <input type="text" id="prenom" formControlName="prenom" minlength="3" required="required" autocomplete=false
+        <input type="text" id="prenom" formControlName="prenom" minlength="{{lengthRespSurname}}" required="required" autocomplete=false
                [ngClass]="{'input-invalid':selectedResponsable,'input-valid':!selectedResponsable}">
         <label for="prenom" class="label-name">
           <span class="content-name">Prenom</span>

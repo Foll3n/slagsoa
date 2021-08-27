@@ -25,7 +25,7 @@
         </label>
       </div>
       <div class="form">
-        <input type="text" id="adresse" formControlName="adresse" minlength="10" autocomplete="off" required="required"
+        <input type="text" id="adresse" formControlName="adresse" minlength="{{lengthClientAdresse}}" autocomplete="off" required="required"
                [ngClass]="{'input-invalid':selectedClient,'input-valid':!selectedClient}">
         <label for="adresse" class="label-name">
           <span class="content-name">Adresse</span>

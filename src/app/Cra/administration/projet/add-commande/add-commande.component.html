@@ -6,11 +6,11 @@
 
 <form class="form-group" [formGroup]="commandeProjet" #formDirective="ngForm" (submit)="addCommande(formDirective)">
   <div class="inputNomCommande">
-    <input type="text" class="form-control" required formControlName="codeCommande" minlength="3"
+    <input type="text" class="form-control" required formControlName="codeCommande" minlength="{{lengthComNum}}"
            placeholder="Code tâche">
   </div>
   <mat-form-field appearance="outline" [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
-    <mat-label>Selectionner un projet</mat-label>
+    <mat-label>Selectionner une commande</mat-label>
     <mat-select formControlName="projet" required>
       <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id" (click)="getCommandesProjet()">
         {{projet.code_projet}}
@@ -35,7 +35,7 @@
     --****************************************************************************************-->
     <mat-form-field appearance="outline"
                     [ngClass]="{ 'add-projet': width >= 768, 'add-projet-responsive': width < 768 }">
-      <mat-label>Selectionner un projet</mat-label>
+      <mat-label>Selectionner une commande</mat-label>
       <mat-select formControlName="projet" required>
         <mat-option *ngFor="let projet of this.listeProjets" [value]="projet.id"
                     (click)="getCommandeProjetUser(projet)">

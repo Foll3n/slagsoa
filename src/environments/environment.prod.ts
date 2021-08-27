@@ -21,7 +21,17 @@ export const environment = {
   urlProjet: 'http://5.196.8.160:4000/gateway/APIProjet/1.0/projet',
   urlRealisation : 'http://5.196.8.160:4000/gateway/APIRealisation/1.0/realisation',
   urlCraWeek : 'http://5.196.8.160:4000/gateway/APICraWeek/1.0/craWeek',
-  urlLogCra : 'http://5.196.8.160:4000/gateway/APICraLog/1.0/log'
+  urlLogCra : 'http://5.196.8.160:4000/gateway/APICraLog/1.0/log',
+  lengthClientName : 3,
+  lengthClientSurname : 3,
+  lengthClientSiret : 14,
+  lengthClientAdresse : 3,
+  lengthRespName : 3,
+  lengthRespSurname : 3,
+  lengthProjetCode: 5,
+  lengthComNum: 5,
+
+
 };
 
 export function dateFormatter(date: string){
