@@ -48,6 +48,11 @@ export function resetForm(form: FormGroup) {
   });
   form.clearValidators();
 }
+export function isDatesEqual(date1:Date, date2:Date) {
+  return date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate();
+}
 // tslint:disable-next-line:typedef
 export function shortMessage(variable: Message, message: string){
   variable.contenu = message;
@@ -59,6 +64,22 @@ export function checkValidity(property: string, form: FormGroup){
   if(form.get(property)?.invalid)
     form.get(property)?.setValue('');
 
+}
+export function validateEmail(email: string) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+export function hexToRGB(hex: string, alpha: string) {
+
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+
+  if (alpha) {
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  } else {
+    return `rgb(${r}, ${g}, ${b})`;
+  }
 }
 /*
  * For easier debugging in development mode, you can import the following file
