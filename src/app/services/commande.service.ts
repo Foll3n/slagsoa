@@ -56,7 +56,7 @@ export class CommandeService {
     response.subscribe(reponse => {
       if (reponse.status === 'OK') {
         if (index) {
-          this.getAllCommandes();
+          this.getAllCommandes(); // afin d'être à jour
         }
       } else {
         console.log('commande non ajoutée');

@@ -191,7 +191,6 @@ export class CraService {
       this.listeCraWeek[index].listeCra[ind] = cra;
       this.emitCraSubject();
     }
-
   }
 
   /**
@@ -494,15 +493,6 @@ export class CraService {
     for (let i = 0; i < this.listeCraWeek.length; i++) {
       this.getCraToServer(i);
     }
-    //
-    // this.getCraToServer( 1);
-    // this.getCraToServer(2);
-
-    // this.selectedWeek = this.craWeekNext;
-    // this.listeCra = this.selectedWeek.listeCra;
-    // this.getCraToServer();
-    // this.selectedWeek = this.craWeek;
-    // this.listeCra = this.selectedWeek.listeCra;
   }
 
   /**
@@ -533,7 +523,6 @@ export class CraService {
       response => {
       },
       error => {
-        // this.setStatusUser(index, 0); // s'il y a une erreur je remet le status a 0
         console.log(error + 'le serveur ne répond pas ');
       }
     );
