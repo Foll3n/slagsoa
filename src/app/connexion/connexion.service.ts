@@ -21,14 +21,11 @@ export class ConnexionService {
   }
 
   public isLogged(){
-    //console.log(sessionStorage.getItem('ndc'))
     return(sessionStorage.getItem('id') != null && sessionStorage.getItem('token') != null);
-    //return true;
   }
 
   public read(){
     return(sessionStorage.getItem('role') == 'utilisateur');
-    //return true;
   }
 
   public write(){
@@ -43,6 +40,7 @@ export class ConnexionService {
 
   public isSuperAdmin(){
     //return true;
+    console.log("test",sessionStorage.getItem('role'));
     return(sessionStorage.getItem('role') == 'MANAGER');
   }
 
@@ -63,7 +61,7 @@ export class ConnexionService {
             sessionStorage.setItem('role' , i.role);
             a.role = i.role;
             a.grade = i.grade;
-            a.nom = i.nom
+            a.nom = i.nom;
             a.prenom = i.prenom;
             a.mail = i.mail;
             a.nbCongesCumules = i.nbCongesCumules;

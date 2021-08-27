@@ -70,7 +70,7 @@ body {
 .form input:focus:invalid + .label-name .content-name{
   transform: translateY(-100%);
   font-size: 14px;
-  color: #ec98b9
+  color: var(--color-non-valide-form)
 }
 
 .form input:focus + .label-name::after,
@@ -80,3 +80,8 @@ body {
 }
 
 //////////////////
+
+//// COLORS /////
+:root{
+  --color-non-valide-form: #ec98b9;
+}

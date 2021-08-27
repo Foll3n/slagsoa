@@ -62,6 +62,7 @@ export class ConnexionComponent implements OnInit {
     this.connexionHttp.connexion(this.logForm.get('ndc')?.value,
       this.logForm.get('mdp')?.value).subscribe(
       resultat => {
+
         if(resultat.id){
           sessionStorage.setItem('id' , resultat.id);
           sessionStorage.setItem('token', resultat.token);
@@ -71,7 +72,7 @@ export class ConnexionComponent implements OnInit {
       error => {
         this.message = "erreur lors de l'identification";
       }
-    )
+    );
   }
 
 

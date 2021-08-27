@@ -15,16 +15,16 @@ import {AdministrationCraComponent} from "./Cra/administration/administration-cr
 import {UpdateProjectComponent} from "./Cra/administration/projet/update-project/update-project.component";
 import {ProjetPdfComponent} from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
 import {AideAjoutProjetComponent} from './Cra/aide-ajout-projet/aide-ajout-projet.component';
+import {AuthGuard} from './connexion/auth-guaard.service';
 
 const routes: Routes = [
-  { path: 'develop', component : AideAjoutProjetComponent},
-  { path: 'generate-pdf', component : ProjetPdfComponent},
-  { path: 'administration-projet', component : AdministrationProjetComponent},
+  { path: 'generate-pdf', canActivate : [AuthGuard], component : ProjetPdfComponent},
+  { path: 'administration-projet', canActivate : [AuthGuard], component : AdministrationProjetComponent},
   { path: 'calendar', component : CalendarMounthComponent},
   { path: 'compte-rendu-activite/:date', component : CompteRenduActiviteComponent},
-  { path: 'administration-cra', component : AdministrationCraComponent},
+  { path: 'administration-cra', canActivate : [AuthGuard], component : AdministrationCraComponent},
   { path: 'connexion', component: ConnexionComponent },
-  { path: 'visualisation', component: VisualisationComponent },
+  { path: 'visualisation', canActivate : [AuthGuard], component: VisualisationComponent },
   { path: 'ajouter', component: AjouterComponent },
   { path: 'utilisateurs', component: UtilisateursComponent },
   { path: 'visualisation-conges', component: VisualisationCongesComponent },
