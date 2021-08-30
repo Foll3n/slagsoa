@@ -103,6 +103,7 @@ import { Slide4Component } from './Cra/aide-ajout-projet/slide4/slide4.component
 import { AddUserComComponent } from './Cra/aide-ajout-projet/add-user-com/add-user-com.component';
 import {JoursferiesService} from './services/joursferies.service';
 import {AuthGuard} from './connexion/auth-guaard.service';
+import {AuthGuardConnexion} from './connexion/auth-guard-connexion.service';
 
 registerLocaleData(localeFr);
 
@@ -197,7 +198,7 @@ registerLocaleData(localeFr);
   ],
   // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   // tslint:disable-next-line:max-line-length
-  providers: [AuthGuard, JoursferiesService, ClientService, ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
+  providers: [AuthGuardConnexion, AuthGuard, JoursferiesService, ClientService, ResponsableService, CraService, UserService, ProjetService, CommandeService, CraWaitingService, CalendarService, ConnexionService, NavComponent , MatCardAvatar, {provide: MatPaginatorIntl, useValue: CustomPaginator()}],
   bootstrap: [AppComponent]
 })
 

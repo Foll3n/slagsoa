@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import {ConnexionService} from './connexion.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuardConnexion implements CanActivate {
 
   constructor(private authService: ConnexionService,
               private router: Router) { }
@@ -12,13 +12,10 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.authService.isLogged()){
-      this.router.navigate(['/connexion']);
-    }
-    if (this.authService.isSuperAdmin()) {
+    if (this.authService.isLogged()) {
       return true;
     } else {
-      this.router.navigate(['/accueil']);
+      this.router.navigate(['/connexion']);
     }
     return true;
   }
