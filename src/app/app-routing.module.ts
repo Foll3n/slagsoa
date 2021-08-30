@@ -13,7 +13,6 @@ import {CalendarMounthComponent} from "./Cra/calendar-mounth/calendar-mounth.com
 import {CompteRenduActiviteComponent} from "./Cra/compte rendu activite/compte-rendu-activite/compte-rendu-activite.component";
 import {AdministrationCraComponent} from "./Cra/administration/administration-cra/administration-cra.component";
 import {ProjetPdfComponent} from './Cra/administration/projet/update-project/projet-pdf/projet-pdf.component';
-import {AideAjoutProjetComponent} from './Cra/aide-ajout-projet/aide-ajout-projet.component';
 import {AuthGuard} from './connexion/auth-guaard.service';
 
 const routes: Routes = [
